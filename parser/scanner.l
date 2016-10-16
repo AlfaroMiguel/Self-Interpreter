@@ -18,13 +18,15 @@ TRUE "true "|" true"|"true"
 FALSE "false "|" false"|"false"
 CLONE "clone "|" clone"
 LOBBY "lobby "|" lobby"
-COLLECT "collect "|" collect"
+COLLECT "collect "|" collect"|"collect"
 ARGUMENTGENERIC ":arg."|" :arg."|"arg"|" arg"|"arg "
 METHOD {WORD}:
 FINISH "exit "|"quit "|"exit"|"quit"
 %%
 {FINISH}                             {	std::cout<<"Fin"<<std::endl;
                                         yyterminate();
+                                    }
+{COLLECT}                             {	std::cout<<"[Collect] ";
                                     }
 {TRUE}                             {	
                                       std::cout <<"Boolean ";
