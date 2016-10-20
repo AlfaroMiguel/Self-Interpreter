@@ -1,6 +1,8 @@
-#include <iostream>
+#include <gtkmm.h>
+#include "ventanaVM.h"
 
-int main() {
-    std::cout << "Hello, World! Client" << std::endl;
-    return 0;
+int main (int argc, char **argv) {
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
+	VentanaVM ventanaVM;
+	return app->run(ventanaVM);
 }
