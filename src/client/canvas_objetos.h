@@ -12,6 +12,7 @@ class CanvasObj: public Goocanvas::Canvas{
  private:
   void on_obj_nuevo_event();
   bool on_button_press_event(GdkEventButton* event);
+  double x, y;
   Glib::RefPtr<Goocanvas::Item> root;
   Gtk::Menu menu_der;
   Gtk::MenuItem objeto_nuevo;

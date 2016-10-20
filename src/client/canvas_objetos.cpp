@@ -15,6 +15,8 @@ CanvasObj::~CanvasObj() {}
 void CanvasObj::dibujar_morph() {
 	Glib::RefPtr<Goocanvas::Rect> cuadrado = Goocanvas::Rect::create(100, 100, 100, 100);
 	cuadrado->property_fill_color().set_value("blue");
+	cuadrado->property_x() = x;
+	cuadrado->property_y() = y;
 	root->add_child(cuadrado);
 }
 
@@ -25,6 +27,8 @@ void CanvasObj::on_obj_nuevo_event() {
 bool CanvasObj::on_button_press_event(GdkEventButton *event) {
 	if((event->type == GDK_BUTTON_PRESS) && (event->button == 3)){
 		menu_der.popup(event->button, event->time);
+		x = event->x;
+		y = event->y;
 		return true;
 	}
 	return false;
