@@ -1,6 +1,8 @@
-add_definitions("-g -o0 -Wall -pedantic")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 file (GLOB SRCS *.cpp *.h)
-file (GLOB COMMON ../common/*.cpp ../common/*.h)
 
-add_executable (server ${COMMON} ${SRCS})
+add_executable (server ${SRCS})
+
+target_link_libraries(server common)

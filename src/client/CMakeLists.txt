@@ -1,6 +1,7 @@
-add_definitions("-g -o0 -Wall -pedantic")
+add_definitions("-g -o0 -Wall -Werror -pedantic -pedantic-errors -std=c++11 -pthread")
 
-file (GLOB COMMON ../common/*.cpp ../common/*.h)
 file (GLOB SRCS  *.cpp *.h)
 
-add_executable (client ${SRCS} ${COMMON})
+add_executable (client ${SRCS})
+
+target_link_libraries(client common)

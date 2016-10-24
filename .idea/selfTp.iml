@@ -2,9 +2,27 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/common/socket_error.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/common/socket_error.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/common/socket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/common/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/server/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/common/socket.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/method.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/interpreter.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/lobby.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/number.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/method.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/number.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/object.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/bool.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/string.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/object.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/interpreter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/lobby.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/bool.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/string.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/CMakeLists.txt" isTestSource="false" />
