@@ -1,4 +1,4 @@
-#include "server_thread.h"
+#include "thread.h"
 
 void Thread::start() {
     thread = std::thread(&Thread::run, this);
