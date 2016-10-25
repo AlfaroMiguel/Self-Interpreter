@@ -12,8 +12,10 @@ class VentanaVM: public Gtk::Window{
   Gtk::Box* caja_base;
   Gtk::Box* caja_editar;
   Gtk::Entry* entrada_nombre;
-  Gtk::Entry* entrada_slot;
-  int contador_morphs = 0;
+  Gtk::Entry* entrada_msj;
+  int morphs_creados = 0;
+  int morphs_activos = 0;
+  Glib::RefPtr<Morph> morph_editando;
  public:
   VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
   virtual ~VentanaVM();
@@ -24,9 +26,13 @@ class VentanaVM: public Gtk::Window{
   void on_editar_nombre_event();
   void on_aceptar_nombre_event();
   void on_agregar_slot_event();
-  void on_aceptar_slot_event();
+  void on_get_event();
+  void on_do_event();
+  void on_editar_obj_event();
+  void on_finalizar_edicion_event();
   bool on_button_press_event(GdkEventButton* event);
-  void dibujar_morph(double x, double y);
+  void agregar_slot(const Glib::ustring nombre_slot);
+  void dibujar_morph(Glib::ustring nombre, double x, double y);
   void crear_menu_objetos();
   void ocultar_barra_edicion();
   double x, y;
@@ -35,9 +41,7 @@ class VentanaVM: public Gtk::Window{
   Glib::RefPtr<Goocanvas::GroupModel> root;
   Gtk::Menu menu_obj;
   Gtk::MenuItem objeto_nuevo;
-  Gtk::MenuItem eliminar_objeto;
-  Gtk::MenuItem editar_nombre;
-  Gtk::MenuItem agregar_slot;
+  Gtk::MenuItem editar_objeto;
   Glib::RefPtr<Gtk::Builder> builder;
  public:
   void on_quit_click();

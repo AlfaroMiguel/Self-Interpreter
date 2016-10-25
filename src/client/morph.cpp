@@ -1,8 +1,11 @@
 #include "morph.h"
 #include <vector>
+
+#define ALTO 23
+#define ANCHO 200
 Morph::Morph(double x, double y, const Glib::ustring& nombre): pos_x(x), pos_y(y){
-	//TODO: se tiene que poder redimensionar
-	base_titulo = Goocanvas::Rect::create(x, y, 100, 23);
+	//TODO: creo que se deberia poder redimensionar
+	base_titulo = Goocanvas::Rect::create(x, y, ANCHO, ALTO);
 	base_titulo->property_fill_color().set_value("white");
 	titulo = Goocanvas::Text::create(nombre, x+2, y+2);
 	titulo->property_fill_color().set_value("black");
@@ -37,7 +40,9 @@ bool Morph::on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>&  i
 }
 
 void Morph::agregar_slot(const Glib::ustring nombre, Glib::RefPtr<Goocanvas::Item>& item){
-	int offset = 23*(slots.size()+1);
+	//TODO: arreglar diferencias entre clickear en los slots y clickear en el objeto base
+	if (nombre.empty()) return;
+	int offset = ALTO*(slots.size()+1);
 	Glib::RefPtr<Morph> slot = create(pos_x, pos_y+offset, nombre);
 	slots.push_back(slot);
 	slot->conectar_seniales(item);
@@ -63,6 +68,8 @@ bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& ite
 		auto new_x = event->x;
 		auto new_y = event->y;
 		mover_elementos(new_x, new_y);
+		pos_x += (new_x-drag_x);
+		pos_y += (new_y-drag_y);
 	}
 	return false;
 }

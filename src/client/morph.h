@@ -20,7 +20,7 @@ class Morph: public Goocanvas::GroupModel {
   Glib::RefPtr<Goocanvas::Item> dragging;
   int drag_x;
   int drag_y;
-  bool siendo_editado;
+  bool siendo_editado = false;
   std::vector<Glib::RefPtr<Goocanvas::Item>> items;
   Glib::RefPtr<Goocanvas::Rect> base_titulo;
   Glib::RefPtr<Goocanvas::Text> titulo;
