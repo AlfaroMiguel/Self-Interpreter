@@ -23,8 +23,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src/server/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/string.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/main.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/client/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/ventanaVM.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/morph.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/morph.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/ventanaVM.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>
