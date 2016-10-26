@@ -9,9 +9,17 @@
 class ComunicadorServer {
  	private:
   		Socket skt_cliente;
+  		ComunicadorServer(const ComunicadorServer& otra) = delete;
+  		ComunicadorServer& operator=(const ComunicadorServer& otra) = delete;
+
  	public:
   		ComunicadorServer(std::string& hostname, std::string& puerto);
+  		ComunicadorServer();
   		~ComunicadorServer();
-  		std::string ejecutar_mensaje(std::string& consulta);
+
+  		ComunicadorServer(ComunicadorServer&& otra);
+  		ComunicadorServer& operator=(ComunicadorServer&& otra);
+
+  		std::string ejecutar_mensaje(const std::string& consulta);
 };
 #endif

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include "morph.h"
+#include "comunicador_server.h"
 
 class VentanaVM: public Gtk::Window{
  private:
@@ -14,18 +15,18 @@ class VentanaVM: public Gtk::Window{
   Gtk::Entry* entrada_nombre;
   Gtk::Entry* entrada_msj;
   int morphs_creados = 0;
-  int morphs_activos = 0;
+  int morphs_activos = 1;
   Glib::RefPtr<Morph> morph_editando;
+  ComunicadorServer com_server;
  public:
   VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
   virtual ~VentanaVM();
  protected:
   void click_objeto_nuevo();
-  void on_obj_nuevo_event();
+  void crear_objeto();
   void on_eliminar_obj_event();
   void on_editar_nombre_event();
   void on_aceptar_nombre_event();
-  void on_agregar_slot_event();
   void on_get_event();
   void on_do_event();
   void on_editar_obj_event();
@@ -45,5 +46,6 @@ class VentanaVM: public Gtk::Window{
   Glib::RefPtr<Gtk::Builder> builder;
  public:
   void on_quit_click();
+  void set_comunicador(ComunicadorServer& com_server);
 };
 #endif

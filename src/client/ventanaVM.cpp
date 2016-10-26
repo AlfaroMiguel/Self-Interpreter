@@ -1,14 +1,11 @@
 #include "ventanaVM.h"
-#include "canvas_objetos.h"
 #include "morph.h"
 #include <iostream>
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
-#include <cairomm/context.h>
-#include <gtkmm/drawingarea.h>
 #include <vector>
+#include "comunicador_server.h"
 
-#define BTN_NUEVO_OBJ "Nuevo Objeto"
 #define BTN_EDITAR_OBJ "Editar Objeto"
 
 #define GLD_CAJA_BASE "cajaBase"
@@ -22,7 +19,7 @@
 #define GLD_BTN_FINALIZAR "btnFinalizar"
 
 VentanaVM::VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
-							Gtk::Window(cobject), builder(builder) {
+							Gtk::Window(cobject), builder(builder){
 	maximize();
 //TODO: que solo aparezca el menu en el canvas
 	caja_base = nullptr;
@@ -56,6 +53,7 @@ VentanaVM::VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& 
 	Gtk::Button* boton_finalizar_edicion = nullptr;
 	builder->get_widget(GLD_BTN_FINALIZAR, boton_finalizar_edicion);
 	boton_finalizar_edicion->signal_clicked().connect(sigc::mem_fun(*this, &VentanaVM::on_finalizar_edicion_event));
+	dibujar_morph("shell", 0, 0);
 	show_all_children();
 	caja_editar->hide();
 }
@@ -63,14 +61,13 @@ VentanaVM::VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& 
 VentanaVM::~VentanaVM() {}
 
 void VentanaVM::crear_menu_objetos(){
-	objeto_nuevo.set_label(BTN_NUEVO_OBJ);
-	editar_objeto.set_label(BTN_EDITAR_OBJ);
-	objeto_nuevo.signal_activate().connect(sigc::mem_fun(*this, &VentanaVM::on_obj_nuevo_event));
-	editar_objeto.signal_activate().connect(sigc::mem_fun(*this, &VentanaVM::on_editar_obj_event));
-	menu_obj.append(objeto_nuevo);
-	menu_obj.append(editar_objeto);
-	menu_obj.show_all();
+	//TODO: que se edite haciendo click o doble click, sin menu
+//	editar_objeto.set_label(BTN_EDITAR_OBJ);
+//	editar_objeto.signal_activate().connect(sigc::mem_fun(*this, &VentanaVM::on_editar_obj_event));
+//	menu_obj.append(editar_objeto);
+//	menu_obj.show_all();
 }
+
 void VentanaVM::dibujar_morph(Glib::ustring nombre, double x, double y) {
 	Glib::RefPtr<Morph> morph = Morph::create(x, y, nombre);
 	morphs.push_back(morph);
@@ -79,7 +76,7 @@ void VentanaVM::dibujar_morph(Glib::ustring nombre, double x, double y) {
 	morph->conectar_seniales(item);
 }
 
-void VentanaVM::on_obj_nuevo_event() {
+void VentanaVM::crear_objeto() {
 	morphs_activos += 1;
 	morphs_creados += 1;
 	Glib::ustring nombre = "Objeto";
@@ -108,9 +105,10 @@ void VentanaVM::on_get_event(){
 	const Glib::ustring mensaje = buffer->get_text();
 	//aca hay que mandarle la cadena al modelo y hacer segun lo que diga
 	std::cout << "Recibe mensaje: " << mensaje << std::endl;
+	com_server.ejecutar_mensaje(mensaje.raw());
 	entrada_msj->delete_text(0, entrada_msj->get_buffer()->get_text().size());
 	//hc para ver si anda agregar slot
-	agregar_slot(mensaje);
+	crear_objeto();
 }
 
 void VentanaVM::on_do_event(){
@@ -120,13 +118,12 @@ void VentanaVM::on_do_event(){
 	std::cout << "Recibe mensaje: " << mensaje << std::endl;
 	entrada_msj->delete_text(0, entrada_msj->get_buffer()->get_text().size());
 	//hc para ver si anda agregar slot
-	dibujar_morph(mensaje, x, y);
+	//dibujar_morph(mensaje, x, y);
 }
 
 
 bool VentanaVM::on_button_press_event(GdkEventButton *event) {
-	//TODO: nuevo objeto aparece presionando afuera de un objeto o en otro menu, por ejemplo en la barra de arriba
-	if((event->type == GDK_BUTTON_PRESS) && (event->button == 3)){
+	if((event->type == GDK_BUTTON_PRESS) && (event->button == 2)){
 		menu_obj.popup(event->button, event->time);
 		if (morphs_activos == 0) editar_objeto.hide();
 		else menu_obj.show_all();
@@ -167,4 +164,7 @@ void VentanaVM::on_quit_click() {
 	hide();
 }
 
+void VentanaVM::set_comunicador(ComunicadorServer& comunicador){
+	com_server = std::move(comunicador);
+}
 
