@@ -1,11 +1,7 @@
 #!/bin/bash
-`bison++ -d -hparser.h -o parser.cpp parser.y`
-`flex++ -d -oscanner.cpp scanner.l`
+`bison -d --debug parser.y`
+`flex scanner.l`
 
-`g++ -c -Wno-write-strings parser.cpp`
-`g++ -c scanner.cpp`
-`g++ -c main.cpp`
-g++ -o parser main.o parser.o scanner.o
+g++ -std=c++11 -o parser  -Wno-write-strings interpreter.cpp lex.yy.c parser.tab.c
 echo 'Parse init'
-./parser
-
+./parser __stdin__

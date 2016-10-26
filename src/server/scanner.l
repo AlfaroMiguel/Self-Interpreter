@@ -1,129 +1,58 @@
-%option c++
-%option noyywrap
-
-
 %{
-#include <sstream>
-#include "parser.h"
-#include <cstdlib>
+	#include <cstdio>
+	#include <cstdlib>
+	#include <string>
+	#include <iostream> //cout
+	using namespace std ;
+	#include "parser.tab.h" // output of bison on example1.y
+	void yyerror(char*);
+	int yyparse(void);
 %}
-
-
-DIGIT  [0-9]
-DIGIT1 [1-9]
-LETTER [aA-zZ]
-WORD {LETTER}{LETTER}*
-IMPRIMIR "print "|" print"
-TRUE "true "|" true"|"true"
-FALSE "false "|" false"|"false"
-CLONE "clone "|" clone"
-LOBBY "lobby "|" lobby"
-COLLECT "collect "|" collect"|"collect"
-ARGUMENTGENERIC ":arg."|" :arg."|"arg"|" arg"|"arg "
-METHOD {WORD}:
-FINISH "exit "|"quit "|"exit"|"quit"
 %%
-{FINISH}                             {	std::cout<<"Fin"<<std::endl;
-                                        yyterminate();
-                                    }
-{COLLECT}                             {	std::cout<<"[Collect] ";
-                                    }
-{TRUE}                             {	
-                                      std::cout <<"Boolean ";
-                                   }
-{FALSE}                             {	
-                                      std::cout <<"Boolean ";
-                                   }
-{DIGIT}	                            {	
-                                      std::cout <<"Numero ";
-                                    }
-{LOBBY}	                            {	
-                                      std::cout <<"Lobby ";
-                                    }
-{LETTER}                           {	
-                                      std::cout <<"Letra ";
-                                    }
-{DIGIT1}{DIGIT}* {
-                                      std::cout <<"Number "<< yytext <<std::endl;
-                                    }
-"."                                 {
-					std::cout <<"End ";
-                                    }
-"("                                 {
-					std::cout <<"Open ";
-                                    }
-")"                                 {
-					std::cout <<"Close ";
-                                    }
-" "                                 { }
-"nil"                                {
-					std::cout <<"Null Object ";
-                                    }
-{WORD}                              {
-
-                                      std::cout <<"Palabra ";
-                                    }
-{IMPRIMIR}                          {	
-                                      std::cout <<"[Print] ";
-                                    }
-"="                               {	
-                                      std::cout <<"[Create No Mutable Object]  ";
-                                    }
-"<-"                               {	
-                                      std::cout <<"[Create Mutable Object] ";
-                                    }
-":"                               {	
-                                      std::cout <<"[Set value] ";
-                                   }
-"+"                               {	
-                                      std::cout <<"[Sum] ";
-                                   }
-"/"                               {	
-                                      std::cout <<"[Division] ";
-                                   }
-"*"                               {	
-                                      std::cout <<"[Multiplication] ";
-                                   }
-{CLONE}                             {	
-                                      std::cout <<"[Clone] ";
-                                   }
-"=="                             {	
-                                      std::cout <<"[Equal] ";
-                                   }
-"!="                             {	
-                                      std::cout <<"[Distinct] ";
-                                   }
-"-"                               {	
-                                      std::cout <<"[Subtraction] ";
-                                   }
-"_AddSlots:"                       {	
-                                      std::cout <<"[Add slot] ";
-                                   }
-"_RemoveSlots:"                    {	
-                                      std::cout <<"[Remove slot] ";
-                                   }
-"_Name:"                            {	
-                                      std::cout <<"[Name] ";
-                                   }
-"(|"                       	  {	
-                                      std::cout <<"[Create Object Init] ";
-                                   }
-"|"                       	  {	
-                                      std::cout <<"Argument ";
-                                   }
-{ARGUMENTGENERIC}                 {	
-                                      std::cout <<"Argument Generic ";
-                                   }
-{METHOD}                 {	
-                                      std::cout <<"[Method] ";
-                                   }
-"|)"                       	   {	
-                                      std::cout <<"[Create Object End] ";
-                                   }
-<<EOF>>                             {	std::cout<<"Fin"<<std::endl;
-                                        yyterminate();
-                                    }
-
-.                               {std::cout<<"[Comando No reconocido] ";}
-
+[ \t\n]+ 										{}; // do nothing on whitespace
+"print" 									{std::cerr<<"[Print] ";return PRINT;}
+[a-zA-Z][a-zA-Z0-9]* 			{
+													//std::cerr<<"[Variable] ";
+													yylval.str_val = new string (yytext);
+													return VARIABLE;
+													}
+[0-9][0-9]*(.[0-9]+)? 		{
+													//std::cerr<<"[Number] ";
+													yylval.double_val = atof(yytext);
+													return NUMBER ;
+													}
+"=" 					return EQUALS;
+"+" 					{std::cerr<<"[Mas] ";return PLUS;}
+"-" 					{std::cerr<<"[Menos] ";return MINUS;}
+"*" 					return ASTERISK;
+"/" 					return FSLASH;
+"<-" 					return EQUALSMUTAL;
+":" 					return SET;
+"(" 					return LPAREN;
+")" 					return RPAREN;
+"_add" 				{//std::cerr<<"add slots ";
+							return ADD;}
+"(|" 					{//std::cerr<<"(| ";
+							return CREATEOBJECTINIT;}
+"|)" 					{//std::cerr<<"|) ";
+							return CREATEOBJECTEND;}
+"." 					return SEMICOLON;
 %%
+
+void yyerror (char * str){
+	printf("Parse Error:-%s-\n", str );
+}
+
+int yywrap ( void ) { }
+
+int main (int num_args , char ** args ) {
+	if( num_args != 2){
+		printf (" usage : ./ parser1 filename \n");
+		exit (0);
+	}
+	FILE * file = fopen ( args [1] ,"r");
+	if( file == NULL ) { printf (" couldn ’t open %s\n", args [1]); exit (0);}
+	yyin = file ; // now flex reads from file
+	yyparse();
+	fclose(file);
+}
