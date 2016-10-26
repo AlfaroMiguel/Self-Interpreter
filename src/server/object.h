@@ -6,31 +6,20 @@
 #include <tuple>
 #include <vector>
 #include <string>
-#include <functional>
-
+#include "registrodeslots.h"
 
 class Object{
-
-public:
-    //(Objeto,esMutable,esParent)
-    typedef std::tuple<Object*, bool, bool> slot_t;
-    //<NombreObjeto, slot>
-    typedef std::map<std::string, slot_t> slot_map;
-
 protected:
     std::string nombre;
-    slot_map slots;
+    RegistroDeSlots slots;
     std::string codigo;
-
-    slot_map obtenerParentsSlots() const;
-
+    RegistroDeSlots obtenerParentsSlots();
     Object* buscarObject(std::string nombre, Object* object);
 
 public:
     Object();
     Object(const Object& otroObject);
     ~Object();
-
 
     void setNombre(const std::string nuevoNombre);
     std::string obtenerNombre();
@@ -44,6 +33,8 @@ public:
     Object* recvMessage(std::string receiverObject,
                         std::string keyWordMensaje,
                         std::vector<Object*> argumentos);
+
+    RegistroDeSlots obtenerSlots();
 
     Object* clone();
     virtual std::string obtenerRepresentacion(){};
