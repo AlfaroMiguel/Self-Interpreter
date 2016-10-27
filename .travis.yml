@@ -1,6 +1,13 @@
 language: cpp
 compiler: g++
 
+before_script:
+  - export PATH=~/usr/bin:$PATH
+  - sudo apt-get update
+  - sudo apt-get install -y cmake make
+  - sudo apt-get install gtkmm-3.0
+  - sudo apt-get install goocanvas-2.0
+
 script:
   - cmake ./src
   - make
