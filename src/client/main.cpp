@@ -1,6 +1,7 @@
-#include <gtkmm.h>
-#include "ventanaVM.h"
+//#include <gtkmm.h>
+//#include "ventanaVM.h"
 #include "comunicador_server.h"
+
 
 int main (int argc, char **argv) {
 	//Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();

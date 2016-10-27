@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/common/socket_error.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/common/socket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/common/thread.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/common/json.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/common/lock.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/method.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/interpreter.h" isTestSource="false" />
@@ -50,15 +51,15 @@
     <orderEntry type="module-library">
       <library name="Header Search Paths">
         <CLASSES>
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
           <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/6/include-fixed" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/6/include" />
           <root url="file:///usr/local/include" />
         </CLASSES>
         <SOURCES>
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
-          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
           <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/6/include-fixed" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/6/include" />
           <root url="file:///usr/local/include" />
         </SOURCES>
       </library>
