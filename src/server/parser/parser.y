@@ -24,6 +24,9 @@ EQUALSMUTAL SET BAR ADD RM CREATEOBJECTINIT CREATEOBJECTEND ARGS WORD
 %token <str_val> VARIABLE
 %token <double_val> NUMBER
 %type <double_val> expression;
+%type <int_val> operation;
+%type <double_val> expresion_method;
+%type <double_val> line_method;
 %type <double_val> atom_expression;
 %type <double_val> inner1 ;
 %type <double_val> inner2 ;
@@ -56,16 +59,40 @@ line :
 		tokenizer.pushToken((*$1),"assignation","");
 		vars[*$1] = $3;delete $1;
 		}
-		|CREATEOBJECTINIT ARGS BAR lines RPAREN
+		|CREATEOBJECTINIT ARGS BAR line_method  SEMICOLON RPAREN SEMICOLON
 		{
 		std::cout << "(| :args | procedimiento)" <<std::endl;
 		}
-		|VARIABLE PLUS NUMBER  SEMICOLON {std::cout << "WORD + NUMBER" <<std::endl;}
-		|VARIABLE MINUS NUMBER SEMICOLON {std::cout << "WORD - NUMBER" <<std::endl;}
-		|VARIABLE ASTERISK NUMBER SEMICOLON {std::cout << "WORD * NUMBER" <<std::endl;}
-		|VARIABLE FSLASH NUMBER SEMICOLON {std::cout << "WORD - NUMBER" <<std::endl;}
 		|atom_expression
 		;
+
+line_method:
+		expresion_method operation expresion_method
+		|expresion_method
+		;
+
+expresion_method:
+		VARIABLE operation NUMBER
+		{
+		}
+		;
+operation:
+		PLUS {
+		std::cout << "algo + algo" <<std::endl;
+		}
+		|MINUS {
+		std::cout << "algo - algo" <<std::endl;
+
+		}
+		|ASTERISK {
+		std::cout << "algo * algo" <<std::endl;
+
+		}
+		|FSLASH {
+		std::cout << "algo / algo" <<std::endl;
+		}
+		;
+
 atom_expression:
 							VARIABLE SEMICOLON
 							{
