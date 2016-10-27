@@ -5,5 +5,15 @@ b <- 14.
 c = 3.
 d : 3.
 f.
-objeto _add (| b = 2. |).
-objeto _add (| b = 2.  y = 3.  t <- 14. |).
+objeto _AddSlots: (| b = 2. |).
+objeto _AddSlots: (| b = 2.
+y = 3.  t <- 14. |).
+objeto __RemoveSlots: (|x. y.|).
+x + y.
+x - y.
+x * y.
+x / y.
+:p.
+(| :arg. |
+arg * 2.
+)

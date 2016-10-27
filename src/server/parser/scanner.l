@@ -9,30 +9,41 @@
 	int yyparse(void);
 %}
 %%
-[ \t\n]+ 										{}; // do nothing on whitespace
-"print" 									{std::cerr<<"[Print] ";return PRINT;}
+[ \t]+ 										{}; // do nothing on whitespace
+[ \n]+ 										{}
+"print" 									{return PRINT;}
 [a-zA-Z][a-zA-Z0-9]* 			{
-													//std::cerr<<"[Variable] ";
+													//std::cout<<"VARIABLE PAARA";
 													yylval.str_val = new string (yytext);
 													return VARIABLE;
+													}
+":"+[a-zA-Z]*+"." 				{
+													//std::cerr<<"encontré un argumento";
+													//yylval.str_val = new string (yytext);
+													return ARGS;
 													}
 [0-9][0-9]*(.[0-9]+)? 		{
 													//std::cerr<<"[Number] ";
 													yylval.double_val = atof(yytext);
-													return NUMBER ;
+													return NUMBER;
 													}
 "=" 					return EQUALS;
-"+" 					{std::cerr<<"[Mas] ";return PLUS;}
-"-" 					{std::cerr<<"[Menos] ";return MINUS;}
+"+" 					{return PLUS;}
+"-" 					{return MINUS;}
 "*" 					return ASTERISK;
 "/" 					return FSLASH;
 "<-" 					return EQUALSMUTAL;
 ":" 					return SET;
 "(" 					return LPAREN;
-")" 					return RPAREN;
-"_add" 				{//std::cerr<<"add slots ";
-							return ADD;}
-"(|" 					{//std::cerr<<"(| ";
+")" 					{
+							//std::cerr<<")";
+							return RPAREN;
+							}
+"_AddSlots:"	{return ADD;}
+"_RemoveSlots:"	{return RM;}
+"|"						{return BAR;}
+"(|" 				 	{
+							//std::cerr<<"(| ";
 							return CREATEOBJECTINIT;}
 "|)" 					{//std::cerr<<"|) ";
 							return CREATEOBJECTEND;}
