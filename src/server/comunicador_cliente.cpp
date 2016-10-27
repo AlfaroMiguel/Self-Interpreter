@@ -4,11 +4,11 @@
 #include <string>
 #include <vector>
 
-ComunicadorCliente::ComunicadorCliente(Socket& skt_aceptar): //ademas recibe el modelo
-	skt_aceptar(skt_aceptar), ejecutando(true){}
+ComunicadorCliente::ComunicadorCliente(Socket skt_aceptar): //ademas recibe el modelo
+	skt_aceptar(std::move(skt_aceptar)), ejecutando(true){}
 
 ComunicadorCliente::~ComunicadorCliente(){
-	//delete &skt_aceptar;
+	//delete &skt_aceptar; Ahora es RAII
 }
 
 void ComunicadorCliente::recibir_mensaje(){
