@@ -15,7 +15,7 @@ ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	skt_cliente = std::move(otra.skt_cliente);
 	return *this;
 }
-std::string ComunicadorServer::ejecutar_mensaje(const std::string& mensaje){
+void ComunicadorServer::ejecutar_mensaje(const std::string& mensaje){
 	char* mensaje_enviar = (char*)mensaje.c_str();
 	skt_cliente.enviar(mensaje_enviar, sizeof(char)*100);
 	std::cout << "Mensaje enviado: " << mensaje << std::endl;

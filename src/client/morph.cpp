@@ -51,7 +51,7 @@ void Morph::agregar_slot(const Glib::ustring nombre, Glib::RefPtr<Goocanvas::Ite
 
 bool Morph::esta_en_posicion(double x, double y, Goocanvas::Canvas* canvas) {
 	Glib::RefPtr<Goocanvas::Item> item_en_pos = canvas->get_item_at(x, y, true);
-	for(int i = 0; i < items.size(); i++){
+	for(unsigned int i = 0; i < items.size(); i++){
 		if (item_en_pos == items[i])
 			return true;
 	}

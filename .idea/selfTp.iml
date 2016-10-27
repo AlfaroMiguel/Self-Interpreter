@@ -12,31 +12,37 @@
       <sourceFolder url="file://$MODULE_DIR$/src/common/thread.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/common/lock.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/method.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/server/method.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/interpreter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/slot.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/registrodeslots.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/lobby.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/server/interpreter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/bool.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/comunicador_cliente.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/method.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/number.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/object.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/server/registrodeslots.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/server/string.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/object.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/string.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/aceptador.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/interpreter.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/aceptador.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/registrodeslots.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/lobby.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/slot.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/bool.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/string.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/server/comunicador_cliente.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/server/number.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/ventanaVM.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/morph.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/morph.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/comunicador_server.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/client/ventanaVM.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/client/comunicador_server.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
     </content>

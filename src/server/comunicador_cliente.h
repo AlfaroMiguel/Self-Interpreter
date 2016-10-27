@@ -1,11 +1,11 @@
 #ifndef COMUNICADOR_CLIENTE_H
 #define COMUNICADOR_CLIENTE_H
 
-#include "socket.h"
+#include "../common/socket.h"
 #include <string>
 #include <vector>
 #include <iostream>
-#include "thread.h"
+#include "../common/thread.h"
 
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del cliente. */

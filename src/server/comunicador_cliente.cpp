@@ -12,8 +12,8 @@ ComunicadorCliente::~ComunicadorCliente(){
 }
 
 void ComunicadorCliente::recibir_mensaje(){
-	char* buffer_mensaje = (char*) malloc(sizeof(char)*10);
-	skt_aceptar.recibir(buffer_mensaje, sizeof(char)*10);
+	char* buffer_mensaje = (char*) malloc(sizeof(char)*100);
+	skt_aceptar.recibir(buffer_mensaje, sizeof(char)*100);
 	std::string mensaje(buffer_mensaje);
 	std::cout << "Mensaje recibido: " << mensaje << std::endl;
 }

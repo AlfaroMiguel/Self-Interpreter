@@ -91,7 +91,7 @@ void VentanaVM::on_eliminar_obj_event(){
 }
 
 void VentanaVM::on_editar_obj_event(){
-	for(int i = 0; i < morphs.size(); i++){
+	for(unsigned int i = 0; i < morphs.size(); i++){
 		if (morphs[i]->esta_en_posicion(x, y, canvas)) {
 			morphs[i]->editando(true);
 			morph_editando = morphs[i];
@@ -142,7 +142,7 @@ void VentanaVM::on_aceptar_nombre_event() {
 }
 
 void VentanaVM::on_finalizar_edicion_event(){
-	for(int i = 0; i < morphs.size(); i++)
+	for(unsigned int i = 0; i < morphs.size(); i++)
 		if (morphs[i]->esta_en_posicion(x, y, canvas))
 			morphs[i]->editando(false);
 	ocultar_barra_edicion();

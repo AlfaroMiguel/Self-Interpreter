@@ -1,9 +1,9 @@
 #ifndef ACEPTADOR_H
 #define ACEPTADOR_H
 
-#include "socket.h"
+#include "../common/socket.h"
 #include "comunicador_cliente.h"
-#include "thread.h"
+#include "../common/thread.h"
 #include <vector>
 
 /* Clase que se ocupa de atender clientes.*/
@@ -11,7 +11,6 @@ class Aceptador: public Thread{
  private:
   std::vector<ComunicadorCliente*> clientes;
   Socket& skt_server;
-  //Modelo& modelo;
   bool aceptando;
 
   void run(){
