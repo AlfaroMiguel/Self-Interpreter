@@ -6,7 +6,7 @@ before_script:
   - sudo apt-get update
   - sudo apt-get install -y cmake make
   - sudo apt-get install gtkmm-3.0
-  - sudo apt-get install goocanvas-2.0
+  - sudo apt-get install goocanvasmm-2.0
 
 script:
   - cmake ./src
