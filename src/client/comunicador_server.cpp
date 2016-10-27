@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <iostream>
 #include "../common/json.hpp"
-#include "../../../../../../usr/include/c++/6/cstdint"
 
 using json = nlohmann::json;
 
@@ -23,7 +22,7 @@ void ComunicadorServer::ejecutar_mensaje(const std::string& mensaje){
 
 	json j;
 	j["evento"] = "codigo";
-	j["codigo"] = "( | x <- 5. | ).";
+	j["codigo"] = mensaje.c_str();
 	std::string s = j.dump();
 
     std::cout<< s.size() << std::endl;

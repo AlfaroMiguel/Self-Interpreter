@@ -1,20 +1,18 @@
-//#include <gtkmm.h>
-//#include "ventanaVM.h"
+#include <gtkmm.h>
+#include "ventanaVM.h"
 #include "comunicador_server.h"
 
 
 int main (int argc, char **argv) {
-	//Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
-	//Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("ventana_vm.glade");
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
+	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("ventana_vm.glade");
 	std::string hostname(argv[1]);
 	std::string puerto(argv[2]);
 	ComunicadorServer com_server(hostname, puerto);
-    std::string mensaje = "holiss";
-    com_server.ejecutar_mensaje(mensaje);
-	//VentanaVM* ventanaVM = nullptr;
-	//builder->get_widget_derived("ventanaPpal", ventanaVM);
-	//ventanaVM->set_comunicador(com_server);
-	//app->run(*ventanaVM);
-	//delete ventanaVM;
+	VentanaVM* ventanaVM = nullptr;
+	builder->get_widget_derived("ventanaPpal", ventanaVM);
+	ventanaVM->set_comunicador(com_server);
+	app->run(*ventanaVM);
+	delete ventanaVM;
 	return 0;
 }

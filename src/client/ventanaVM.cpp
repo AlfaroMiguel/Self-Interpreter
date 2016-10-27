@@ -62,10 +62,10 @@ VentanaVM::~VentanaVM() {}
 
 void VentanaVM::crear_menu_objetos(){
 	//TODO: que se edite haciendo click o doble click, sin menu
-//	editar_objeto.set_label(BTN_EDITAR_OBJ);
-//	editar_objeto.signal_activate().connect(sigc::mem_fun(*this, &VentanaVM::on_editar_obj_event));
-//	menu_obj.append(editar_objeto);
-//	menu_obj.show_all();
+	editar_objeto.set_label(BTN_EDITAR_OBJ);
+	editar_objeto.signal_activate().connect(sigc::mem_fun(*this, &VentanaVM::on_editar_obj_event));
+	menu_obj.append(editar_objeto);
+	menu_obj.show_all();
 }
 
 void VentanaVM::dibujar_morph(Glib::ustring nombre, double x, double y) {
@@ -123,7 +123,7 @@ void VentanaVM::on_do_event(){
 
 
 bool VentanaVM::on_button_press_event(GdkEventButton *event) {
-	if((event->type == GDK_BUTTON_PRESS) && (event->button == 2)){
+	if((event->type == GDK_BUTTON_PRESS) && (event->button == 3)){
 		menu_obj.popup(event->button, event->time);
 		if (morphs_activos == 0) editar_objeto.hide();
 		else menu_obj.show_all();
