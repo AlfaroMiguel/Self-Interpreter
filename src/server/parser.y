@@ -18,6 +18,7 @@
 	double double_val ;
 	string* str_val ;
 }
+%start parse
 
 %token <int_val> PLUS MINUS ASTERISK FSLASH EQUALS PRINT LPAREN RPAREN SEMICOLON EQUALSMUTAL SET  ADD CREATEOBJECTINIT CREATEOBJECTEND
 %token <str_val> VARIABLE
@@ -28,21 +29,21 @@
 %{
 	Interpreter interpreter;
 %}
-%start parsetree
 %%
-parsetree:	lines;
+parse:	lines;
 
 lines:		lines line
 					|line
 					;
 
-line :		PRINT expression SEMICOLON {printf ("%lf\n", $2 );}
-		|VARIABLE EQUALS expression SEMICOLON {vars[*$1] = $3;std::cerr<<"variable = line. ";delete $1 ;}
-		|VARIABLE EQUALSMUTAL expression SEMICOLON {interpreter.crearObjetoMutable(*$1,$3);}
-		|VARIABLE SET expression SEMICOLON {interpreter.setObjeto(*$1,$3);}
-		|VARIABLE SEMICOLON {interpreter.crearObjetoMutable(*$1,0.0);}
-		|CREATEOBJECTINIT line CREATEOBJECTEND SEMICOLON {std::cerr<<"(| line |). ";}
-		|VARIABLE ADD line {std::cerr<<"variable _addSlot line ";}
+line :
+		PRINT expression SEMICOLON {std::cerr<<"print line"<<std::endl;}
+		|VARIABLE EQUALS expression SEMICOLON {std::cerr<<"variable = line. "<<std::endl;vars[*$1] = $3;delete $1 ;}
+		|VARIABLE EQUALSMUTAL expression SEMICOLON {std::cerr<<"variable <- line."<<std::endl;interpreter.crearObjetoMutable(*$1,$3);}
+		|VARIABLE SET expression SEMICOLON {std::cerr<<"variable : line."<<std::endl;interpreter.setObjeto(*$1,$3);}
+		|VARIABLE SEMICOLON {std::cerr<<"variable <- nill."<<std::endl;}
+		|CREATEOBJECTINIT line CREATEOBJECTEND SEMICOLON {std::cerr<<"(| line |). "<<std::endl;;}
+		|VARIABLE ADD line {std::cerr<<"variable _addSlot line "<<std::endl;}
 		;
 
 expression: 	expression PLUS inner1 { $$ = $1 + $3 ;}
