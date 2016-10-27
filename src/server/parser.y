@@ -24,6 +24,7 @@
 %token <str_val> VARIABLE
 %token <double_val> NUMBER
 %type <double_val> expression;
+%type <double_val> atom_expression;
 %type <double_val> inner1 ;
 %type <double_val> inner2 ;
 %{
@@ -38,13 +39,15 @@ lines:		lines line
 
 line :
 		PRINT expression SEMICOLON {std::cerr<<"print line"<<std::endl;}
-		|VARIABLE EQUALS expression SEMICOLON {std::cerr<<"variable = line. "<<std::endl;vars[*$1] = $3;delete $1 ;}
-		|VARIABLE EQUALSMUTAL expression SEMICOLON {std::cerr<<"variable <- line."<<std::endl;interpreter.crearObjetoMutable(*$1,$3);}
-		|VARIABLE SET expression SEMICOLON {std::cerr<<"variable : line."<<std::endl;interpreter.setObjeto(*$1,$3);}
-		|VARIABLE SEMICOLON {std::cerr<<"variable <- nill."<<std::endl;}
-		|CREATEOBJECTINIT line CREATEOBJECTEND SEMICOLON {std::cerr<<"(| line |). "<<std::endl;;}
+		|CREATEOBJECTINIT lines CREATEOBJECTEND SEMICOLON {std::cerr<<"(| line |). "<<std::endl;;}
 		|VARIABLE ADD line {std::cerr<<"variable _addSlot line "<<std::endl;}
+		|VARIABLE EQUALS expression SEMICOLON {std::cerr<<"variable = line. "<<std::endl;vars[*$1] = $3;delete $1 ;}
+		|atom_expression
 		;
+atom_expression:
+							 VARIABLE SEMICOLON {std::cerr<<"variable <- nill."<<std::endl;}
+							|VARIABLE EQUALSMUTAL expression SEMICOLON {std::cerr<<"variable <- line."<<std::endl;interpreter.crearObjetoMutable(*$1,$3);}
+							|VARIABLE SET expression SEMICOLON {std::cerr<<"variable : line."<<std::endl;interpreter.setObjeto(*$1,$3);}
 
 expression: 	expression PLUS inner1 { $$ = $1 + $3 ;}
 						| expression MINUS inner1 { $$ = $1 - $3 ;}
