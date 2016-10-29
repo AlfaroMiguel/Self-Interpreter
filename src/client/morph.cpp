@@ -3,6 +3,7 @@
 
 #define ALTO 23
 #define ANCHO 200
+
 Morph::Morph(double x, double y, const Glib::ustring& nombre): pos_x(x), pos_y(y){
 	//TODO: creo que se deberia poder redimensionar
 	base_titulo = Goocanvas::Rect::create(x, y, ANCHO, ALTO);
@@ -24,6 +25,7 @@ void Morph::eliminar(){
 	titulo->remove();
 	remove();
 }
+
 bool Morph::on_item_button_press_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event) {
 	if(event->button == 1) {
 		dragging = item;
@@ -39,7 +41,12 @@ bool Morph::on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>&  i
 	return false;
 }
 
-void Morph::agregar_slot(const Glib::ustring nombre, Glib::RefPtr<Goocanvas::Item>& item){
+void Morph::agregar_slots(std::vector<Glib::ustring> slots_a_agregar,  Glib::RefPtr<Goocanvas::Item>& item){
+	for(unsigned int i = 0; i < slots_a_agregar.size(); i++)
+		agregar_slot(slots_a_agregar[i], item);
+}
+
+void Morph::agregar_slot(const Glib::ustring& nombre, Glib::RefPtr<Goocanvas::Item>& item){
 	//TODO: arreglar diferencias entre clickear en los slots y clickear en el objeto base
 	if (nombre.empty()) return;
 	int offset = ALTO*(slots.size()+1);

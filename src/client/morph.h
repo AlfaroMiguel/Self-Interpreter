@@ -4,6 +4,7 @@
 #include <goocanvasmm.h>
 #include <iostream>
 #include <vector>
+
 class Morph: public Goocanvas::GroupModel {
  public:
   static Glib::RefPtr<Morph> create(double x, double y, const Glib::ustring& nombre);
@@ -15,13 +16,14 @@ class Morph: public Goocanvas::GroupModel {
   void editar_nombre(const Glib::ustring nombre_nuevo);
   void editando(bool valor);
   bool editando();
-  void agregar_slot(const Glib::ustring nombre, Glib::RefPtr<Goocanvas::Item>& item);
+  void agregar_slots(std::vector<Glib::ustring> slots_a_agregar,  Glib::RefPtr<Goocanvas::Item>& item);
  protected:
   Glib::RefPtr<Goocanvas::Item> dragging;
   int drag_x;
   int drag_y;
   bool siendo_editado = false;
   std::vector<Glib::RefPtr<Goocanvas::Item>> items;
+  void agregar_slot(const Glib::ustring& nombre, Glib::RefPtr<Goocanvas::Item>& item);
   Glib::RefPtr<Goocanvas::Rect> base_titulo;
   Glib::RefPtr<Goocanvas::Text> titulo;
   std::vector<Glib::RefPtr<Morph>> slots;

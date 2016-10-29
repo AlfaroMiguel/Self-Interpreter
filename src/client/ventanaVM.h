@@ -23,7 +23,7 @@ class VentanaVM: public Gtk::Window{
   virtual ~VentanaVM();
  protected:
   void click_objeto_nuevo();
-  void crear_objeto();
+  void crear_objeto(const Glib::ustring& nombre, std::vector<Glib::ustring> slots);
   void on_eliminar_obj_event();
   void on_editar_nombre_event();
   void on_aceptar_nombre_event();
@@ -32,17 +32,12 @@ class VentanaVM: public Gtk::Window{
   void on_editar_obj_event();
   void on_finalizar_edicion_event();
   bool on_button_press_event(GdkEventButton* event);
-  void agregar_slot(const Glib::ustring nombre_slot);
-  void dibujar_morph(Glib::ustring nombre, double x, double y);
-  void crear_menu_objetos();
+  void dibujar_morph(const Glib::ustring& nombre, double x, double y, std::vector<Glib::ustring> slots);
   void ocultar_barra_edicion();
   double x, y;
   std::vector<Glib::RefPtr<Morph>> morphs;
   Goocanvas::Canvas* canvas;
   Glib::RefPtr<Goocanvas::GroupModel> root;
-  Gtk::Menu menu_obj;
-  Gtk::MenuItem objeto_nuevo;
-  Gtk::MenuItem editar_objeto;
   Glib::RefPtr<Gtk::Builder> builder;
  public:
   void on_quit_click();
