@@ -8,7 +8,7 @@
 	using namespace std ;
 	map<string,double > vars ; // map from variable name to value
 	extern int yylex ();
-	extern void yyerror ( char *);
+	extern void yyerror (const char *);
 	void Div0Error ( void );
 	void UnknownVarError ( string s );
 %}
@@ -18,7 +18,7 @@
 	string* str_val ;
 }
 %start parse
-
+%define parse.error verbose
 %token <int_val> PLUS MINUS ASTERISK FSLASH EQUALS PRINT LPAREN RPAREN SEMICOLON
 EQUALSMUTAL SET BAR ADD RM CREATEOBJECTINIT CREATEOBJECTEND ARGS WORD
 %token <str_val> VARIABLE
@@ -41,30 +41,37 @@ lines:		lines line
 					;
 
 line :
-		PRINT expression SEMICOLON {tokenizer.pushToken("","print","");}
-		|CREATEOBJECTINIT lines CREATEOBJECTEND SEMICOLON
+		PRINT expression SEMICOLON {
+		tokenizer.pushToken("","print","");
+		}
+		|CREATEOBJECTINIT lines CREATEOBJECTEND
 		{
 		tokenizer.pushToken("","encapsulate","");
 		}
-		|VARIABLE ADD line
+		|VARIABLE ADD line SEMICOLON
 		{
 		tokenizer.pushToken("","add","");
 		tokenizer.pushToken(*$1,"find","");
 		}
-		|VARIABLE RM line {
+		|VARIABLE RM line SEMICOLON
+		{
 		tokenizer.pushToken("","remove","");
 		tokenizer.pushToken(*$1,"find","");
 		}
-		|VARIABLE EQUALS expression SEMICOLON {
+		|VARIABLE EQUALS lines SEMICOLON
+		{
 		tokenizer.pushToken((*$1),"assignation","");
-		vars[*$1] = $3;delete $1;
+		//vars[*$1] = $3;delete $1;
 		}
-		|CREATEOBJECTINIT ARGS BAR line_method  SEMICOLON RPAREN SEMICOLON
+		|CREATEOBJECTINIT ARGS BAR line_method  SEMICOLON RPAREN
 		{
 		std::cout << "(| :args | procedimiento)" <<std::endl;
 		}
 		|atom_expression
+		|expression
 		;
+
+
 
 line_method:
 		expresion_method operation expresion_method
@@ -74,6 +81,10 @@ line_method:
 expresion_method:
 		VARIABLE operation NUMBER
 		{
+		}
+		|VARIABLE operation VARIABLE
+		{
+		//esto es redundante porque un atom_expression tiene la misma pinta, tengo que generalizar los atom_expression
 		}
 		;
 operation:
@@ -146,9 +157,27 @@ expression: 	expression PLUS inner1 SEMICOLON
 inner1: 	inner1 ASTERISK inner2 { $$ = $1 * $3 ;}
 		|inner1 FSLASH inner2{if( $3 == 0) Div0Error (); else $$ = $1 / $3 ;}
 		|inner2 { $$ = $1 ;};
-inner2: 	VARIABLE {tokenizer.pushToken(*$1,"find","");if (! vars . count (* $1 )) UnknownVarError (* $1 ); else $$ = vars [* $1 ]; delete $1 ;}
-		|NUMBER {tokenizer.pushToken("","create_number",to_string($1)); $$ = $1 ;}
-		|LPAREN expression RPAREN { $$ = $2 ;};
+inner2:
+		VARIABLE {
+		tokenizer.pushToken(*$1,"find","");
+		if (! vars . count (* $1 ))
+				//UnknownVarError (* $1 );
+				std::cout << "la letra no se guardó" <<std::endl;
+		else
+			$$ = vars [* $1 ];
+			//delete $1 ;
+			std::cout << "VARIABLE" <<std::endl;
+			}
+		|NUMBER
+		{
+		//std::cout << "VARIABLE" <<std::endl;
+		tokenizer.pushToken("","create_number",to_string($1));
+		//$$ = $1 ;
+		}
+		|LPAREN expression RPAREN {
+		//$$ = $2 ;
+		}
+		;
 %%
 void Div0Error ( void ) { printf (" Error : division by zero \n"); exit (0);}
 void UnknownVarError ( string s ) { printf (" Error : -%s- does not exist !\n", s . c_str ()); exit (0);}

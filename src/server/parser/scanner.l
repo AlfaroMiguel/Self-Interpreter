@@ -5,7 +5,7 @@
 	#include <iostream> //cout
 	using namespace std ;
 	#include "parser.tab.h" // output of bison on example1.y
-	void yyerror(char*);
+	void yyerror( const char*);
 	int yyparse(void);
 %}
 %%
@@ -27,7 +27,10 @@
 													yylval.double_val = atof(yytext);
 													return NUMBER;
 													}
-"=" 					return EQUALS;
+"=" 											{
+													//std::cerr<<"=";
+													return EQUALS;
+													}
 "+" 					{return PLUS;}
 "-" 					{return MINUS;}
 "*" 					return ASTERISK;
@@ -48,9 +51,13 @@
 "|)" 					{//std::cerr<<"|) ";
 							return CREATEOBJECTEND;}
 "." 					return SEMICOLON;
+							{
+							std::cerr<<"No se encontró";
+							}
 %%
 
-void yyerror (char * str){
+void yyerror (const char * str)
+{
 	printf("Parse Error:-%s-\n", str );
 }
 
