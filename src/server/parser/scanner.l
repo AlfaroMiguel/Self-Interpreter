@@ -4,10 +4,11 @@
 	#include <string>
 	#include <iostream> //cout
 	using namespace std ;
-	#include "parser.tab.h" // output of bison on example1.y
+	#include "parser.h" // output of bison on example1.y
 	void yyerror( const char*);
 	int yyparse(void);
 %}
+%option c++
 %%
 [ \t]+ 										{}; // do nothing on whitespace
 [ \n]+ 										{}
@@ -30,6 +31,10 @@
 "=" 											{
 													//std::cerr<<"=";
 													return EQUALS;
+													}
+"//" 											{
+													std::cerr<<"barra barra";
+													return COMMENT;
 													}
 "+" 					{return PLUS;}
 "-" 					{return MINUS;}

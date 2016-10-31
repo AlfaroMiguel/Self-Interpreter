@@ -8,8 +8,8 @@
 	using namespace std ;
 	map<string,double > vars ; // map from variable name to value
 	extern int yylex ();
-	extern void yyerror (const char *);
-	void Div0Error ( void );
+	extern void yyerror(const char *);
+	void Div0Error(void);
 	void UnknownVarError ( string s );
 %}
 %union{
@@ -20,7 +20,7 @@
 %start parse
 %define parse.error verbose
 %token <int_val> PLUS MINUS ASTERISK FSLASH EQUALS PRINT LPAREN RPAREN SEMICOLON
-EQUALSMUTAL SET BAR ADD RM CREATEOBJECTINIT CREATEOBJECTEND ARGS WORD
+EQUALSMUTAL SET BAR ADD RM CREATEOBJECTINIT CREATEOBJECTEND ARGS WORD COMMENT
 %token <str_val> VARIABLE
 %token <double_val> NUMBER
 %type <double_val> expression;
@@ -37,7 +37,13 @@ Tokenizer tokenizer;
 parse:	lines;
 
 lines:		lines line
+					{
+					std::cout << "ap" <<std::endl;
+					}
 					|line
+					{
+					std::cout << "apa" <<std::endl;
+					}
 					;
 
 line :

@@ -1,5 +1,6 @@
 #include "tokenizer.h"
 #include "tuple_string.h"
+#include "object.h"
 #include <iostream> //cout
 
 using std::string;
