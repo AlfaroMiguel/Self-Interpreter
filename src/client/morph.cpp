@@ -103,6 +103,5 @@ bool Morph::editando(){
 }
 
 void Morph::editar_nombre(Glib::ustring nombre_nuevo) {
-	std::cout << "editar nombre morph" << std::endl;
 	objeto->editar_nombre(nombre_nuevo);
 }

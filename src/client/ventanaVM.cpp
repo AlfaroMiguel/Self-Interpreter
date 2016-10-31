@@ -125,13 +125,11 @@ void VentanaVM::on_do_event(){
 
 bool VentanaVM::on_button_press_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)){
-		std::cout << "doble click" << std::endl;
 		x = event->x;
 		y = event->y;
 		if (morphs_activos == 0) return false;
 		for(unsigned int i = 0; i < morphs.size(); i++) {
 			if (morphs[i]->esta_en_posicion(x, y)) {
-				std::cout << "entra al if" << std::endl;
 				morphs[i]->editando(true);
 				morph_editando = morphs[i];
 				caja_editar->show_all();

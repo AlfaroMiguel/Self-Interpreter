@@ -14,8 +14,6 @@ Glib::RefPtr<Objeto> Objeto::create(double pos_x, double pos_y, Glib::ustring& n
 Objeto::~Objeto(){}
 
 bool Objeto::esta_en_posicion(double x, double y){
-	std::cout << "x del objeto: " << pos_x << " x pedida: " << x << std::endl;
-	std::cout << "y del objeto: " << pos_y << " y pedida: " << y << std::endl;
 	if (pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO> y) return true;
 	for (unsigned int i = 0; i < slots.size(); i++)
 		if (slots[i]->esta_en_posicion(x, y)) return true;
