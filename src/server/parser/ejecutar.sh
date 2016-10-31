@@ -2,6 +2,6 @@
 `flex scanner.l`
 `bison -d  --debug -g -v parser.y`
 
-echo `g++ -std=c++11 -o parser  -Wno-write-strings tokenizer.cpp tuple_string.cpp lex.yy.c parser.tab.c`
+echo `g++ -std=c++11 -o parser  -Wno-write-strings *.c *.h ../*cpp ../*h`
 echo 'Parse init'
 ./parser  __stdin__
