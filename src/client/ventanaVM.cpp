@@ -4,9 +4,8 @@
 #include <gtkmm/application.h>
 #include <gtkmm/window.h>
 #include <vector>
+#include <map>
 #include "comunicador_server.h"
-
-#define BTN_EDITAR_OBJ "Editar Objeto"
 
 #define GLD_CAJA_BASE "cajaBase"
 #define GLD_CAJA_EDITAR "cajaEditar"
@@ -29,8 +28,8 @@ VentanaVM::VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& 
 	canvas->set_hexpand(true);
 	caja_base->add(*canvas);
 	add_events(Gdk::BUTTON_PRESS_MASK);
-	root = Goocanvas::GroupModel::create();
-	canvas->set_root_item_model(root);
+	root = Goocanvas::Group::create();
+	canvas->set_root_item(root);
 	caja_editar = nullptr;
 	builder->get_widget(GLD_CAJA_EDITAR, caja_editar);
 	Gtk::Button* boton_aceptar_nombre = nullptr;
@@ -52,26 +51,28 @@ VentanaVM::VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& 
 	Gtk::Button* boton_finalizar_edicion = nullptr;
 	builder->get_widget(GLD_BTN_FINALIZAR, boton_finalizar_edicion);
 	boton_finalizar_edicion->signal_clicked().connect(sigc::mem_fun(*this, &VentanaVM::on_finalizar_edicion_event));
-	std::vector<Glib::ustring> slots;
-	dibujar_morph("shell", 0, 0, slots);
+	std::map<Glib::ustring, Glib::ustring> slots;
+	Glib::ustring shell = "shell";
+	dibujar_morph(shell, 0, 0, slots);
 	show_all_children();
 	caja_editar->hide();
 }
 
 VentanaVM::~VentanaVM() {}
 
-void VentanaVM::dibujar_morph(const Glib::ustring& nombre, double x, double y, std::vector<Glib::ustring> slots) {
+void VentanaVM::dibujar_morph(Glib::ustring& nombre, double x, double y, std::map<Glib::ustring, Glib::ustring> slots) {
 	Glib::RefPtr<Morph> morph = Morph::create(x, y, nombre);
 	morphs.push_back(morph);
 	root->add_child(morph);
-	auto item = canvas->get_item(morph);
-	morph->conectar_seniales(item);
-	morph->agregar_slots(slots, item);
+	//auto item = canvas->get_item(morph);
+	morph->conectar_seniales();
+	morph->agregar_slots(slots);
 }
 
-void VentanaVM::crear_objeto(const Glib::ustring& nombre, std::vector<Glib::ustring> slots) {
+void VentanaVM::crear_objeto(Glib::ustring& nombre, std::map<Glib::ustring, Glib::ustring> slots) {
 	morphs_activos += 1;
 	morphs_creados += 1;
+	//Glib::ustring valor;
 	dibujar_morph(nombre, x, y, slots);
 }
 
@@ -83,7 +84,7 @@ void VentanaVM::on_eliminar_obj_event(){
 
 void VentanaVM::on_editar_obj_event(){
 	for(unsigned int i = 0; i < morphs.size(); i++){
-		if (morphs[i]->esta_en_posicion(x, y, canvas)) {
+		if (morphs[i]->esta_en_posicion(x, y)) {
 			morphs[i]->editando(true);
 			morph_editando = morphs[i];
 			caja_editar->show_all();
@@ -93,7 +94,8 @@ void VentanaVM::on_editar_obj_event(){
 
 void VentanaVM::on_get_event(){
 	Glib::RefPtr<const Gtk::EntryBuffer> buffer = entrada_msj->get_buffer();
-	const Glib::ustring mensaje = buffer->get_text();
+	Glib::ustring mensaje = buffer->get_text();
+	if (mensaje.empty()) return;
 	//aca hay que mandarle la cadena al modelo y hacer segun lo que diga
 	std::cout << "Recibe mensaje: " << mensaje << std::endl;
 	com_server.ejecutar_mensaje(mensaje.raw());
@@ -101,15 +103,18 @@ void VentanaVM::on_get_event(){
 	//hc para ver si anda agregar slot
 	Glib::ustring slot1 = "x";
 	Glib::ustring slot2 = "y";
-	std::vector<Glib::ustring> slots;
-	slots.push_back(slot1);
-	slots.push_back(slot2);
+	Glib::ustring valor1 = "4";
+	Glib::ustring valor2 = "6";
+	std::map<Glib::ustring, Glib::ustring> slots;
+	slots.insert(std::make_pair(slot1, valor1));
+	slots.insert(std::make_pair(slot2, valor2));
 	crear_objeto(mensaje, slots);
 }
 
 void VentanaVM::on_do_event(){
 	Glib::RefPtr<const Gtk::EntryBuffer> buffer = entrada_msj->get_buffer();
 	const Glib::ustring mensaje = buffer->get_text();
+	if (mensaje.empty()) return;
 	//aca hay que mandarle la cadena al modelo y hacer segun lo que diga
 	std::cout << "Recibe mensaje: " << mensaje << std::endl;
 	entrada_msj->delete_text(0, entrada_msj->get_buffer()->get_text().size());
@@ -120,11 +125,13 @@ void VentanaVM::on_do_event(){
 
 bool VentanaVM::on_button_press_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)){
+		std::cout << "doble click" << std::endl;
 		x = event->x;
 		y = event->y;
 		if (morphs_activos == 0) return false;
 		for(unsigned int i = 0; i < morphs.size(); i++) {
-			if (morphs[i]->esta_en_posicion(x, y, canvas)) {
+			if (morphs[i]->esta_en_posicion(x, y)) {
+				std::cout << "entra al if" << std::endl;
 				morphs[i]->editando(true);
 				morph_editando = morphs[i];
 				caja_editar->show_all();
@@ -144,7 +151,7 @@ void VentanaVM::on_aceptar_nombre_event() {
 
 void VentanaVM::on_finalizar_edicion_event(){
 	for(unsigned int i = 0; i < morphs.size(); i++)
-		if (morphs[i]->esta_en_posicion(x, y, canvas))
+		if (morphs[i]->esta_en_posicion(x, y))
 			morphs[i]->editando(false);
 	ocultar_barra_edicion();
 }

@@ -5,6 +5,7 @@
 #include <goocanvasmm.h>
 #include <iostream>
 #include <vector>
+#include <map>
 #include "morph.h"
 #include "comunicador_server.h"
 
@@ -23,7 +24,7 @@ class VentanaVM: public Gtk::Window{
   virtual ~VentanaVM();
  protected:
   void click_objeto_nuevo();
-  void crear_objeto(const Glib::ustring& nombre, std::vector<Glib::ustring> slots);
+  void crear_objeto(Glib::ustring& nombre, std::map<Glib::ustring, Glib::ustring> slots);
   void on_eliminar_obj_event();
   void on_editar_nombre_event();
   void on_aceptar_nombre_event();
@@ -32,12 +33,12 @@ class VentanaVM: public Gtk::Window{
   void on_editar_obj_event();
   void on_finalizar_edicion_event();
   bool on_button_press_event(GdkEventButton* event);
-  void dibujar_morph(const Glib::ustring& nombre, double x, double y, std::vector<Glib::ustring> slots);
+  void dibujar_morph(Glib::ustring& nombre, double x, double y, std::map<Glib::ustring, Glib::ustring> slots);
   void ocultar_barra_edicion();
   double x, y;
   std::vector<Glib::RefPtr<Morph>> morphs;
   Goocanvas::Canvas* canvas;
-  Glib::RefPtr<Goocanvas::GroupModel> root;
+  Glib::RefPtr<Goocanvas::Group> root;
   Glib::RefPtr<Gtk::Builder> builder;
  public:
   void on_quit_click();
