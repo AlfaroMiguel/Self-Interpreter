@@ -37,8 +37,8 @@ public:
     RegistroDeSlots obtenerSlots();
 
     Object* clone();
-    virtual std::string obtenerRepresentacion(){};
-    virtual Object* print(const std::vector<Object*>& argumentos){};
+    virtual std::string obtenerRepresentacion();
+    virtual Object* print(const std::vector<Object*>& argumentos);
 
     //Object* collect(); Esto va en el Lobby
 };

@@ -80,4 +80,16 @@ Object* Object::recvMessage(std::string receiverName,
      * +, -, *, /, ==, !=, print
      * Por lo que seria un MethodObject con codigo asociado
      * ese codigo se debe pasar al parser y "decodificarlo"*/
+     return this;
+}
+
+/*arreglar este método*/
+std::string Object::obtenerRepresentacion(){
+  std::string algo = "aa";
+  return algo;
+}
+
+/*arreglar este método*/
+Object* Object::print(const std::vector<Object*>& argumentos){
+  return this;
 }

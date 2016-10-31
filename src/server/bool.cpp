@@ -13,5 +13,5 @@ bool Bool::getValor(){
 }
 
 Object* Bool::print(){
-    std::cout << valor;
+    return this;
 }

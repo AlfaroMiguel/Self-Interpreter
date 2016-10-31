@@ -12,7 +12,6 @@ private:
 public:
     Number();
     ~Number();
-
     void setValor(float nuevoValor);
     float getValor();
     std::string obtenerRepresentacion();
