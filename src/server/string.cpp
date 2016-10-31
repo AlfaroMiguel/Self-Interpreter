@@ -1,4 +1,5 @@
 #include "string.h"
+#include "print.h"
 
 String::String() : Object(){
     Print* printSlot = new Print(this);

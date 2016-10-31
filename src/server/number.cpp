@@ -1,4 +1,6 @@
 #include "number.h"
+#include "suma.h"
+#include "print.h"
 #include <functional>
 
 Number::Number() : Object(){
