@@ -3,18 +3,24 @@
 #define ALTO 23
 #define ANCHO 200
 
-Glib::RefPtr<Slot> Slot::create(double x, double y, Glib::ustring& nombre, Glib::ustring& valor){
+Glib::RefPtr<Slot> Slot::create(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor){
 	return Glib::RefPtr<Slot>(new Slot(x, y, nombre, valor));
 }
 
-Slot::Slot(double x, double y, Glib::ustring& nombre, Glib::ustring& valor):
+Slot::Slot(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor):
 			Representacion(x, y, nombre), valor(valor){
 	Glib::ustring cadena_texto = nombre + ": " + valor;
-	texto = Goocanvas::Text::create(cadena_texto, pos_x+2, pos_y+2);
-	add_child(texto);
+	texto->property_text() = cadena_texto;
 }
 
 Slot::~Slot(){}
+
+Slot::Slot(const Slot&& otra): Representacion(otra.pos_x, otra.pos_y, otra.nombre), valor(otra.valor){}
+
+Slot& Slot::operator=(const Slot&& otra){
+	valor = otra.valor;
+	return *this;
+}
 
 bool Slot::esta_en_posicion(double x, double y){
 	return pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO > y;

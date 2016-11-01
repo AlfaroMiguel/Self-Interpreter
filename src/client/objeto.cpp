@@ -2,16 +2,20 @@
 #define ALTO 23
 #define ANCHO 200
 
-Objeto::Objeto(double pos_x, double pos_y, Glib::ustring& nombre): Representacion(pos_x, pos_y, nombre){
-	texto = Goocanvas::Text::create(nombre, pos_x+2, pos_y+2);
-	add_child(texto);
-}
+Objeto::Objeto(double pos_x, double pos_y, const Glib::ustring& nombre): Representacion(pos_x, pos_y, nombre){}
 
-Glib::RefPtr<Objeto> Objeto::create(double pos_x, double pos_y, Glib::ustring& nombre){
+Glib::RefPtr<Objeto> Objeto::create(double pos_x, double pos_y, const Glib::ustring& nombre){
 	return Glib::RefPtr<Objeto>(new Objeto(pos_x, pos_y, nombre));
 }
 
 Objeto::~Objeto(){}
+
+Objeto::Objeto(Objeto&& otra): Representacion(otra.pos_x, otra.pos_y, otra.nombre), slots(otra.slots){}
+
+Objeto& Objeto::operator=(Objeto&& otra){
+	slots = otra.slots;
+	return *this;
+}
 
 bool Objeto::esta_en_posicion(double x, double y){
 	if (pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO> y) return true;
@@ -20,11 +24,11 @@ bool Objeto::esta_en_posicion(double x, double y){
 	return false;
 }
 
-void Objeto::agregar_slots(std::map<Glib::ustring, Glib::ustring> slots_a_agregar){
-	std::map<Glib::ustring, Glib::ustring>::iterator it = slots_a_agregar.begin();
+void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
+	std::map<std::string, std::string>::iterator it = slots_a_agregar.begin();
 	while(it != slots_a_agregar.end()) {
-		Glib::ustring nombre = it->first;
-		Glib::ustring valor = it->second;
+		Glib::ustring nombre(it->first);
+		Glib::ustring valor(it->second);
 		int offset = ALTO*(slots.size()+1);
 		Glib::RefPtr<Slot> slot_nuevo = Slot::create(pos_x, pos_y+offset, nombre, valor);
 		slots.push_back(slot_nuevo);

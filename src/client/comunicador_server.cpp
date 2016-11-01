@@ -2,39 +2,59 @@
 #include <cstdint>
 #include <iostream>
 #include "../common/json.hpp"
+#include "modelo.h"
+
+#define EVENTO_MODIFICAR "modificar"
+#define EVENTO_CREAR "crear"
 
 using json = nlohmann::json;
 
-ComunicadorServer::ComunicadorServer(std::string& hostname, std::string& puerto){
+ComunicadorServer::ComunicadorServer(const std::string& hostname, const std::string& puerto){
 	skt_cliente.conectar(hostname, puerto);
 }
 
-ComunicadorServer::ComunicadorServer() {}
 ComunicadorServer::~ComunicadorServer(){}
 
-ComunicadorServer::ComunicadorServer(ComunicadorServer &&otra): skt_cliente(std::move(otra.skt_cliente)){}
+ComunicadorServer::ComunicadorServer(ComunicadorServer &&otra):
+		skt_cliente(std::move(otra.skt_cliente)), modelo(otra.modelo){}
 
+void ComunicadorServer::set_modelo(Modelo* modelo) {
+	this->modelo = modelo;
+}
 ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	skt_cliente = std::move(otra.skt_cliente);
+	modelo = otra.modelo;
 	return *this;
 }
-void ComunicadorServer::ejecutar_mensaje(const std::string& mensaje){
+
+void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
 
 	json j;
-	j["evento"] = "codigo";
+	j["evento"] = evento.c_str();
 	j["codigo"] = mensaje.c_str();
 	std::string s = j.dump();
 
-    std::cout<< s.size() << std::endl;
-
 	char* evento_enviar = (char*)s.c_str();
-
-    size_t tamanio_t = strlen(evento_enviar);
 
     uint32_t tamanio_32 = (uint32_t)htonl(strlen(evento_enviar));
 	skt_cliente.enviar((char*)(&tamanio_32), sizeof(tamanio_32));
 
-    skt_cliente.enviar(evento_enviar, tamanio_t);
+    skt_cliente.enviar(evento_enviar, strlen(evento_enviar));
 
-	std::cout << "Mensaje enviado: " << evento_enviar << std::endl;
+}
+
+void ComunicadorServer::recibir_mensaje(std::string &msj) {
+	json j = json::parse((char*)msj.c_str());
+	std::string evento = j["evento"];
+	std::string modificar(EVENTO_CREAR);
+	std::map<std::string, std::string> dic_slots;
+	if(evento == modificar) {
+		std::string nombre = j["nombre"];
+		double x = j["posicion"]["x"];
+		double y = j["posicion"]["y"];
+		/*json slots = j["slots"];
+		for (json::iterator it = slots.begin(); it != slots.end(); ++it)
+			dic_slots.insert(std::make_pair(it.key(), it.value()));*/
+		modelo->crear_morph(nombre, x, y, dic_slots);
+	}
 }
