@@ -51,12 +51,12 @@ Socket &Socket::operator=(Socket &&otro) {
     return *this;
 }
 
-void Socket::bind_and_listen(std::string &puerto) {
+void Socket::bind_and_listen(const std::string &puerto) {
     connect_bind(NULL, puerto.c_str(), bind);
     listen(fd, CANT_CLIENTES);
 }
 
-void Socket::conectar(std::string &hostname, std::string &puerto) {
+void Socket::conectar(const std::string &hostname, const std::string &puerto) {
     return connect_bind(hostname.c_str(), puerto.c_str(), connect);
 }
 

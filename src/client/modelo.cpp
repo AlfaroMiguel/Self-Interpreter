@@ -3,9 +3,7 @@
 #include "ventana_edicion.h"
 
 Modelo::Modelo(const std::string& hostname, const std::string& puerto): com_server(hostname, puerto){
-	std::cout << "CREANDO EL MODELO" << std::endl;
 	com_server.set_modelo(this);
-	std::cout << "MODELO CREADO" << std::endl;
 }
 
 Modelo::~Modelo(){}
@@ -57,14 +55,11 @@ void Modelo::enviar_mensaje(const std::string& mensaje, const std::string& event
 }
 
 void Modelo::crear_morph(const std::string& nombre, double x, double y, std::map<std::string, std::string> dic_slots) {
-	//TODO: ARREGLAR LO DE STRING Y USTRING
-	std::cout << "CREANDO MORPH" << std::endl;
 	const Glib::ustring nombre_morph(nombre);
 	Glib::RefPtr<Morph> morph = Morph::create(x, y, nombre_morph);
 	morphs.push_back(morph);
 	morph->conectar_seniales();
 	morph->agregar_slots(dic_slots);
-	std::cout << "MORPH CREADO" << std::endl;
 	ventana_objetos->dibujar_morph(morph);
 }
 

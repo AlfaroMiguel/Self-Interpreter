@@ -12,11 +12,9 @@
 VentanaVM::VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 							Gtk::Window(cobject), builder(builder){
 	maximize();
-	std::cout << "CREANDO VENTANA VM" << std::endl;
 	builder->get_widget_derived(GLD_CAJA_EDITAR, ventana_edicion);
 	builder->get_widget_derived(GLD_CAJA_OBJETOS, ventana_objetos);
 	show_all_children();
-	std::cout << "VENTANA VM CREADA" << std::endl;
 	ventana_edicion->hide();
 }
 

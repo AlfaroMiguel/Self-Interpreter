@@ -2,7 +2,6 @@
 #include <iostream>
 VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 								Gtk::Box(cobject){
-	std::cout << "CREANDO VENTANA OBJETOS" << std::endl;
 	set_size_request(800, 800);
 	canvas = Gtk::manage(new Goocanvas::Canvas());
 	canvas->set_hexpand(true);
@@ -10,17 +9,13 @@ VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 	add(*canvas);
 	root = Goocanvas::Group::create();
 	canvas->set_root_item(root);
-	std::cout << "VENTANA OBJETOS CREADA" << std::endl;
 }
 
 VentanaObjetos::~VentanaObjetos() {}
 
 
 void VentanaObjetos::dibujar_morph(Glib::RefPtr<Morph> morph) {
-	std::cout << "DIBUJANDO MORPH" << std::endl;
-	//Glib::RefPtr<Goocanvas::Rect> rect = Goocanvas::Rect::create(10, 10, 10, 10);
 	root->add_child(morph);
-	std::cout << "MORPH DIBUJADO" << std::endl;
 }
 
 void VentanaObjetos::eliminar_morph(Glib::RefPtr<Morph> morph) {

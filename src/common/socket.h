@@ -44,10 +44,10 @@ public:
     /*Operador asignacion por movimiento*/
     Socket &operator=(Socket &&otra);
     /*Recibe una cadena con el puerto, luego bindea y escucha en ese puerto*/
-    void bind_and_listen(std::string &puerto);
+    void bind_and_listen(const std::string &puerto);
     /*Recibe una cadena con la ip y el puerto del socket
      * a conectarse y se conecta*/
-    void conectar(std::string &hostname, std::string &puerto);
+    void conectar(const std::string &hostname, const std::string &puerto);
     /*Recibe un socket aceptador y acepta un nuevo cliente, luego setea
      * el file descriptor del socket aceptado*/
     void aceptar(Socket &socket_aceptado);
