@@ -34,6 +34,7 @@ void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::st
 	json j;
 	j["evento"] = evento.c_str();
 	j["codigo"] = mensaje.c_str();
+	enviar_json(j);
 }
 
 void ComunicadorServer::enviar_json(json j){
