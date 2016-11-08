@@ -14,7 +14,7 @@ private:
     Socket skt_aceptar;
     bool ejecutando;
 
-    void recibir_mensaje();
+    void atender();
 
 public:
     ComunicadorCliente(Socket skt_aceptar);
@@ -26,12 +26,14 @@ public:
     bool esta_ejecutando();
 
     void run() {
-        recibir_mensaje();
+        this->atender();
     }
 
     void operator()() {
         this->run();
     }
+
+    void recibir_mensaje(std::string mensaje);
 };
 
 #endif
