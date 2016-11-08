@@ -1,5 +1,6 @@
 #ifndef MORPH_H
 #define MORPH_H
+
 #include <gtkmm.h>
 #include <goocanvasmm.h>
 #include <iostream>
@@ -25,12 +26,16 @@ class Morph: public Goocanvas::Group {
   	void editando(bool valor);
   	bool editando();
   	void agregar_slots(std::map<std::string, std::string> slots_a_agregar);
-
+  	double get_x();
+  	double get_y();
+  	void agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea);
+	const std::string& obtener_nombre_slot(double x, double y);
  protected:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;
   	bool siendo_editado = false;
   	Glib::RefPtr<Objeto> objeto;
+  	Glib::RefPtr<Goocanvas::Polyline> linea;
 
   	bool on_item_button_press_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);
   	bool on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);

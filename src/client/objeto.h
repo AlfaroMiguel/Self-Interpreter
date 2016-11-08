@@ -3,6 +3,7 @@
 
 #include "representacion.h"
 #include "slot.h"
+
 class Objeto: public Representacion{
  public:
   	Objeto(double pos_x, double pos_y, const Glib::ustring& nombre);
@@ -16,7 +17,7 @@ class Objeto: public Representacion{
   	void mover(double new_x, double new_y);
   	bool esta_en_posicion(double x, double y);
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
-
+  	Glib::ustring obtener_nombre_slot(double x, double y);
  private:
   	std::vector<Glib::RefPtr<Slot>> slots;
 

@@ -32,6 +32,9 @@ bool VentanaObjetos::on_button_press_event(GdkEventButton *event) {
 			return true;
 		}
 	}
+	if((event->type == GDK_BUTTON_PRESS) && (event->button == 3)) {
+		modelo->crear_morph_de_slot(event->x, event->y);
+	}
 	return false;
 }
 

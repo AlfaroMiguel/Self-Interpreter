@@ -15,7 +15,7 @@ class Slot: public Representacion{
   	bool esta_en_posicion(double x, double y);
   	void mover(double new_x, double new_y);
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
-
+	Glib::ustring& obtener_nombre();
  private:
   	Glib::ustring valor;
 

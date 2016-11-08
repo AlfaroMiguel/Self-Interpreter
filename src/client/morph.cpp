@@ -29,6 +29,18 @@ Glib::RefPtr<Morph> Morph::create(double x, double y, const Glib::ustring& nombr
 	return Glib::RefPtr<Morph>(new Morph(x, y, nombre));
 }
 
+double Morph::get_x() {
+	return objeto->get_x();
+}
+
+double Morph::get_y() {
+	return objeto->get_y();
+}
+
+void Morph::agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea){
+	add_child(linea);
+}
+
 void Morph::eliminar(){
 	objeto->remove();
 	remove();
@@ -61,6 +73,9 @@ void Morph::editar_nombre(const std::string& nombre_nuevo) {
 	objeto->editar_nombre(nombre);
 }
 
+const std::string& Morph::obtener_nombre_slot(double x, double y){
+	return (objeto->obtener_nombre_slot(x, y)).raw();
+}
 bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventMotion* event) {
 	if(item && dragging && item == dragging) {
 		auto new_x = event->x;

@@ -1,7 +1,6 @@
 #include "comunicador_server.h"
 #include <cstdint>
 #include <iostream>
-#include "../common/json.hpp"
 #include "modelo.h"
 
 #define EVENTO_MODIFICAR "modificar"
@@ -11,6 +10,10 @@ using json = nlohmann::json;
 
 ComunicadorServer::ComunicadorServer(const std::string& hostname, const std::string& puerto){
 	skt_cliente.conectar(hostname, puerto);
+	json j;
+	j["evento"] = "conectar";
+	j["lobby"] = 1;
+	enviar_json(j);
 }
 
 ComunicadorServer::~ComunicadorServer(){}
@@ -28,21 +31,21 @@ ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 }
 
 void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
-
 	json j;
 	j["evento"] = evento.c_str();
 	j["codigo"] = mensaje.c_str();
+}
+
+void ComunicadorServer::enviar_json(json j){
 	std::string s = j.dump();
 
 	char* evento_enviar = (char*)s.c_str();
 
-    uint32_t tamanio_32 = (uint32_t)htonl(strlen(evento_enviar));
+	uint32_t tamanio_32 = (uint32_t)htonl(strlen(evento_enviar));
 	skt_cliente.enviar((char*)(&tamanio_32), sizeof(tamanio_32));
 
-    skt_cliente.enviar(evento_enviar, strlen(evento_enviar));
-
+	skt_cliente.enviar(evento_enviar, strlen(evento_enviar));
 }
-
 void ComunicadorServer::recibir_mensaje(std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
 	std::string evento = j["evento"];

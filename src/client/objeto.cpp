@@ -49,3 +49,12 @@ void Objeto::editar_nombre(const Glib::ustring& nombre_nuevo){
 	nombre = nombre_nuevo;
 	texto->property_text() = nombre_nuevo;
 }
+
+Glib::ustring Objeto::obtener_nombre_slot(double x, double y){
+	for (unsigned int i = 0; i < slots.size(); i++) {
+		if (slots[i]->esta_en_posicion(x, y))
+			return slots[i]->obtener_nombre();
+	}
+	Glib::ustring vacia;
+	return vacia;
+}
