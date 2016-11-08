@@ -11,9 +11,9 @@ using json = nlohmann::json;
 ComunicadorServer::ComunicadorServer(const std::string& hostname, const std::string& puerto){
 	skt_cliente.conectar(hostname, puerto);
 	json j;
-	j["evento"] = "conectar";
-	j["lobby"] = 1;
+	j["evento"] = "inicializar";
 	enviar_json(j);
+
 }
 
 ComunicadorServer::~ComunicadorServer(){}
@@ -60,5 +60,9 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 		for (json::iterator it = slots.begin(); it != slots.end(); ++it)
 			dic_slots.insert(std::make_pair(it.key(), it.value()));*/
 		modelo->crear_morph(nombre, x, y, dic_slots);
+	}
+	if (evento == "inicializar"){
+		int cant_lobbies = j["cant_lobbies"];
+		modelo->set_lobbies(cant_lobbies);
 	}
 }

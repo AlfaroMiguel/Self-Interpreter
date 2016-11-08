@@ -92,3 +92,7 @@ void Modelo::crear_morph_de_slot(double x, double y){
 			crear_morph(nombre, x + 50, y + 50, dic_slots);
 	}
 }
+
+void Modelo::set_lobbies(int cant_lobbies){
+
+}
