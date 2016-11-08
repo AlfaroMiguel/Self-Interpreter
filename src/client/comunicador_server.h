@@ -2,7 +2,10 @@
 #define COMUNICADOR_SERVER_H
 
 #include "../common/socket.h"
+#include "../common/json.hpp"
 #include <string>
+
+using json = nlohmann::json;
 
 class Modelo;
 /* Clase que encapsula el manejo del envío y recepción de datos
@@ -15,6 +18,7 @@ class ComunicadorServer {
   		ComunicadorServer(const ComunicadorServer& otra) = delete;
   		ComunicadorServer& operator=(const ComunicadorServer& otra) = delete;
 
+  		void enviar_json(json j);
  	public:
   		ComunicadorServer(const std::string& hostname, const std::string& puerto);
   		ComunicadorServer();
@@ -26,5 +30,6 @@ class ComunicadorServer {
   		void set_modelo(Modelo* modelo);
   		void enviar_mensaje(const std::string& consulta, const std::string& evento);
   		void recibir_mensaje(std::string& msj);
+
 };
 #endif
