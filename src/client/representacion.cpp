@@ -32,3 +32,11 @@ void Representacion::actualizar_posicion(double new_x, double new_y){
 	pos_x += new_x;
 	pos_y += new_y;
 }
+
+double Representacion::get_x() {
+	return pos_x;
+}
+
+double Representacion::get_y() {
+	return pos_y;
+}

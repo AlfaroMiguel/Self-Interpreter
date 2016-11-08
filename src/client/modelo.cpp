@@ -63,6 +63,16 @@ void Modelo::crear_morph(const std::string& nombre, double x, double y, std::map
 	ventana_objetos->dibujar_morph(morph);
 }
 
+void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2) {
+	double x_inicio = morph1->get_x();
+	double x_fin = morph2->get_x();
+	double y_inicio = morph1->get_y();
+	double y_fin = morph2->get_y();
+	Glib::RefPtr <Goocanvas::Polyline> linea = Goocanvas::Polyline::create(x_inicio, y_inicio, x_fin, y_fin);
+	morph1->agregar_union(linea);
+	morph2->agregar_union(linea);
+}
+
 void Modelo::set_vista_objetos(VentanaObjetos* vista){
 	ventana_objetos = vista;
 	std::map<std::string, std::string> slots;
@@ -72,4 +82,13 @@ void Modelo::set_vista_objetos(VentanaObjetos* vista){
 
 void Modelo::set_vista_editar(VentanaEdicion* vista){
 	ventana_edicion = vista;
+}
+
+void Modelo::crear_morph_de_slot(double x, double y){
+	if (morph_editando){
+		std::map<std::string, std::string> dic_slots;
+		const std::string nombre = morph_editando->obtener_nombre_slot(x, y);
+		if (! nombre.empty())
+			crear_morph(nombre, x + 50, y + 50, dic_slots);
+	}
 }

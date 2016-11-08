@@ -25,6 +25,8 @@ class Modelo{
   	bool editar_morph(double x, double y);
   	void set_vista_objetos(VentanaObjetos* vista);
   	void set_vista_editar(VentanaEdicion* vista);
+  	void unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2);
+	void crear_morph_de_slot(double x, double y);
  private:
   	Modelo(const Modelo& otra) = delete;
   	Modelo& operator=(const Modelo& otra) = delete;

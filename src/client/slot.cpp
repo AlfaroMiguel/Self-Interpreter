@@ -35,3 +35,7 @@ void Slot::editar_nombre(const Glib::ustring& nombre_nuevo){
 	Glib::ustring texto_nuevo = nombre + ": " + valor;
 	texto->property_text() = texto_nuevo;
 }
+
+Glib::ustring& Slot::obtener_nombre(){
+	return nombre;
+}
