@@ -1,8 +1,6 @@
 #include "comunicador_cliente.h"
 #include "../common/json.hpp"
-#include <cstdint>
-#include <string>
-#include <vector>
+#include "recibidor.h"
 
 using json = nlohmann::json;
 
@@ -13,25 +11,15 @@ ComunicadorCliente::~ComunicadorCliente(){
 	//delete &skt_aceptar; Ahora es RAII
 }
 
-void ComunicadorCliente::recibir_mensaje(){
+void ComunicadorCliente::atender(){
+    Recibidor recibidor(skt_aceptar, *this);
+    recibidor.run();
+}
 
-	char* tamanio_mensaje = (char*) malloc(sizeof(uint32_t));
+void ComunicadorCliente::recibir_mensaje(std::string mensaje){
+    json j = json::parse(mensaje);
+    std::cerr << j["evento"] << std::endl;
 
-    while(skt_aceptar.recibir(tamanio_mensaje, sizeof(uint32_t))) {
-        uint32_t tamanio = (ntohl(*(uint32_t *) tamanio_mensaje));
-
-        std::cout << "Tamanio mensaje: " << tamanio << std::endl;
-        char *buffer_evento = (char *) malloc(tamanio);
-
-        skt_aceptar.recibir(buffer_evento, tamanio);
-        std::cout << "Mensaje recibido: " << buffer_evento << std::endl;
-
-        json j = json::parse(buffer_evento);
-
-        std::string evento = j["evento"];
-        std::cout << "El evento es: " << evento << std::endl;
-
-    }
 }
 
 bool ComunicadorCliente::esta_ejecutando(){
