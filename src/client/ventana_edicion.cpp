@@ -74,11 +74,3 @@ void VentanaEdicion::enviar_mensaje(const std::string& evento){
 	modelo->enviar_mensaje(mensaje.raw(), evento);
 	entrada_msj->delete_text(0, mensaje.size());
 }
-//hc para ver si anda; agregar slot
-//	Glib::ustring slot1 = "x";
-//	Glib::ustring slot2 = "y";
-//	Glib::ustring valor1 = "4";
-//	Glib::ustring valor2 = "6";
-//	std::map<Glib::ustring, Glib::ustring> slots;
-//	slots.insert(std::make_pair(slot1, valor1));
-//	slots.insert(std::make_pair(slot2, valor2));

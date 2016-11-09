@@ -1,6 +1,8 @@
 #include "modelo.h"
 #include "ventana_objetos.h"
 #include "ventana_edicion.h"
+#include "ventana_inicio.h"
+#include "ventanaVM.h"
 
 Modelo::Modelo(const std::string& hostname, const std::string& puerto): com_server(hostname, puerto){
 	com_server.set_modelo(this);
@@ -84,6 +86,10 @@ void Modelo::set_vista_editar(VentanaEdicion* vista){
 	ventana_edicion = vista;
 }
 
+void Modelo::set_vista_inicio(VentanaInicio* vista){
+	ventana_inicio = vista;
+}
+
 void Modelo::crear_morph_de_slot(double x, double y){
 	if (morph_editando){
 		std::map<std::string, std::string> dic_slots;
@@ -93,6 +99,31 @@ void Modelo::crear_morph_de_slot(double x, double y){
 	}
 }
 
-void Modelo::set_lobbies(int cant_lobbies){
+void Modelo::set_lobby(const std::string& id){
+}
 
+void Modelo::iniciar() {
+	ventana_inicio->iniciar();
+}
+
+void Modelo::inicializar(){
+	std::string lobby1("1");
+	std::string lobby2("2");
+	std::string lobby3("3");
+	ventana_inicio->agregar_lobby(lobby1);
+	ventana_inicio->agregar_lobby(lobby2);
+	ventana_inicio->agregar_lobby(lobby3);
+	ventana_inicio->iniciar();
+	//com_server.inicializar();
+}
+
+void Modelo::abrir_vm(VentanaVM* ventanavm, const std::string& lobby, const std::string& nombre_cliente){
+	this->ventana_vm = ventanavm;
+	ventana_vm->mostrar(); //esto es hardcodeo, va en crear_vm()
+	//com_server.enviar_datos_cliente(lobby, nombre_cliente);
+}
+
+void Modelo::crear_vm(){
+	//aca creo todos los morphs
+	ventana_vm->mostrar();
 }

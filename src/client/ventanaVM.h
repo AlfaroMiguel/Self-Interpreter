@@ -27,5 +27,6 @@ class VentanaVM: public Gtk::Window{
   //void actualizar_morph(std::string nombre, double x, double y, std::map<std::string, std::string> slots);
   void on_quit_click();
   void set_modelo(Modelo* modelo);
+  void mostrar();
 };
 #endif

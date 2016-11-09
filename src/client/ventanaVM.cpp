@@ -14,8 +14,6 @@ VentanaVM::VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& 
 	maximize();
 	builder->get_widget_derived(GLD_CAJA_EDITAR, ventana_edicion);
 	builder->get_widget_derived(GLD_CAJA_OBJETOS, ventana_objetos);
-	show_all_children();
-	ventana_edicion->hide();
 }
 
 VentanaVM::~VentanaVM() {
@@ -30,10 +28,14 @@ void VentanaVM::set_modelo(Modelo* modelo){
 	modelo->set_vista_editar(ventana_edicion);
 }
 
+void VentanaVM::mostrar(){
+	std::cout << "entro" << std::endl;
+	show();
+	show_all_children();
+	ventana_edicion->hide();
+}
+
 void VentanaVM::on_quit_click() {
 	hide();
 }
 
-//void VentanaVM::actualizar_morph(std::string nombre, double x, double y, std::map<std::string, std::string> slots){
-//	std::cout << "nombre: " << nombre << "x: " << x << "y: " << y << std::endl;
-//}
