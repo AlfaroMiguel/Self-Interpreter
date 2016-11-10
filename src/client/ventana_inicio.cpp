@@ -1,8 +1,7 @@
 #include "ventana_inicio.h"
 
 VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
-	Gtk::Window(cobject){
-	builder->get_widget_derived("ventanaPpal", ventana_vm);
+	Gtk::Dialog(cobject){
 	builder->get_widget("opcLobbies", comboBox);
 	builder->get_widget("btnConfirmar", boton_confirmar);
 	boton_confirmar->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_confirmar));
@@ -22,20 +21,24 @@ void VentanaInicio::iniciar() {
 		comboBox->append(lobbies[i]);
 	}
 	if (lobbies.size() > 0)
-		comboBox->set_active(1);
+		comboBox->set_active(0);
 	show_all_children();
 }
 
 void VentanaInicio::set_modelo(Modelo* modelo){
 	this->modelo = modelo;
-	modelo->set_vista_inicio(this);
 	modelo->inicializar();
 }
 
 void VentanaInicio::on_confirmar(){
+	//app->hold();
 	const Glib::ustring lobby = comboBox->get_active_text();
 	const Glib::ustring nombre = entrada_nombre->get_buffer()->get_text();
 	hide();
-	ventana_vm->mostrar();
+	ventana_vm->iniciar();
 	//modelo->abrir_vm(ventana_vm, lobby.raw(), nombre.raw());
+}
+
+void VentanaInicio::set_vista_principal(VentanaVM* ventana_vm) {
+	this->ventana_vm = ventana_vm;
 }

@@ -11,16 +11,16 @@ int main (int argc, char **argv) {
 //	VentanaVM* ventanaVM = nullptr;
 //	builder->get_widget_derived("ventanaPpal", ventanaVM);
 
-	VentanaInicio* ventanaInicio = nullptr;
-	builder->get_widget_derived("ventanaInicio", ventanaInicio);
-
 	const std::string hostname(argv[1]);
 	const std::string puerto(argv[2]);
 	Modelo modelo(hostname, puerto);
 
-	ventanaInicio->set_modelo(&modelo);
-	std::cout << "2" << std::endl;
-	app->run(*ventanaInicio);
-	delete ventanaInicio;
+	VentanaVM* ventana_vm = nullptr;
+	builder->get_widget_derived("ventanaPpal", ventana_vm);
+
+	ventana_vm->set_modelo(&modelo);
+
+	app->run(*ventana_vm);
+	delete ventana_vm;
 	return 0;
 }

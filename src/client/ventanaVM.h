@@ -10,12 +10,15 @@
 #include "comunicador_server.h"
 #include "ventana_edicion.h"
 #include "ventana_objetos.h"
+#include "ventana_inicio.h"
 
 class VentanaVM: public Gtk::Window{
  private:
   VentanaEdicion* ventana_edicion;
   VentanaObjetos* ventana_objetos;
+  VentanaInicio* ventana_inicio;
   Glib::RefPtr<Gtk::Builder> builder;
+  Glib::RefPtr<Gtk::Application> app;
 
  public:
   VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
@@ -28,5 +31,6 @@ class VentanaVM: public Gtk::Window{
   void on_quit_click();
   void set_modelo(Modelo* modelo);
   void mostrar();
+  void iniciar();
 };
 #endif
