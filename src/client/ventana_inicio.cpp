@@ -22,7 +22,6 @@ void VentanaInicio::iniciar() {
 	}
 	if (lobbies.size() > 0)
 		comboBox->set_active(0);
-	show_all_children();
 }
 
 void VentanaInicio::set_modelo(Modelo* modelo){
@@ -31,7 +30,6 @@ void VentanaInicio::set_modelo(Modelo* modelo){
 }
 
 void VentanaInicio::on_confirmar(){
-	//app->hold();
 	const Glib::ustring lobby = comboBox->get_active_text();
 	const Glib::ustring nombre = entrada_nombre->get_buffer()->get_text();
 	hide();

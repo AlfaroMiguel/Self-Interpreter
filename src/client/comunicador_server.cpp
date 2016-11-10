@@ -61,9 +61,8 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 void ComunicadorServer::recibir_mensaje(std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
 	std::string evento = j["evento"];
-	std::string modificar(EVENTO_CREAR);
 	std::map<std::string, std::string> dic_slots;
-	if(evento == modificar) {
+	if(evento == EVENTO_CREAR) {
 		std::string nombre = j["nombre"];
 		double x = j["posicion"]["x"];
 		double y = j["posicion"]["y"];
