@@ -34,11 +34,8 @@ void VentanaVM::set_modelo(Modelo* modelo){
 	modelo->set_vista_objetos(ventana_objetos);
 	ventana_objetos->set_modelo(modelo);
 	modelo->set_vista_editar(ventana_edicion);
-	std::cout << "ccaca" << std::endl;
 	modelo->set_vista_inicio(ventana_inicio);
 	ventana_inicio->set_modelo(modelo);
-	std::cout << "ccaca1" << std::endl;
-	std::cout << "ccaca2" << std::endl;
 }
 
 void VentanaVM::iniciar() {
