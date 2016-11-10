@@ -16,6 +16,8 @@ ComunicadorServer::ComunicadorServer(const std::string& hostname, const std::str
 }
 
 ComunicadorServer::~ComunicadorServer(){
+	skt_cliente.shutdown();
+	recibidor->join();
     delete recibidor;
 }
 

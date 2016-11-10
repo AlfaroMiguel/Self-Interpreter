@@ -20,7 +20,10 @@ int main (int argc, char **argv) {
 
 	ventana_vm->set_modelo(&modelo);
 
+	std::cout << "antes de app" << std::endl;
+
 	app->run(*ventana_vm);
 	delete ventana_vm;
+	std::cout << "dsp de app" << std::endl;
 	return 0;
 }
