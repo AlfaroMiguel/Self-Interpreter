@@ -39,7 +39,6 @@ void ComunicadorServer::inicializar(){
 	j["evento"] = "inicializar";
 	enviar_json(j);
     recibidor->start();
-    std::cout << "Sale" << std::endl;
 }
 
 void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
@@ -65,9 +64,9 @@ void ComunicadorServer::enviar_json(json j){
 
 void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std::string& nombre_cliente){
 	json j;
-	j["evento"] = "datos cliente";
-	j["lobby"] = std::stoi(lobby);
-	j["nombre"] = nombre_cliente.c_str();
+	j["evento"] = "conectar";
+	j["lobby"] = lobby;
+	j["nombre"] = nombre_cliente;
 	enviar_json(j);
 }
 

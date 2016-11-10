@@ -113,11 +113,11 @@ void Modelo::inicializar(){
 
 void Modelo::abrir_vm(VentanaVM* ventanavm, const std::string& lobby, const std::string& nombre_cliente){
 	this->ventana_vm = ventanavm;
-	//ventana_vm->mostrar(); //esto es hardcodeo, va en crear_vm()
-	//com_server.enviar_datos_cliente(lobby, nombre_cliente);
+	com_server.enviar_datos_cliente(lobby, nombre_cliente);
 }
 
 void Modelo::crear_vm(){
 	//aca creo todos los morphs
 	//ventana_vm->mostrar();
+	ventana_vm->iniciar();
 }

@@ -23,7 +23,6 @@ void VentanaInicio::iniciar() {
 	}
 	if (lobbies.size() > 0)
 		comboBox->set_active(0);
-	std::cout << "Fin iniciar" << std::endl;
 }
 
 void VentanaInicio::set_modelo(Modelo* modelo){
@@ -35,8 +34,8 @@ void VentanaInicio::on_confirmar(){
 	const Glib::ustring lobby = comboBox->get_active_text();
 	const Glib::ustring nombre = entrada_nombre->get_buffer()->get_text();
 	hide();
-	ventana_vm->iniciar();
-	//modelo->abrir_vm(ventana_vm, lobby.raw(), nombre.raw());
+	//ventana_vm->iniciar();
+	modelo->abrir_vm(ventana_vm, lobby.raw(), nombre.raw());
 }
 
 void VentanaInicio::set_vista_principal(VentanaVM* ventana_vm) {
