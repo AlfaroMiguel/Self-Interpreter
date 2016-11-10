@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "../common/thread.h"
+#include "controlador_eventos.h"
 
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del cliente. */
@@ -13,8 +14,8 @@ class ComunicadorCliente : public Thread {
 private:
     Socket skt_aceptar;
     bool ejecutando;
-
     void atender();
+    ControladorDeEventos controladorDeEventos;
 
 public:
     ComunicadorCliente(Socket skt_aceptar);
@@ -33,7 +34,8 @@ public:
         this->run();
     }
 
-    void recibir_mensaje(std::string mensaje);
+    void recibirEvento(std::string evento);
+    void enviarEvento(std::string evento);
 };
 
 #endif

@@ -1,8 +1,19 @@
-//
-// Created by mikealpha on 10/11/16.
-//
+#ifndef CONTROLADOR_EVENTOS_H
+#define CONTROLADOR_EVENTOS_H
 
-#ifndef SELFTP_CONTROLADOR_EVENTOS_H
-#define SELFTP_CONTROLADOR_EVENTOS_H
+#include <string>
 
-#endif //SELFTP_CONTROLADOR_EVENTOS_H
+class ComunicadorCliente;
+
+class ControladorDeEventos {
+private:
+    ComunicadorCliente& cliente;
+
+public:
+    ControladorDeEventos(ComunicadorCliente& cliente);
+    ~ControladorDeEventos();
+    void resolverEvento(std::string evento);
+};
+
+
+#endif

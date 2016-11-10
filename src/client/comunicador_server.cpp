@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <iostream>
 #include "modelo.h"
+#include "recibidor.h"
 
 #define EVENTO_MODIFICAR "modificar"
 #define EVENTO_CREAR "crear"
@@ -10,6 +11,7 @@ using json = nlohmann::json;
 
 ComunicadorServer::ComunicadorServer(const std::string& hostname, const std::string& puerto){
 	skt_cliente.conectar(hostname, puerto);
+
 }
 
 ComunicadorServer::~ComunicadorServer(){}
@@ -20,6 +22,7 @@ ComunicadorServer::ComunicadorServer(ComunicadorServer &&otra):
 void ComunicadorServer::set_modelo(Modelo* modelo) {
 	this->modelo = modelo;
 }
+
 ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	skt_cliente = std::move(otra.skt_cliente);
 	modelo = otra.modelo;
@@ -30,6 +33,8 @@ void ComunicadorServer::inicializar(){
 	json j;
 	j["evento"] = "inicializar";
 	enviar_json(j);
+    Recibidor recibidor(skt_cliente, *this);
+    recibidor.run();
 }
 
 void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
@@ -44,10 +49,13 @@ void ComunicadorServer::enviar_json(json j){
 
 	char* evento_enviar = (char*)s.c_str();
 
-	uint32_t tamanio_32 = (uint32_t)htonl(strlen(evento_enviar));
-	skt_cliente.enviar((char*)(&tamanio_32), sizeof(tamanio_32));
+	uint32_t tamanio_32 = htonl((uint32_t)(strlen(evento_enviar) + 1));
 
-	skt_cliente.enviar(evento_enviar, strlen(evento_enviar));
+	std::cout << tamanio_32 << std::endl;
+	skt_cliente.enviar((char*)(&tamanio_32), sizeof(uint32_t));
+
+	std::cout << evento_enviar << std::endl;
+	skt_cliente.enviar(evento_enviar, strlen(evento_enviar) + 1);
 }
 
 void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std::string& nombre_cliente){
@@ -76,6 +84,7 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 		modelo->set_lobby(id);
 	}
 	if(evento == "iniciar"){
+        std::cout << "entra" << std::endl;
 		modelo->iniciar();
 	}
 	if(evento == "cliente conectado"){
