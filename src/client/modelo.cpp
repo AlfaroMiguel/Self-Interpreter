@@ -107,14 +107,14 @@ void Modelo::iniciar() {
 }
 
 void Modelo::inicializar(){
-	std::string lobby1("1");
-	std::string lobby2("2");
-	std::string lobby3("3");
-	ventana_inicio->agregar_lobby(lobby1);
-	ventana_inicio->agregar_lobby(lobby2);
-	ventana_inicio->agregar_lobby(lobby3);
-	ventana_inicio->iniciar();
-	//com_server.inicializar();
+//	std::string lobby1("1");
+//	std::string lobby2("2");
+//	std::string lobby3("3");
+//	ventana_inicio->agregar_lobby(lobby1);
+//	ventana_inicio->agregar_lobby(lobby2);
+//	ventana_inicio->agregar_lobby(lobby3);
+//	ventana_inicio->iniciar();
+	com_server.inicializar();
 }
 
 void Modelo::abrir_vm(VentanaVM* ventanavm, const std::string& lobby, const std::string& nombre_cliente){
