@@ -16,13 +16,14 @@ void VentanaInicio::agregar_lobby(const std::string& id){
 }
 
 void VentanaInicio::iniciar() {
+	std::cout << lobbies.size() << std::endl;
 	for(unsigned  int i = 0; i < lobbies.size(); i++) {
 		std::cout << lobbies[i] << std::endl;
 		comboBox->append(lobbies[i]);
 	}
 	if (lobbies.size() > 0)
 		comboBox->set_active(0);
-	show_all_children();
+	std::cout << "Fin iniciar" << std::endl;
 }
 
 void VentanaInicio::set_modelo(Modelo* modelo){

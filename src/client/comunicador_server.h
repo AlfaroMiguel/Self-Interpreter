@@ -5,8 +5,9 @@
 #include "../common/json.hpp"
 #include <string>
 
-using json = nlohmann::json;
 
+using json = nlohmann::json;
+class Recibidor;
 class Modelo;
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del servidor. */
@@ -14,7 +15,7 @@ class ComunicadorServer {
  	private:
   		Socket skt_cliente;
   		Modelo* modelo;
-
+		Recibidor* recibidor;
   		ComunicadorServer(const ComunicadorServer& otra) = delete;
   		ComunicadorServer& operator=(const ComunicadorServer& otra) = delete;
 
