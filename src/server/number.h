@@ -1,20 +1,21 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 
-#include "object.h"
-#include "bool.h"
-#include "method.h"
+#include "expression.h"
+#include "nativevalue.h"
+#include <map>
 
-class Number : public Object{
+class Number : public Expression{
 private:
-    float valor;
-    bool esMutable;
+  std::map<std::string,Expression*> slots;
+  NativeValue value;
 public:
-    Number();
+    Number(int valueAux);
     ~Number();
-    void setValor(float nuevoValor);
-    float getValor();
-    std::string obtenerRepresentacion();
+    void setValue(int valueAux);
+    NativeValue getValue();
+    NativeValue ejecute(std::string operation, Expression* expression);
+    void evaluate();
 };
 
 #endif

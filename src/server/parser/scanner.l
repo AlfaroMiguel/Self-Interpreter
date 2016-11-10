@@ -4,11 +4,10 @@
 	#include <string>
 	#include <iostream> //cout
 	using namespace std ;
-	#include "parser.h" // output of bison on example1.y
-	void yyerror( const char*);
+	#include "parser.tab.h" // output of bison on example1.y
+	//void yyerror( const char*);
 	int yyparse(void);
 %}
-%option c++
 %%
 [ \t]+ 										{}; // do nothing on whitespace
 [ \n]+ 										{}
@@ -67,15 +66,3 @@ void yyerror (const char * str)
 }
 
 int yywrap ( void ) { }
-
-int main (int num_args , char ** args ) {
-	if( num_args != 2){
-		printf (" usage : ./ parser1 filename \n");
-		exit (0);
-	}
-	FILE * file = fopen ( args [1] ,"r");
-	if( file == NULL ) { printf (" couldn ’t open %s\n", args [1]); exit (0);}
-	yyin = file ; // now flex reads from file
-	yyparse();
-	fclose(file);
-}
