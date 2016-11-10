@@ -6,39 +6,34 @@
 #include <tuple>
 #include <vector>
 #include <string>
-#include "registrodeslots.h"
+//#include "registrodeslots.h"
 
 class Object{
 protected:
     std::string nombre;
-    RegistroDeSlots slots;
-    std::string codigo;
-    RegistroDeSlots obtenerParentsSlots();
-    Object* buscarObject(std::string nombre, Object* object);
+    //RegistroDeSlots slots;
+    //std::string codigo;
+    //RegistroDeSlots obtenerParentsSlots();
+    //Object* buscarObject(std::string nombre, Object* object);
 
 public:
     Object();
     Object(const Object& otroObject);
     ~Object();
 
-    void setNombre(const std::string nuevoNombre);
-    std::string obtenerNombre();
+    void setName(const std::string nuevoNombre);
+    std::string getName();
 
-    void AddSlots(std::string nombreSlot, Object* object, bool esMutable, bool esParentSlot);
-    void RemoveSlots(std::string nombreSlot);
+    void addSlots(std::string nombreSlot, Object* object, bool esMutable, bool esParentSlot);
+    void removeSlots(std::string nombreSlot);
 
-    void setCodigo(const std::string nuevoCodigo);
-    std::string obtenerCodigo() const;
+    //Object* recvMessage(std::string message);
 
-    Object* recvMessage(std::string receiverObject,
-                        std::string keyWordMensaje,
-                        std::vector<Object*> argumentos);
-
-    RegistroDeSlots obtenerSlots();
+    //RegistroDeSlots obtenerSlots();
 
     Object* clone();
-    virtual std::string obtenerRepresentacion();
-    virtual Object* print(const std::vector<Object*>& argumentos);
+    // virtual std::string obtenerRepresentacion();
+    // virtual Object* print(const std::vector<Object*>& argumentos);
 
     //Object* collect(); Esto va en el Lobby
 };
