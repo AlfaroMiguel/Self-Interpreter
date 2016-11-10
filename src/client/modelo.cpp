@@ -100,6 +100,7 @@ void Modelo::crear_morph_de_slot(double x, double y){
 }
 
 void Modelo::set_lobby(const std::string& id){
+	ventana_inicio->agregar_lobby(id);
 }
 
 void Modelo::iniciar() {
@@ -107,13 +108,6 @@ void Modelo::iniciar() {
 }
 
 void Modelo::inicializar(){
-//	std::string lobby1("1");
-//	std::string lobby2("2");
-//	std::string lobby3("3");
-//	ventana_inicio->agregar_lobby(lobby1);
-//	ventana_inicio->agregar_lobby(lobby2);
-//	ventana_inicio->agregar_lobby(lobby3);
-//	ventana_inicio->iniciar();
 	com_server.inicializar();
 }
 

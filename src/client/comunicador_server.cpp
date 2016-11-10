@@ -11,10 +11,13 @@ using json = nlohmann::json;
 
 ComunicadorServer::ComunicadorServer(const std::string& hostname, const std::string& puerto){
 	skt_cliente.conectar(hostname, puerto);
+    recibidor = new Recibidor(skt_cliente, *this);
 
 }
 
-ComunicadorServer::~ComunicadorServer(){}
+ComunicadorServer::~ComunicadorServer(){
+    delete recibidor;
+}
 
 ComunicadorServer::ComunicadorServer(ComunicadorServer &&otra):
 		skt_cliente(std::move(otra.skt_cliente)), modelo(otra.modelo){}
@@ -33,8 +36,8 @@ void ComunicadorServer::inicializar(){
 	json j;
 	j["evento"] = "inicializar";
 	enviar_json(j);
-    Recibidor recibidor(skt_cliente, *this);
-    recibidor.run();
+    recibidor->start();
+    std::cout << "Sale" << std::endl;
 }
 
 void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
