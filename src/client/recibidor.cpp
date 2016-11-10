@@ -8,7 +8,9 @@ Recibidor::~Recibidor(){}
 
 void Recibidor::recibir(){
 	char* tam_buffer = (char*) malloc(sizeof(uint32_t));
+	std::cout << "afuera" << std::endl;
 	while(skt.recibir(tam_buffer, sizeof(uint32_t))){
+		std::cout << "adentro" << std::endl;
 		uint32_t tam = (ntohl)(*(uint32_t*)tam_buffer);
 		char* msj_buffer = (char*) malloc(sizeof(char)*tam);
 		skt.recibir(msj_buffer, tam);

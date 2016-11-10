@@ -57,7 +57,7 @@ void Aceptador::aceptar() {
         }
         std::cerr << "Cliente conectado." << std::endl;
         ComunicadorCliente *cliente_nuevo = new ComunicadorCliente(std::move(socket_acpt));
-        cliente_nuevo->run();
+        cliente_nuevo->start();
         eliminar_clientes_atendidos();
         clientes.push_back(cliente_nuevo);
     }
