@@ -184,9 +184,18 @@ void Interpreter::addSlot(string name){
   }
 }
 
-void Interpreter::interpret(char* buffer){
+void Interpreter::interpretChar(char* buffer){
   yy_scan_string(buffer);
   yyparse();
+}
+
+
+void Interpreter::interpretFile(const char* nameFile){
+  FILE * file = fopen(nameFile ,"r");
+	if( file == NULL ) {printf (" couldn ’t open %s\n", nameFile); exit (0);}
+	yyin = file ; // now flex reads from file
+	yyparse();
+	fclose(file);
 }
 
 Interpreter::~Interpreter(){}

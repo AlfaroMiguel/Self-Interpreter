@@ -23,7 +23,8 @@ private:
 public:
     Interpreter();
     void pushToken(std::string id,std::string message,std::string value);
-    void interpret(char *buffer);
+    void interpretChar(char* buffer);
+    void interpretFile(const char* nameFile);
     void end();
     ~Interpreter();
 };
