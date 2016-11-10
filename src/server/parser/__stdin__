@@ -1,22 +1,17 @@
-a = 3.
-print a.
-a <- 13. h <- 13.
-b <- 14.
-c = 3.
-d : 3.
-f.
-objeto _AddSlots: (| b = 2. |).
-objeto _AddSlots: (| b = 2.
-y = 3.  t <- 14. |).
-objeto __RemoveSlots: (|x. y.|).
-x + y.
-x - y.
-x * y.
-x / y.
-:p.
-(| :arg. |
-arg * 2.
-).
-(| :arg. |
-arg * 2 +  arg * 5 .
-).
+lobby _AddSlots: (|
+  OtroObjeto = (|
+  x = 1.
+  y <- 3.
+  metodo = (|  | 4 + 2 + 1. ).
+  |).
+|).
+lobby _AddSlots: (|
+  objeto = (|
+  x = 1.
+  y = 3.
+  numero = (|  | 3 * 3.).
+  |).
+|).
+
+objeto numero.
+OtroObjeto metodo.
