@@ -4,19 +4,29 @@
 #include "number.h"
 
 
-Expression::Expression(){}
+Expression::Expression(){
+  std::cout << "create expression" << std::endl;
+}
 
 Expression::~Expression(){}
 
 void Expression::setReceiver(Object* receiverPtr){
+  std::cout << "Expression::setReceiver" << std::endl;
   receiver = receiverPtr;
 }
 
+
+void Expression::isObject(){
+  std::cout << "no soy un object" << std::endl;
+}
+
 void Expression::setArgument(Object* argumentPtr){
+  std::cout << "Expression::setArgument" << std::endl;
   argument = argumentPtr;
 }
 
 void Expression::setOperator(std::string operatorString){
+  std::cout << "Expression::setOperator" << std::endl;
   this->operation = operatorString;
 }
 
@@ -50,6 +60,7 @@ void Expression::evaluate(){
     std::cout << "Expression::evaluate" << std::endl;
     //std::cout << "Expression::evaluate" <<receiver->getName()<< std::endl;
     if (receiver != nullptr){
+      std::cout << "dentro del if" << std::endl;
       receiver->evaluate();
       argument->evaluate();
       NativeValue valor = receiver->ejecute(operation,argument->getResult());

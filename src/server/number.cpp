@@ -4,6 +4,7 @@
 #include "object.h"
 
 Number::Number(int valueAux):Object(){
+  std::cout << "create Number" << std::endl;
   value.setValue(valueAux);
   setReceiver(this);
   setResult(this);
@@ -21,18 +22,25 @@ NativeValue Number::getValue(){
   return value;
 }
 
-
-void Number::evaluate(){
-
+void Number::setReceiver(Object* receiverPtr){
+  std::cout << "Number::setReceiver" << std::endl;
+  receiver = receiverPtr;
 }
+
+void Number::setOperator(std::string operatorString){
+  std::cout << "Number::setOperator" << std::endl;
+  this->operation = operatorString;
+}
+
 
 NativeValue Number::convertToNativeValue(){
   return getValue();
 }
 
 
-NativeValue Number::ejecute(std::string operation, Expression* expression){
+NativeValue Number::ejecute(std::string operation, Object* expression){
   /*Aca permito cosas del tipo 3 + 4.0*/
+  std::cout << "Number::ejecute" << std::endl;
   int resultado = 0;
   if (expression->getValue().isInt() || expression->getValue().isFloat()){
     std::cout << "Soy expression Number "<< value.getInt() <<" y voy a ejecutar la operation:" <<operation<< std::endl;

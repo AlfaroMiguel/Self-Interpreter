@@ -14,6 +14,7 @@ class Expression:public Object{
 public:
     Expression();
     ~Expression();
+    void isObject();
     /*Sets*/
     void setReceiver(Object* receiverPtr);
     void setOperator(std::string operatorString);

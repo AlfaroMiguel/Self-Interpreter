@@ -50,7 +50,6 @@ void Interpreter::pushToken(string id,string message, string value){
       createNumber(value);
       break;
     case 2:
-        std::cout<<"assignation Expression"<<std::endl;
         assignationExpression(id);
         break;
     case 3:
@@ -106,9 +105,10 @@ void Interpreter::end(){
 void Interpreter::sendMessage(string message){
   std::cout << "sendMessage" << std::endl;
   Object* expression = stack.top();
-  std::cout << "Nombre de expression:" <<expression->getName()<< std::endl;
+  std::cout << "Nombre de expression a enviar mensaje:" << expression->getName()<< std::endl;
   stack.pop();
   /*tengo que ver cuando tengo mas de un argumento*/
+  expression->isObject();
   expression->setOperator(message);
   expression->evaluate();
 }
@@ -122,9 +122,9 @@ void Interpreter::createNumber(string value){
 
 
 void Interpreter::createExpression(string message){
-  std::cout << "createExpression:" <<message<< std::endl;
+  std::cout << "Interpreter::createExpression:" <<message<< std::endl;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
-  Object* expression = new Object;
+  Expression* expression = new Expression;
   expression->setArgument(stack.top());
   stack.pop();
   expression->setOperator(message);
@@ -136,7 +136,7 @@ void Interpreter::createExpression(string message){
 Object* Interpreter::findExpression(string name){
   std::cout << "findExpression:" <<name<< std::endl;
   if (map.count(name) == 0){
-    std::cout << "not found" << std::endl;
+      std::cout << "not found" << std::endl;
       Object* expression = new Object;
       expression->setName(name);
       return expression;
@@ -146,9 +146,10 @@ Object* Interpreter::findExpression(string name){
 
 /*Si existia un Expression, se piza sino no pasa nada*/
 void Interpreter::assignationExpression(string name){
-  std::cout << "assginationExpression"<< std::endl;
+  std::cout << "assginationExpression:"<<name<< std::endl;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
   if (!stack.empty()){
+    std::cout << "stack empty" << std::endl;
     Object* expression = stack.top();
     expression->setName(name);
   }else{
@@ -158,7 +159,7 @@ void Interpreter::assignationExpression(string name){
 
 /*Todo lo que haya en el stack lo agrego como slot en un objeto que lo agrego en el stack*/
 void Interpreter::encapsulateStack(){
-  Object* expression = new Object;
+  Expression* expression = new Expression;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
   while (!stack.empty()){
     Object* slot = stack.top();

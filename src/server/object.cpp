@@ -11,7 +11,7 @@ typedef std::map<std::string, slot_t> slot_map;
 
 
 Object::Object(){
-    this->nombre = "object";
+  std::cout << "create___Object____" << std::endl;
 }
 
 Object::Object(const Object &otro) {
@@ -20,6 +20,10 @@ Object::Object(const Object &otro) {
     this->codigo = otro.codigo;
 }
 
+
+void Object::isObject(){
+  std::cout << "Soy un objeto" << std::endl;
+}
 /*ver que onda*/
 NativeValue Object::getValue(){
   NativeValue value;
@@ -29,6 +33,7 @@ NativeValue Object::getValue(){
 
 /*ver que onda*/
 NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
+  std::cout << "object::ejecute" << std::endl;
   NativeValue value;
   return value;
 }
@@ -42,7 +47,8 @@ Object* Object::getSlotName(std::string name){
 
 Object::~Object(){}
 
-void Object::setName(const std::string nuevoNombre) {
+void Object::setName(const std::string nuevoNombre){
+    std::cout << "Object::setName:" <<nuevoNombre<< std::endl;
     this->nombre = nuevoNombre;
 }
 

@@ -9,6 +9,10 @@
 
 class Number : public Object{
 private:
+  Object* receiver;
+  std::string operation;
+  Object* argument;
+  Object* result;
   NativeValue value;
 public:
     Number(int valueAux);
@@ -16,8 +20,9 @@ public:
     NativeValue convertToNativeValue();
     void setValue(int valueAux);
     NativeValue getValue();
-    NativeValue ejecute(std::string operation, Expression* expression);
-    void evaluate();
+    void setOperator(std::string operatorString);
+    void setReceiver(Object* receiverPtr);
+    NativeValue ejecute(std::string operation, Object* expression);
 };
 
 #endif
