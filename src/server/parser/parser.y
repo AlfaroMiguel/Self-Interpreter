@@ -27,7 +27,6 @@ EQUALSMUTAL SET BAR ADD RM CREATEOBJECTINIT CREATEOBJECTEND ARGS WORD COMMENT
 %type <double_val> argument;
 //%type <int_val> operation;
 //%type <double_val> expresion_method;
-//%type <double_val> line_method;
 %type <double_val> atom_expression;
 %type <double_val> inner1 ;
 %type <double_val> inner2 ;
@@ -99,46 +98,6 @@ argument:/*nada*/
 				}
 				;
 
-line_method:
-		expresion_method operation line_method
-		|expresion_method
-		;
-
-expresion_method:
-		VARIABLE operation NUMBER
-		{
-		std::cout << "variable *+/- number" <<std::endl;
-		}
-		|VARIABLE operation VARIABLE
-		{
-		std::cout << "variable *+/- variable" <<std::endl;
-		//esto es redundante porque un atom_expression tiene la misma pinta, tengo que generalizar los atom_expression
-		}
-		|NUMBER operation NUMBER
-		{
-		std::cout << "number *+/- number" <<std::endl;
-		}
-		|NUMBER
-		{
-		std::cout << "number" <<std::endl;
-		}
-		;
-
-operation:
-		PLUS {
-		std::cout << "+" <<std::endl;
-		}
-		|MINUS {
-		std::cout << "-" <<std::endl;
-		}
-		|ASTERISK {
-		std::cout << "*" <<std::endl;
-		}
-		|FSLASH {
-		std::cout << "/" <<std::endl;
-		}
-		;
-
 atom_expression:
 							VARIABLE SEMICOLON
 							{
@@ -150,30 +109,6 @@ atom_expression:
 							|VARIABLE SET expression SEMICOLON{
 							interpreter.pushToken(*$1,"find","");
 							interpreter.pushToken("","set","");
-							}
-							|VARIABLE PLUS VARIABLE SEMICOLON
-							{
-							interpreter.pushToken(*$3,"find","");
-							interpreter.pushToken("","+","");
-							interpreter.pushToken(*$1,"find","");
-							}
-							|VARIABLE MINUS VARIABLE SEMICOLON
-							{
-							interpreter.pushToken(*$3,"find","");
-							interpreter.pushToken("","-","");
-							interpreter.pushToken(*$1,"find","");
-							}
-							|VARIABLE ASTERISK VARIABLE SEMICOLON
-							{
-							interpreter.pushToken(*$3,"find","");
-							interpreter.pushToken("","*","");
-							interpreter.pushToken(*$1,"find","");
-							}
-							|VARIABLE FSLASH VARIABLE SEMICOLON
-							{
-							interpreter.pushToken(*$3,"find","");
-							interpreter.pushToken("","/","");
-							interpreter.pushToken(*$1,"find","");
 							}
 							|ARGS
 							{

@@ -1,12 +1,16 @@
 #include "number.h"
 #include <iostream> //cout //stof
 #include "nativevalue.h"
+#include "object.h"
 
-Number::Number(int valueAux):Expression(){
+Number::Number(int valueAux):Object(){
   value.setValue(valueAux);
   setReceiver(this);
   setResult(this);
 }
+
+Number::~Number(){}
+
 
 void Number::setValue(int valueAux){
   /*Un nativeValue no es modificable*/
@@ -21,6 +25,11 @@ NativeValue Number::getValue(){
 void Number::evaluate(){
 
 }
+
+NativeValue Number::convertToNativeValue(){
+  return getValue();
+}
+
 
 NativeValue Number::ejecute(std::string operation, Expression* expression){
   /*Aca permito cosas del tipo 3 + 4.0*/

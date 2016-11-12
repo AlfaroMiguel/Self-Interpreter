@@ -3,7 +3,6 @@
 
 #include <string>
 
-
 class NativeValue{
 private:
     int intValue;

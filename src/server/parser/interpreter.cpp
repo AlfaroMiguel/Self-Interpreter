@@ -1,9 +1,10 @@
 #include "interpreter.h"
 #include <iostream> //cout //stof
-#include "../expression.h"
+#include "../object.h"
 #include "../number.h"
 #include <string>
 #include "scanner.h"
+#include <vector>
 
 extern int yyparse();
 extern FILE *yyin;
@@ -27,9 +28,9 @@ Interpreter::Interpreter(){
   mapMessages.insert(std::pair<string,int>("*",12));
   mapMessages.insert(std::pair<string,int>("/",13));
   /*Lobby tiene existencia desde un principio*/
-  Expression* lobby = new Expression;
+  Object* lobby = new Object;
   lobby->setName("lobby");
-  map.insert(std::pair<string,Expression*>(lobby->getName(),lobby));
+  map.insert(std::pair<string,Object*>(lobby->getName(),lobby));
 }
 
 /*id       message    valor
@@ -49,47 +50,47 @@ void Interpreter::pushToken(string id,string message, string value){
       createNumber(value);
       break;
     case 2:
-        std::cout<<"assignation object"<<std::endl;
-        assignationObject(id);
+        std::cout<<"assignation Expression"<<std::endl;
+        assignationExpression(id);
         break;
     case 3:
-        std::cout<<"Create null object mutal and assignation"<<std::endl;
+        std::cout<<"Create null Expression mutal and assignation"<<std::endl;
         break;
     case 4:
-        std::cout<<"Object [print]"<<std::endl;
+        std::cout<<"Expression [print]"<<std::endl;
         break;
     case 5:
-        std::cout<<"Find Object"<<std::endl;
-        stack.push(findObject(id));
+        std::cout<<"Find Expression"<<std::endl;
+        stack.push(findExpression(id));
         break;
     case 6:
-        std::cout<<"Object [set]"<<std::endl;
+        std::cout<<"Expression [set]"<<std::endl;
         break;
     case 7:
         std::cout<<"Encapsulate stack"<<std::endl;
         encapsulateStack();
         break;
     case 8:
-        std::cout<<"Object [add_slot]"<<std::endl;
+        std::cout<<"Expression [add_slot]"<<std::endl;
         addSlot(id);
         break;
     case 9:
-        std::cout<<"Object [remove_slot]"<<std::endl;
+        std::cout<<"Expression [remove_slot]"<<std::endl;
         break;
     case 10:
-        //std::cout<<"Object [sum] Object"<<std::endl;
+        //std::cout<<"Expression [sum] Expression"<<std::endl;
         createExpression(message);
         break;
     case 11:
-        //std::cout<<"Object [less] Object"<<std::endl;
+        //std::cout<<"Expression [less] Expression"<<std::endl;
         createExpression(message);
         break;
     case 12:
-        //std::cout<<"Object [multiplication] Object"<<std::endl;
+        //std::cout<<"Expression [multiplication] Expression"<<std::endl;
         createExpression(message);
         break;
     case 13:
-        //std::cout<<"Object [division] Object"<<std::endl;
+        //std::cout<<"Expression [division] Expression"<<std::endl;
         createExpression(message);
         break;
     default:
@@ -104,7 +105,7 @@ void Interpreter::end(){
 
 void Interpreter::sendMessage(string message){
   std::cout << "sendMessage" << std::endl;
-  Expression* expression = stack.top();
+  Object* expression = stack.top();
   std::cout << "Nombre de expression:" <<expression->getName()<< std::endl;
   stack.pop();
   /*tengo que ver cuando tengo mas de un argumento*/
@@ -123,7 +124,7 @@ void Interpreter::createNumber(string value){
 void Interpreter::createExpression(string message){
   std::cout << "createExpression:" <<message<< std::endl;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
-  Expression* expression = new Expression;
+  Object* expression = new Object;
   expression->setArgument(stack.top());
   stack.pop();
   expression->setOperator(message);
@@ -132,24 +133,24 @@ void Interpreter::createExpression(string message){
   stack.push(expression);
 }
 /*Si no se encuetra en el map, lo creo y lo devuelvo*/
-Expression* Interpreter::findObject(string name){
-  std::cout << "findObject:" <<name<< std::endl;
+Object* Interpreter::findExpression(string name){
+  std::cout << "findExpression:" <<name<< std::endl;
   if (map.count(name) == 0){
     std::cout << "not found" << std::endl;
-      Expression* expression = new Expression;
+      Object* expression = new Object;
       expression->setName(name);
       return expression;
     }
     return map[name];
 }
 
-/*Si existia un object, se piza sino no pasa nada*/
-void Interpreter::assignationObject(string name){
-  std::cout << "assginationObject"<< std::endl;
+/*Si existia un Expression, se piza sino no pasa nada*/
+void Interpreter::assignationExpression(string name){
+  std::cout << "assginationExpression"<< std::endl;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
   if (!stack.empty()){
-    Expression* object = stack.top();
-    object->setName(name);
+    Object* expression = stack.top();
+    expression->setName(name);
   }else{
     std::cout << "Hubo un error no existe objeto al cual asignar nombre" <<std::endl;
     }
@@ -157,10 +158,10 @@ void Interpreter::assignationObject(string name){
 
 /*Todo lo que haya en el stack lo agrego como slot en un objeto que lo agrego en el stack*/
 void Interpreter::encapsulateStack(){
-  Expression* expression = new Expression;
+  Object* expression = new Object;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
   while (!stack.empty()){
-    Expression* slot = stack.top();
+    Object* slot = stack.top();
     stack.pop();
     expression->addSlots(slot->getName(),slot,false,false);
   }
@@ -172,15 +173,18 @@ le pido sus slots y los agreago a objeto*/
 void Interpreter::addSlot(string name){
   std::cout << "addSlot:"<<name<<std::endl;
   //Objeto a la que voy agregar slot
-  Expression* object = findObject(name);
+  Object* parent = findExpression(name);
   //Objeto a la que le saco el slot
-  Expression* objectSlotRemove = stack.top();
+  Object* expressionSlotRemove = stack.top();
   stack.pop();
-  Expression* slot = objectSlotRemove->getSlot();
-  object->addSlots(slot->getName(),slot,false,false);
+  RegistroDeSlots slots = expressionSlotRemove->getSlots();
+  std::vector<Object*> slotsVector = slots.getObjects();
+  Object* slot = slotsVector[0];
+  parent->addSlots(slot->getName(),slot,false,false);
+  slot->addSlots(parent->getName(),parent,false,true);
   if(name.compare("lobby") == 0){
     std::cout << "Lo guarde en el lobby" << std::endl;
-    map.insert(std::pair<string,Expression*>(slot->getName(),slot));
+    map.insert(std::pair<string,Object*>(slot->getName(),slot));
   }
 }
 

@@ -1,6 +1,7 @@
 #include "nativevalue.h"
 #include <stdexcept>
 
+#include "object.h"
 
 NativeValue::NativeValue(){
     isIntBool = false;

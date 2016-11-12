@@ -3,15 +3,17 @@
 
 #include "expression.h"
 #include "nativevalue.h"
+#include "object.h"
 #include <map>
 
-class Number : public Expression{
+
+class Number : public Object{
 private:
-  std::map<std::string,Expression*> slots;
   NativeValue value;
 public:
     Number(int valueAux);
     ~Number();
+    NativeValue convertToNativeValue();
     void setValue(int valueAux);
     NativeValue getValue();
     NativeValue ejecute(std::string operation, Expression* expression);

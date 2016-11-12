@@ -1,4 +1,5 @@
 #include "expression.h"
+#include "object.h"
 #include <iostream> //cout //stof
 #include "number.h"
 
@@ -7,11 +8,11 @@ Expression::Expression(){}
 
 Expression::~Expression(){}
 
-void Expression::setReceiver(Expression* receiverPtr){
+void Expression::setReceiver(Object* receiverPtr){
   receiver = receiverPtr;
 }
 
-void Expression::setArgument(Expression* argumentPtr){
+void Expression::setArgument(Object* argumentPtr){
   argument = argumentPtr;
 }
 
@@ -23,11 +24,13 @@ NativeValue Expression::getValue(){
   return result->getValue();
 }
 
-Expression* Expression::getResult(){
+Object* Expression::getResult(){
   return result;
 }
 
-NativeValue Expression::ejecute(std::string operationStr, Expression* argumentPtr){
+
+
+NativeValue Expression::ejecute(std::string operationStr, Object* argumentPtr){
   std::cout << "Error, cannot ejecute() in Expression class" << std::endl;
   /*A la expression ya se le mando el mensaje evaluate, ahora pide ejecutar*/
   if(result!=nullptr){
@@ -38,27 +41,7 @@ NativeValue Expression::ejecute(std::string operationStr, Expression* argumentPt
   return valueAux;
 }
 
-Expression* Expression::getSlot(){
-  std::cout <<"My name:"<<name<< "  getSlot:"<< std::endl;
-  Expression* slot = mySlots.rbegin()->second;
-  std::cout << "Slot name:" <<slot->getName()<< std::endl;
-  return slot;
-}
-
-std::string Expression::getName(){
-  return name;
-}
-
-void Expression::addSlots(std::string id,Expression* slot, bool algo, bool otro){
-  std::cout <<"My name:"<<name<< " Agregado slot:" <<id<< std::endl;
-  mySlots.insert(std::pair<std::string,Expression*>(id,slot));
-}
-
-void Expression::setName(std::string nameStr){
-  std::cout << "Expression::setName:" <<nameStr<< std::endl;
-  name = nameStr;
-}
-void Expression::setResult(Expression* resultPtr){
+void Expression::setResult(Object* resultPtr){
   result = resultPtr;
 }
 
@@ -74,7 +57,7 @@ void Expression::evaluate(){
       std::cout << "Resultado de la expression:" << result->getValue().getInt() << std::endl;
     }
     else{
-      Expression* metodo = this->mySlots[operation];
+      Object* metodo = this->getSlotName(operation);
       std::cout << "nombre del metodo:" <<metodo->getName()<< std::endl;
       metodo->evaluate();
     }
