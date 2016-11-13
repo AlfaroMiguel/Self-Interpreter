@@ -1,4 +1,6 @@
 #include "morph.h"
+#include "modelo.h"
+#include "cont_eventos.h"
 #include <vector>
 #include <map>
 
@@ -80,7 +82,8 @@ bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& ite
 	if(item && dragging && item == dragging) {
 		auto new_x = event->x;
 		auto new_y = event->y;
-		objeto->mover(new_x - drag_x, new_y - drag_y);
+		//objeto->mover(new_x - drag_x, new_y - drag_y);
+		cont_eventos->mover_morph(get_nombre(), new_x - drag_x, new_y - drag_y);
 	}
 	return false;
 }
@@ -98,4 +101,16 @@ bool Morph::on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>&  i
 	if(event->button == 1)
 		dragging.reset();
 	return false;
+}
+
+const std::string Morph::get_nombre(){
+	return objeto->get_nombre();
+}
+
+void Morph::mover(double x, double y){
+	objeto->mover(x, y);
+}
+
+void Morph::set_control(ControladorEventos *cont_eventos) {
+	this->cont_eventos = cont_eventos;
 }

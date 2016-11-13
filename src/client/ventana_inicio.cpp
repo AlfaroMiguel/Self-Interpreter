@@ -10,7 +10,7 @@ VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Bu
 
 VentanaInicio::~VentanaInicio() {}
 
-void VentanaInicio::agregar_lobby(const std::string& id){
+void VentanaInicio::set_lobby(const std::string& id){
 	Glib::ustring lobby(id);
 	lobbies.push_back(lobby);
 }
@@ -25,19 +25,16 @@ void VentanaInicio::iniciar() {
 		comboBox->set_active(0);
 }
 
-void VentanaInicio::set_modelo(Modelo* modelo){
-	this->modelo = modelo;
-	modelo->inicializar();
+void VentanaInicio::set_control(ControladorEventos* cont_eventos) {
+	this->cont_eventos = cont_eventos;
 }
 
 void VentanaInicio::on_confirmar(){
 	const Glib::ustring lobby = comboBox->get_active_text();
 	const Glib::ustring nombre = entrada_nombre->get_buffer()->get_text();
 	hide();
-	//ventana_vm->iniciar();
-	modelo->abrir_vm(ventana_vm, lobby.raw(), nombre.raw());
+	cont_eventos->abrir_vm(lobby.raw(), nombre.raw());
 }
 
-void VentanaInicio::set_vista_principal(VentanaVM* ventana_vm) {
-	this->ventana_vm = ventana_vm;
-}
+
+

@@ -1,10 +1,12 @@
 #ifndef VENTANA_OBJETOS_H
 #define VENTANA_OBJETOS_H
 
-#include "morph.h"
+
 #include "modelo.h"
 #include <gtkmm.h>
 #include <goocanvasmm.h>
+
+class Morph;
 
 class VentanaObjetos: public Gtk::Box{
  	public:
@@ -13,9 +15,10 @@ class VentanaObjetos: public Gtk::Box{
 
   		void dibujar_morph(Glib::RefPtr<Morph> morph);
   		void eliminar_morph(Glib::RefPtr<Morph> morph);
-  		void set_modelo(Modelo* modelo);
+  		void set_control(ControladorEventos* cont_eventos);
+  		void iniciar();
  	private:
-  		Modelo* modelo;
+  		ControladorEventos* cont_eventos;
   		Goocanvas::Canvas* canvas;
   		Glib::RefPtr<Goocanvas::Group> root;
 

@@ -18,6 +18,7 @@ class Objeto: public Representacion{
   	bool esta_en_posicion(double x, double y);
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
   	Glib::ustring obtener_nombre_slot(double x, double y);
+  	const std::string get_nombre();
  private:
   	std::vector<Glib::RefPtr<Slot>> slots;
 

@@ -1,23 +1,17 @@
 #include "modelo.h"
-#include "ventana_objetos.h"
-#include "ventana_edicion.h"
-#include "ventana_inicio.h"
-#include "ventanaVM.h"
+#include "cont_vistas.h"
+#include "morph.h"
 
-Modelo::Modelo(const std::string& hostname, const std::string& puerto): com_server(hostname, puerto){
-	com_server.set_modelo(this);
+Modelo::Modelo() {}
+
+Modelo::~Modelo() {}
+
+Modelo::Modelo(Modelo&& otra): morphs(otra.morphs), morph_editando(otra.morph_editando) {
 }
-
-Modelo::~Modelo(){}
-
-Modelo::Modelo(Modelo&& otra): morphs(otra.morphs), morph_editando(otra.morph_editando),
-								com_server(std::move(otra.com_server)), ventana_objetos(otra.ventana_objetos){}
 
 Modelo& Modelo::operator=(Modelo&& otra){
 	morphs = otra.morphs;
 	morph_editando = otra.morph_editando;
-	com_server = std::move(otra.com_server);
-	ventana_objetos = otra.ventana_objetos;
 	return *this;
 }
 
@@ -26,7 +20,7 @@ bool Modelo::editar_morph(double x, double y){
 		if (morphs[i]->esta_en_posicion(x, y)) {
 			morphs[i]->editando(true);
 			morph_editando = morphs[i];
-			ventana_edicion->show_all();
+			cont_eventos->editar();
 			return true;
 		}
 	}
@@ -34,7 +28,7 @@ bool Modelo::editar_morph(double x, double y){
 }
 
 void Modelo::cambiar_nombre_morph(const std::string& nuevo_nombre){
-	if (morph_editando) morph_editando->editar_nombre(nuevo_nombre);
+	if(morph_editando) morph_editando->editar_nombre(nuevo_nombre);
 }
 
 void Modelo::finalizar_edicion(){
@@ -43,17 +37,12 @@ void Modelo::finalizar_edicion(){
 
 void Modelo::eliminar_morph(double x, double y){
 	if (morph_editando){
-		ventana_objetos->eliminar_morph(morph_editando);
+		cont_eventos->eliminar_morph(morph_editando);
 		for(unsigned int i = 0; i < morphs.size(); i++){
 			if (morphs[i] == morph_editando)
 				morphs.erase(morphs.begin()+i);
 		}
 	}
-}
-
-void Modelo::enviar_mensaje(const std::string& mensaje, const std::string& evento){
-	if (mensaje.empty()) return;
-	com_server.enviar_mensaje(mensaje, evento);
 }
 
 void Modelo::crear_morph(const std::string& nombre, double x, double y, std::map<std::string, std::string> dic_slots) {
@@ -62,7 +51,8 @@ void Modelo::crear_morph(const std::string& nombre, double x, double y, std::map
 	morphs.push_back(morph);
 	morph->conectar_seniales();
 	morph->agregar_slots(dic_slots);
-	ventana_objetos->dibujar_morph(morph);
+	morph->set_control(cont_eventos);
+	cont_eventos->crear_morph(morph);
 }
 
 void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2) {
@@ -75,21 +65,6 @@ void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2)
 	morph2->agregar_union(linea);
 }
 
-void Modelo::set_vista_objetos(VentanaObjetos* vista){
-	ventana_objetos = vista;
-	std::map<std::string, std::string> slots;
-	const std::string shell("shell");
-	crear_morph(shell, 0, 0, slots);
-}
-
-void Modelo::set_vista_editar(VentanaEdicion* vista){
-	ventana_edicion = vista;
-}
-
-void Modelo::set_vista_inicio(VentanaInicio* vista){
-	ventana_inicio = vista;
-}
-
 void Modelo::crear_morph_de_slot(double x, double y){
 	if (morph_editando){
 		std::map<std::string, std::string> dic_slots;
@@ -99,25 +74,14 @@ void Modelo::crear_morph_de_slot(double x, double y){
 	}
 }
 
-void Modelo::set_lobby(const std::string& id){
-	ventana_inicio->agregar_lobby(id);
+void Modelo::mover_morph(const std::string& morph, double x, double y){
+	for (unsigned int i = 0; i < morphs.size(); ++i) {
+		if (morphs[i]->get_nombre() == morph){
+			morphs[i]->mover(x, y);
+		}
+	}
 }
 
-void Modelo::iniciar() {
-	ventana_inicio->iniciar();
-}
-
-void Modelo::inicializar(){
-	com_server.inicializar();
-}
-
-void Modelo::abrir_vm(VentanaVM* ventanavm, const std::string& lobby, const std::string& nombre_cliente){
-	this->ventana_vm = ventanavm;
-	com_server.enviar_datos_cliente(lobby, nombre_cliente);
-}
-
-void Modelo::crear_vm(){
-	//aca creo todos los morphs
-	//ventana_vm->mostrar();
-	ventana_vm->iniciar();
+void Modelo::set_control(ControladorEventos *cont_eventos) {
+	this->cont_eventos = cont_eventos;
 }

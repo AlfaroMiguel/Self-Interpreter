@@ -2,6 +2,7 @@
 #define VENTANA_EDICION_H
 
 #include "modelo.h"
+#include "cont_eventos.h"
 #include <gtkmm.h>
 
 class VentanaEdicion: public Gtk::Box{
@@ -9,7 +10,7 @@ class VentanaEdicion: public Gtk::Box{
   		VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
   		~VentanaEdicion();
 
-  		void set_modelo(Modelo* modelo);
+  		void set_control(ControladorEventos* cont_eventos);
  	private:
   		Gtk::Entry* entrada_nombre;
   		Gtk::Entry* entrada_msj;
@@ -20,7 +21,7 @@ class VentanaEdicion: public Gtk::Box{
   		Gtk::Button* boton_finalizar_edicion;
 
   		double x_editando, y_editando;
-  		Modelo* modelo;
+  		ControladorEventos* cont_eventos;
 
   		void on_eliminar_obj_event();
   		void on_editar_nombre_event();

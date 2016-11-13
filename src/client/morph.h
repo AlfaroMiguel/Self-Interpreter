@@ -10,6 +10,9 @@
 #include "objeto.h"
 #include "slot.h"
 
+class Modelo;
+class ControladorEventos;
+
 class Morph: public Goocanvas::Group {
  public:
   	static Glib::RefPtr<Morph> create(double x, double y, const Glib::ustring& nombre);
@@ -28,14 +31,19 @@ class Morph: public Goocanvas::Group {
   	void agregar_slots(std::map<std::string, std::string> slots_a_agregar);
   	double get_x();
   	double get_y();
+  	const std::string get_nombre();
   	void agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea);
 	const std::string& obtener_nombre_slot(double x, double y);
+  	void mover(double x, double y);
+  	void set_control(ControladorEventos* cont_eventos);
  protected:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;
   	bool siendo_editado = false;
   	Glib::RefPtr<Objeto> objeto;
   	Glib::RefPtr<Goocanvas::Polyline> linea;
+
+  	ControladorEventos* cont_eventos;
 
   	bool on_item_button_press_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);
   	bool on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);

@@ -1,5 +1,6 @@
 #include "ventana_objetos.h"
 #include <iostream>
+#include "morph.h"
 VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 								Gtk::Box(cobject){
 	set_size_request(800, 800);
@@ -22,19 +23,15 @@ void VentanaObjetos::eliminar_morph(Glib::RefPtr<Morph> morph) {
 	morph->eliminar();
 }
 
-void VentanaObjetos::set_modelo(Modelo* modelo) {
-	this->modelo = modelo;
+void VentanaObjetos::set_control(ControladorEventos* cont_eventos) {
+	this->cont_eventos = cont_eventos;
 }
 
 bool VentanaObjetos::on_button_press_event(GdkEventButton *event) {
-	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
-		if (modelo->editar_morph(event->x, event->y)) {
-			return true;
-		}
-	}
-	if((event->type == GDK_BUTTON_PRESS) && (event->button == 3)) {
-		modelo->crear_morph_de_slot(event->x, event->y);
-	}
-	return false;
+	return cont_eventos->button_event(event);
+}
+
+void VentanaObjetos::iniciar() {
+	this->show();
 }
 

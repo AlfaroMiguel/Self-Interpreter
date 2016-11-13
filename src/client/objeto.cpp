@@ -58,3 +58,7 @@ Glib::ustring Objeto::obtener_nombre_slot(double x, double y){
 	Glib::ustring vacia;
 	return vacia;
 }
+
+const std::string Objeto::get_nombre(){
+	return nombre.raw();
+}

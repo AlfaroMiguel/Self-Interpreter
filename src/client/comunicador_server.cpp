@@ -1,8 +1,12 @@
 #include "comunicador_server.h"
+
 #include <cstdint>
 #include <iostream>
+
 #include "modelo.h"
 #include "recibidor.h"
+#include "ventana_inicio.h"
+#include "cont_eventos.h"
 
 #define EVENTO_MODIFICAR "modificar"
 #define EVENTO_CREAR "crear"
@@ -22,15 +26,15 @@ ComunicadorServer::~ComunicadorServer(){
 }
 
 ComunicadorServer::ComunicadorServer(ComunicadorServer &&otra):
-		skt_cliente(std::move(otra.skt_cliente)), modelo(otra.modelo){}
+		skt_cliente(std::move(otra.skt_cliente)), cont_eventos(otra.cont_eventos){}
 
-void ComunicadorServer::set_modelo(Modelo* modelo) {
-	this->modelo = modelo;
+void ComunicadorServer::set_control(ControladorEventos* cont_eventos) {
+	this->cont_eventos = cont_eventos;
 }
 
 ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	skt_cliente = std::move(otra.skt_cliente);
-	modelo = otra.modelo;
+	cont_eventos = otra.cont_eventos;
 	return *this;
 }
 
@@ -70,6 +74,15 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 	enviar_json(j);
 }
 
+void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, double x, double y){
+	json j;
+	j["evento"] = "mover morph";
+	j["id"] = morph;
+	j["x"] = x;
+	j["y"] = y;
+	enviar_json(j);
+}
+
 void ComunicadorServer::recibir_mensaje(std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
 	std::string evento = j["evento"];
@@ -81,22 +94,28 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 		/*json slots = j["slots"];
 		for (json::iterator it = slots.begin(); it != slots.end(); ++it)
 			dic_slots.insert(std::make_pair(it.key(), it.value()));*/
-		modelo->crear_morph(nombre, x, y, dic_slots);
+		cont_eventos->crear_morph(nombre, x, y, dic_slots);
 	}
+
 	if (evento == "agregar lobby"){
 		std::string id = j["id"];
-		modelo->set_lobby(id);
+		cont_eventos->set_lobby(id);
 	}
 	if(evento == "iniciar"){
-        std::cout << "entra" << std::endl;
-		modelo->iniciar();
+		cont_eventos->iniciar();
 	}
 	if(evento == "cliente conectado"){
 		//tiene que crear la vm con todos los morphs
-		modelo->crear_vm();
+		cont_eventos->crear_vm();
 	}
 	if(evento == "error cliente"){
 		//mandar al modelo que levante una ventana de error
+	}
+	if(evento == "mover morph"){
+		std::string morph = j["id"];
+		double new_x = j["x"];
+		double new_y = j["y"];
+		cont_eventos->mover_morph(morph, new_x, new_y);
 	}
 }
 
