@@ -47,20 +47,20 @@ RegistroDeSlots RegistroDeSlots::obtenerParentsSlots(){
 }
 
 Object* RegistroDeSlots::buscarSlot(std::string& nombre, Object* objeto){
-    std::cout << "RegistrosDeSlots::buscarSlot" <<nombre<<":"<<objeto->getName()<< std::endl;
+    std::cout << "Busco " <<nombre<<" en "<< objeto->getName() << std::endl;
     if (nombre == objeto->getName()){ //Si es el objeto lo devuelvo
         return objeto;
     }
     RegistroDeSlots slotsDeObject = objeto->getSlots();
     auto slots_it = slotsDeObject.slotMap.find(nombre); //Sino busco en sus slots
     if(slots_it == slotsDeObject.slotMap.end()){
-        std::cout << "slots_it == slotsDeObject.slotMap.end()" << std::endl;
-        RegistroDeSlots parentSlots = obtenerParentsSlots();
+        //std::cout << "slots_it == slotsDeObject.slotMap.end()" << std::endl;
+        RegistroDeSlots parentSlots = objeto->obtenerParentsSlots();
         std::vector<Object*> parentsEncontrados;
-        std::cout << "cantidad de parentSlots encontrados" <<parentsEncontrados.size()<< std::endl;
+        //std::cout << "cantidad de parentSlots encontrados" <<parentsEncontrados.size()<< std::endl;
         for(auto iter = parentSlots.slotMap.begin(); iter != parentSlots.slotMap.end(); ++iter){
             Object* objetoTemporal = (iter->second).obtenerReferencia();
-            std::cout << "objetoTemporal" <<objetoTemporal->getName()<< std::endl;
+            //std::cout << "objetoTemporal" <<objetoTemporal->getName()<< std::endl;
             Object* parent = buscarSlot(nombre, objetoTemporal);
             parentsEncontrados.push_back(parent);
         }
