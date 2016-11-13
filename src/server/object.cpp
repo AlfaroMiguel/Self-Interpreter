@@ -61,7 +61,7 @@ void Object::addSlots(std::string nombreSlot,
                       Object* object,
                       bool esMutable,
                       bool esParentSlot){
-    //std::cout << "Agrego slot: " << nombreSlot << " a " << this->nombre << std::endl;
+    std::cout << "Agrego slot: " << nombreSlot << " a " << this->getName() << std::endl;
     slots.agregarSlot(nombreSlot, object, esMutable, esParentSlot);
 }
 
@@ -90,7 +90,7 @@ RegistroDeSlots Object::obtenerParentsSlots(){
 }
 
 Object* Object::buscarObject(std::string nombre, Object* object) {
-    //std::cout << "Busco: " << nombre <<  " en " << object->obtenerNombre() << std::endl;
+    std::cout << "Busco: " << nombre <<  " en " << object->getName() << std::endl;
     return slots.buscarSlot(nombre, object);
 }
 

@@ -13,6 +13,7 @@ Expression::~Expression(){}
 void Expression::setReceiver(Object* receiverPtr){
   std::cout << "Expression::setReceiver" << std::endl;
   receiver = receiverPtr;
+  receiver->addSlots("self",this,false,true);
 }
 
 
@@ -23,6 +24,7 @@ void Expression::isObject(){
 void Expression::setArgument(Object* argumentPtr){
   std::cout << "Expression::setArgument" << std::endl;
   argument = argumentPtr;
+  argument->addSlots("self",this,false,true);
 }
 
 void Expression::setOperator(std::string operatorString){

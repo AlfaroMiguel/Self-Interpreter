@@ -28,6 +28,7 @@ void SearcherObject::addSlots(std::string id,Object* slot, bool algo, bool otro)
 }
 
 void SearcherObject::evaluate(){
+  std::cout << "SearcherObject::evaluate" << std::endl;
   Object* self = getSlotName("self");
   Object* expression = Object::buscarObject(nombre,self);
   if (expression != nullptr){

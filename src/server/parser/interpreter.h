@@ -13,6 +13,7 @@ private:
   std::stack<Object*> stack;
   std::map<std::string,Object*> map;
   void createNumber(std::string value);
+  void createVariable(std::string name);
   void assignationExpression(std::string name);
   void addSlot(std::string name);
   void encapsulateStack();

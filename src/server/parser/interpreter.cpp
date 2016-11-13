@@ -2,6 +2,7 @@
 #include <iostream> //cout //stof
 #include "../object.h"
 #include "../number.h"
+#include "../searcher_object.h"
 #include <string>
 #include "scanner.h"
 #include <vector>
@@ -27,6 +28,8 @@ Interpreter::Interpreter(){
   mapMessages.insert(std::pair<string,int>("-",11));
   mapMessages.insert(std::pair<string,int>("*",12));
   mapMessages.insert(std::pair<string,int>("/",13));
+  mapMessages.insert(std::pair<string,int>("create_variable",14));
+
   /*Lobby tiene existencia desde un principio*/
   Object* lobby = new Object;
   lobby->setName("lobby");
@@ -92,6 +95,10 @@ void Interpreter::pushToken(string id,string message, string value){
         //std::cout<<"Expression [division] Expression"<<std::endl;
         createExpression(message);
         break;
+    case 14:
+        //std::cout<<"Expression [division] Expression"<<std::endl;
+        createVariable(id);
+        break;
     default:
       std::cout<<"Interpreter::ERROR: message not found:"<<message<<std::endl;
       sendMessage(message);
@@ -101,6 +108,7 @@ void Interpreter::pushToken(string id,string message, string value){
 void Interpreter::end(){
   /*logica para cuanto tengo que ejecutar toda una linea*/
 }
+
 
 void Interpreter::sendMessage(string message){
   std::cout << "sendMessage" << std::endl;
@@ -120,6 +128,12 @@ void Interpreter::createNumber(string value){
   stack.push(number);
 }
 
+void Interpreter::createVariable(string name){
+  std::cout << "createVariable" << std::endl;
+  std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
+  SearcherObject* object = new SearcherObject(name);
+  stack.push(object);
+}
 
 void Interpreter::createExpression(string message){
   std::cout << "Interpreter::createExpression:" <<message<< std::endl;
@@ -149,7 +163,7 @@ void Interpreter::assignationExpression(string name){
   std::cout << "assginationExpression:"<<name<< std::endl;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
   if (!stack.empty()){
-    std::cout << "stack empty" << std::endl;
+    std::cout << "stack not empty" << std::endl;
     Object* expression = stack.top();
     expression->setName(name);
   }else{
@@ -159,14 +173,15 @@ void Interpreter::assignationExpression(string name){
 
 /*Todo lo que haya en el stack lo agrego como slot en un objeto que lo agrego en el stack*/
 void Interpreter::encapsulateStack(){
-  Expression* expression = new Expression;
+  Expression* parent = new Expression;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
   while (!stack.empty()){
     Object* slot = stack.top();
     stack.pop();
-    expression->addSlots(slot->getName(),slot,false,false);
+    parent->addSlots(slot->getName(),slot,false,false);
+    slot->addSlots("self",parent,false,true);
   }
-  stack.push(expression);
+  stack.push(parent);
 }
 
 /*Voy a tener algo expression addSlot algo, ese algo es un objeto a la cual le
@@ -182,7 +197,7 @@ void Interpreter::addSlot(string name){
   std::vector<Object*> slotsVector = slots.getObjects();
   Object* slot = slotsVector[0];
   parent->addSlots(slot->getName(),slot,false,false);
-  slot->addSlots(parent->getName(),parent,false,true);
+  slot->addSlots("self",parent,false,true);
   if(name.compare("lobby") == 0){
     std::cout << "Lo guarde en el lobby" << std::endl;
     map.insert(std::pair<string,Object*>(slot->getName(),slot));

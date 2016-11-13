@@ -141,7 +141,9 @@ inner1: 	inner1 ASTERISK inner2 {
 
 inner2:
 		VARIABLE {
-		interpreter.pushToken(*$1,"find","");
+		std::cout << "VARIABLE" <<std::endl;
+		//interpreter.pushToken(*$1,"find","");
+		interpreter.pushToken(*$1,"create_variable","");
 		if (! vars . count (* $1 ))
 				//UnknownVarError (* $1 );
 				std::cout << "la letra no se guardó" <<std::endl;
@@ -152,7 +154,6 @@ inner2:
 			}
 		|NUMBER
 		{
-		//std::cout << "VARIABLE" <<std::endl;
 		interpreter.pushToken("","create_number",to_string($1));
 		//$$ = $1 ;
 		}

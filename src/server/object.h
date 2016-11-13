@@ -14,8 +14,6 @@ protected:
     std::string nombre;
     RegistroDeSlots slots;
     std::string codigo; /*represetancion*/
-    RegistroDeSlots obtenerParentsSlots();
-    Object* buscarObject(std::string nombre, Object* object);
 
 public:
     Object();
@@ -24,6 +22,8 @@ public:
     Object* getSlotName(std::string name);
     virtual void isObject();
     /*metodos de expression*/
+    RegistroDeSlots obtenerParentsSlots();
+    Object* buscarObject(std::string nombre, Object* object);
     virtual void setReceiver(Object* receiverPtr){
       std::cout << "Object::setReceiver:" << std::endl;
     }

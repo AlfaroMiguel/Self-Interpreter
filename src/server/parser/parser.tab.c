@@ -468,7 +468,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    37,    37,    39,    43,    50,    53,    57,    61,    66,
       71,    75,    78,    85,    92,    95,   102,   106,   109,   113,
-     119,   124,   129,   131,   136,   140,   143,   153,   159
+     119,   124,   129,   131,   136,   140,   143,   155,   160
 };
 #endif
 
@@ -1469,7 +1469,9 @@ yyreduce:
   case 26:
 #line 143 "parser.y" /* yacc.c:1646  */
     {
-		interpreter.pushToken(*(yyvsp[0].str_val),"find","");
+		std::cout << "VARIABLE" <<std::endl;
+		//interpreter.pushToken(*$1,"find","");
+		interpreter.pushToken(*(yyvsp[0].str_val),"create_variable","");
 		if (! vars . count (* (yyvsp[0].str_val) ))
 				//UnknownVarError (* $1 );
 				std::cout << "la letra no se guardó" <<std::endl;
@@ -1478,29 +1480,28 @@ yyreduce:
 			//delete $1 ;
 			std::cout << "VARIABLE" <<std::endl;
 			}
-#line 1482 "parser.tab.c" /* yacc.c:1646  */
+#line 1484 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 154 "parser.y" /* yacc.c:1646  */
+#line 156 "parser.y" /* yacc.c:1646  */
     {
-		//std::cout << "VARIABLE" <<std::endl;
 		interpreter.pushToken("","create_number",to_string((yyvsp[0].double_val)));
 		//$$ = $1 ;
 		}
-#line 1492 "parser.tab.c" /* yacc.c:1646  */
+#line 1493 "parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 159 "parser.y" /* yacc.c:1646  */
+#line 160 "parser.y" /* yacc.c:1646  */
     {
 		//$$ = $2 ;
 		}
-#line 1500 "parser.tab.c" /* yacc.c:1646  */
+#line 1501 "parser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1504 "parser.tab.c" /* yacc.c:1646  */
+#line 1505 "parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1728,7 +1729,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 163 "parser.y" /* yacc.c:1906  */
+#line 164 "parser.y" /* yacc.c:1906  */
 
 void Div0Error ( void ) { printf (" Error : division by zero \n"); exit (0);}
 void UnknownVarError ( string s ) { printf (" Error : -%s- does not exist !\n", s . c_str ()); exit (0);}
