@@ -1,7 +1,0 @@
-lobby _AddSlots: (| punto = (|x = 2. y =2.|). |).
-objeto _AddSlots: (| b = 2. a =3.|).
-objeto = (|
-x = 1.
-y = 3.
-metodo = (|  | 3 * 2 +  6 * 5 - 8 / 6 + 1. ).
-|).
