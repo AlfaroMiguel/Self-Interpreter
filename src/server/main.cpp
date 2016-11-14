@@ -1,4 +1,6 @@
-#include "parser/interpreter.h"
+
+//Descomentar si se quiere probar el main del parser
+/*#include "parser/interpreter.h"
 
 int main(int argc, char const *argv[]) {
     Interpreter interpreter;
@@ -20,10 +22,10 @@ int main(int argc, char const *argv[]) {
     // interpreter.interpretChar(numero);
     // interpreter.interpretChar(metodo);
     return 0;
-}
+}*/
 
 
-/*
+//main del Servidor
 #include <iostream>
 #include "../common/socket.h"
 #include "aceptador.h"
@@ -53,4 +55,4 @@ int main(int argc, const char *argv[]) try{
 }
 catch(...){
     return SALIDA;
-}*/
+}
