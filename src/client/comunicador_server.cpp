@@ -120,10 +120,12 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 			cont_eventos->set_lobby(id);
 		}
 		cont_eventos->iniciar();
+		cont_eventos->mostrar_lobbies();
 	}
 	if(evento == "cliente conectado"){
-		std::cout << "recibe cliente conectado" << std::endl;
-		cont_eventos->mostrar_lobbies();
+		json j:
+		j["evento"] = "inicializar";
+		enviar_json(j);
 	}
 	if(evento == "error cliente"){
 		//mandar al modelo que levante una ventana de error
