@@ -56,10 +56,8 @@ Glib::RefPtr<Morph> Modelo::crear_morph(const std::string& nombre, double x, dou
 	return morph;
 }
 
-void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2) {
-	double x_inicio = morph1->get_x();
+void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2, double x_inicio, double y_inicio) {
 	double x_fin = morph2->get_x();
-	double y_inicio = morph1->get_y();
 	double y_fin = morph2->get_y();
 	Glib::RefPtr <Goocanvas::Polyline> linea = Goocanvas::Polyline::create(x_inicio, y_inicio, x_fin, y_fin);
 	morph1->agregar_union(linea);
@@ -70,9 +68,9 @@ void Modelo::crear_morph_de_slot(double x, double y){
 	if (morph_editando){
 		std::map<std::string, std::string> dic_slots;
 		const std::string nombre(morph_editando->obtener_valor_slot(x, y));
-		if (!nombre.empty()) {
+		if (!nombre.empty() && !existe_morph(nombre)) {
 			Glib::RefPtr <Morph> nuevo_morph = crear_morph(nombre, x + 50, y + 50, dic_slots);
-			//unir_morphs(nuevo_morph, morph_editando);
+			//unir_morphs(nuevo_morph, morph_editando, x, y);
 		}
 	}
 }
@@ -85,6 +83,14 @@ void Modelo::mover_morph(const std::string& morph, double x, double y){
 	}
 }
 
+bool Modelo::existe_morph(const std::string& nombre){
+	for (unsigned int i = 0; i < morphs.size(); ++i) {
+		if (morphs[i]->get_nombre() == nombre){
+			return true;
+		}
+	}
+	return false;
+}
 void Modelo::set_control(ControladorEventos *cont_eventos) {
 	this->cont_eventos = cont_eventos;
 }
@@ -92,9 +98,12 @@ void Modelo::set_control(ControladorEventos *cont_eventos) {
 void Modelo::inicializar(){
 	std::map<std::string, std::string> dic_slots;
 	//esto de rellenar el map es hc, la shell no tiene slots
-	std::string slot("x");
-	std::string valor("4");
-	dic_slots.insert(std::pair<std::string, std::string>(slot, valor));
+	std::string slot1("x");
+	std::string valor1("4");
+	std::string slot2("y");
+	std::string valor2("5");
+	dic_slots.insert(std::pair<std::string, std::string>(slot1, valor1));
+	dic_slots.insert(std::pair<std::string, std::string>(slot2, valor2));
 	std::string nombre("shell");
 	crear_morph(nombre, 0, 0, dic_slots);
 }

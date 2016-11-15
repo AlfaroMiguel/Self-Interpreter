@@ -29,10 +29,17 @@ void ControladorEventos::mover_morph(const std::string& morph, double x, double 
 	com_server->enviar_nueva_posicion_morph(morph, x, y);
 }
 
-void ControladorEventos::abrir_vm(const std::string& lobby, const std::string& nombre_cliente){
-	com_server->enviar_datos_cliente(lobby, nombre_cliente);
+void ControladorEventos::abrir_vm(const std::string& lobby, const std::string& estado_lobby){
+	com_server->enviar_datos_cliente(lobby, estado_lobby);
 }
 
+void ControladorEventos::ingresar_cliente(const std::string &nombre_cliente) {
+	com_server->ingresar_cliente(nombre_cliente);
+}
+
+void ControladorEventos::mostrar_lobbies() {
+	cont_vistas->mostrar_lobbies();
+}
 void ControladorEventos::inicializar(){
 	modelo->inicializar();
 }

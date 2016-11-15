@@ -37,5 +37,6 @@ class ComunicadorServer {
   		void enviar_datos_cliente(const std::string& lobby, const std::string& nombre_cliente);
   		void enviar_mensaje(const std::string& consulta, const std::string& evento);
   		void enviar_nueva_posicion_morph(const std::string& morph, double x, double y);
+  		void ingresar_cliente(const std::string& nombre_cliente);
 };
 #endif

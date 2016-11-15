@@ -10,6 +10,8 @@
 
 #define EVENTO_MODIFICAR "modificar"
 #define EVENTO_CREAR "crear"
+#define EVENTO_AGREGAR_LOBBIES "agregar lobbies"
+#define EVENTO_MOVER "mover morph"
 
 using json = nlohmann::json;
 
@@ -67,20 +69,27 @@ void ComunicadorServer::enviar_json(json j){
 	skt_cliente.enviar(evento_enviar, strlen(evento_enviar) + 1);
 }
 
-void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std::string& nombre_cliente){
+void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std::string& estado_lobby){
 	json j;
 	j["evento"] = "conectar";
 	j["lobby"] = lobby;
-	j["nombre"] = nombre_cliente;
+	j["estado"] = estado_lobby;
 	enviar_json(j);
 }
 
 void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, double x, double y){
 	json j;
-	j["evento"] = "mover morph";
+	j["evento"] = EVENTO_MOVER;
 	j["id"] = morph;
 	j["x"] = x;
 	j["y"] = y;
+	enviar_json(j);
+}
+
+void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
+	json j;
+	j["evento"] = "conectar cliente";
+	j["nombre"] = nombre_cliente;
 	enviar_json(j);
 }
 
@@ -92,27 +101,33 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 		std::string nombre = j["nombre"];
 		double x = j["posicion"]["x"];
 		double y = j["posicion"]["y"];
-		/*json slots = j["slots"];
-		for (json::iterator it = slots.begin(); it != slots.end(); ++it)
-			dic_slots.insert(std::make_pair(it.key(), it.value()));*/
+		std::string slots_str = j["slots"];
+		json slots = json::parse((char*)slots_str.c_str());
+		for (json::iterator it = slots.begin(); it != slots.end(); ++it) {
+			std::string nombre = it.key();
+			std::string valor = it.value();
+			dic_slots.insert(std::make_pair(nombre, valor));
+		}
 		cont_eventos->crear_morph(nombre, x, y, dic_slots);
 	}
-
-	if (evento == "agregar lobby"){
-		std::string id = j["id"];
-		cont_eventos->set_lobby(id);
-	}
-	if(evento == "iniciar"){
+	if (evento == EVENTO_AGREGAR_LOBBIES){
+		for (json::iterator it = j.begin(); it != j.end(); ++it) {
+			std::string id = it.value();
+			cont_eventos->set_lobby(id);
+		}
 		cont_eventos->iniciar();
 	}
 	if(evento == "cliente conectado"){
-		//tiene que crear la vm con todos los morphs
-		cont_eventos->crear_vm();
+		cont_eventos->mostrar_lobbies();
 	}
 	if(evento == "error cliente"){
 		//mandar al modelo que levante una ventana de error
 	}
-	if(evento == "mover morph"){
+	if (evento == "datos lobby"){
+		//tiene que crear la vm con todos los morphs
+		cont_eventos->crear_vm();
+	}
+	if(evento == EVENTO_MOVER){
 		std::string morph = j["id"];
 		double new_x = j["x"];
 		double new_y = j["y"];

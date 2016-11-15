@@ -22,7 +22,7 @@ class Modelo{
   	void finalizar_edicion();
   	void cambiar_nombre_morph(const std::string& nuevo_nombre);
   	void editar_morph(double x, double y);
-  	void unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2);
+  	void unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2, double x, double y);
 	void crear_morph_de_slot(double x, double y);
   	void mover_morph(const std::string& morph, double x, double y);
 	void set_control(ControladorEventos* cont_eventos);
@@ -30,6 +30,7 @@ class Modelo{
   	bool es_objeto(double x, double y);
   	bool es_slot(double x, double y);
   	void seleccionar_morph(double x, double y);
+  	bool existe_morph(const std::string& nombre);
  private:
   	Modelo(const Modelo& otra) = delete;
   	Modelo& operator=(const Modelo& otra) = delete;

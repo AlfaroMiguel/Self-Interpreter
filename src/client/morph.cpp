@@ -114,6 +114,7 @@ const std::string Morph::get_nombre(){
 
 void Morph::mover(double x, double y){
 	objeto->mover(x, y);
+	if (linea) linea->translate(x, y);
 }
 
 void Morph::set_control(ControladorEventos *cont_eventos) {

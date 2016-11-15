@@ -13,18 +13,20 @@ class VentanaInicio: public Gtk::Dialog{
   	void set_lobby(const std::string& id);
   	void iniciar();
   	void set_control(ControladorEventos* cont_eventos);
-  	void set_app(Glib::RefPtr<Gtk::Application> app);
  private:
   	std::vector<Glib::ustring> lobbies;
   	ControladorEventos* cont_eventos;
 
-  	Glib::RefPtr<Gtk::Application> app;
 
   	Gtk::ComboBoxText* comboBox;
 	Gtk::Button* boton_confirmar;
-  	Gtk::Entry* entrada_nombre;
+  	Gtk::Button* boton_salir;
+  	Gtk::RadioButton* boton_agregar_lobby;
+  	Gtk::RadioButton* boton_seleccionar_lobby;
+  	Gtk::RadioButton* boton_lobby_privado;
+  	Gtk::RadioButton* boton_lobby_compartido;
+  	Gtk::Entry* entrada_texto;
 
   	void on_confirmar();
-	void on_quit_click();
 };
 #endif
