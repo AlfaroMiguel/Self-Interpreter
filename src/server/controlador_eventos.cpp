@@ -8,6 +8,13 @@ ControladorDeEventos::ControladorDeEventos(ComunicadorCliente& cliente) : client
 
 ControladorDeEventos::~ControladorDeEventos(){}
 
+void ControladorDeEventos::resolverConectar(std::string nombre){
+    std::cout << " Nuevo cliente " << nombre << std::endl; //Sacar
+    json jrespuesta;
+    jrespuesta["evento"] = "cliente conectado";
+    cliente.enviarEvento(jrespuesta.dump());
+}
+
 void ControladorDeEventos::resolverInicializar(){
     std::vector<std::string> lobbies = cliente.vm.getAvailablesLobbies(cliente.clientName);
     json jlobbies;
@@ -20,25 +27,18 @@ void ControladorDeEventos::resolverInicializar(){
     cliente.enviarEvento(jInicializar.dump());
 }
 
-void ControladorDeEventos::resolverConectar(std::string nombre){
-    std::cout << " Nuevo cliente " << nombre << std::endl; //Sacar
-    json jrespuesta;
-    jrespuesta["evento"] = "cliente conectado";
-    cliente.enviarEvento(jrespuesta.dump());
-}
-
 void ControladorDeEventos::resolverEvento(std::string evento) {
     json eventoj = json::parse(evento);
     std::cout << eventoj["evento"] << std::endl; //Aca dependiendo del evento envio o modifico cosas
 
     std::string nombreEvento = eventoj["evento"];
 
-    if(nombreEvento == "inicializar"){
-        resolverInicializar();
-    }
-
     if(nombreEvento == "conectar cliente"){ //El cliente me informa a que lobby se conecta
         resolverConectar(eventoj["nombre"]);
+    }
+
+    if(nombreEvento == "inicializar"){
+        resolverInicializar();
     }
 
     if(nombreEvento == "mover morph"){
