@@ -3,7 +3,10 @@
 /*#include "parser/interpreter.h"
 
 int main(int argc, char const *argv[]) {
+    //Object* lobby = new Object;
+    //Interpreter interpreter(lobby);
     Interpreter interpreter;
+
     //interpreter.interpretFile(argv[1]);
     char pajaro[] = "lobby _AddSlots: (| pajaro = (| x = 1. y = 3. algunMetodo = (|  | x * 2. ). |).  |). \n\0\0";
     interpreter.interpretChar(pajaro);
@@ -25,7 +28,7 @@ int main(int argc, char const *argv[]) {
 }*/
 
 
-//main del Servidor
+main del Servidor
 #include <iostream>
 #include "../common/socket.h"
 #include "aceptador.h"
@@ -39,9 +42,8 @@ int main(int argc, const char *argv[]) try{
     if(argc != CANT_PARAMETROS){
         return SALIDA;
     }
-    VirtualMachine vm;
     std::string puerto = argv[POS_PORT];
-    Aceptador aceptador(puerto, vm);
+    Aceptador aceptador(puerto);
     aceptador.run();
     std::string entrada;
     while (getline(std::cin, entrada)) {
