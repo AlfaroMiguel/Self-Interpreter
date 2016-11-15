@@ -123,7 +123,7 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 		cont_eventos->mostrar_lobbies();
 	}
 	if(evento == "cliente conectado"){
-		json j:
+		json j;
 		j["evento"] = "inicializar";
 		enviar_json(j);
 	}
