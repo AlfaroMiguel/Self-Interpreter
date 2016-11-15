@@ -520,8 +520,8 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "scanner.l"
 #line 2 "scanner.l"
-	#include <cstdio>
-	#include <cstdlib>
+	#include <stdio.h>
+	#include <stdlib.h>
 	#include <string>
 	#include <iostream> //cout
 	using namespace std ;
