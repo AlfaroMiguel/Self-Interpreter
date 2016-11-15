@@ -8,7 +8,7 @@
 	using namespace std;
 	map<string,double > vars ; // map from variable name to value
 	extern int yylex ();
-	extern void yyerror(const char *);
+	extern void yyerror(Interpreter* interpreter,const char *);
 	void Div0Error(void);
 	void UnknownVarError ( string s );
 %}
@@ -30,9 +30,10 @@ EQUALSMUTAL SET BAR ADD RM CREATEOBJECTINIT CREATEOBJECTEND ARGS WORD COMMENT
 %type <double_val> atom_expression;
 %type <double_val> inner1 ;
 %type <double_val> inner2 ;
-%{
-Interpreter interpreter;
-%}
+%parse-param{Interpreter * interpreter}
+%code requires{
+	#include "interpreter.h"
+}
 %%
 parse:	lines;
 
@@ -48,24 +49,24 @@ lines:		lines line
 
 line :
 		PRINT expression SEMICOLON {
-		interpreter.pushToken("","print","");
+		interpreter->pushToken("","print","");
 		}
 		|CREATEOBJECTINIT lines CREATEOBJECTEND
 		{
-		interpreter.pushToken("","encapsulate","");
+		interpreter->pushToken("","encapsulate","");
 		}
 		|VARIABLE ADD line SEMICOLON
 		{
-		interpreter.pushToken(*$1,"add","");
+		interpreter->pushToken(*$1,"add","");
 		}
 		|VARIABLE RM line SEMICOLON
 		{
-		interpreter.pushToken("","remove","");
-		interpreter.pushToken(*$1,"find","");
+		interpreter->pushToken("","remove","");
+		interpreter->pushToken(*$1,"find","");
 		}
 		|VARIABLE EQUALS lines SEMICOLON
 		{
-		interpreter.pushToken((*$1),"assignation","");
+		interpreter->pushToken((*$1),"assignation","");
 		//vars[*$1] = $3;delete $1;
 		}
 		|CREATEOBJECTINIT argument BAR expression SEMICOLON RPAREN
@@ -78,9 +79,9 @@ line :
 		|VARIABLE VARIABLE SEMICOLON{
 		std::cout << "objeto metodo." <<std::endl;
 		/*Lo busco y lo guardo en el stack*/
-		interpreter.pushToken(*$1,"find","");
+		interpreter->pushToken(*$1,"find","");
 		/*Le mando el mensaje siguiente*/
-		interpreter.pushToken("",*$2,"");
+		interpreter->pushToken("",*$2,"");
 		}
 		|expression{
 		std::cout << "Parser::expression" <<std::endl;
@@ -101,14 +102,14 @@ argument:/*nada*/
 atom_expression:
 							VARIABLE SEMICOLON
 							{
-							interpreter.pushToken((*$1),"assignation","");
+							interpreter->pushToken((*$1),"assignation","");
 							}
 							|VARIABLE EQUALSMUTAL expression SEMICOLON {
-							interpreter.pushToken(*$1,"assignation_mutable","");
+							interpreter->pushToken(*$1,"assignation_mutable","");
 							}
 							|VARIABLE SET expression SEMICOLON{
-							interpreter.pushToken(*$1,"find","");
-							interpreter.pushToken("","set","");
+							interpreter->pushToken(*$1,"find","");
+							interpreter->pushToken("","set","");
 							}
 							|ARGS
 							{
@@ -119,31 +120,31 @@ atom_expression:
 expression: 	expression PLUS inner1
 							{
 							//$$ = $1 + $3 ;
-							interpreter.pushToken("","+","");
+							interpreter->pushToken("","+","");
 								}
 						| expression MINUS inner1 {
 						//std::cout << "$$ = $1 - $3" <<std::endl;
-						interpreter.pushToken("","-","");
+						interpreter->pushToken("","-","");
 						 //$$ = $1 - $3 ;
 						 }
 						| inner1 { $$ = $1 ;};
 
 inner1: 	inner1 ASTERISK inner2 {
 		//std::cout << "$$ = $1 * $3" <<std::endl;
-		interpreter.pushToken("","*","");
+		interpreter->pushToken("","*","");
  		//$$ = $1 * $3 ;
 		}
 		|inner1 FSLASH inner2{
 		//std::cout << "$$ = $1 / $3" <<std::endl;
-		interpreter.pushToken("","/","");
+		interpreter->pushToken("","/","");
 		if( $3 == 0) Div0Error (); else $$ = $1 / $3 ;}
 		|inner2 { $$ = $1 ;};
 
 inner2:
 		VARIABLE {
 		std::cout << "VARIABLE" <<std::endl;
-		//interpreter.pushToken(*$1,"find","");
-		interpreter.pushToken(*$1,"create_variable","");
+		//interpreter->pushToken(*$1,"find","");
+		interpreter->pushToken(*$1,"create_variable","");
 		if (! vars . count (* $1 ))
 				//UnknownVarError (* $1 );
 				std::cout << "la letra no se guardó" <<std::endl;
@@ -154,7 +155,7 @@ inner2:
 			}
 		|NUMBER
 		{
-		interpreter.pushToken("","create_number",to_string($1));
+		interpreter->pushToken("","create_number",to_string($1));
 		//$$ = $1 ;
 		}
 		|LPAREN expression RPAREN {

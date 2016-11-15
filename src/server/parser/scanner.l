@@ -2,6 +2,7 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string>
+	#include "interpreter.h"
 	#include <iostream> //cout
 	using namespace std ;
 	#include "parser.h" // output of bison on example1.y
@@ -60,7 +61,7 @@
 							}
 %%
 
-void yyerror (const char * str)
+void yyerror (Interpreter* interpreter,const char * str)
 {
 	printf("Parse Error:-%s-\n", str );
 }

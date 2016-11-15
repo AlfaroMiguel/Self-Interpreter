@@ -6,13 +6,31 @@
 #include <string>
 #include "scanner.h"
 #include <vector>
+#include <stdexcept>
 
-extern int yyparse();
+extern int yyparse(Interpreter *interpreter);
 extern FILE *yyin;
 extern void reset_lexer(void);
 extern void reset_parser(void);
 
 using std::string;
+
+Interpreter::Interpreter(Object* entorno_ptr):entorno(entorno_ptr){
+  mapMessages.insert(std::pair<string,int>("create_number",1));
+  mapMessages.insert(std::pair<string,int>("assignation",2));
+  mapMessages.insert(std::pair<string,int>("assignation_mutable",3));
+  mapMessages.insert(std::pair<string,int>("print",4));
+  mapMessages.insert(std::pair<string,int>("find",5));
+  mapMessages.insert(std::pair<string,int>("set",6));
+  mapMessages.insert(std::pair<string,int>("encapsulate",7));
+  mapMessages.insert(std::pair<string,int>("add",8));
+  mapMessages.insert(std::pair<string,int>("remove",9));
+  mapMessages.insert(std::pair<string,int>("+",10));
+  mapMessages.insert(std::pair<string,int>("-",11));
+  mapMessages.insert(std::pair<string,int>("*",12));
+  mapMessages.insert(std::pair<string,int>("/",13));
+  mapMessages.insert(std::pair<string,int>("create_variable",14));
+}
 
 Interpreter::Interpreter(){
   mapMessages.insert(std::pair<string,int>("create_number",1));
@@ -32,8 +50,7 @@ Interpreter::Interpreter(){
 
   /*Lobby tiene existencia desde un principio*/
   Object* lobby = new Object;
-  lobby->setName("lobby");
-  map.insert(std::pair<string,Object*>(lobby->getName(),lobby));
+  entorno = lobby;
 }
 
 /*id       message    valor
@@ -149,13 +166,23 @@ void Interpreter::createExpression(string message){
 /*Si no se encuetra en el map, lo creo y lo devuelvo*/
 Object* Interpreter::findExpression(string name){
   std::cout << "findExpression:" <<name<< std::endl;
-  if (map.count(name) == 0){
-      std::cout << "not found" << std::endl;
-      Object* expression = new Object;
-      expression->setName(name);
-      return expression;
-    }
-    return map[name];
+  // if (map.count(name) == 0){
+  //     std::cout << "not found" << std::endl;
+  //     Object* expression = new Object;
+  //     expression->setName(name);
+  //     return expression;
+  //   }
+  //   return map[name];
+  if (name.compare("lobby") == 0 ){
+    return entorno;
+  }
+  Object* object = entorno->getSlotName(name);
+  if (object != nullptr){
+    return object;
+  }
+  else{
+    throw std::runtime_error("Interpreter::objeto no encontrado");
+  }
 }
 
 /*Si existia un Expression, se piza sino no pasa nada*/
@@ -207,7 +234,7 @@ void Interpreter::addSlot(string name){
 void Interpreter::interpretChar(char* buffer){
   //Sacar comentarios si se quiere compilar con el parser
   yy_scan_string(buffer);
-  yyparse();
+  yyparse(this);
 }
 
 
