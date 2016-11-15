@@ -4,7 +4,7 @@
 	#include <string>
 	#include <iostream> //cout
 	using namespace std ;
-	#include "parser.tab.h" // output of bison on example1.y
+	#include "parser.h" // output of bison on example1.y
 	//void yyerror( const char*);
 	int yyparse(void);
 %}
