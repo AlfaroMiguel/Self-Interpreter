@@ -206,8 +206,8 @@ void Interpreter::addSlot(string name){
 
 void Interpreter::interpretChar(char* buffer){
   //Sacar comentarios si se quiere compilar con el parser
-  //yy_scan_string(buffer);
-  //yyparse();
+  yy_scan_string(buffer);
+  yyparse();
 }
 
 
