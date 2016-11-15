@@ -7,6 +7,7 @@ Recibidor::Recibidor(Socket& skt, ComunicadorServer& com_server): skt(skt), com_
 Recibidor::~Recibidor(){}
 
 void Recibidor::recibir(){
+	std::cout << "Empiezo a recibir" << std::endl;
 	char* tam_buffer = (char*) malloc(sizeof(uint32_t));
 	while(skt.recibir(tam_buffer, sizeof(uint32_t))){
 		uint32_t tam = (ntohl)(*(uint32_t*)tam_buffer);

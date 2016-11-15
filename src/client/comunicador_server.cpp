@@ -75,8 +75,6 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 	j["lobby"] = lobby;
 	j["estado"] = estado_lobby;
 	enviar_json(j);
-	cont_eventos->inicializar();
-	recibidor->start();
 }
 
 void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, double x, double y){
@@ -93,6 +91,8 @@ void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
 	j["evento"] = "conectar cliente";
 	j["nombre"] = nombre_cliente;
 	enviar_json(j);
+	cont_eventos->inicializar();
+	recibidor->start();
 }
 
 void ComunicadorServer::recibir_mensaje(std::string &msj) {
