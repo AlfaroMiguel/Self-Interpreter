@@ -34,7 +34,7 @@ void ControladorEventos::abrir_vm(const std::string& lobby, const std::string& n
 }
 
 void ControladorEventos::inicializar(){
-	com_server->inicializar();
+	modelo->inicializar();
 }
 
 void ControladorEventos::crear_morph(Glib::RefPtr<Morph> morph) {
@@ -51,11 +51,17 @@ void ControladorEventos::editar(){
 
 bool ControladorEventos::button_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
-		modelo->editar_morph(event->x, event->y);
-		return true;
-	}
-	if((event->type == GDK_BUTTON_PRESS) && (event->button == 3)) {
-		modelo->crear_morph_de_slot(event->x, event->y);
+		double x = event->x;
+		double y = event->y;
+		modelo->seleccionar_morph(x, y);
+		if (modelo->es_objeto(x, y)) {
+			std::cout << "Encuentra objeto" << std::endl;
+			modelo->editar_morph(x, y);
+		}
+		if (modelo->es_slot(x, y)) {
+			std::cout << "Encuentra slot" << std::endl;
+			modelo->crear_morph_de_slot(x, y);
+		}
 		return true;
 	}
 	return false;

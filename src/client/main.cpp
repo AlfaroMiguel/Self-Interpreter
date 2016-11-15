@@ -28,6 +28,7 @@ int main (int argc, char **argv) {
 
 	ventana_vm->set_control(&cont_eventos);
 
+	modelo.inicializar();
 	com_server.inicializar();
 
 	app->run(*ventana_vm);

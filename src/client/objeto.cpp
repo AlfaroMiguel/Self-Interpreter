@@ -18,9 +18,8 @@ Objeto& Objeto::operator=(Objeto&& otra){
 }
 
 bool Objeto::esta_en_posicion(double x, double y){
-	if (pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO> y) return true;
-	for (unsigned int i = 0; i < slots.size(); i++)
-		if (slots[i]->esta_en_posicion(x, y)) return true;
+	if (objeto_en_posicion(x, y)) return true;
+	if (slot_en_posicion(x, y)) return true;
 	return false;
 }
 
@@ -50,15 +49,36 @@ void Objeto::editar_nombre(const Glib::ustring& nombre_nuevo){
 	texto->property_text() = nombre_nuevo;
 }
 
-Glib::ustring Objeto::obtener_nombre_slot(double x, double y){
+Glib::ustring Objeto::obtener_valor_slot(double x, double y){
 	for (unsigned int i = 0; i < slots.size(); i++) {
 		if (slots[i]->esta_en_posicion(x, y))
-			return slots[i]->obtener_nombre();
+			return slots[i]->obtener_valor();
 	}
 	Glib::ustring vacia;
 	return vacia;
 }
 
-const std::string Objeto::get_nombre(){
+Glib::ustring Objeto::obtener_nombre_slot(double x, double y){
+	for (unsigned int i = 0; i < slots.size(); i++) {
+		if (slots[i]->esta_en_posicion(x, y)) {
+			return slots[i]->obtener_nombre();
+		}
+	}
+	Glib::ustring vacia;
+	return vacia;
+}
+
+const std::string Objeto::get_nombre() {
 	return nombre.raw();
+}
+
+bool Objeto::objeto_en_posicion(double x, double y) {
+	if (pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO> y) return true;
+	return false;
+}
+
+bool Objeto::slot_en_posicion(double x, double y){
+	for (unsigned int i = 0; i < slots.size(); i++)
+		if (slots[i]->esta_en_posicion(x, y)) return true;
+	return false;
 }

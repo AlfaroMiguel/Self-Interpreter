@@ -6,8 +6,7 @@ Modelo::Modelo() {}
 
 Modelo::~Modelo() {}
 
-Modelo::Modelo(Modelo&& otra): morphs(otra.morphs), morph_editando(otra.morph_editando) {
-}
+Modelo::Modelo(Modelo&& otra): morphs(otra.morphs), morph_editando(otra.morph_editando) {}
 
 Modelo& Modelo::operator=(Modelo&& otra){
 	morphs = otra.morphs;
@@ -15,16 +14,17 @@ Modelo& Modelo::operator=(Modelo&& otra){
 	return *this;
 }
 
-bool Modelo::editar_morph(double x, double y){
+void Modelo::editar_morph(double x, double y){
+	cont_eventos->editar();
+}
+
+void Modelo::seleccionar_morph(double x, double y){
 	for(unsigned int i = 0; i < morphs.size(); i++) {
 		if (morphs[i]->esta_en_posicion(x, y)) {
 			morphs[i]->editando(true);
 			morph_editando = morphs[i];
-			cont_eventos->editar();
-			return true;
 		}
 	}
-	return false;
 }
 
 void Modelo::cambiar_nombre_morph(const std::string& nuevo_nombre){
@@ -45,7 +45,7 @@ void Modelo::eliminar_morph(double x, double y){
 	}
 }
 
-void Modelo::crear_morph(const std::string& nombre, double x, double y, std::map<std::string, std::string> dic_slots) {
+Glib::RefPtr<Morph> Modelo::crear_morph(const std::string& nombre, double x, double y, std::map<std::string, std::string> dic_slots) {
 	const Glib::ustring nombre_morph(nombre);
 	Glib::RefPtr<Morph> morph = Morph::create(x, y, nombre_morph);
 	morphs.push_back(morph);
@@ -53,6 +53,7 @@ void Modelo::crear_morph(const std::string& nombre, double x, double y, std::map
 	morph->agregar_slots(dic_slots);
 	morph->set_control(cont_eventos);
 	cont_eventos->crear_morph(morph);
+	return morph;
 }
 
 void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2) {
@@ -68,9 +69,11 @@ void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2)
 void Modelo::crear_morph_de_slot(double x, double y){
 	if (morph_editando){
 		std::map<std::string, std::string> dic_slots;
-		const std::string nombre = morph_editando->obtener_nombre_slot(x, y);
-		if (! nombre.empty())
-			crear_morph(nombre, x + 50, y + 50, dic_slots);
+		const std::string nombre(morph_editando->obtener_valor_slot(x, y));
+		if (!nombre.empty()) {
+			Glib::RefPtr <Morph> nuevo_morph = crear_morph(nombre, x + 50, y + 50, dic_slots);
+			//unir_morphs(nuevo_morph, morph_editando);
+		}
 	}
 }
 
@@ -84,4 +87,28 @@ void Modelo::mover_morph(const std::string& morph, double x, double y){
 
 void Modelo::set_control(ControladorEventos *cont_eventos) {
 	this->cont_eventos = cont_eventos;
+}
+
+void Modelo::inicializar(){
+	std::map<std::string, std::string> dic_slots;
+	//esto de rellenar el map es hc, la shell no tiene slots
+	std::string slot("x");
+	std::string valor("4");
+	dic_slots.insert(std::pair<std::string, std::string>(slot, valor));
+	std::string nombre("shell");
+	crear_morph(nombre, 0, 0, dic_slots);
+}
+
+bool Modelo::es_objeto(double x, double y){
+	for(unsigned int i = 0; i < morphs.size(); i++)
+		if (morphs[i]->es_objeto(x, y))
+			return true;
+	return false;
+}
+
+bool Modelo::es_slot(double x, double y){
+	for(unsigned int i = 0; i < morphs.size(); i++)
+		if (morphs[i]->es_slot(x, y))
+			return true;
+	return false;
 }

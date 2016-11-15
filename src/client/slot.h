@@ -5,7 +5,7 @@
 
 class Slot: public Representacion{
  public:
-  	static Glib::RefPtr<Slot> create(double x, double y, const Glib::ustring& nombre, const Glib::ustring& );
+  	static Glib::RefPtr<Slot> create(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor);
   	Slot(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor);
  	~Slot();
 
@@ -15,7 +15,8 @@ class Slot: public Representacion{
   	bool esta_en_posicion(double x, double y);
   	void mover(double new_x, double new_y);
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
-	Glib::ustring& obtener_nombre();
+	Glib::ustring& obtener_valor();
+  	Glib::ustring& obtener_nombre();
  private:
   	Glib::ustring valor;
 

@@ -42,6 +42,7 @@ void ComunicadorServer::inicializar(){
 	json j;
 	j["evento"] = "inicializar";
 	enviar_json(j);
+	cont_eventos->inicializar();
     recibidor->start();
 }
 

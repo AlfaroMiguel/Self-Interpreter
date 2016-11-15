@@ -1,5 +1,5 @@
 #include "slot.h"
-
+#include <iostream>
 #define ALTO 23
 #define ANCHO 200
 
@@ -34,6 +34,10 @@ void Slot::editar_nombre(const Glib::ustring& nombre_nuevo){
 	nombre = nombre_nuevo;
 	Glib::ustring texto_nuevo = nombre + ": " + valor;
 	texto->property_text() = texto_nuevo;
+}
+
+Glib::ustring& Slot::obtener_valor(){
+	return valor;
 }
 
 Glib::ustring& Slot::obtener_nombre(){

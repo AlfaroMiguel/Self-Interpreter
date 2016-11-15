@@ -75,14 +75,19 @@ void Morph::editar_nombre(const std::string& nombre_nuevo) {
 	objeto->editar_nombre(nombre);
 }
 
-const std::string& Morph::obtener_nombre_slot(double x, double y){
+const std::string Morph::obtener_valor_slot(double x, double y){
+	return (objeto->obtener_valor_slot(x, y)).raw();
+}
+
+const std::string Morph::obtener_nombre_slot(double x, double y){
 	return (objeto->obtener_nombre_slot(x, y)).raw();
 }
+
+
 bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventMotion* event) {
 	if(item && dragging && item == dragging) {
 		auto new_x = event->x;
 		auto new_y = event->y;
-		//objeto->mover(new_x - drag_x, new_y - drag_y);
 		cont_eventos->mover_morph(get_nombre(), new_x - drag_x, new_y - drag_y);
 	}
 	return false;
@@ -113,4 +118,12 @@ void Morph::mover(double x, double y){
 
 void Morph::set_control(ControladorEventos *cont_eventos) {
 	this->cont_eventos = cont_eventos;
+}
+
+bool Morph::es_objeto(double x, double y) {
+	return objeto->objeto_en_posicion(x, y);
+}
+
+bool Morph::es_slot(double x, double y) {
+	return objeto->slot_en_posicion(x, y);
 }
