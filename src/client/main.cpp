@@ -10,6 +10,7 @@
 #include "cont_eventos.h"
 
 int main (int argc, char **argv) {
+
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
 	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file("ventana_vm.glade");
 

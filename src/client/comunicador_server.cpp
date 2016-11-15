@@ -95,7 +95,7 @@ void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
 	recibidor->start();
 }
 
-void ComunicadorServer::recibir_mensaje(std::string &msj) {
+void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
 	std::string evento = j["evento"];
 	std::map<std::string, std::string> dic_slots;
@@ -120,7 +120,7 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 			cont_eventos->set_lobby(id);
 		}
 		cont_eventos->iniciar();
-		cont_eventos->mostrar_lobbies();
+		//cont_eventos->mostrar_lobbies();
 	}
 	if(evento == "cliente conectado"){
 		json j;

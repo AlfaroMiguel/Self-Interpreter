@@ -45,6 +45,10 @@ void VentanaVM::iniciar() {
 	ventana_objetos->show();
 }
 
+void VentanaVM::inicializar(){
+	ventana_inicio->iniciar();
+}
+
 void VentanaVM::editar(){
 	ventana_edicion->show_all();
 }

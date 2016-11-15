@@ -28,5 +28,6 @@ class VentanaInicio: public Gtk::Dialog{
   	Gtk::Entry* entrada_texto;
 
   	void on_confirmar();
+  	bool do_iniciar();
 };
 #endif

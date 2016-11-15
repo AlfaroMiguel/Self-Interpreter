@@ -24,7 +24,7 @@ void VentanaInicio::set_lobby(const std::string& id){
 	lobbies.push_back(lobby);
 }
 
-void VentanaInicio::iniciar() {
+bool VentanaInicio::do_iniciar(){
 	std::cout << lobbies.size() << std::endl;
 	for(unsigned  int i = 0; i < lobbies.size(); i++) {
 		std::cout << lobbies[i] << std::endl;
@@ -32,6 +32,13 @@ void VentanaInicio::iniciar() {
 	}
 	if (lobbies.size() > 0)
 		comboBox->set_active(0);
+	std::cout << "se crean los lobbies" << std::endl;
+	this->show();
+	return false;
+}
+
+void VentanaInicio::iniciar() {
+	sigc::connection conn = Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_iniciar));
 }
 
 void VentanaInicio::set_control(ControladorEventos* cont_eventos) {
@@ -40,7 +47,7 @@ void VentanaInicio::set_control(ControladorEventos* cont_eventos) {
 
 void VentanaInicio::on_confirmar(){
 	Glib::ustring lobby;
-	Glib::ustring estado("compartido");
+	Glib::ustring estado("existente");
 	if (boton_seleccionar_lobby->get_active())
 		lobby = comboBox->get_active_text();
 	else {

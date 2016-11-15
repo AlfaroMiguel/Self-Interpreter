@@ -21,9 +21,9 @@ void ControladorVistas::eliminar_morph(Glib::RefPtr<Morph> morph){
 }
 
 void ControladorVistas::mostrar_lobbies() {
-	std::cout << "controlador vistas mostrar lobbies" << std::endl;
 	ventana_principal->mostrar_lobbies();
 }
+
 void ControladorVistas::editar() {
 	ventana_principal->editar();
 }
@@ -33,7 +33,7 @@ void ControladorVistas::set_lobby(const std::string& id){
 }
 
 void ControladorVistas::iniciar() {
-	ventana_inicio->iniciar();
+	ventana_principal->inicializar();
 }
 
 void ControladorVistas::crear_vm() {

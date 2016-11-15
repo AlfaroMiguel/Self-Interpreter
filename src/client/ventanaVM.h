@@ -39,5 +39,6 @@ class VentanaVM: public Gtk::Window{
   void iniciar();
   void editar();
   void mostrar_lobbies();
+  void inicializar();
 };
 #endif
