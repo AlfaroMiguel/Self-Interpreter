@@ -3,4 +3,3 @@
 `bison -d  --debug -g -v --defines=parser.h --output=parser.cpp parser.y`
 
 echo 'Archivos de parser generados'
-'
