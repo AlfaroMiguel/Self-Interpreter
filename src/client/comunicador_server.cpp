@@ -40,13 +40,13 @@ ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	return *this;
 }
 
-void ComunicadorServer::inicializar(){
-	json j;
-	j["evento"] = "inicializar";
-	enviar_json(j);
-	cont_eventos->inicializar();
-    recibidor->start();
-}
+//void ComunicadorServer::inicializar(){
+//	json j;
+//	j["evento"] = "inicializar";
+//	enviar_json(j);
+//	cont_eventos->inicializar();
+//  recibidor->start();
+//}
 
 void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
 	json j;
@@ -75,6 +75,8 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 	j["lobby"] = lobby;
 	j["estado"] = estado_lobby;
 	enviar_json(j);
+	cont_eventos->inicializar();
+	recibidor->start();
 }
 
 void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, double x, double y){
@@ -111,7 +113,9 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 		cont_eventos->crear_morph(nombre, x, y, dic_slots);
 	}
 	if (evento == EVENTO_AGREGAR_LOBBIES){
-		for (json::iterator it = j.begin(); it != j.end(); ++it) {
+		std::string lobbies_str = j["lobbies"];
+		json lobbies = json::parse((char*)lobbies_str.c_str())
+		for (json::iterator it = lobbies.begin(); it != lobbies.end(); ++it) {
 			std::string id = it.value();
 			cont_eventos->set_lobby(id);
 		}
