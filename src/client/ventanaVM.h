@@ -38,5 +38,6 @@ class VentanaVM: public Gtk::Window{
   void set_control(ControladorEventos* cont_eventos);
   void iniciar();
   void editar();
+  void mostrar_lobbies();
 };
 #endif

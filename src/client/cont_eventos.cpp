@@ -38,6 +38,7 @@ void ControladorEventos::ingresar_cliente(const std::string &nombre_cliente) {
 }
 
 void ControladorEventos::mostrar_lobbies() {
+	std::cout << "cont eventos mostrar lobbies" << std::endl;
 	cont_vistas->mostrar_lobbies();
 }
 void ControladorEventos::inicializar(){

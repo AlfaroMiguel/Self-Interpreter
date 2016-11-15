@@ -49,3 +49,6 @@ void VentanaVM::editar(){
 	ventana_edicion->show_all();
 }
 
+void VentanaVM::mostrar_lobbies(){
+	ventana_inicio->show();
+}

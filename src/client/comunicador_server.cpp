@@ -122,6 +122,7 @@ void ComunicadorServer::recibir_mensaje(std::string &msj) {
 		cont_eventos->iniciar();
 	}
 	if(evento == "cliente conectado"){
+		std::cout << "recibe cliente conectado" << std::endl;
 		cont_eventos->mostrar_lobbies();
 	}
 	if(evento == "error cliente"){
