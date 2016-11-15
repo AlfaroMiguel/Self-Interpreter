@@ -41,10 +41,14 @@ void VentanaVM::set_control(ControladorEventos* cont_eventos){
 	cont_vistas->set_control(cont_eventos);
 }
 
-void VentanaVM::iniciar() {
+bool VentanaVM::do_iniciar() {
 	ventana_objetos->show();
+	return false;
 }
 
+void VentanaVM::iniciar() {
+	sigc::connection conn = Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaVM::do_iniciar));
+}
 void VentanaVM::inicializar(){
 	ventana_inicio->iniciar();
 }

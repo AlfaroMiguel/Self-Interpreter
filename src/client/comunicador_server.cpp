@@ -71,7 +71,7 @@ void ComunicadorServer::enviar_json(json j){
 
 void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std::string& estado_lobby){
 	json j;
-	j["evento"] = "conectar";
+	j["evento"] = "elegir lobby";
 	j["lobby"] = lobby;
 	j["estado"] = estado_lobby;
 	enviar_json(j);

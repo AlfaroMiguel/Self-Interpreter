@@ -23,5 +23,6 @@ class VentanaObjetos: public Gtk::Box{
   		Glib::RefPtr<Goocanvas::Group> root;
 
   		bool on_button_press_event(GdkEventButton* event);
+  		bool do_iniciar();
 };
 #endif

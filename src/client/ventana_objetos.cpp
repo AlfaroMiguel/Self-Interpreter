@@ -31,7 +31,12 @@ bool VentanaObjetos::on_button_press_event(GdkEventButton *event) {
 	return cont_eventos->button_event(event);
 }
 
-void VentanaObjetos::iniciar() {
+bool VentanaObjetos::do_iniciar() {
 	this->show();
+	return false;
+}
+
+void VentanaObjetos::iniciar() {
+	sigc::connection conn = Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaObjetos::do_iniciar));
 }
 
