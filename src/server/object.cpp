@@ -38,8 +38,6 @@ NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
   return value;
 }
 
-
-
 Object* Object::getSlotName(std::string name){
   Slot slot =  slots.obtenerSlot(name);
   return slot.obtenerReferencia();
@@ -93,8 +91,6 @@ Object* Object::buscarObject(std::string nombre, Object* object) {
     std::cout << "Busco: " << nombre <<  " en " << object->getName() << std::endl;
     return slots.buscarSlot(nombre, object);
 }
-
-
 
 
 Object* Object::getResult(){

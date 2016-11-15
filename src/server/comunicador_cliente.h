@@ -7,6 +7,7 @@
 #include <iostream>
 #include "../common/thread.h"
 #include "controlador_eventos.h"
+#include "virtualmachine.h"
 
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del cliente. */
@@ -17,8 +18,11 @@ private:
     void atender();
     ControladorDeEventos controladorDeEventos;
 
+
 public:
-    ComunicadorCliente(Socket skt_aceptar);
+    std::string clientName;
+    VirtualMachine& vm;
+    ComunicadorCliente(Socket skt_aceptar, VirtualMachine& vm);
 
     /* Destructor de la clase. */
     virtual ~ComunicadorCliente();

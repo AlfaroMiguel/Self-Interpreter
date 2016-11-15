@@ -9,28 +9,19 @@ ControladorDeEventos::ControladorDeEventos(ComunicadorCliente& cliente) : client
 ControladorDeEventos::~ControladorDeEventos(){}
 
 void ControladorDeEventos::resolverInicializar(){
-    std::string lobby1("Lobby principal");
-    std::string lobby2("Lobby secundario");
-    std::string lobby3("Lobby backup");
-    //Hardcodeo los lobbys pero se los tengo que pedir al modelo
-    std::vector<std::string> lobbys;
-    lobbys.push_back(lobby1);
-    lobbys.push_back(lobby2);
-    lobbys.push_back(lobby3);
-
-    for(int i = 0; i < lobbys.size(); i++){
-        json jrespuesta;
-        jrespuesta["evento"] = "agregar lobby";
-        jrespuesta["id"] = lobbys[i];
-        cliente.enviarEvento(jrespuesta.dump());
+    std::vector<std::string> lobbies = cliente.vm.getAvailablesLobbies(cliente.clientName);
+    json jlobbies;
+    for(int i = 0; i < lobbies.size(); i++){
+        jlobbies[std::to_string(i)] = lobbies[i];
     }
-    json jrespuesta;
-    jrespuesta["evento"] = "iniciar";
-    cliente.enviarEvento(jrespuesta.dump());
+    json jInicializar;
+    jInicializar["evento"] = "agregar lobbies";
+    jInicializar["lobbies"] = jlobbies.dump();
+    cliente.enviarEvento(jInicializar.dump());
 }
 
-void ControladorDeEventos::resolverConectar(std::string nombre, std::string lobby){
-    std::cout << nombre<< " se quiere conectar a " << lobby << std::endl; //Sacar
+void ControladorDeEventos::resolverConectar(std::string nombre){
+    std::cout << " Nuevo cliente " << nombre << std::endl; //Sacar
     json jrespuesta;
     jrespuesta["evento"] = "cliente conectado";
     cliente.enviarEvento(jrespuesta.dump());
@@ -42,12 +33,12 @@ void ControladorDeEventos::resolverEvento(std::string evento) {
 
     std::string nombreEvento = eventoj["evento"];
 
-    if(nombreEvento == "inicializar"){ //Ni bien se conecta el cliente le paso los lobbys disponibles
+    if(nombreEvento == "inicializar"){
         resolverInicializar();
     }
 
-    if(nombreEvento == "conectar"){ //El cliente me informa a que lobby se conecta
-        resolverConectar(eventoj["nombre"], eventoj["lobby"]);
+    if(nombreEvento == "conectar cliente"){ //El cliente me informa a que lobby se conecta
+        resolverConectar(eventoj["nombre"]);
     }
 
     if(nombreEvento == "mover morph"){

@@ -13,6 +13,7 @@
 #include "../common/thread.h"
 #include "comunicador_cliente.h"
 #include "../common/socket.h"
+#include "virtualmachine.h"
 
 /*Clase encargada de aceptar clientes nuevos que se quieran conectar
  * al servidor, hereda de Thread.
@@ -25,13 +26,14 @@ class Aceptador : public Thread {
     Socket socket;
     std::vector<ComunicadorCliente *> clientes;
     bool sigo_aceptando;
+    VirtualMachine& vm;
     /*Metodo privado que elimina los clientes que ya fueron atendidos*/
     void eliminar_clientes_atendidos();
 
 public:
     /*Constructor del aceptador recibe un puerto de donde va a crear el socket
      * y recibir los clientes nuevos, y la referencia al modelo*/
-    Aceptador(std::string& puerto);
+    Aceptador(std::string& puerto, VirtualMachine &vm);
     /*Destructor del aceptador*/
     ~Aceptador();
     /*Metodo que cuando se ejecuta el aceptador esta listo para aceptar

@@ -39,8 +39,9 @@ int main(int argc, const char *argv[]) try{
     if(argc != CANT_PARAMETROS){
         return SALIDA;
     }
+    VirtualMachine vm;
     std::string puerto = argv[POS_PORT];
-    Aceptador aceptador(puerto);
+    Aceptador aceptador(puerto, vm);
     aceptador.run();
     std::string entrada;
     while (getline(std::cin, entrada)) {

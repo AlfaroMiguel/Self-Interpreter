@@ -24,8 +24,9 @@ bool hay_que_eliminar_cliente(ComunicadorCliente* cliente){
     return cliente == NULL;
 }
 
-Aceptador::Aceptador(std::string& puerto) :
-        sigo_aceptando(true){
+Aceptador::Aceptador(std::string& puerto, VirtualMachine& vm) :
+        sigo_aceptando(true),
+        vm(vm){
     socket.bind_and_listen(puerto);
 }
 
@@ -56,7 +57,7 @@ void Aceptador::aceptar() {
             continue;
         }
         std::cerr << "Cliente conectado." << std::endl;
-        ComunicadorCliente *cliente_nuevo = new ComunicadorCliente(std::move(socket_acpt));
+        ComunicadorCliente *cliente_nuevo = new ComunicadorCliente(std::move(socket_acpt), vm);
         cliente_nuevo->start();
         eliminar_clientes_atendidos();
         clientes.push_back(cliente_nuevo);

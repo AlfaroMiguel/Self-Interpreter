@@ -1,8 +1,8 @@
 #include "comunicador_cliente.h"
 #include "recibidor.h"
 
-ComunicadorCliente::ComunicadorCliente(Socket skt_aceptar): //ademas recibe el modelo
-	skt_aceptar(std::move(skt_aceptar)), ejecutando(true), controladorDeEventos(*this){
+ComunicadorCliente::ComunicadorCliente(Socket skt_aceptar, VirtualMachine& vm): //ademas recibe el modelo
+	skt_aceptar(std::move(skt_aceptar)), ejecutando(true), controladorDeEventos(*this), vm(vm){
 }
 
 ComunicadorCliente::~ComunicadorCliente(){

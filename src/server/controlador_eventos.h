@@ -8,8 +8,9 @@ class ControladorDeEventos {
 private:
     ComunicadorCliente& cliente;
 
+    void resolverConectar(std::string nombre);
     void resolverInicializar();
-    void resolverConectar(std::string nombre, std::string lobby);
+
 
 public:
     ControladorDeEventos(ComunicadorCliente& cliente);
