@@ -4,6 +4,7 @@
 
 SearcherObject::SearcherObject(std::string nameString):Object(){
   setName(nameString);
+  setRepresentation(nameString);
 }
 
 SearcherObject::~SearcherObject(){

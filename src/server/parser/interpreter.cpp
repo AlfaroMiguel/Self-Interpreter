@@ -35,6 +35,7 @@ Interpreter::Interpreter(Object* entorno_ptr, Lobby* lobby):entorno(entorno_ptr)
     char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |). \n\0\0";
     this->interpretChar(shellCode);
 
+  mapMessages.insert(std::pair<string,int>("representation",15));
 }
 
 Interpreter::Interpreter(){
@@ -72,8 +73,8 @@ void Interpreter::pushToken(string id,string message, string value){
   int id_message = mapMessages[message];
   switch(id_message){
     case 1:
-      createNumber(value);
-      break;
+        createNumber(value);
+        break;
     case 2:
         assignationExpression(id);
         break;
@@ -121,14 +122,19 @@ void Interpreter::pushToken(string id,string message, string value){
         //std::cout<<"Expression [division] Expression"<<std::endl;
         createVariable(id);
         break;
+    case 15:
+        //std::cout<<"Expression [division] Expression"<<std::endl;
+        setRepresentation(value);
+        break;
     default:
       std::cout<<"Interpreter::ERROR: message not found:"<<message<<std::endl;
       sendMessage(message);
   }
 }
 
-void Interpreter::end(){
-  /*logica para cuanto tengo que ejecutar toda una linea*/
+void Interpreter::setRepresentation(std::string value){
+  Object* object = stack.top();
+  object->setRepresentation(value);
 }
 
 
@@ -147,6 +153,7 @@ void Interpreter::createNumber(string value){
   std::cout << "createNumber:"<<value<<std::endl;
   std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
   Number* number = new Number(stof(value));
+  number->setRepresentation(value);
   stack.push(number);
 }
 
@@ -198,7 +205,11 @@ void Interpreter::assignationExpression(string name){
     std::cout << "stack not empty" << std::endl;
     Object* expression = stack.top();
     expression->setName(name);
+
       expression->setLobby(lobby); //Test
+
+    std::cout << "get representation:" << std::endl;
+    std::cout << expression->getRepresentation() << std::endl;
   }else{
     std::cout << "Hubo un error no existe objeto al cual asignar nombre" <<std::endl;
     }

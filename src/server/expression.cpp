@@ -16,7 +16,6 @@ void Expression::setReceiver(Object* receiverPtr){
   receiver->addSlots("self",this,false,true);
 }
 
-
 void Expression::isObject(){
   std::cout << "no soy un object" << std::endl;
 }
@@ -30,6 +29,16 @@ void Expression::setArgument(Object* argumentPtr){
 void Expression::setOperator(std::string operatorString){
   std::cout << "Expression::setOperator" << std::endl;
   this->operation = operatorString;
+}
+
+
+std::string Expression::getRepresentation() const {
+  std::cout << "Expression::getRepresentation" << std::endl;
+  if ( receiver != nullptr){
+    return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
+  }
+  std::string pepe = "lala";
+  return pepe;
 }
 
 NativeValue Expression::getValue(){
