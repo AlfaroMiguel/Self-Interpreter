@@ -91,6 +91,10 @@ void ControladorEventos::crear_morph(const std::string& nombre,
 	modelo->crear_morph(nombre, x, y, dic_slots);
 }
 
-void ControladorEventos::crear_morph(const std::string& nombre, double x, double y){
+void ControladorEventos::crear_morph(const std::string& nombre, double x, double y) {
 	com_server->enviar_datos_morph(nombre, x, y);
+}
+
+void ControladorEventos::dibujar_morph(Glib::RefPtr<Morph> morph){
+	cont_vistas->dibujar_morph(morph);
 }

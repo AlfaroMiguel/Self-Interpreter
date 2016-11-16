@@ -57,6 +57,7 @@ Glib::RefPtr<Morph> Modelo::crear_morph(const std::string& nombre, double x, dou
 	morph->conectar_seniales();
 	morph->agregar_slots(dic_slots);
 	morph->set_control(cont_eventos);
+	cont_eventos->dibujar_morph(morph);
 	return morph;
 }
 

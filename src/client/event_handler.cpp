@@ -6,4 +6,6 @@ EventHandler::~EventHandler() {}
 
 EventHandler::EventHandler(EventHandler&& otra){}
 
-EventHandler& EventHandler::operator=(EventHandler&& otra){}
+EventHandler& EventHandler::operator=(EventHandler&& otra){
+	return *this;
+}

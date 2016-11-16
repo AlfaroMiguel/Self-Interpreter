@@ -25,6 +25,7 @@ class ControladorEventos{
   		void editar();
   		void crear_morph(const std::string& nombre, double x, double y, std::map<std::string, std::string> dic_slots);
   		void crear_morph(const std::string& nombre, double x, double y);
+  		void dibujar_morph(Glib::RefPtr<Morph> morph);
   		bool button_event(GdkEventButton *event);
   		void cambio_nombre(const std::string& nuevo_nombre);
   		void finalizar_edicion();
