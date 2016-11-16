@@ -98,5 +98,5 @@ void ControladorEventos::set_control(ControladorVistas* contr_vistas) {
 
 void ControladorEventos::crear_morph(const std::string& nombre,
 									 double x, double y, std::map<std::string, std::string> dic_slots){
-	//decirle al server
+	this->modelo->crear_morph(nombre,x,y,dic_slots); //Esto lo escribi yo -> Miguel
 }

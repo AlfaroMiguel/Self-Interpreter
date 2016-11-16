@@ -96,16 +96,7 @@ void Modelo::set_control(ControladorEventos *cont_eventos) {
 }
 
 void Modelo::inicializar(){
-	std::map<std::string, std::string> dic_slots;
-	//esto de rellenar el map es hc, la shell no tiene slots
-	std::string slot1("x");
-	std::string valor1("4");
-	std::string slot2("y");
-	std::string valor2("5");
-	dic_slots.insert(std::pair<std::string, std::string>(slot1, valor1));
-	dic_slots.insert(std::pair<std::string, std::string>(slot2, valor2));
-	std::string nombre("shell");
-	crear_morph(nombre, 0, 0, dic_slots);
+
 }
 
 bool Modelo::es_objeto(double x, double y){
