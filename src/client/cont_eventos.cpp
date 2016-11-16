@@ -39,15 +39,6 @@ void ControladorEventos::ingresar_cliente(const std::string &nombre_cliente) {
 	com_server->ingresar_cliente(nombre_cliente);
 }
 
-
-void ControladorEventos::inicializar(){
-	modelo->inicializar();
-}
-
-void ControladorEventos::crear_morph(Glib::RefPtr<Morph> morph) {
-	cont_vistas->dibujar_morph(morph);
-}
-
 void ControladorEventos::eliminar_morph(Glib::RefPtr<Morph> morph) {
 	cont_vistas->eliminar_morph(morph);
 }
@@ -97,5 +88,9 @@ void ControladorEventos::set_control(ControladorVistas* contr_vistas) {
 
 void ControladorEventos::crear_morph(const std::string& nombre,
 									 double x, double y, std::map<std::string, std::string> dic_slots){
-	//decirle al server
+	modelo->crear_morph(nombre, x, y, dic_slots);
+}
+
+void ControladorEventos::crear_morph(const std::string& nombre, double x, double y){
+	com_server->enviar_datos_morph(nombre, x, y);
 }

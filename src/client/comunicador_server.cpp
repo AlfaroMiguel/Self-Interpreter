@@ -40,14 +40,6 @@ ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	return *this;
 }
 
-//void ComunicadorServer::inicializar(){
-//	json j;
-//	j["evento"] = "inicializar";
-//	enviar_json(j);
-//	cont_eventos->inicializar();
-//  recibidor->start();
-//}
-
 void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
 	json j;
 	j["evento"] = evento.c_str();
@@ -55,6 +47,14 @@ void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::st
 	enviar_json(j);
 }
 
+void ComunicadorServer::enviar_datos_morph(const std::string& nombre, double x, double y){
+	json j;
+	j["evento"] = "crear morph";
+	j["id"] = nombre;
+	j["x"] = x;
+	j["y"] = y;
+	enviar_json(j);
+}
 void ComunicadorServer::enviar_json(json j){
 	std::string s = j.dump();
 
@@ -91,7 +91,6 @@ void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
 	j["evento"] = "conectar cliente";
 	j["nombre"] = nombre_cliente;
 	enviar_json(j);
-	cont_eventos->inicializar();
 	recibidor->start();
 }
 

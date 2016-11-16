@@ -57,7 +57,6 @@ Glib::RefPtr<Morph> Modelo::crear_morph(const std::string& nombre, double x, dou
 	morph->conectar_seniales();
 	morph->agregar_slots(dic_slots);
 	morph->set_control(cont_eventos);
-	cont_eventos->crear_morph(morph);
 	return morph;
 }
 
@@ -75,6 +74,7 @@ void Modelo::crear_morph_de_slot(double x, double y){
 		const std::string nombre(morph_editando->obtener_valor_slot(x, y));
 		if (!nombre.empty() && !existe_morph(nombre)) {
 			Glib::RefPtr <Morph> nuevo_morph = crear_morph(nombre, x + 50, y + 50, dic_slots);
+			cont_eventos->crear_morph(nombre, x + 50, y + 50);
 			//unir_morphs(nuevo_morph, morph_editando, x, y);
 		}
 	}
@@ -98,19 +98,6 @@ bool Modelo::existe_morph(const std::string& nombre){
 }
 void Modelo::set_control(ControladorEventos *cont_eventos) {
 	this->cont_eventos = cont_eventos;
-}
-
-void Modelo::inicializar(){
-	std::map<std::string, std::string> dic_slots;
-	//esto de rellenar el map es hc, la shell no tiene slots
-	std::string slot1("x");
-	std::string valor1("4");
-	std::string slot2("y");
-	std::string valor2("5");
-	dic_slots.insert(std::pair<std::string, std::string>(slot1, valor1));
-	dic_slots.insert(std::pair<std::string, std::string>(slot2, valor2));
-	std::string nombre("shell");
-	crear_morph(nombre, 0, 0, dic_slots);
 }
 
 bool Modelo::es_objeto(double x, double y){

@@ -26,7 +26,6 @@ class Modelo{
 	void crear_morph_de_slot(double x, double y);
   	void mover_morph(const std::string& morph, double x, double y);
 	void set_control(ControladorEventos* cont_eventos);
-	void inicializar();
   	bool es_objeto(double x, double y);
   	bool es_slot(double x, double y);
   	void seleccionar_morph(double x, double y);

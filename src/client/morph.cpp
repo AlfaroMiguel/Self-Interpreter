@@ -8,7 +8,6 @@
 #define ANCHO 200
 
 Morph::Morph(double x, double y, const Glib::ustring& nombre) {
-	//TODO: creo que se deberia poder redimensionar
 	objeto = Objeto::create(x, y, nombre);
 	add_child(objeto);
 }
