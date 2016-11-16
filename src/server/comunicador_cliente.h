@@ -22,6 +22,7 @@ private:
 public:
     std::string clientName;
     VirtualMachine& vm;
+
     ComunicadorCliente(Socket skt_aceptar, VirtualMachine& vm);
 
     /* Destructor de la clase. */

@@ -524,12 +524,13 @@ char *yytext;
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string>
+	#include "interpreter.h"
 	#include <iostream> //cout
 	using namespace std ;
 	#include "parser.h" // output of bison on example1.y
 	//void yyerror( const char*);
 	int yyparse(void);
-#line 533 "scanner.cpp"
+#line 534 "scanner.cpp"
 
 #define INITIAL 0
 
@@ -716,9 +717,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 11 "scanner.l"
+#line 12 "scanner.l"
 
-#line 722 "scanner.cpp"
+#line 723 "scanner.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -803,23 +804,23 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 12 "scanner.l"
+#line 13 "scanner.l"
 {}; // do nothing on whitespace
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 13 "scanner.l"
+#line 14 "scanner.l"
 {}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 14 "scanner.l"
+#line 15 "scanner.l"
 {return PRINT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "scanner.l"
+#line 16 "scanner.l"
 {
 													//std::cout<<"VARIABLE PAARA";
 													yylval.str_val = new string (yytext);
@@ -828,7 +829,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 20 "scanner.l"
+#line 21 "scanner.l"
 {
 													//std::cerr<<"encontré un argumento";
 													//yylval.str_val = new string (yytext);
@@ -837,7 +838,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 25 "scanner.l"
+#line 26 "scanner.l"
 {
 													//std::cerr<<"[Number] ";
 													yylval.double_val = atof(yytext);
@@ -846,7 +847,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 30 "scanner.l"
+#line 31 "scanner.l"
 {
 													//std::cerr<<"=";
 													return EQUALS;
@@ -854,7 +855,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 34 "scanner.l"
+#line 35 "scanner.l"
 {
 													std::cerr<<"barra barra";
 													return COMMENT;
@@ -862,42 +863,42 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 38 "scanner.l"
+#line 39 "scanner.l"
 {return PLUS;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 39 "scanner.l"
+#line 40 "scanner.l"
 {return MINUS;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 40 "scanner.l"
+#line 41 "scanner.l"
 return ASTERISK;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 41 "scanner.l"
+#line 42 "scanner.l"
 return FSLASH;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 42 "scanner.l"
+#line 43 "scanner.l"
 return EQUALSMUTAL;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 43 "scanner.l"
+#line 44 "scanner.l"
 return SET;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 44 "scanner.l"
+#line 45 "scanner.l"
 return LPAREN;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 45 "scanner.l"
+#line 46 "scanner.l"
 {
 							//std::cerr<<")";
 							return RPAREN;
@@ -905,50 +906,50 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 49 "scanner.l"
+#line 50 "scanner.l"
 {return ADD;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 50 "scanner.l"
+#line 51 "scanner.l"
 {return RM;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 51 "scanner.l"
+#line 52 "scanner.l"
 {return BAR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 52 "scanner.l"
+#line 53 "scanner.l"
 {
 							//std::cerr<<"(| ";
 							return CREATEOBJECTINIT;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 55 "scanner.l"
+#line 56 "scanner.l"
 {//std::cerr<<"|) ";
 							return CREATEOBJECTEND;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 57 "scanner.l"
+#line 58 "scanner.l"
 return SEMICOLON;
 	YY_BREAK
 
 case 23:
 YY_RULE_SETUP
-#line 59 "scanner.l"
+#line 60 "scanner.l"
 
 	YY_BREAK
 
 case 24:
 YY_RULE_SETUP
-#line 61 "scanner.l"
+#line 62 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 952 "scanner.cpp"
+#line 953 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1946,11 +1947,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 61 "scanner.l"
+#line 62 "scanner.l"
 
 
 
-void yyerror (const char * str)
+void yyerror (Interpreter* interpreter,const char * str)
 {
 	printf("Parse Error:-%s-\n", str );
 }

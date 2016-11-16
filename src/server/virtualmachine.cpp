@@ -17,7 +17,7 @@ VirtualMachine::~VirtualMachine() {
     //Aca tendria que entrar la serializacion de los lobbys, cuando se cierra la vm
 }
 
-void VirtualMachine::newClient(std::string clientName, ComunicadorCliente *clientReference) {
+Client* VirtualMachine::newClient(std::string clientName, ComunicadorCliente *clientReference) {
     Client* newClient =  new Client(clientName, clientReference);
     existingClients.insert(make_pair(clientName, newClient));
 }
@@ -32,4 +32,43 @@ std::vector<std::string> VirtualMachine::getAvailablesLobbies(std::string client
     return availablesLobbies;
 }
 
+bool VirtualMachine::connectClient(std::string clientName, ComunicadorCliente* clientReference){
+    auto itClient = existingClients.find(clientName);
+    if(itClient != existingClients.end())
+        return false;
 
+    Client* client = newClient(clientName, clientReference);
+    existingClients.insert(std::make_pair(clientName, client));
+    return true;
+}
+
+void VirtualMachine::disconnectClient(std::string clientName){
+    auto itClient = existingClients.find(clientName);
+    if(itClient != existingClients.end())
+        existingClients.erase(clientName);
+    for(auto itLobbies = existingLobbies.begin(); itLobbies != existingLobbies.end(); itLobbies++){
+        itLobbies->second->disconnectClient(itClient->second);
+    }
+}
+
+bool VirtualMachine::connectClientToLobby(std::string clientName, std::string lobbyName, bool isShared) {
+    auto itClient = existingClients.find(clientName);
+    if(itClient == existingClients.end())
+        return false;
+
+    Client* client = itClient->second;
+
+    auto itLobby = existingLobbies.find(lobbyName);
+    Lobby* lobby;
+    if(itLobby == existingLobbies.end()){
+        Object* lobbyObject = new Object();
+        lobbyObject->setName(lobbyName);
+        lobby = new Lobby(lobbyName, isShared, lobbyObject);
+        existingLobbies.insert(std::make_pair(lobby->getLobbyName(), lobby));
+    }
+    else
+        lobby = itLobby->second;
+
+    lobby->connectClient(client);
+    client->setActualLobby(lobby);
+}

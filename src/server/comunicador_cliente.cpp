@@ -7,6 +7,7 @@ ComunicadorCliente::ComunicadorCliente(Socket skt_aceptar, VirtualMachine& vm): 
 
 ComunicadorCliente::~ComunicadorCliente(){
 	//delete &skt_aceptar; Ahora es RAII
+
 }
 
 void ComunicadorCliente::atender(){
@@ -14,6 +15,8 @@ void ComunicadorCliente::atender(){
     Recibidor recibidor(skt_aceptar, *this);
     recibidor.run();
     std::cout << "Termino de atender" << std::endl;
+    vm.disconnectClient(clientName);
+    std::cout << "Desconecto cliente: " << clientName << std::endl;
 }
 
 void ComunicadorCliente::recibirEvento(std::string evento){

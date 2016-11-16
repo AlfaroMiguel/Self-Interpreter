@@ -9,9 +9,16 @@ ControladorDeEventos::ControladorDeEventos(ComunicadorCliente& cliente) : client
 ControladorDeEventos::~ControladorDeEventos(){}
 
 void ControladorDeEventos::resolverConectar(std::string nombre){
-    std::cout << " Nuevo cliente " << nombre << std::endl; //Sacar
+    std::cout << " Se conecta cliente " << nombre << std::endl;
+    bool sePudoConectar = cliente.vm.connectClient(nombre, &cliente);
     json jrespuesta;
-    jrespuesta["evento"] = "cliente conectado";
+    if(sePudoConectar)
+        jrespuesta["evento"] = "cliente conectado";
+
+    else
+        jrespuesta["evento"] = "error";
+
+    cliente.clientName = nombre;
     cliente.enviarEvento(jrespuesta.dump());
 }
 
@@ -27,23 +34,35 @@ void ControladorDeEventos::resolverInicializar(){
     cliente.enviarEvento(jInicializar.dump());
 }
 
+void ControladorDeEventos::resolverElegirLobby(std::string nombreLobby, std::string estadoLobby){
+    //Conecto al cliente al lobby
+    if(estadoLobby == "compartido")
+        cliente.vm.connectClientToLobby(cliente.clientName, nombreLobby, true);
+    else
+        cliente.vm.connectClientToLobby(cliente.clientName, nombreLobby, false);
+
+
+    json jDatosLobby;
+    jDatosLobby["evento"] = "datos lobby";
+    cliente.enviarEvento(jDatosLobby.dump());
+}
+
 void ControladorDeEventos::resolverEvento(std::string evento) {
     json eventoj = json::parse(evento);
     std::cout << eventoj["evento"] << std::endl; //Aca dependiendo del evento envio o modifico cosas
 
     std::string nombreEvento = eventoj["evento"];
 
-    if(nombreEvento == "conectar cliente"){ //El cliente me informa a que lobby se conecta
+    if(nombreEvento == "conectar cliente"){ //El cliente me informa su nombre
         resolverConectar(eventoj["nombre"]);
     }
 
-    if(nombreEvento == "inicializar"){
+    if(nombreEvento == "inicializar"){ //El cliente quiere los lobbys
         resolverInicializar();
     }
 
-    if(nombreEvento == "mover morph"){
-        std::cout << "El morph " << eventoj["nombre"] << "se movio a x:" << eventoj["x"] << " y:" << eventoj["y"] << std::endl;
-        //Aca tengo que actualizar las posiciones de los morphs
+    if(nombreEvento == "elegir lobby"){ //EL cliente elijio un lobby
+        resolverElegirLobby(eventoj["lobby"], eventoj["estado"]);
     }
 
 }

@@ -11,7 +11,7 @@ link_directories(${GTKMM_LIBRARY_DIRS} ${GSTMM_LIBRARY_DIRS})
 include_directories(${GOOCANVASMM_INCLUDE_DIRS} ${GOOCANVASMM_INCLUDE_DIRS})
 link_directories(${GOOCANVASMM_LIBRARY_DIRS} ${GOOCANVASMM_LIBRARY_DIRS})
 
-add_definitions("-g -o0 -Wall -Wdeprecated-declarations -pedantic -pedantic-errors -std=c++11 -pthread `pkg-config gtkmm-3.0 --cflags --libs --libs goocanvasmm-2.0`")
+add_definitions("-g -o0 -Wall -Wdeprecated-declarations -pedantic -pedantic-errors -std=c++11 -pthread -lthread `pkg-config gtkmm-3.0 --cflags --libs --libs goocanvasmm-2.0`")
 
 file (GLOB SRCS  *.cpp *.h)
 

@@ -39,6 +39,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 34 "parser.y" /* yacc.c:1909  */
+
+	#include "interpreter.h"
+
+#line 48 "parser.h" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -80,7 +86,7 @@ union YYSTYPE
 	double double_val ;
   string* str_val;
 
-#line 84 "parser.h" /* yacc.c:1909  */
+#line 90 "parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -91,6 +97,6 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE yylval;
 
-int yyparse (void);
+int yyparse (Interpreter * interpreter);
 
 #endif /* !YY_YY_PARSER_H_INCLUDED  */
