@@ -1,7 +1,7 @@
 #ifndef EVENT_HANDLER_H
 #define EVENT_HANDLER_H
 
-#include "cont_eventos.h
+#include "cont_eventos.h"
 
 class EventHandler{
  protected:
@@ -14,9 +14,6 @@ class EventHandler{
   virtual ~EventHandler();
   EventHandler(EventHandler&& otra);
   EventHandler& operator=(EventHandler&& otra);
-  virtual void run() = 0;
-  void operator()(){
-	  this->run();
-  }
+  virtual void run(json j) = 0;
 };
 #endif

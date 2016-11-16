@@ -5,7 +5,7 @@ NewMorphHandler::NewMorphHandler(ControladorEventos* cont_eventos): EventHandler
 
 NewMorphHandler::~NewMorphHandler() {}
 
-void NewMorphHandler::run() {
+void NewMorphHandler::run(json j) {
 	std::map<std::string, std::string> dic_slots;
 	std::string nombre = j["nombre"];
 	double x = j["posicion"]["x"];

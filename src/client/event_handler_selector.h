@@ -11,6 +11,6 @@ class EventHandlerSelector{
   ~EventHandlerSelector();
   EventHandler* get_event_handler(const std::string& event);
  private:
-  std::map<EventHandler*>, std::string> event_handlers;
+  std::map<std::string, EventHandler*> event_handlers;
 };
 #endif
