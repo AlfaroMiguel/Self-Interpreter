@@ -10,7 +10,7 @@ private:
 
     void resolverConectar(std::string nombre);
     void resolverInicializar();
-
+    void resolverElegirLobby(std::string nombreLobby, std::string estadoLobby);
 
 public:
     ControladorDeEventos(ComunicadorCliente& cliente);

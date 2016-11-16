@@ -23,9 +23,15 @@ bool Lobby::isLobbyShared(){
 }
 
 void Lobby::connectClient(Client* client){
-    clientsConnected.insert(std::make_pair(client->getClientName(), client));
+    auto itClient = clientsConnected.find((client->getClientName()));
+    if(itClient == clientsConnected.end())
+        clientsConnected.insert(std::make_pair(client->getClientName(), client));
+    else
+        itClient->second = client;
 }
 
 void Lobby::disconnectClient(Client* client){
-    clientsConnected.erase(client->getClientName());
+    auto itClient = clientsConnected.find(client->getClientName());
+    if(itClient != clientsConnected.end())
+        itClient->second = nullptr;
 }
