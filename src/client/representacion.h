@@ -29,5 +29,6 @@ class Representacion: public Goocanvas::Group {
  private:
   	Representacion(const Representacion& otra) = delete;
   	Representacion& operator=(const Representacion& otra) = delete;
+
 };
 #endif

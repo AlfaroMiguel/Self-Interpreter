@@ -29,6 +29,10 @@ void Modelo::seleccionar_morph(double x, double y){
 
 void Modelo::cambiar_nombre_morph(const std::string& nuevo_nombre){
 	if(morph_editando) morph_editando->editar_nombre(nuevo_nombre);
+	std::cout << "Morphs: " << std::endl;
+	for(unsigned int i = 0; i < morphs.size(); i++){
+		std::cout << morphs[i]->get_nombre()  << std::endl;
+	}
 }
 
 void Modelo::finalizar_edicion(){
@@ -46,6 +50,7 @@ void Modelo::eliminar_morph(double x, double y){
 }
 
 Glib::RefPtr<Morph> Modelo::crear_morph(const std::string& nombre, double x, double y, std::map<std::string, std::string> dic_slots) {
+	std::cout << "Crea morph: " << nombre << std::endl;
 	const Glib::ustring nombre_morph(nombre);
 	Glib::RefPtr<Morph> morph = Morph::create(x, y, nombre_morph);
 	morphs.push_back(morph);

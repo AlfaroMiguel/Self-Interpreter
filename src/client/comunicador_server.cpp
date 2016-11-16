@@ -120,7 +120,6 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 			cont_eventos->set_lobby(id);
 		}
 		cont_eventos->iniciar();
-		//cont_eventos->mostrar_lobbies();
 	}
 	if(evento == "cliente conectado"){
 		json j;

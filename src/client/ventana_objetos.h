@@ -24,5 +24,6 @@ class VentanaObjetos: public Gtk::Box{
 
   		bool on_button_press_event(GdkEventButton* event);
   		bool do_iniciar();
+  		bool do_dibujar_morph(Glib::RefPtr<Morph> morph);
 };
 #endif

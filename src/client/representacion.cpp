@@ -1,5 +1,5 @@
 #include "representacion.h"
-
+#include "cont_eventos.h"
 #define ALTO 23
 #define ANCHO 200
 

@@ -43,9 +43,14 @@ void Morph::agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea){
 	add_child(linea);
 }
 
-void Morph::eliminar(){
+bool Morph::do_eliminar(){
 	objeto->remove();
 	remove();
+	return false;
+}
+
+void Morph::eliminar() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &Morph::do_eliminar));
 }
 
 void Morph::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
@@ -88,7 +93,9 @@ bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& ite
 	if(item && dragging && item == dragging) {
 		auto new_x = event->x;
 		auto new_y = event->y;
-		cont_eventos->mover_morph(get_nombre(), new_x - drag_x, new_y - drag_y);
+		std::cout << "New pos: " << new_x << ", " << new_y << std::endl;
+		std::cout << "Drag pos: " << drag_x << ", " << drag_y << std::endl;
+ 		cont_eventos->mover_morph(get_nombre(), new_x - drag_x , new_y - drag_y);
 	}
 	return false;
 }
@@ -114,6 +121,7 @@ const std::string Morph::get_nombre(){
 
 void Morph::mover(double x, double y){
 	objeto->mover(x, y);
+	cont_eventos->actualizar_posicion(get_nombre(), get_x(), get_y());
 	if (linea) linea->translate(x, y);
 }
 

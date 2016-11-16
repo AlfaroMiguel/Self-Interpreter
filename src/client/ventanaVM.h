@@ -27,7 +27,7 @@ class VentanaVM: public Gtk::Window{
   Glib::RefPtr<Gtk::Builder> builder;
 
   bool do_iniciar();
-
+  bool do_editar();
  public:
   VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
   virtual ~VentanaVM();

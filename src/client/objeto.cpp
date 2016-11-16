@@ -39,13 +39,15 @@ void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 void Objeto::mover(double new_x, double new_y){
 	translate(new_x, new_y);
 	actualizar_posicion(new_x, new_y);
-	for (unsigned int i = 0; i < slots.size(); i++) {
+	for (unsigned int i = 0; i < slots.size(); i++)
 		slots[i]->mover(new_x, new_y);
-	}
+	std::cout << "La posicion del objeto es: " << pos_x << ", " << pos_y << std::endl;
 }
 
 void Objeto::editar_nombre(const Glib::ustring& nombre_nuevo){
+	std::cout << "Nombre anterior: " << nombre.raw() << std::endl;
 	nombre = nombre_nuevo;
+	std::cout << "Nombre nuevo: " << nombre.raw() << std::endl;
 	texto->property_text() = nombre_nuevo;
 }
 
