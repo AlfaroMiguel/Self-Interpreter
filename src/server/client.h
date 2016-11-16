@@ -1,8 +1,9 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <string>
 
+#include <string>
+class Morph;
 class Lobby;
 class ComunicadorCliente;
 
@@ -18,6 +19,8 @@ public:
 
     std::string getClientName();
     void setActualLobby(Lobby* newActualLobby);
+    Lobby* getActualLobby();
+    void notify(std::string eventName, Morph& morph);
 };
 
 #endif

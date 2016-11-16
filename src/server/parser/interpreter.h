@@ -7,6 +7,7 @@
 #include <string>
 #include "../object.h"
 
+class Lobby;
 
 class Interpreter{
 private:
@@ -22,14 +23,18 @@ private:
   void createExpression(std::string message);
   void sendMessage(std::string message);
   Object* entorno;
+    Lobby* lobby;
 public:
-    Interpreter(Object* entorno_ptr);
+    Interpreter(Object* entorno_ptr, Lobby* lobby);
     Interpreter();
     void pushToken(std::string id,std::string message,std::string value);
     void interpretChar(char* buffer);
     void interpretFile(const char* nameFile);
     void end();
     ~Interpreter();
+
+    void initializeMorphs(Lobby* lobbyContainer);
+    void moveMorph(std::string morphName, double newX, double newY);
 };
 
 #endif /*INTERPRETER_H*/

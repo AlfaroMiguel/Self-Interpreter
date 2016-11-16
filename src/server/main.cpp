@@ -3,14 +3,14 @@
 /*#include "parser/interpreter.h"
 
 int main(int argc, char const *argv[]) {
-    //Object* lobby = new Object;
-    //Interpreter interpreter(lobby);
-    Interpreter interpreter;
+    Object* lobby = new Object;
+    Interpreter interpreter(lobby);
+    //Interpreter interpreter;
 
     //interpreter.interpretFile(argv[1]);
-    char pajaro[] = "lobby _AddSlots: (| pajaro = (| x = 1. y = 3. algunMetodo = (|  | x * 2. ). |).  |). \n\0\0";
+    char pajaro[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |). \n\0\0";
     interpreter.interpretChar(pajaro);
-    char algunMetodo[] = "pajaro algunMetodo.\n\0\0";
+    char algunMetodo[] = "punto xPorDos.\n\0\0";
     interpreter.interpretChar(algunMetodo);
     // char pajaro[] = "lobby _AddSlots: (| pajaro = (| x = 1. y = 3. algunMetodo = (|  | 3 * 2 + 1. ). |).  |). \n\0\0";
     // interpreter.interpretChar(pajaro);

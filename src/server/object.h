@@ -9,11 +9,17 @@
 #include "registrodeslots.h"
 #include "nativevalue.h"
 
+#include "morph.h"
+#include "lobby.h"
+
 class Object{
 protected:
     std::string nombre;
     RegistroDeSlots slots;
     std::string codigo; /*represetancion*/
+
+    Morph myMorph;
+    Lobby* myLobby;
 
 public:
     Object();
@@ -41,9 +47,6 @@ public:
     virtual NativeValue ejecute(std::string operationStr, Object* argumentPtr);
     virtual void evaluate();
 
-
-
-
     void setName(const std::string nuevoNombre);
     std::string getName();
     RegistroDeSlots getSlots();
@@ -61,6 +64,10 @@ public:
     virtual Object* print(const std::vector<Object*>& argumentos);
 
     //Object* collect(); Esto va en el Lobby
+
+    void setLobby(Lobby* lobby);
+    void notifyClients(std::string eventName);
+    void moveMorph(double newX, double newY);
 };
 
 #endif

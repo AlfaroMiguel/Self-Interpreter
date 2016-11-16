@@ -5,7 +5,9 @@
 #include <vector>
 #include <map>
 #include "client.h"
+#include "morph.h"
 
+class Interpreter;
 class Object;
 
 class Lobby{
@@ -14,6 +16,8 @@ private:
     bool isShared;
     Object* lobbyReference;
     std::map<std::string, Client*> clientsConnected;
+    Interpreter* interpreter;
+
 public:
     Lobby(std::string lobbyName, bool isShared, Object* lobbyReference);
     ~Lobby();
@@ -27,6 +31,12 @@ public:
 
     void connectClient(Client* client);
     void disconnectClient(Client* client);
+
+    void notifyClient(std::string eventName, std::string clientName, Morph& morph);
+    void notifyClients(std::string eventName, Morph& morph);
+    void initializeClient(std::string clientName);
+
+    void moveMorph(std::string morphName, double newX, double newY);
 };
 
 #endif

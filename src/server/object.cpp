@@ -23,6 +23,7 @@ Object::Object(const Object &otro) {
 
 void Object::isObject(){
   std::cout << "Soy un objeto" << std::endl;
+    myLobby = nullptr;
 }
 /*ver que onda*/
 NativeValue Object::getValue(){
@@ -46,8 +47,11 @@ Object* Object::getSlotName(std::string name){
 Object::~Object(){}
 
 void Object::setName(const std::string nuevoNombre){
-    std::cout << "Object::setName:" <<nuevoNombre<< std::endl;
+    std::cout << "Object::setName:" << nuevoNombre << std::endl;
     this->nombre = nuevoNombre;
+
+    myMorph.setName(nuevoNombre);
+    this->notifyClients("crear");
 }
 
 std::string Object::getName() {
@@ -109,4 +113,20 @@ std::string Object::obtenerRepresentacion(){
 /*arreglar este método*/
 Object* Object::print(const std::vector<Object*>& argumentos){
   return this;
+}
+
+void Object::setLobby(Lobby *lobby) {
+    myLobby = lobby;
+}
+
+void Object::notifyClients(std::string eventName){
+    if(myLobby != nullptr) {
+        myLobby->notifyClients(eventName, myMorph);
+        std::cout << "Notifico clientes" << std::endl;
+    }
+}
+
+void Object::moveMorph(double newX, double newY){
+    myMorph.changePosition(newX, newY);
+    notifyClients("mover morph");
 }

@@ -88,11 +88,9 @@ void ControladorEventos::set_control(ControladorVistas* contr_vistas) {
 
 void ControladorEventos::crear_morph(const std::string& nombre,
 									 double x, double y, std::map<std::string, std::string> dic_slots){
-<<<<<<< HEAD
 	modelo->crear_morph(nombre, x, y, dic_slots);
 }
 
 void ControladorEventos::crear_morph(const std::string& nombre, double x, double y){
 	com_server->enviar_datos_morph(nombre, x, y);
-	//this->modelo->crear_morph(nombre,x,y,dic_slots); 
 }

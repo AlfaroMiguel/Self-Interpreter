@@ -7,6 +7,7 @@
 #include "scanner.h"
 #include <vector>
 #include <stdexcept>
+#include "../lobby.h"
 
 extern int yyparse(Interpreter *interpreter);
 extern FILE *yyin;
@@ -15,7 +16,7 @@ extern void reset_parser(void);
 
 using std::string;
 
-Interpreter::Interpreter(Object* entorno_ptr):entorno(entorno_ptr){
+Interpreter::Interpreter(Object* entorno_ptr, Lobby* lobby):entorno(entorno_ptr), lobby(lobby){
   mapMessages.insert(std::pair<string,int>("create_number",1));
   mapMessages.insert(std::pair<string,int>("assignation",2));
   mapMessages.insert(std::pair<string,int>("assignation_mutable",3));
@@ -30,6 +31,10 @@ Interpreter::Interpreter(Object* entorno_ptr):entorno(entorno_ptr){
   mapMessages.insert(std::pair<string,int>("*",12));
   mapMessages.insert(std::pair<string,int>("/",13));
   mapMessages.insert(std::pair<string,int>("create_variable",14));
+
+    char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |). \n\0\0";
+    this->interpretChar(shellCode);
+
 }
 
 Interpreter::Interpreter(){
@@ -193,6 +198,7 @@ void Interpreter::assignationExpression(string name){
     std::cout << "stack not empty" << std::endl;
     Object* expression = stack.top();
     expression->setName(name);
+      expression->setLobby(lobby); //Test
   }else{
     std::cout << "Hubo un error no existe objeto al cual asignar nombre" <<std::endl;
     }
@@ -248,3 +254,19 @@ void Interpreter::interpretFile(const char* nameFile){
 }
 
 Interpreter::~Interpreter(){}
+
+//Test
+void Interpreter::initializeMorphs(Lobby* lobbyContainer){
+    std::cout << "Initialize Morphs" << std::endl;
+  for(auto itObject = map.begin(); itObject != map.end(); itObject++){
+      std::cout << "Notifica: " << itObject->second->getName() << std::endl;
+    itObject->second->notifyClients("crear");
+  }
+}
+
+void Interpreter::moveMorph(std::string morphName, double newX, double newY){
+  auto itObject = map.find(morphName);
+  if(itObject == map.end())return;
+  Object* object = itObject->second;
+  object->moveMorph(newX, newY);
+}

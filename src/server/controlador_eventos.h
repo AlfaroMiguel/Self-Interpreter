@@ -11,6 +11,7 @@ private:
     void resolverConectar(std::string nombre);
     void resolverInicializar();
     void resolverElegirLobby(std::string nombreLobby, std::string estadoLobby);
+    void resolverMoverMorph(std::string idMorph, double newX, double newY);
 
 public:
     ControladorDeEventos(ComunicadorCliente& cliente);

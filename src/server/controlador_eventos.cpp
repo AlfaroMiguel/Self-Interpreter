@@ -47,6 +47,10 @@ void ControladorDeEventos::resolverElegirLobby(std::string nombreLobby, std::str
     cliente.enviarEvento(jDatosLobby.dump());
 }
 
+void ControladorDeEventos::resolverMoverMorph(std::string idMorph, double newX, double newY) {
+    cliente.vm.clientMovedMorph(cliente.clientName, idMorph, newX, newY);
+}
+
 void ControladorDeEventos::resolverEvento(std::string evento) {
     json eventoj = json::parse(evento);
     std::cout << eventoj["evento"] << std::endl; //Aca dependiendo del evento envio o modifico cosas
@@ -63,6 +67,9 @@ void ControladorDeEventos::resolverEvento(std::string evento) {
 
     if(nombreEvento == "elegir lobby"){ //EL cliente elijio un lobby
         resolverElegirLobby(eventoj["lobby"], eventoj["estado"]);
+    }
+    if(nombreEvento == "mover morph"){ //Se movio un morph
+        resolverMoverMorph(eventoj["id"], eventoj["x"], eventoj["y"]);
     }
 
 }
