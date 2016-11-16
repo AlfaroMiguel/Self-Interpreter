@@ -47,16 +47,18 @@ bool VentanaVM::do_iniciar() {
 }
 
 void VentanaVM::iniciar() {
-	sigc::connection conn = Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaVM::do_iniciar));
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaVM::do_iniciar));
 }
+
 void VentanaVM::inicializar(){
 	ventana_inicio->iniciar();
 }
 
-void VentanaVM::editar(){
+bool VentanaVM::do_editar(){
 	ventana_edicion->show_all();
+	return false;
 }
 
-void VentanaVM::mostrar_lobbies(){
-	ventana_inicio->show();
+void VentanaVM::editar(){
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaVM::do_editar));
 }

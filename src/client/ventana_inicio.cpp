@@ -38,7 +38,7 @@ bool VentanaInicio::do_iniciar(){
 }
 
 void VentanaInicio::iniciar() {
-	sigc::connection conn = Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_iniciar));
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_iniciar));
 }
 
 void VentanaInicio::set_control(ControladorEventos* cont_eventos) {

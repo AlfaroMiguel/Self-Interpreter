@@ -20,6 +20,7 @@ class ControladorEventos{
   		void iniciar();
   		void crear_vm();
   		void mover_morph(const std::string& morph, double x, double y);
+  		void actualizar_posicion(const std::string& morph, double x, double y);
   		void abrir_vm(const std::string& lobby, const std::string& nombre_cliente);
   		void inicializar();
   		void editar();

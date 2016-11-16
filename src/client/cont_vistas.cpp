@@ -20,10 +20,6 @@ void ControladorVistas::eliminar_morph(Glib::RefPtr<Morph> morph){
 	ventana_objetos->eliminar_morph(morph);
 }
 
-void ControladorVistas::mostrar_lobbies() {
-	ventana_principal->mostrar_lobbies();
-}
-
 void ControladorVistas::editar() {
 	ventana_principal->editar();
 }

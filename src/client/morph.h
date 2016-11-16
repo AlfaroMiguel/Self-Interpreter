@@ -39,7 +39,7 @@ class Morph: public Goocanvas::Group {
   	void set_control(ControladorEventos* cont_eventos);
   	bool es_objeto(double x, double y);
   	bool es_slot(double x, double y);
- protected:
+ private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;
   	bool siendo_editado = false;
@@ -51,8 +51,7 @@ class Morph: public Goocanvas::Group {
   	bool on_item_button_press_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);
   	bool on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);
   	bool on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventMotion* event);
-
- private:
+  	bool do_eliminar();
   	Morph(const Morph& otra) = delete;
   	Morph& operator=(const Morph& otra) = delete;
 };

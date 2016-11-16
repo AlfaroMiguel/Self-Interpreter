@@ -15,8 +15,13 @@ VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 VentanaObjetos::~VentanaObjetos() {}
 
 
-void VentanaObjetos::dibujar_morph(Glib::RefPtr<Morph> morph) {
+bool VentanaObjetos::do_dibujar_morph(Glib::RefPtr<Morph> morph) {
 	root->add_child(morph);
+	return false;
+}
+
+void VentanaObjetos::dibujar_morph(Glib::RefPtr <Morph> morph) {
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_dibujar_morph), morph));
 }
 
 void VentanaObjetos::eliminar_morph(Glib::RefPtr<Morph> morph) {
@@ -37,6 +42,6 @@ bool VentanaObjetos::do_iniciar() {
 }
 
 void VentanaObjetos::iniciar() {
-	sigc::connection conn = Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaObjetos::do_iniciar));
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaObjetos::do_iniciar));
 }
 
