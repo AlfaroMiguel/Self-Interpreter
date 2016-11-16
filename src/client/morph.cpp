@@ -135,3 +135,7 @@ bool Morph::es_objeto(double x, double y) {
 bool Morph::es_slot(double x, double y) {
 	return objeto->slot_en_posicion(x, y);
 }
+
+void Morph::cambiar_posicion(double x, double y){
+	objeto->cambiar_posicion(x, y);
+}

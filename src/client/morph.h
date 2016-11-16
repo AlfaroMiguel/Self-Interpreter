@@ -39,6 +39,7 @@ class Morph: public Goocanvas::Group {
   	void set_control(ControladorEventos* cont_eventos);
   	bool es_objeto(double x, double y);
   	bool es_slot(double x, double y);
+  	void cambiar_posicion(double x, double y);
  private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;

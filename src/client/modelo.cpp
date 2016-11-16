@@ -81,6 +81,14 @@ void Modelo::crear_morph_de_slot(double x, double y){
 	}
 }
 
+void Modelo::cambiar_pos_morph(const std::string& nombre, double x, double y){
+	for (unsigned int i = 0; i < morphs.size(); ++i) {
+		if (morphs[i]->get_nombre() == nombre){
+			morphs[i]->cambiar_posicion(x, y);
+		}
+	}
+}
+
 void Modelo::mover_morph(const std::string& morph, double x, double y){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
 		if (morphs[i]->get_nombre() == morph){

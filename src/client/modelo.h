@@ -30,6 +30,7 @@ class Modelo{
   	bool es_slot(double x, double y);
   	void seleccionar_morph(double x, double y);
   	bool existe_morph(const std::string& nombre);
+  	void cambiar_pos_morph(const std::string& nombre, double x, double y);
  private:
   	Modelo(const Modelo& otra) = delete;
   	Modelo& operator=(const Modelo& otra) = delete;

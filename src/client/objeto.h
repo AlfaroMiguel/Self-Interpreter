@@ -22,6 +22,7 @@ class Objeto: public Representacion{
   	bool objeto_en_posicion(double x, double y);
   	bool slot_en_posicion(double x, double y);
   	const std::string get_nombre();
+  	void cambiar_posicion(double x, double y);
  private:
   	std::vector<Glib::RefPtr<Slot>> slots;
 

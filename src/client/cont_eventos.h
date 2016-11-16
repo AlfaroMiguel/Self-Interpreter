@@ -34,6 +34,7 @@ class ControladorEventos{
   		void enviar_mensaje(const std::string& mensaje, const std::string& evento);
 		void ingresar_cliente(const std::string& nombre_cliente);
   		void mostrar_lobbies();
+  		void cambiar_pos_morph(const std::string& nombre, double x, double y);
  	private:
   		Modelo* modelo;
   		ComunicadorServer* com_server;

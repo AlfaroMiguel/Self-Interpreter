@@ -83,6 +83,7 @@ void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, do
 	j["id"] = morph;
 	j["x"] = x;
 	j["y"] = y;
+	std::cout << "Envio posicion: " << x << ", "<< y << std::endl;
 	enviar_json(j);
 }
 
@@ -136,10 +137,7 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 		std::string morph = j["nombre"];
 		double new_x = j["posicion"]["x"];
 		double new_y = j["posicion"]["y"];
-//		std::string slots_str = j["slots"];
-//		json slots = json::parse((char*)slots_str.c_str());
-//		std::cout << "los convierte en json" << std::endl;
-		cont_eventos->mover_morph(morph, new_x, new_y);
+		cont_eventos->cambiar_pos_morph(morph, new_x, new_y);
 	}
 }
 

@@ -29,6 +29,7 @@ void ControladorEventos::mover_morph(const std::string& morph, double x, double 
 }
 
 void ControladorEventos::actualizar_posicion(const std::string& morph, double x, double y){
+	std::cout << "Posicion en cont eventos: " << x << ", " << y << std::endl;
 	com_server->enviar_nueva_posicion_morph(morph, x, y);
 }
 void ControladorEventos::abrir_vm(const std::string& lobby, const std::string& estado_lobby){
@@ -97,4 +98,8 @@ void ControladorEventos::crear_morph(const std::string& nombre, double x, double
 
 void ControladorEventos::dibujar_morph(Glib::RefPtr<Morph> morph){
 	cont_vistas->dibujar_morph(morph);
+}
+
+void ControladorEventos::cambiar_pos_morph(const std::string& nombre, double x, double y){
+	modelo->cambiar_pos_morph(nombre, x, y);
 }

@@ -36,6 +36,15 @@ void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 	}
 }
 
+void Objeto::cambiar_posicion(double x, double y){
+	double offset_x = x - pos_x;
+	double offset_y = y - pos_y;
+	pos_x = x;
+	pos_y = y;
+	for (unsigned int i = 0; i < slots.size(); i++)
+		slots[i]->mover(offset_x, offset_y);
+}
+
 void Objeto::mover(double new_x, double new_y){
 	translate(new_x, new_y);
 	actualizar_posicion(new_x, new_y);
