@@ -133,9 +133,12 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 		cont_eventos->crear_vm();
 	}
 	if(evento == EVENTO_MOVER){
-		std::string morph = j["id"];
-		double new_x = j["x"];
-		double new_y = j["y"];
+		std::string morph = j["nombre"];
+		double new_x = j["posicion"]["x"];
+		double new_y = j["posicion"]["y"];
+//		std::string slots_str = j["slots"];
+//		json slots = json::parse((char*)slots_str.c_str());
+//		std::cout << "los convierte en json" << std::endl;
 		cont_eventos->mover_morph(morph, new_x, new_y);
 	}
 }
