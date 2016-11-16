@@ -21,6 +21,7 @@ private:
   Object* findExpression(std::string name);
   void createExpression(std::string message);
   void sendMessage(std::string message);
+  void setRepresentation(std::string value);
   Object* entorno;
 public:
     Interpreter(Object* entorno_ptr);
@@ -28,7 +29,6 @@ public:
     void pushToken(std::string id,std::string message,std::string value);
     void interpretChar(char* buffer);
     void interpretFile(const char* nameFile);
-    void end();
     ~Interpreter();
 };
 

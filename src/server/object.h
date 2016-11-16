@@ -13,7 +13,7 @@ class Object{
 protected:
     std::string nombre;
     RegistroDeSlots slots;
-    std::string codigo; /*represetancion*/
+    std::string representation; /*represetancion*/
 
 public:
     Object();
@@ -50,14 +50,12 @@ public:
     void addSlots(std::string nombreSlot, Object* object, bool esMutable, bool esParentSlot);
     void RemoveSlots(std::string nombreSlot);
 
-    void setCodigo(const std::string nuevoCodigo);
-    std::string obtenerCodigo() const;
-
 
     RegistroDeSlots obtenerSlots();
 
     Object* clone();
-    virtual std::string obtenerRepresentacion();
+    virtual std::string getRepresentation() const;
+    virtual void setRepresentation(std::string representationStr);
     virtual Object* print(const std::vector<Object*>& argumentos);
 
     //Object* collect(); Esto va en el Lobby

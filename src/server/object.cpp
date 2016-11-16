@@ -17,7 +17,7 @@ Object::Object(){
 Object::Object(const Object &otro) {
     this->nombre = otro.nombre;
     this->slots = otro.slots;
-    this->codigo = otro.codigo;
+    //this->codigo = otro.codigo;
 }
 
 
@@ -67,13 +67,7 @@ void Object::RemoveSlots(std::string nombreSlot) {
     slots.removerSlot(nombreSlot);
 }
 
-void Object::setCodigo(const std::string nuevoCodigo){
-    this->codigo = nuevoCodigo;
-}
 
-std::string Object::obtenerCodigo() const {
-    return this->codigo;
-}
 
 Object* Object::clone() {
     return new Object(*this);
@@ -101,9 +95,11 @@ void Object::evaluate(){}
 
 
 /*arreglar este método*/
-std::string Object::obtenerRepresentacion(){
-  std::string algo = "aa";
-  return algo;
+void Object::setRepresentation(std::string representationStr){
+  representation = representationStr;
+}
+std::string Object::getRepresentation() const {
+  return representation;
 }
 
 /*arreglar este método*/
