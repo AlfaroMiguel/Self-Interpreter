@@ -55,6 +55,10 @@ line :
 		{
 		interpreter->pushToken("","encapsulate","");
 		}
+		|CREATEOBJECTINIT CREATEOBJECTEND
+		{
+		interpreter->pushToken("","encapsulate","");
+		}
 		|VARIABLE ADD line SEMICOLON
 		{
 		interpreter->pushToken(*$1,"add","");
