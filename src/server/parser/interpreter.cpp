@@ -32,7 +32,7 @@ Interpreter::Interpreter(Object* entorno_ptr, Lobby* lobby):entorno(entorno_ptr)
   mapMessages.insert(std::pair<string,int>("/",13));
   mapMessages.insert(std::pair<string,int>("create_variable",14));
 
-    char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |). \n\0\0";
+    char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |).";
     this->interpretChar(shellCode);
 
   mapMessages.insert(std::pair<string,int>("representation",15));
@@ -248,16 +248,18 @@ void Interpreter::addSlot(string name){
   }
 }
 
-void Interpreter::interpretChar(char* buffer){
+void Interpreter::interpretChar(const char* buffer){
   //Sacar comentarios si se quiere compilar con el parser
-  yy_scan_string(buffer);
-  yyparse(this);
+    std::cout << "Empieza a interpretar" << buffer << std::endl;
+    yy_scan_string(buffer);
+    yyparse(this);
+    std::cout << "Termine de interpretar" << std::endl;
 }
 
 
 void Interpreter::interpretFile(const char* nameFile){
   FILE * file = fopen(nameFile ,"r");
-	if( file == NULL ) {printf (" couldn ’t open %s\n", nameFile); exit (0);}
+	if( file == NULL ) {printf (" No se pudo abrir el archivo %s\n", nameFile); exit (0);}
     //Comentario porque no compila el parser con cmake, falta arreglar esto
 	//yyin = file ; // now flex reads from file
 	//yyparse();

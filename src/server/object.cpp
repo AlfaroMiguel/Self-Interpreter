@@ -12,6 +12,8 @@ typedef std::map<std::string, slot_t> slot_map;
 
 Object::Object(){
   std::cout << "create___Object____" << std::endl;
+    representation = "";
+    myLobby = nullptr;
 }
 
 Object::Object(const Object &otro) {
@@ -23,7 +25,7 @@ Object::Object(const Object &otro) {
 
 void Object::isObject(){
   std::cout << "Soy un objeto" << std::endl;
-    myLobby = nullptr;
+
 }
 /*ver que onda*/
 NativeValue Object::getValue(){
@@ -71,8 +73,6 @@ void Object::RemoveSlots(std::string nombreSlot) {
     slots.removerSlot(nombreSlot);
 }
 
-
-
 Object* Object::clone() {
     return new Object(*this);
 }
@@ -112,13 +112,15 @@ Object* Object::print(const std::vector<Object*>& argumentos){
 }
 
 void Object::setLobby(Lobby *lobby) {
+    std::cout << "Soy el objeto " << nombre << " y estoy adentro del lobby " << lobby->getLobbyName() << std::endl;
     myLobby = lobby;
 }
 
 void Object::notifyClients(std::string eventName){
     if(myLobby != nullptr) {
-        myLobby->notifyClients(eventName, myMorph);
         std::cout << "Notifico clientes" << std::endl;
+        myLobby->notifyClients(eventName, myMorph);
+
     }
 }
 

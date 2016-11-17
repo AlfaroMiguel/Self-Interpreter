@@ -10,6 +10,7 @@ private:
     std::map<std::string, Client*> existingClients;
 
     Client* newClient(std::string clientName, ComunicadorCliente* clientReference);
+    Client* searchClient(std::string clientName);
 public:
     VirtualMachine();
     ~VirtualMachine();
@@ -19,6 +20,7 @@ public:
     bool connectClientToLobby(std::string clientName, std::string lobbyName, bool isShared);
     void disconnectClient(std::string clientName);
     void clientMovedMorph(std::string clientName, std::string morphName, double newX, double newY);
+    void interpretCode(std::string clientName, std::string code);
 };
 
 #endif

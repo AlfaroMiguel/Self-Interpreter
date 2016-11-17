@@ -37,6 +37,8 @@ public:
     void initializeClient(std::string clientName);
 
     void moveMorph(std::string morphName, double newX, double newY);
+
+    void interpretCode(std::string code);
 };
 
 #endif

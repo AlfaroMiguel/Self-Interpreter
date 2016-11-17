@@ -1,6 +1,18 @@
 #include "virtualmachine.h"
 #include "object.h"
 
+//Aux functions
+
+Client* VirtualMachine::searchClient(std::string clientName){
+    auto itClient = existingClients.find(clientName);
+    if(itClient == existingClients.end())
+        return nullptr;
+
+    return itClient->second;
+}
+
+//Methods
+
 VirtualMachine::VirtualMachine() {
     //Tengo que tener un lobby principal, por ahora lo hago compartido entre todos los clientes
     std::cout << "Creo maquina virtual" << std::endl;
@@ -21,6 +33,7 @@ VirtualMachine::~VirtualMachine() {
 Client* VirtualMachine::newClient(std::string clientName, ComunicadorCliente *clientReference) {
     Client* newClient =  new Client(clientName, clientReference);
     existingClients.insert(make_pair(clientName, newClient));
+    return newClient;
 }
 
 std::vector<std::string> VirtualMachine::getAvailablesLobbies(std::string client){
@@ -83,4 +96,13 @@ void VirtualMachine::clientMovedMorph(std::string clientName, std::string morphN
     Client* client = itClient->second;
     Lobby* lobby = client->getActualLobby();
     lobby->moveMorph(morphName, newX, newY);
+}
+
+void VirtualMachine::interpretCode(std::string clientName, std::string code){
+    Client* client = searchClient(clientName);
+    if(client != nullptr){
+        Lobby* lobby = client->getActualLobby();
+        std::cout << "El lobby actual de: " << clientName << " es " << lobby->getLobbyName() << std::endl;
+        lobby->interpretCode(code);
+    }
 }

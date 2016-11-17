@@ -17,7 +17,7 @@ int main(int argc, char const *argv[]) {
     // char algunMetodo[] = "pajaro algunMetodo.\n\0\0";
     //interpreter.interpretChar(algunMetodo);
     // char OtroObjeto[] = "lobby _AddSlots: (| OtroObjeto = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|).";
-    // char objeto[] = "lobby _AddSlots: (| objeto = (| x = 1. y = 3. numero = (|  | 3 * 3.).|). |).";
+    // char objeto[] = "lobby _AddSlots: (| objeto = (| |). |).";
     // char numero[] = "objeto numero.";
     // char metodo[] = "OtroObjeto metodo.";
     // interpreter.interpretChar(OtroObjeto);

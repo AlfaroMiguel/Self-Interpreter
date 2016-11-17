@@ -29,7 +29,7 @@ public:
     Interpreter(Object* entorno_ptr, Lobby* lobby);
     Interpreter();
     void pushToken(std::string id,std::string message,std::string value);
-    void interpretChar(char* buffer);
+    void interpretChar(const char* buffer);
     void interpretFile(const char* nameFile);
     ~Interpreter();
 

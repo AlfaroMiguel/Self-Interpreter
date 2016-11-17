@@ -51,6 +51,14 @@ void ControladorDeEventos::resolverMoverMorph(std::string idMorph, double newX, 
     cliente.vm.clientMovedMorph(cliente.clientName, idMorph, newX, newY);
 }
 
+void ControladorDeEventos::resolverGet(std::string codigo){
+    cliente.vm.interpretCode(cliente.clientName, codigo);
+}
+
+void ControladorDeEventos::resolverDo(std::string codigo){
+    //El do no notifica a los clientes del morph
+}
+
 void ControladorDeEventos::resolverEvento(std::string evento) {
     json eventoj = json::parse(evento);
     std::cout << eventoj["evento"] << std::endl; //Aca dependiendo del evento envio o modifico cosas
@@ -70,6 +78,12 @@ void ControladorDeEventos::resolverEvento(std::string evento) {
     }
     if(nombreEvento == "mover morph"){ //Se movio un morph
         resolverMoverMorph(eventoj["id"], eventoj["x"], eventoj["y"]);
+    }
+    if (nombreEvento == "get"){//Enviaron codigo y quieren ver los morphs
+        resolverGet(eventoj["codigo"]);
+    }
+    if(nombreEvento == "do"){
+        resolverDo(eventoj["codigo"]);
     }
 
 }
