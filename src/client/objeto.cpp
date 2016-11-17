@@ -41,6 +41,7 @@ void Objeto::cambiar_posicion(double x, double y){
 	double offset_y = y - pos_y;
 	pos_x = x;
 	pos_y = y;
+	translate(offset_x, offset_y);
 	for (unsigned int i = 0; i < slots.size(); i++)
 		slots[i]->mover(offset_x, offset_y);
 }
