@@ -19,8 +19,8 @@ class ControladorEventos{
   		void set_lobby(const std::string& id);
   		void iniciar();
   		void crear_vm();
-  		void mover_morph(const std::string& morph, double x, double y);
-  		void actualizar_posicion(const std::string& morph, double x, double y);
+  		void mover_morph(const std::string& morph, const Posicion& new_pos);
+  		void actualizar_posicion(const std::string& morph, const Posicion& pos);
   		void abrir_vm(const std::string& lobby, const std::string& nombre_cliente);
   		void editar();
   		void crear_morph(const std::string& nombre, const Posicion& pos, std::map<std::string, std::string> dic_slots);

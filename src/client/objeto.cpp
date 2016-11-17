@@ -45,8 +45,9 @@ bool Objeto::on_cambiar_posicion(Posicion* pos){
 	posicion.set_x(x);
 	posicion.set_y(y);
 	translate(offset_x, offset_y);
+	Posicion pos_slot(offset_x, offset_y);
 	for (unsigned int i = 0; i < slots.size(); i++)
-		slots[i]->mover(offset_x, offset_y);
+		slots[i]->mover(pos_slot);
 	return false;
 }
 
@@ -54,11 +55,13 @@ void Objeto::cambiar_posicion(Posicion* pos){
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_cambiar_posicion), pos));
 }
 
-void Objeto::mover(double new_x, double new_y){
+void Objeto::mover(const Posicion& new_pos){
+	double new_x = new_pos.get_x();
+	double new_y = new_pos.get_y();
 	translate(new_x, new_y);
-	actualizar_posicion(new_x, new_y);
+	actualizar_posicion(new_pos);
 	for (unsigned int i = 0; i < slots.size(); i++)
-		slots[i]->mover(new_x, new_y);
+		slots[i]->mover(new_pos);
 	std::cout << "La posicion del objeto es: " << posicion.get_x() << ", " << posicion.get_y() << std::endl;
 }
 
@@ -101,4 +104,8 @@ bool Objeto::slot_en_posicion(const Posicion& pos_comparar) const{
 	for (unsigned int i = 0; i < slots.size(); i++)
 		if (slots[i]->esta_en_posicion(pos_comparar)) return true;
 	return false;
+}
+
+const Posicion& Objeto::get_posicion() const{
+	return posicion;
 }

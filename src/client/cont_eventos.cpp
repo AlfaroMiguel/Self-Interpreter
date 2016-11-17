@@ -24,14 +24,14 @@ void ControladorEventos::crear_vm(){
 	cont_vistas->crear_vm();
 }
 
-void ControladorEventos::mover_morph(const std::string& morph, double x, double y){
-	modelo->mover_morph(morph, x , y);
+void ControladorEventos::mover_morph(const std::string& morph, const Posicion& new_pos){
+	modelo->mover_morph(morph, new_pos);
 }
 
-void ControladorEventos::actualizar_posicion(const std::string& morph, double x, double y){
-	std::cout << "Posicion en cont eventos: " << x << ", " << y << std::endl;
-	com_server->enviar_nueva_posicion_morph(morph, x, y);
+void ControladorEventos::actualizar_posicion(const std::string& morph, const Posicion& pos){
+	com_server->enviar_nueva_posicion_morph(morph, pos);
 }
+
 void ControladorEventos::abrir_vm(const std::string& lobby, const std::string& estado_lobby){
 	com_server->enviar_datos_cliente(lobby, estado_lobby);
 }

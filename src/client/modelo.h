@@ -24,7 +24,7 @@ class Modelo{
   	void editar_morph() const;
   	void unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2, double x, double y);
 	void crear_morph_de_slot(Posicion& pos);
-  	void mover_morph(const std::string& morph, double x, double y);
+  	void mover_morph(const std::string& morph, const Posicion& new_pos);
 	void set_control(ControladorEventos* cont_eventos);
   	bool es_objeto(const Posicion& pos) const;
   	bool es_slot(const Posicion& pos) const;

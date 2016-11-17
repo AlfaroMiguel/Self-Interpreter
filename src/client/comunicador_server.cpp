@@ -79,13 +79,13 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 	enviar_json(j);
 }
 
-void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, double x, double y){
+void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, const Posicion& pos){
 	json j;
 	j["evento"] = EVENTO_MOVER;
 	j["id"] = morph;
-	j["x"] = x;
-	j["y"] = y;
-	std::cout << "Envio posicion: " << x << ", "<< y << std::endl;
+	j["x"] = pos.get_x();
+	j["y"] = pos.get_y();
+	std::cout << "Envio posicion: " << pos.get_x() << ", "<< pos.get_y() << std::endl;
 	enviar_json(j);
 }
 
