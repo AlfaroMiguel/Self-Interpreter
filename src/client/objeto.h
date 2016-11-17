@@ -7,8 +7,8 @@
 
 class Objeto: public Representacion{
  public:
-  	Objeto(double pos_x, double pos_y, const Glib::ustring& nombre);
-  	static Glib::RefPtr<Objeto> create(double pos_x, double pos_y, const Glib::ustring& nombre);
+  	Objeto(const Posicion& pos, const Glib::ustring& nombre);
+  	static Glib::RefPtr<Objeto> create(const Posicion& pos, const Glib::ustring& nombre);
   	~Objeto();
 
   	Objeto(Objeto&& otra);
@@ -16,20 +16,20 @@ class Objeto: public Representacion{
 
   	void agregar_slots(std::map<std::string, std::string> slots_a_agregar);
   	void mover(double new_x, double new_y);
-  	bool esta_en_posicion(double x, double y);
+  	bool esta_en_posicion(const Posicion& pos_comparar) const;
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
-  	Glib::ustring obtener_valor_slot(double x, double y);
-  	Glib::ustring obtener_nombre_slot(double x, double y);
-  	bool objeto_en_posicion(double x, double y);
-  	bool slot_en_posicion(double x, double y);
+  	Glib::ustring obtener_valor_slot(const Posicion& pos) const;
+  	Glib::ustring obtener_nombre_slot(const Posicion& pos) const;
+  	bool objeto_en_posicion(const Posicion& pos_comparar) const;
+  	bool slot_en_posicion(const Posicion& pos_comparar) const;
   	const std::string get_nombre();
-  	void cambiar_posicion(double x, double y);
+  	void cambiar_posicion(Posicion* pos);
  private:
   	std::vector<Glib::RefPtr<Slot>> slots;
 
   	Objeto(const Objeto& otra) = delete;
   	Objeto& operator=(const Objeto& otra) = delete;
 
-  	bool on_cambiar_posicion(Posicion& pos);
+  	bool on_cambiar_posicion(Posicion* pos);
 };
 #endif

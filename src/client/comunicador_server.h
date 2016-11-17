@@ -4,7 +4,7 @@
 #include "../common/socket.h"
 #include "../common/json.hpp"
 #include <string>
-
+#include "posicion.h"
 
 using json = nlohmann::json;
 class Recibidor;
@@ -37,7 +37,7 @@ class ComunicadorServer {
   		void set_control(ControladorEventos* cont_eventos);
   		void recibir_mensaje(const std::string& msj);
   		void enviar_datos_cliente(const std::string& lobby, const std::string& nombre_cliente);
-  		void enviar_datos_morph(const std::string& mensaje, double x, double y);
+  		void enviar_datos_morph(const std::string& mensaje, const Posicion& pos);
   		void enviar_mensaje(const std::string& consulta, const std::string& evento);
   		void enviar_nueva_posicion_morph(const std::string& morph, double x, double y);
   		void ingresar_cliente(const std::string& nombre_cliente);

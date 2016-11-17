@@ -7,8 +7,8 @@
 #define ALTO 23
 #define ANCHO 200
 
-Morph::Morph(double x, double y, const Glib::ustring& nombre) {
-	objeto = Objeto::create(x, y, nombre);
+Morph::Morph(const Posicion& pos, const Glib::ustring& nombre) {
+	objeto = Objeto::create(pos, nombre);
 	add_child(objeto);
 }
 
@@ -26,8 +26,8 @@ Morph& Morph::operator=(Morph&& otra){
 	return *this;
 }
 
-Glib::RefPtr<Morph> Morph::create(double x, double y, const Glib::ustring& nombre){
-	return Glib::RefPtr<Morph>(new Morph(x, y, nombre));
+Glib::RefPtr<Morph> Morph::create(const Posicion& pos, const Glib::ustring& nombre){
+	return Glib::RefPtr<Morph>(new Morph(pos, nombre));
 }
 
 double Morph::get_x() {
@@ -56,8 +56,8 @@ void Morph::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 	objeto->agregar_slots(slots_a_agregar);
 }
 
-bool Morph::esta_en_posicion(double x, double y) {
-	return objeto->esta_en_posicion(x, y);
+bool Morph::esta_en_posicion(const Posicion& pos) const {
+	return objeto->esta_en_posicion(pos);
 }
 
 void Morph::conectar_seniales(){
@@ -79,12 +79,12 @@ void Morph::editar_nombre(const std::string& nombre_nuevo) {
 	objeto->editar_nombre(nombre);
 }
 
-const std::string Morph::obtener_valor_slot(double x, double y){
-	return (objeto->obtener_valor_slot(x, y)).raw();
+const std::string Morph::obtener_valor_slot(const Posicion& pos) const{
+	return (objeto->obtener_valor_slot(pos)).raw();
 }
 
-const std::string Morph::obtener_nombre_slot(double x, double y){
-	return (objeto->obtener_nombre_slot(x, y)).raw();
+const std::string Morph::obtener_nombre_slot(const Posicion& pos) const{
+	return (objeto->obtener_nombre_slot(pos)).raw();
 }
 
 
@@ -128,14 +128,14 @@ void Morph::set_control(ControladorEventos *cont_eventos) {
 	this->cont_eventos = cont_eventos;
 }
 
-bool Morph::es_objeto(double x, double y) {
-	return objeto->objeto_en_posicion(x, y);
+bool Morph::es_objeto(const Posicion& pos) const{
+	return objeto->objeto_en_posicion(pos);
 }
 
-bool Morph::es_slot(double x, double y) {
-	return objeto->slot_en_posicion(x, y);
+bool Morph::es_slot(const Posicion& pos) const{
+	return objeto->slot_en_posicion(pos);
 }
 
-void Morph::cambiar_posicion(double x, double y){
-	objeto->cambiar_posicion(x, y);
+void Morph::cambiar_posicion(Posicion* pos){
+	objeto->cambiar_posicion(pos);
 }

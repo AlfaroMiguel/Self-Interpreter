@@ -6,7 +6,7 @@
 #include <gtkmm.h>
 #include "morph.h"
 #include "comunicador_server.h"
-
+#include "posicion.h"
 class Modelo;
 class ControladorVistas;
 
@@ -23,8 +23,8 @@ class ControladorEventos{
   		void actualizar_posicion(const std::string& morph, double x, double y);
   		void abrir_vm(const std::string& lobby, const std::string& nombre_cliente);
   		void editar();
-  		void crear_morph(const std::string& nombre, double x, double y, std::map<std::string, std::string> dic_slots);
-  		void crear_morph(const std::string& nombre, double x, double y);
+  		void crear_morph(const std::string& nombre, const Posicion& pos, std::map<std::string, std::string> dic_slots);
+  		void crear_morph(const std::string& nombre, const Posicion& pos);
   		void dibujar_morph(Glib::RefPtr<Morph> morph);
   		bool button_event(GdkEventButton *event);
   		void cambio_nombre(const std::string& nuevo_nombre);
@@ -34,7 +34,7 @@ class ControladorEventos{
   		void enviar_mensaje(const std::string& mensaje, const std::string& evento);
 		void ingresar_cliente(const std::string& nombre_cliente);
   		void mostrar_lobbies();
-  		void cambiar_pos_morph(const std::string& nombre, double x, double y);
+  		void cambiar_pos_morph(const std::string& nombre, Posicion* pos);
   		void error_ingreso_cliente();
   		void cliente_conectado();
  	private:

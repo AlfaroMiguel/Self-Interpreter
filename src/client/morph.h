@@ -15,8 +15,8 @@ class ControladorEventos;
 
 class Morph: public Goocanvas::Group {
  public:
-  	static Glib::RefPtr<Morph> create(double x, double y, const Glib::ustring& nombre);
-  	Morph(double x, double y, const Glib::ustring& nombre);
+  	static Glib::RefPtr<Morph> create(const Posicion& pos, const Glib::ustring& nombre);
+  	Morph(const Posicion& pos, const Glib::ustring& nombre);
   	~Morph();
 
   	Morph(Morph&& otra);
@@ -24,7 +24,7 @@ class Morph: public Goocanvas::Group {
 
   	void conectar_seniales();
   	void eliminar();
-  	bool esta_en_posicion(double x, double y);
+  	bool esta_en_posicion(const Posicion& pos) const;
   	void editar_nombre(const std::string& nombre_nuevo);
   	void editando(bool valor);
   	bool editando();
@@ -33,13 +33,13 @@ class Morph: public Goocanvas::Group {
   	double get_y();
   	const std::string get_nombre();
   	void agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea);
-	const std::string obtener_valor_slot(double x, double y);
-  	const std::string obtener_nombre_slot(double x, double y);
+	const std::string obtener_valor_slot(const Posicion& pos) const;
+  	const std::string obtener_nombre_slot(const Posicion& pos) const;
   	void mover(double x, double y);
   	void set_control(ControladorEventos* cont_eventos);
-  	bool es_objeto(double x, double y);
-  	bool es_slot(double x, double y);
-  	void cambiar_posicion(double x, double y);
+  	bool es_objeto(const Posicion& pos) const;
+  	bool es_slot(const Posicion& pos) const;
+  	void cambiar_posicion(Posicion* pos);
  private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;

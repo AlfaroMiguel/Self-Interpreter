@@ -17,5 +17,6 @@ void NewMorphHandler::run(json j) {
 		std::string valor = it.value();
 		dic_slots.insert(std::make_pair(nombre, valor));
 	}
-	cont_eventos->crear_morph(nombre, x, y, dic_slots);
+	Posicion pos_morph(x, y);
+	cont_eventos->crear_morph(nombre, pos_morph, dic_slots);
 }

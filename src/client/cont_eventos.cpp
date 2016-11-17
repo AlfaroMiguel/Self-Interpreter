@@ -50,16 +50,17 @@ void ControladorEventos::editar(){
 
 bool ControladorEventos::button_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
-		double x = event->x;
-		double y = event->y;
-		modelo->seleccionar_morph(x, y);
-		if (modelo->es_objeto(x, y)) {
+//		double x = event->x;
+//		double y = event->y;
+		Posicion pos_evento(event->x, event->y);
+		modelo->seleccionar_morph(pos_evento);
+		if (modelo->es_objeto(pos_evento)) {
 			std::cout << "Encuentra objeto" << std::endl;
-			modelo->editar_morph(x, y);
+			modelo->editar_morph();
 		}
-		if (modelo->es_slot(x, y)) {
+		if (modelo->es_slot(pos_evento)) {
 			std::cout << "Encuentra slot" << std::endl;
-			modelo->crear_morph_de_slot(x, y);
+			modelo->crear_morph_de_slot(pos_evento);
 		}
 		return true;
 	}
@@ -88,20 +89,20 @@ void ControladorEventos::set_control(ControladorVistas* contr_vistas) {
 }
 
 void ControladorEventos::crear_morph(const std::string& nombre,
-									 double x, double y, std::map<std::string, std::string> dic_slots){
-	modelo->crear_morph(nombre, x, y, dic_slots);
+									 const Posicion& pos, std::map<std::string, std::string> dic_slots){
+	modelo->crear_morph(nombre, pos, dic_slots);
 }
 
-void ControladorEventos::crear_morph(const std::string& nombre, double x, double y) {
-	com_server->enviar_datos_morph(nombre, x, y);
+void ControladorEventos::crear_morph(const std::string& nombre, const Posicion& pos) {
+	com_server->enviar_datos_morph(nombre, pos);
 }
 
 void ControladorEventos::dibujar_morph(Glib::RefPtr<Morph> morph){
 	cont_vistas->dibujar_morph(morph);
 }
 
-void ControladorEventos::cambiar_pos_morph(const std::string& nombre, double x, double y){
-	modelo->cambiar_pos_morph(nombre, x, y);
+void ControladorEventos::cambiar_pos_morph(const std::string& nombre, Posicion* pos){
+	modelo->cambiar_pos_morph(nombre, pos);
 }
 
 void ControladorEventos::error_ingreso_cliente() {

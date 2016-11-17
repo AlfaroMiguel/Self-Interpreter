@@ -40,6 +40,7 @@ ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	return *this;
 }
 
+//que esto se llame enviar codigo
 void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
 	json j;
 	j["evento"] = evento.c_str();
@@ -47,14 +48,15 @@ void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::st
 	enviar_json(j);
 }
 
-void ComunicadorServer::enviar_datos_morph(const std::string& nombre, double x, double y){
+void ComunicadorServer::enviar_datos_morph(const std::string& nombre, const Posicion& pos){
 	json j;
 	j["evento"] = "crear morph";
 	j["id"] = nombre;
-	j["x"] = x;
-	j["y"] = y;
+	j["x"] = pos.get_x();
+	j["y"] = pos.get_y();
 	enviar_json(j);
 }
+
 void ComunicadorServer::enviar_json(json j){
 	std::string s = j.dump();
 
@@ -110,7 +112,8 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 			std::string valor = it.value();
 			dic_slots.insert(std::make_pair(nombre, valor));
 		}
-		cont_eventos->crear_morph(nombre, x, y, dic_slots);
+		Posicion pos_morph(x, y);
+		cont_eventos->crear_morph(nombre, pos_morph, dic_slots);
 	}
 	if (evento == EVENTO_AGREGAR_LOBBIES){
 		std::string lobbies_str = j["lobbies"];
@@ -140,7 +143,8 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 		std::string morph = j["nombre"];
 		double new_x = j["posicion"]["x"];
 		double new_y = j["posicion"]["y"];
-		cont_eventos->cambiar_pos_morph(morph, new_x, new_y);
+		Posicion new_pos(new_x, new_y);
+		cont_eventos->cambiar_pos_morph(morph, &new_pos);
 	}
 }
 

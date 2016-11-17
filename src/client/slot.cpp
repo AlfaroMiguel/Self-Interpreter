@@ -3,27 +3,29 @@
 #define ALTO 23
 #define ANCHO 200
 
-Glib::RefPtr<Slot> Slot::create(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor){
-	return Glib::RefPtr<Slot>(new Slot(x, y, nombre, valor));
+Glib::RefPtr<Slot> Slot::create(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor){
+	return Glib::RefPtr<Slot>(new Slot(pos, nombre, valor));
 }
 
-Slot::Slot(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor):
-			Representacion(x, y, nombre), valor(valor){
+Slot::Slot(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor):
+			Representacion(pos, nombre), valor(valor){
 	Glib::ustring cadena_texto = nombre + ": " + valor;
 	texto->property_text() = cadena_texto;
 }
 
 Slot::~Slot(){}
 
-Slot::Slot(const Slot&& otra): Representacion(otra.pos_x, otra.pos_y, otra.nombre), valor(otra.valor){}
+Slot::Slot(const Slot&& otra): Representacion(otra.posicion, otra.nombre), valor(otra.valor){}
 
 Slot& Slot::operator=(const Slot&& otra){
 	valor = otra.valor;
 	return *this;
 }
 
-bool Slot::esta_en_posicion(double x, double y){
-	return pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO > y;
+bool Slot::esta_en_posicion(const Posicion& pos_comparar) const{
+	Posicion pos_max(posicion.get_x()+ANCHO, posicion.get_y()+ALTO);
+	//return pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO > y;
+	return posicion < pos_comparar && pos_max > pos_comparar;
 }
 
 void Slot::mover(double new_x, double new_y){

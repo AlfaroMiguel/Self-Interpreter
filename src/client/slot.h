@@ -2,17 +2,17 @@
 #define SLOT_H
 
 #include "representacion.h"
-
+#include "posicion.h"
 class Slot: public Representacion{
  public:
-  	static Glib::RefPtr<Slot> create(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor);
-  	Slot(double x, double y, const Glib::ustring& nombre, const Glib::ustring& valor);
+  	static Glib::RefPtr<Slot> create(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor);
+  	Slot(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor);
  	~Slot();
 
   	Slot(const Slot&& otra);
   	Slot& operator=(const Slot&& otra);
 
-  	bool esta_en_posicion(double x, double y);
+  	bool esta_en_posicion(const Posicion& pos) const;
   	void mover(double new_x, double new_y);
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
 	Glib::ustring& obtener_valor();
