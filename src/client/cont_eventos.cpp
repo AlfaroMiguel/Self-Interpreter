@@ -50,18 +50,12 @@ void ControladorEventos::editar(){
 
 bool ControladorEventos::button_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
-//		double x = event->x;
-//		double y = event->y;
 		Posicion pos_evento(event->x, event->y);
 		modelo->seleccionar_morph(pos_evento);
-		if (modelo->es_objeto(pos_evento)) {
-			std::cout << "Encuentra objeto" << std::endl;
+		if (modelo->es_objeto(pos_evento))
 			modelo->editar_morph();
-		}
-		if (modelo->es_slot(pos_evento)) {
-			std::cout << "Encuentra slot" << std::endl;
+		if (modelo->es_slot(pos_evento))
 			modelo->crear_morph_de_slot(pos_evento);
-		}
 		return true;
 	}
 	return false;
@@ -110,5 +104,6 @@ void ControladorEventos::error_ingreso_cliente() {
 }
 
 void ControladorEventos::cliente_conectado(){
+	com_server->inicializar();
 	cont_vistas->ocultar_vista_cliente();
 }
