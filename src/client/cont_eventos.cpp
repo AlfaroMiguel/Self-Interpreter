@@ -24,14 +24,14 @@ void ControladorEventos::crear_vm(){
 	cont_vistas->crear_vm();
 }
 
-void ControladorEventos::mover_morph(const std::string& morph, double x, double y){
-	modelo->mover_morph(morph, x , y);
+void ControladorEventos::mover_morph(const std::string& morph, const Posicion& new_pos){
+	modelo->mover_morph(morph, new_pos);
 }
 
-void ControladorEventos::actualizar_posicion(const std::string& morph, double x, double y){
-	std::cout << "Posicion en cont eventos: " << x << ", " << y << std::endl;
-	com_server->enviar_nueva_posicion_morph(morph, x, y);
+void ControladorEventos::actualizar_posicion(const std::string& morph, const Posicion& pos){
+	com_server->enviar_nueva_posicion_morph(morph, pos);
 }
+
 void ControladorEventos::abrir_vm(const std::string& lobby, const std::string& estado_lobby){
 	com_server->enviar_datos_cliente(lobby, estado_lobby);
 }
@@ -50,18 +50,12 @@ void ControladorEventos::editar(){
 
 bool ControladorEventos::button_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
-//		double x = event->x;
-//		double y = event->y;
 		Posicion pos_evento(event->x, event->y);
 		modelo->seleccionar_morph(pos_evento);
-		if (modelo->es_objeto(pos_evento)) {
-			std::cout << "Encuentra objeto" << std::endl;
+		if (modelo->es_objeto(pos_evento))
 			modelo->editar_morph();
-		}
-		if (modelo->es_slot(pos_evento)) {
-			std::cout << "Encuentra slot" << std::endl;
+		if (modelo->es_slot(pos_evento))
 			modelo->crear_morph_de_slot(pos_evento);
-		}
 		return true;
 	}
 	return false;
@@ -110,5 +104,6 @@ void ControladorEventos::error_ingreso_cliente() {
 }
 
 void ControladorEventos::cliente_conectado(){
+	com_server->inicializar();
 	cont_vistas->ocultar_vista_cliente();
 }

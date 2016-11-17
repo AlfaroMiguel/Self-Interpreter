@@ -28,8 +28,8 @@ bool Slot::esta_en_posicion(const Posicion& pos_comparar) const{
 	return posicion < pos_comparar && pos_max > pos_comparar;
 }
 
-void Slot::mover(double new_x, double new_y){
-	actualizar_posicion(new_x, new_y);
+void Slot::mover(const Posicion& new_pos){
+	actualizar_posicion(new_pos);
 }
 
 void Slot::editar_nombre(const Glib::ustring& nombre_nuevo){

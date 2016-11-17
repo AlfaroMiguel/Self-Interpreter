@@ -94,7 +94,8 @@ bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& ite
 		auto new_y = event->y;
 		std::cout << "New pos: " << new_x << ", " << new_y << std::endl;
 		std::cout << "Drag pos: " << drag_x << ", " << drag_y << std::endl;
- 		cont_eventos->mover_morph(get_nombre(), new_x - drag_x , new_y - drag_y);
+		Posicion new_pos(new_x - drag_x, new_y - drag_y);
+ 		cont_eventos->mover_morph(get_nombre(), new_pos);
 	}
 	return false;
 }
@@ -118,12 +119,15 @@ const std::string Morph::get_nombre(){
 	return objeto->get_nombre();
 }
 
-void Morph::mover(double x, double y){
-	objeto->mover(x, y);
-	cont_eventos->actualizar_posicion(get_nombre(), get_x(), get_y());
-	if (linea) linea->translate(x, y);
+void Morph::mover(const Posicion& new_pos){
+	objeto->mover(new_pos);
+	cont_eventos->actualizar_posicion(get_nombre(), get_posicion());
+	//if (linea) linea->translate(x, y);
 }
 
+const Posicion& Morph::get_posicion() const{
+	return objeto->get_posicion();
+}
 void Morph::set_control(ControladorEventos *cont_eventos) {
 	this->cont_eventos = cont_eventos;
 }

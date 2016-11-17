@@ -18,6 +18,7 @@ class Posicion{
   bool operator==(const Posicion& otra) const;
   bool operator>(const Posicion& otra) const;
   bool operator<(const Posicion& otra) const;
+  Posicion& operator+=(const Posicion& otra);
   double get_x() const;
   double get_y() const;
   void add_x(double x);

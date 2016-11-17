@@ -31,13 +31,18 @@ double Posicion::get_x() const{
 	return x;
 }
 
-void Posicion::add_x(double x) {
-	this->x += x;
+Posicion& Posicion::operator+=(const Posicion& otra){
+	x += otra.x;
+	y += otra.y;
+	return *this;
 }
-
-void Posicion::add_y(double y) {
-	this->y += y;
-}
+//void Posicion::add_x(double x) {
+//	this->x += x;
+//}
+//
+//void Posicion::add_y(double y) {
+//	this->y += y;
+//}
 
 void Posicion::set_x(double x) {
 	this->x = x;

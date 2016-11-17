@@ -29,9 +29,8 @@ Representacion& Representacion::operator=(const Representacion&& otra){
 	return *this;
 }
 
-void Representacion::actualizar_posicion(double new_x, double new_y){
-	posicion.add_x(new_x);
-	posicion.add_y(new_y);
+void Representacion::actualizar_posicion(const Posicion& new_pos){
+	posicion += new_pos;
 }
 
 double Representacion::get_x() {

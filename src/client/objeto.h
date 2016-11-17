@@ -15,7 +15,7 @@ class Objeto: public Representacion{
   	Objeto& operator=(Objeto&& otra);
 
   	void agregar_slots(std::map<std::string, std::string> slots_a_agregar);
-  	void mover(double new_x, double new_y);
+  	void mover(const Posicion& nueva_pos);
   	bool esta_en_posicion(const Posicion& pos_comparar) const;
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
   	Glib::ustring obtener_valor_slot(const Posicion& pos) const;
@@ -24,6 +24,7 @@ class Objeto: public Representacion{
   	bool slot_en_posicion(const Posicion& pos_comparar) const;
   	const std::string get_nombre();
   	void cambiar_posicion(Posicion* pos);
+  	const Posicion& get_posicion() const;
  private:
   	std::vector<Glib::RefPtr<Slot>> slots;
 

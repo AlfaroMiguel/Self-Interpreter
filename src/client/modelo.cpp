@@ -91,10 +91,10 @@ void Modelo::cambiar_pos_morph(const std::string& nombre, Posicion* pos){
 	}
 }
 
-void Modelo::mover_morph(const std::string& morph, double x, double y){
+void Modelo::mover_morph(const std::string& morph, const Posicion& new_pos){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
 		if (morphs[i]->get_nombre() == morph){
-			morphs[i]->mover(x, y);
+			morphs[i]->mover(new_pos);
 		}
 	}
 }

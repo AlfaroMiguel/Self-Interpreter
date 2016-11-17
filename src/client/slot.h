@@ -13,7 +13,7 @@ class Slot: public Representacion{
   	Slot& operator=(const Slot&& otra);
 
   	bool esta_en_posicion(const Posicion& pos) const;
-  	void mover(double new_x, double new_y);
+  	void mover(const Posicion& new_pos);
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
 	Glib::ustring& obtener_valor();
   	Glib::ustring& obtener_nombre();

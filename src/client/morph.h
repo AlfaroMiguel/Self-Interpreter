@@ -35,11 +35,12 @@ class Morph: public Goocanvas::Group {
   	void agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea);
 	const std::string obtener_valor_slot(const Posicion& pos) const;
   	const std::string obtener_nombre_slot(const Posicion& pos) const;
-  	void mover(double x, double y);
+  	void mover(const Posicion& new_pos);
   	void set_control(ControladorEventos* cont_eventos);
   	bool es_objeto(const Posicion& pos) const;
   	bool es_slot(const Posicion& pos) const;
   	void cambiar_posicion(Posicion* pos);
+  	const Posicion& get_posicion() const;
  private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;
