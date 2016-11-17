@@ -3,6 +3,7 @@
 
 #include "representacion.h"
 #include "slot.h"
+#include "posicion.h"
 
 class Objeto: public Representacion{
  public:
@@ -28,5 +29,7 @@ class Objeto: public Representacion{
 
   	Objeto(const Objeto& otra) = delete;
   	Objeto& operator=(const Objeto& otra) = delete;
+
+  	bool on_cambiar_posicion(Posicion& pos);
 };
 #endif

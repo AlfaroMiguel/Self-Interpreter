@@ -36,7 +36,9 @@ void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 	}
 }
 
-void Objeto::cambiar_posicion(double x, double y){
+bool Objeto::on_cambiar_posicion(Posicion& pos){
+	double x = pos.get_x();
+	double y = pos.get_y();
 	double offset_x = x - pos_x;
 	double offset_y = y - pos_y;
 	pos_x = x;
@@ -44,6 +46,12 @@ void Objeto::cambiar_posicion(double x, double y){
 	translate(offset_x, offset_y);
 	for (unsigned int i = 0; i < slots.size(); i++)
 		slots[i]->mover(offset_x, offset_y);
+	return false;
+}
+
+void Objeto::cambiar_posicion(double x, double y){
+	Posicion pos(x, y); //esto crearlo en otro lado y recibirlo
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_cambiar_posicion), pos));
 }
 
 void Objeto::mover(double new_x, double new_y){
