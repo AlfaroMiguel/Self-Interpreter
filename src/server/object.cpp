@@ -51,7 +51,7 @@ void Object::setName(const std::string nuevoNombre){
     this->nombre = nuevoNombre;
 
     myMorph.setName(nuevoNombre);
-    this->notifyClients("crear");
+    if(myLobby != nullptr)this->notifyClients("crear");
 }
 
 std::string Object::getName() {
