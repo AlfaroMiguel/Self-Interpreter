@@ -12,13 +12,13 @@ void ControladorDeEventos::resolverConectar(std::string nombre){
     std::cout << " Se conecta cliente " << nombre << std::endl;
     bool sePudoConectar = cliente.vm.connectClient(nombre, &cliente);
     json jrespuesta;
-    if(sePudoConectar)
+    if(sePudoConectar){
         jrespuesta["evento"] = "cliente conectado";
-
+        cliente.clientName = nombre;
+    }
     else
         jrespuesta["evento"] = "error";
 
-    cliente.clientName = nombre;
     cliente.enviarEvento(jrespuesta.dump());
 }
 

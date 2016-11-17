@@ -70,6 +70,7 @@ bool VirtualMachine::connectClientToLobby(std::string clientName, std::string lo
     else
         lobby = itLobby->second;
 
+    std::cout << "Connect Client: "<< clientName << "to lobby: "<< lobbyName << std::endl;
     lobby->connectClient(client);
     client->setActualLobby(lobby);
 }
