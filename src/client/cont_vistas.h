@@ -29,6 +29,8 @@ class ControladorVistas{
   		void eliminar_morph(Glib::RefPtr<Morph> morph);
   		void set_control(ControladorEventos* cont_eventos);
 		void mostrar_lobbies();
+  		void error_ingreso_cliente();
+  		void ocultar_vista_cliente();
  	private:
   		VentanaVM* ventana_principal;
   		VentanaInicio* ventana_inicio;

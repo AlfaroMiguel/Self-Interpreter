@@ -18,6 +18,14 @@ void VentanaCliente::set_control(ControladorEventos* cont_eventos) {
 void VentanaCliente::on_ingresar(){
 	Glib::ustring nombre_cliente = entrada_texto->get_buffer()->get_text();
 	std::cout << "Nombre cliente: " << nombre_cliente.raw() << std::endl;
-	hide();
 	cont_eventos->ingresar_cliente(nombre_cliente.raw());
+}
+
+bool VentanaCliente::on_ocultar() {
+	hide();
+	return false;
+}
+
+void VentanaCliente::ocultar(){
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaCliente::on_ocultar));
 }

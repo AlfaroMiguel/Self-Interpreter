@@ -65,7 +65,7 @@ void ComunicadorServer::enviar_json(json j){
 	std::cout << tamanio_32 << std::endl;
 	skt_cliente.enviar((char*)(&tamanio_32), sizeof(uint32_t));
 
-	std::cout << evento_enviar << std::endl;
+	std::cout << "Envio evento: " << evento_enviar << std::endl;
 	skt_cliente.enviar(evento_enviar, strlen(evento_enviar) + 1);
 }
 
@@ -122,12 +122,15 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 		cont_eventos->iniciar();
 	}
 	if(evento == "cliente conectado"){
+		std::cout << "Se conecta ok" << std::endl;
 		json j;
 		j["evento"] = "inicializar";
 		enviar_json(j);
+		cont_eventos->cliente_conectado();
 	}
-	if(evento == "error cliente"){
-		//mandar al modelo que levante una ventana de error
+	if(evento == "error"){
+		std::cout << "Ingresa a error" << std::endl;
+		cont_eventos->error_ingreso_cliente();
 	}
 	if (evento == "datos lobby"){
 		//tiene que crear la vm con todos los morphs

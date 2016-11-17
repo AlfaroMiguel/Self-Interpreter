@@ -77,23 +77,6 @@
                 <property name="position">1</property>
               </packing>
             </child>
-            <child>
-              <object class="GtkLabel" id="lblError">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Ya se encuentra conectado</property>
-                <property name="ellipsize">middle</property>
-                <attributes>
-                  <attribute name="foreground" value="#cccc00000000"/>
-                  <attribute name="strikethrough-color" value="#cccc00000000"/>
-                </attributes>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
           </object>
           <packing>
             <property name="expand">False</property>

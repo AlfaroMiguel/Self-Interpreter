@@ -24,6 +24,10 @@ void ControladorVistas::editar() {
 	ventana_principal->editar();
 }
 
+void ControladorVistas::ocultar_vista_cliente() {
+	ventana_cliente->ocultar();
+}
+
 void ControladorVistas::set_lobby(const std::string& id){
 	ventana_inicio->set_lobby(id);
 }
@@ -42,4 +46,8 @@ void ControladorVistas::set_control(ControladorEventos *cont_eventos) {
 	ventana_edicion->set_control(cont_eventos);
 	ventana_cliente->set_control(cont_eventos);
 	cont_eventos->set_control(this);
+}
+
+void ControladorVistas::error_ingreso_cliente() {
+	ventana_inicio->mostrar_error();
 }

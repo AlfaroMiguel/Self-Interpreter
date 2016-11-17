@@ -9,6 +9,7 @@ class VentanaCliente: public Gtk::Dialog{
   ~VentanaCliente();
 
   void set_control(ControladorEventos* cont_eventos);
+  void ocultar();
 
  private:
   ControladorEventos* cont_eventos;
@@ -18,5 +19,6 @@ class VentanaCliente: public Gtk::Dialog{
   Gtk::Entry* entrada_texto;
 
   void on_ingresar();
+  bool on_ocultar();
 };
 #endif

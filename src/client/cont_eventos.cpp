@@ -103,3 +103,11 @@ void ControladorEventos::dibujar_morph(Glib::RefPtr<Morph> morph){
 void ControladorEventos::cambiar_pos_morph(const std::string& nombre, double x, double y){
 	modelo->cambiar_pos_morph(nombre, x, y);
 }
+
+void ControladorEventos::error_ingreso_cliente() {
+	cont_vistas->error_ingreso_cliente();
+}
+
+void ControladorEventos::cliente_conectado(){
+	cont_vistas->ocultar_vista_cliente();
+}

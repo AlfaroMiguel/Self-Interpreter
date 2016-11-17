@@ -10,11 +10,13 @@ VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Bu
 	builder->get_widget("btnPrivado", boton_lobby_privado);
 	builder->get_widget("btnCompartido", boton_lobby_compartido);
 	builder->get_widget("entradaTexto", entrada_texto);
+	builder->get_widget("lblError", label_error);
 	boton_agregar_lobby->join_group(*boton_seleccionar_lobby);
 	boton_lobby_compartido->join_group(*boton_lobby_privado);
 	boton_seleccionar_lobby->set_active();
 	boton_lobby_privado->set_active();
 	boton_confirmar->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_confirmar));
+	label_error->hide();
 }
 
 VentanaInicio::~VentanaInicio() {}
@@ -59,6 +61,16 @@ void VentanaInicio::on_confirmar(){
 	}
 	hide();
 	cont_eventos->abrir_vm(lobby.raw(), estado.raw());
+}
+
+bool VentanaInicio::do_mostrar_error(){
+	label_error->show();
+	entrada_texto->delete_text(0, entrada_texto->get_buffer()->get_text().size());
+	return false;
+}
+
+void VentanaInicio::mostrar_error() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_mostrar_error));
 }
 
 
