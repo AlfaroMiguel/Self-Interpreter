@@ -75,7 +75,11 @@ void Lobby::initializeClient(std::string clientName) {
 
 void Lobby::moveMorph(std::string morphName, double newX, double newY){
     auto itObject = visibleObjects.find(morphName);
-    if (itObject == visibleObjects.end())return;
+    if (itObject == visibleObjects.end()){
+        std::cout << "No encontre el morph" << morphName << std::endl;
+        return;
+    }
+    std::cout << "Encontre el morph" << morphName << std::endl;
     Object *object = itObject->second;
     object->moveMorph(newX, newY);
 }
