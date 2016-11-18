@@ -116,15 +116,15 @@ void Object::setLobby(Lobby *lobby) {
     myLobby = lobby;
 }
 
-void Object::notifyClients(std::string eventName){
+void Object::notifyClients(std::string eventName, std::string clientName){
     if(myLobby != nullptr) {
         std::cout << "Notifico clientes" << std::endl;
-        myLobby->notifyClients(eventName, myMorph);
+        myLobby->notifyClients(eventName, myMorph, clientName);
 
     }
 }
 
-void Object::moveMorph(double newX, double newY){
+void Object::moveMorph(std::string clientName, double newX, double newY){
     myMorph.changePosition(newX, newY);
-    notifyClients("mover morph");
+    notifyClients("mover morph", clientName);
 }

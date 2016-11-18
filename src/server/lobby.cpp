@@ -51,15 +51,15 @@ void Lobby::notifyClient(std::string eventName, std::string clientName, Morph& m
             itClient->second->notify(eventName, morph);
 }
 
-void Lobby::notifyClients(std::string eventName, Morph& morph){
+void Lobby::notifyClients(std::string eventName, Morph& morph, std::string clientNameUnnotified = ""){
     std::cout << "Empieza a notificar (notifyClients)"<< std::endl;
 
     for(auto itClient = clientsConnected.begin(); itClient != clientsConnected.end(); itClient++){
         std::cout << "Entra a iterar los clientes" << std::endl;
         std::cout << clientsConnected.size() << std::endl;
-        //std::cout <<  "Notifica a " << itClient->second->getClientName() << std::endl;
         if(itClient->second != nullptr){
-            itClient->second->notify(eventName, morph);
+            if(itClient->second->getClientName() != clientNameUnnotified)
+                itClient->second->notify(eventName, morph);
         }
     }
     std::cout << "Termina de notificar" << std::endl;
@@ -73,7 +73,7 @@ void Lobby::initializeClient(std::string clientName) {
 
 }
 
-void Lobby::moveMorph(std::string morphName, double newX, double newY){
+void Lobby::moveMorph(std::string clientName, std::string morphName, double newX, double newY){
     auto itObject = visibleObjects.find(morphName);
     if (itObject == visibleObjects.end()){
         std::cout << "No encontre el morph" << morphName << std::endl;
@@ -81,7 +81,7 @@ void Lobby::moveMorph(std::string morphName, double newX, double newY){
     }
     std::cout << "Encontre el morph" << morphName << std::endl;
     Object *object = itObject->second;
-    object->moveMorph(newX, newY);
+    object->moveMorph(clientName, newX, newY);
 }
 
 void Lobby::interpretCodeGet(std::string code){

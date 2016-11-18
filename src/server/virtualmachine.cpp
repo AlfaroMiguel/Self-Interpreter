@@ -95,7 +95,7 @@ void VirtualMachine::clientMovedMorph(std::string clientName, std::string morphN
 
     Client* client = itClient->second;
     Lobby* lobby = client->getActualLobby();
-    lobby->moveMorph(morphName, newX, newY);
+    lobby->moveMorph(clientName, morphName, newX, newY);
 }
 
 void VirtualMachine::interpretCodeGet(std::string clientName, std::string code){

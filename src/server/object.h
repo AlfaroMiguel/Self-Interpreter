@@ -64,8 +64,8 @@ public:
     //Object* collect(); Esto va en el Lobby
 
     void setLobby(Lobby* lobby);
-    void notifyClients(std::string eventName);
-    void moveMorph(double newX, double newY);
+    void notifyClients(std::string eventName, std::string clientName = "");
+    void moveMorph(std::string clientName, double newX, double newY);
 };
 
 #endif

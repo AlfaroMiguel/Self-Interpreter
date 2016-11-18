@@ -35,10 +35,10 @@ public:
     void disconnectClient(Client* client);
 
     void notifyClient(std::string eventName, std::string clientName, Morph& morph);
-    void notifyClients(std::string eventName, Morph& morph);
+    void notifyClients(std::string eventName, Morph& morph, std::string clientNameUnnoified);
     void initializeClient(std::string clientName);
 
-    void moveMorph(std::string morphName, double newX, double newY);
+    void moveMorph(std::string clientName, std::string morphName, double newX, double newY);
 
     void interpretCodeGet(std::string code);
     void interpretCodeDo(std::string code);
