@@ -238,7 +238,7 @@ void Interpreter::assignationExpression(string name) {
         Object *expression = stack.top();
         expression->setName(name);
 
-        //expression->setLobby(lobby); //Test
+        expression->setLobby(lobby); //Test
 
         std::cout << "Get representation: " << std::endl;
         std::cout << expression->getRepresentation() << std::endl;
