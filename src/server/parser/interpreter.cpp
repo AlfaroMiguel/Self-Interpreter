@@ -35,6 +35,7 @@ Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_pt
     mapMessages.insert(std::pair<string, int>("/", 13));
     mapMessages.insert(std::pair<string, int>("create_variable", 14));
     mapMessages.insert(std::pair<string, int>("representation", 15));
+    mapMessages.insert(std::pair<string, int>("clone", 16));
 }
 
 Interpreter::Interpreter() {
@@ -125,10 +126,49 @@ void Interpreter::pushToken(string id, string message, string value) {
             //std::cout<<"Expression [division] Expression"<<std::endl;
             setRepresentation(value);
             break;
+        case 16:
+                //std::cout<<"Expression [division] Expression"<<std::endl;
+              cloneObject(id);
+              break;
         default:
             std::cout << "Interpreter::ERROR: message not found: " << message << std::endl;
             sendMessage(message);
     }
+}
+
+void Interpreter::cloneObject(std::string id){
+    Object* objectToClone = findExpression(id);
+    RegistroDeSlots slots = objectToClone->getSlots();
+    std::vector<Object*> slotsVector = slots.getObjects();
+    std::vector<Object*> slotsRedefined;
+    //Saco todos los slots que se redefinieron
+    while (!stack.empty()) {
+      slotsRedefined.push_back(stack.top());
+      stack.pop();
+    }
+    //si un un slot nativo estan entre los que se redefinio entonces guardo el
+    //redefinido, sino creo un copia y lo inserto
+    for (size_t i = 0; i < slotsVector.size(); i++){
+      bool isFound = false;
+      Object* slotNative = slotsVector[i];
+      for (size_t j = 0; j < slotsRedefined.size(); j++){
+        Object* slotRedefined = slotsRedefined[j];
+        //si un slot fue redefinido
+        if (slotNative->getName().compare(slotRedefined->getName())){
+          isFound = true;
+        }
+      }
+      //sino esta entre los redefinidos entonces lo agrego
+      if(!isFound){
+        Object* newSlot = slotNative->clone();
+        stack.push(newSlot);
+    }
+  }
+  //reagrego los slots redefinidos en el stack
+  for (size_t i = 0; i < slotsRedefined.size(); i++) {
+    Object* slot = slotsRedefined[i];
+    stack.push(slot);
+  }
 }
 
 void Interpreter::setRepresentation(std::string value) {
@@ -198,7 +238,7 @@ void Interpreter::assignationExpression(string name) {
         Object *expression = stack.top();
         expression->setName(name);
 
-        expression->setLobby(lobby); //Test
+        //expression->setLobby(lobby); //Test
 
         std::cout << "Get representation: " << std::endl;
         std::cout << expression->getRepresentation() << std::endl;
@@ -209,7 +249,7 @@ void Interpreter::assignationExpression(string name) {
 
 /*Todo lo que haya en el stack lo agrego como slot en un objeto que lo agrego en el stack*/
 void Interpreter::encapsulateStack() {
-    Expression *parent = new Expression;
+    Expression* parent = new Expression;
     //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     while (!stack.empty()) {
         Object *slot = stack.top();

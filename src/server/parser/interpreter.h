@@ -24,6 +24,7 @@ private:
   void createExpression(std::string message);
   void sendMessage(std::string message);
   void setRepresentation(std::string value);
+  void cloneObject(std::string id);
   Object* entorno;
     Lobby* lobby;
 public:

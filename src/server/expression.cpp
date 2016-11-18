@@ -5,7 +5,16 @@
 
 
 Expression::Expression(){
+  receiver = nullptr;
+  argument = nullptr;
+  result = nullptr;
   std::cout << "create expression" << std::endl;
+  if (receiver != nullptr){
+    std::cout << "receive not null" << std::endl;
+  }
+  if (argument != nullptr){
+    std::cout << "argument not null" << std::endl;
+  }
 }
 
 Expression::~Expression(){}
@@ -19,6 +28,9 @@ void Expression::setReceiver(Object* receiverPtr){
 void Expression::isObject(){
   std::cout << "no soy un object" << std::endl;
 }
+
+
+
 
 void Expression::setArgument(Object* argumentPtr){
   std::cout << "Expression::setArgument" << std::endl;
@@ -36,6 +48,7 @@ std::string Expression::getRepresentation() const {
   std::cout << "Expression::getRepresentation a: "<< nombre << std::endl;
   //Hay que arreglar esto sino no anda
   if ( receiver != nullptr){
+    std::cout << "nombre del receiver" << receiver->getName() << std::endl;
     return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
   }
   std::string pepe = "lala";
