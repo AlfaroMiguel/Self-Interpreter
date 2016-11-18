@@ -9,6 +9,6 @@ class NewMorphHandler: public EventHandler{
   ~NewMorphHandler();
   void operator()();
  private:
-  void run(json j);
+  void handle(json j);
 };
 #endif

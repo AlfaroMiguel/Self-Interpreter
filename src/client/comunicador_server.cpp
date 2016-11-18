@@ -7,7 +7,8 @@
 #include "recibidor.h"
 #include "ventana_inicio.h"
 #include "cont_eventos.h"
-
+#include "event_handler.h"
+#include "event_handler_selector.h"
 #define EVENTO_MODIFICAR "modificar"
 #define EVENTO_CREAR "crear"
 #define EVENTO_AGREGAR_LOBBIES "agregar lobbies"
@@ -100,21 +101,27 @@ void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
 void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
 	std::string evento = j["evento"];
-	std::map<std::string, std::string> dic_slots;
+	EventHandlerSelector event_handler_selector(cont_eventos);
 	if(evento == EVENTO_CREAR) {
-		std::string nombre = j["nombre"];
-		double x = j["posicion"]["x"];
-		double y = j["posicion"]["y"];
-		std::string slots_str = j["slots"];
-		json slots = json::parse((char*)slots_str.c_str());
-		for (json::iterator it = slots.begin(); it != slots.end(); ++it) {
-			std::string nombre = it.key();
-			std::string valor = it.value();
-			dic_slots.insert(std::make_pair(nombre, valor));
-		}
-		Posicion pos_morph(x, y);
-		cont_eventos->crear_morph(nombre, pos_morph, dic_slots);
+		EventHandler *event_handler =
+			event_handler_selector.get_event_handler(evento);
+		event_handler->handle(j);
 	}
+	std::map<std::string, std::string> dic_slots;
+//	if(evento == EVENTO_CREAR) {
+//		std::string nombre = j["nombre"];
+//		double x = j["posicion"]["x"];
+//		double y = j["posicion"]["y"];
+//		std::string slots_str = j["slots"];
+//		json slots = json::parse((char*)slots_str.c_str());
+//		for (json::iterator it = slots.begin(); it != slots.end(); ++it) {
+//			std::string nombre = it.key();
+//			std::string valor = it.value();
+//			dic_slots.insert(std::make_pair(nombre, valor));
+//		}
+//		Posicion pos_morph(x, y);
+//		cont_eventos->crear_morph(nombre, pos_morph, dic_slots);
+//	}
 	if (evento == EVENTO_AGREGAR_LOBBIES){
 		std::string lobbies_str = j["lobbies"];
 		json lobbies = json::parse((char*)lobbies_str.c_str());

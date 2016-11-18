@@ -49,6 +49,7 @@ void Modelo::eliminar_morph(double x, double y){
 	}
 }
 
+
 Glib::RefPtr<Morph> Modelo::crear_morph(const std::string& nombre,
 										const Posicion& pos, std::map<std::string, std::string> dic_slots) {
 	std::cout << "Crea morph: " << nombre << std::endl;

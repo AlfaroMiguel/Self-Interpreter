@@ -7,9 +7,15 @@
 #define ALTO 23
 #define ANCHO 200
 
+bool Morph::on_create(Glib::RefPtr<Objeto>){
+	add_child(objeto);
+	return false;
+}
+
 Morph::Morph(const Posicion& pos, const Glib::ustring& nombre) {
 	objeto = Objeto::create(pos, nombre);
-	add_child(objeto);
+//	add_child(objeto);
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Morph::on_create), objeto));
 }
 
 Morph::~Morph(){}

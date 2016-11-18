@@ -14,6 +14,6 @@ class EventHandler{
   virtual ~EventHandler();
   EventHandler(EventHandler&& otra);
   EventHandler& operator=(EventHandler&& otra);
-  virtual void run(json j) = 0;
+  virtual void handle(json j) = 0;
 };
 #endif
