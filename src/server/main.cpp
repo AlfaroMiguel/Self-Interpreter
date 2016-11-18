@@ -8,7 +8,13 @@ int main(int argc, char const *argv[]) {
     Interpreter interpreter(lobby,nullptr);
     std::cout << "pepe" << std::endl;
     char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |)."; //devuelve el ptr de shell
+    char createNullObject[] = "lobby _AddSlots: (| punto3 = (|  |).  |)."; //devuelve el ptr de punto
+    char createNullObject1[] = "lobby _AddSlots: (| punto1 = (|  |).  |)."; //devuelve el ptr de punto1
+    char createNullObject2[] = "lobby _AddSlots: (| punto2 = (|  |).  |)."; //devuelve el ptr de punto2
     interpreter.interpretChar(shellCode);
+    interpreter.interpretChar(createNullObject);
+    interpreter.interpretChar(createNullObject1);
+    interpreter.interpretChar(createNullObject2);
     char punto[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |). \n\0\0"; //devuelve el ptr de punto
     interpreter.interpretChar(punto);
     char algunMetodo[] = "punto xPorDos.\n\0\0";
@@ -19,7 +25,7 @@ int main(int argc, char const *argv[]) {
     interpreter.interpretChar(multiLinea); //devuelve otroObjeto ptr y OtroObjeto1 ptr
 
     return 0;
-}*/
+} */
 
 
 
