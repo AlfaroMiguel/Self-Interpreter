@@ -6,3 +6,8 @@ y = 3.
 metodo = (|  | 3 * 2 +  6 * 5 - 8 / 6 + 1. ).
 |).
 lobby _AddSlots: (|shell = (||). |).
+OtroObjeto = (|
+x = 1.
+y = 3.
+metodo = (|  | x*y. ).
+|).

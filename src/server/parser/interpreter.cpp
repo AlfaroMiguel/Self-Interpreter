@@ -32,8 +32,8 @@ Interpreter::Interpreter(Object* entorno_ptr, Lobby* lobby):entorno(entorno_ptr)
   mapMessages.insert(std::pair<string,int>("/",13));
   mapMessages.insert(std::pair<string,int>("create_variable",14));
 
-    char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |).";
-    this->interpretChar(shellCode);
+    //char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |).";
+    //this->interpretChar(shellCode);
 
   mapMessages.insert(std::pair<string,int>("representation",15));
 }
@@ -55,8 +55,8 @@ Interpreter::Interpreter(){
   mapMessages.insert(std::pair<string,int>("create_variable",14));
 
   /*Lobby tiene existencia desde un principio*/
-  Object* lobby = new Object;
-  entorno = lobby;
+  Object* entornoPtr = new Object;
+  entorno = entornoPtr;
 }
 
 /*id       message    valor
@@ -178,13 +178,6 @@ void Interpreter::createExpression(string message){
 /*Si no se encuetra en el map, lo creo y lo devuelvo*/
 Object* Interpreter::findExpression(string name){
   std::cout << "findExpression:" <<name<< std::endl;
-  // if (map.count(name) == 0){
-  //     std::cout << "not found" << std::endl;
-  //     Object* expression = new Object;
-  //     expression->setName(name);
-  //     return expression;
-  //   }
-  //   return map[name];
   if (name.compare("lobby") == 0 ){
     return entorno;
   }
@@ -206,7 +199,7 @@ void Interpreter::assignationExpression(string name){
     Object* expression = stack.top();
     expression->setName(name);
 
-      expression->setLobby(lobby); //Test
+    //expression->setLobby(lobby); //Test
 
     std::cout << "get representation:" << std::endl;
     std::cout << expression->getRepresentation() << std::endl;
@@ -241,6 +234,8 @@ void Interpreter::addSlot(string name){
   std::vector<Object*> slotsVector = slots.getObjects();
   Object* slot = slotsVector[0];
   parent->addSlots(slot->getName(),slot,false,false);
+  std::cout << "SE CREO EL ELEMENTO" <<slot->getName()<< std::endl;
+  temporalObjects.push_back(slot);
   slot->addSlots("self",parent,false,true);
   if(name.compare("lobby") == 0){
     std::cout << "Lo guarde en el lobby" << std::endl;
@@ -248,12 +243,14 @@ void Interpreter::addSlot(string name){
   }
 }
 
-void Interpreter::interpretChar(const char* buffer){
-  //Sacar comentarios si se quiere compilar con el parser
+std::vector<Object*> Interpreter::interpretChar(const char* buffer){
+    //Sacar comentarios si se quiere compilar con el parser
+    temporalObjects.clear();
     std::cout << "Empieza a interpretar" << buffer << std::endl;
     yy_scan_string(buffer);
     yyparse(this);
     std::cout << "Termine de interpretar" << std::endl;
+    return temporalObjects;
 }
 
 

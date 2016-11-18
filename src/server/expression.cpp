@@ -35,9 +35,9 @@ void Expression::setOperator(std::string operatorString){
 std::string Expression::getRepresentation() const {
   std::cout << "Expression::getRepresentation a: "<< nombre << std::endl;
   //Hay que arreglar esto sino no anda
-  //if ( receiver != nullptr){
-  //  return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
-  //}
+  if ( receiver != nullptr){
+    return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
+  }
   std::string pepe = "lala";
   return pepe;
 }

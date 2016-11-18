@@ -2,28 +2,22 @@
 //Descomentar si se quiere probar el main del parser
 /*#include "parser/interpreter.h"
 
+
 int main(int argc, char const *argv[]) {
     Object* lobby = new Object;
-    Interpreter interpreter(lobby);
-    //Interpreter interpreter;
-
-    //interpreter.interpretFile(argv[1]);
-    char pajaro[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |). \n\0\0";
-    interpreter.interpretChar(pajaro);
+    Interpreter interpreter(lobby,nullptr);
+    std::cout << "pepe" << std::endl;
+    char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |)."; //devuelve el ptr de shell
+    interpreter.interpretChar(shellCode);
+    char punto[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |). \n\0\0"; //devuelve el ptr de punto
+    interpreter.interpretChar(punto);
     char algunMetodo[] = "punto xPorDos.\n\0\0";
     interpreter.interpretChar(algunMetodo);
-    // char pajaro[] = "lobby _AddSlots: (| pajaro = (| x = 1. y = 3. algunMetodo = (|  | 3 * 2 + 1. ). |).  |). \n\0\0";
-    // interpreter.interpretChar(pajaro);
-    // char algunMetodo[] = "pajaro algunMetodo.\n\0\0";
-    //interpreter.interpretChar(algunMetodo);
-    // char OtroObjeto[] = "lobby _AddSlots: (| OtroObjeto = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|).";
-    // char objeto[] = "lobby _AddSlots: (| objeto = (| |). |).";
-    // char numero[] = "objeto numero.";
-    // char metodo[] = "OtroObjeto metodo.";
-    // interpreter.interpretChar(OtroObjeto);
-    // interpreter.interpretChar(objeto);
-    // interpreter.interpretChar(numero);
-    // interpreter.interpretChar(metodo);
+    char pajaro[] = "lobby _AddSlots: (| pajaro = (| x = 1. y = 3. algunMetodo = (|  | 3 * 2 + 1. ). |).  |). \n\0\0"; //devuelve el ptr de pajaro
+    interpreter.interpretChar(pajaro);
+    char multiLinea[] = "lobby _AddSlots: (| OtroObjeto = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|). lobby _AddSlots: (| OtroObjeto1 = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|).";
+    interpreter.interpretChar(multiLinea); //devuelve otroObjeto ptr y OtroObjeto1 ptr
+
     return 0;
 }*/
 

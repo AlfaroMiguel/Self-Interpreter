@@ -14,6 +14,7 @@ private:
   std::map<std::string,int> mapMessages;
   std::stack<Object*> stack;
   std::map<std::string,Object*> map;
+  std::vector<Object*> temporalObjects;
   void createNumber(std::string value);
   void createVariable(std::string name);
   void assignationExpression(std::string name);
@@ -29,7 +30,7 @@ public:
     Interpreter(Object* entorno_ptr, Lobby* lobby);
     Interpreter();
     void pushToken(std::string id,std::string message,std::string value);
-    void interpretChar(const char* buffer);
+    std::vector<Object*> interpretChar(const char* buffer);
     void interpretFile(const char* nameFile);
     ~Interpreter();
 
