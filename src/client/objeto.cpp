@@ -37,56 +37,56 @@ void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 	}
 }
 
-//bool Objeto::on_cambiar_posicion(Posicion* pos){
-//	double x = pos->get_x();
-//	double y = pos->get_y();
-//	double offset_x = x - posicion.get_x();
-//	double offset_y = y - posicion.get_y();
-//	posicion.set_x(x);
-//	posicion.set_y(y);
-//	translate(offset_x, offset_y);
-//	Posicion pos_slot(offset_x, offset_y);
-//	for (unsigned int i = 0; i < slots.size(); i++)
-//		slots[i]->mover(pos_slot);
-//	return false;
-//}
-
-void Objeto::cambiar_posicion(Posicion* pos){
+bool Objeto::on_cambiar_posicion(Posicion* pos){
 	double x = pos->get_x();
 	double y = pos->get_y();
 	double offset_x = x - posicion.get_x();
 	double offset_y = y - posicion.get_y();
 	posicion.set_x(x);
 	posicion.set_y(y);
-	Posicion pos_slot(offset_x, offset_y);
-	//Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_mover), &pos_slot));
 	translate(offset_x, offset_y);
+	Posicion pos_slot(offset_x, offset_y);
 	for (unsigned int i = 0; i < slots.size(); i++)
 		slots[i]->mover(pos_slot);
-}
-
-bool Objeto::on_mover(const Posicion* pos){
-	translate(pos->get_x(), pos->get_y());
 	return false;
 }
 
-//bool Objeto::on_mover(const Posicion* new_pos){
-//	double new_x = new_pos->get_x();
-//	double new_y = new_pos->get_y();
-//	translate(new_x, new_y);
-//	actualizar_posicion(*new_pos);
+void Objeto::cambiar_posicion(Posicion* pos){
+//	double x = pos->get_x();
+//	double y = pos->get_y();
+//	double offset_x = x - posicion.get_x();
+//	double offset_y = y - posicion.get_y();
+//	posicion.set_x(x);
+//	posicion.set_y(y);
+//	Posicion pos_slot(offset_x, offset_y);
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_cambiar_posicion), pos));
+//	translate(offset_x, offset_y);
 //	for (unsigned int i = 0; i < slots.size(); i++)
-//		slots[i]->mover(*new_pos);
+//		slots[i]->mover(pos_slot);
+}
+
+//bool Objeto::on_mover(const Posicion* pos){
+//	translate(pos->get_x(), pos->get_y());
 //	return false;
 //}
+
+bool Objeto::on_mover(const Posicion* new_pos){
+	double new_x = new_pos->get_x();
+	double new_y = new_pos->get_y();
+	translate(new_x, new_y);
+	actualizar_posicion(*new_pos);
+	for (unsigned int i = 0; i < slots.size(); i++)
+		slots[i]->mover(*new_pos);
+	return false;
+}
 
 void Objeto::mover(const Posicion& new_pos){
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_mover), &new_pos));
 	//translate(new_pos.get_x(), new_pos.get_y());
-	actualizar_posicion(new_pos);
-	for (unsigned int i = 0; i < slots.size(); i++)
-		slots[i]->mover(new_pos);
-	std::cout << "La posicion del objeto es: " << posicion.get_x() << ", " << posicion.get_y() << std::endl;
+//	actualizar_posicion(new_pos);
+//	for (unsigned int i = 0; i < slots.size(); i++)
+//		slots[i]->mover(new_pos);
+//	std::cout << "La posicion del objeto es: " << posicion.get_x() << ", " << posicion.get_y() << std::endl;
 }
 
 void Objeto::editar_nombre(const Glib::ustring& nombre_nuevo){
