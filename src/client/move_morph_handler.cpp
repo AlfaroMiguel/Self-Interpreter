@@ -10,8 +10,8 @@ MoveMorphHandler::MoveMorphHandler(ControladorEventos* cont_eventos): EventHandl
 MoveMorphHandler::~MoveMorphHandler() {}
 
 void MoveMorphHandler::run(json j) {
-	std::mutex mutex;
-	Lock lock(mutex);
+//	std::mutex mutex;
+//	Lock lock(mutex);
 	std::cout << "MoveMorphHandler" << std::endl;
 	std::string morph = j["nombre"];
 	double new_x = j["posicion"]["x"];
