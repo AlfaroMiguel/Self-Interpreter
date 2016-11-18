@@ -20,7 +20,8 @@ public:
     bool connectClientToLobby(std::string clientName, std::string lobbyName, bool isShared);
     void disconnectClient(std::string clientName);
     void clientMovedMorph(std::string clientName, std::string morphName, double newX, double newY);
-    void interpretCode(std::string clientName, std::string code);
+    void interpretCodeGet(std::string clientName, std::string code);
+    void interpretCodeDo(std::string clientName, std::string code);
 };
 
 #endif

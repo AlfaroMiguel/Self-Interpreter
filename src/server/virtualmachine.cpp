@@ -98,11 +98,20 @@ void VirtualMachine::clientMovedMorph(std::string clientName, std::string morphN
     lobby->moveMorph(morphName, newX, newY);
 }
 
-void VirtualMachine::interpretCode(std::string clientName, std::string code){
+void VirtualMachine::interpretCodeGet(std::string clientName, std::string code){
     Client* client = searchClient(clientName);
     if(client != nullptr){
         Lobby* lobby = client->getActualLobby();
         std::cout << "El lobby actual de: " << clientName << " es " << lobby->getLobbyName() << std::endl;
-        lobby->interpretCode(code);
+        lobby->interpretCodeGet(code);
+    }
+}
+
+void VirtualMachine::interpretCodeDo(std::string clientName, std::string code){
+    Client* client = searchClient(clientName);
+    if(client != nullptr){
+        Lobby* lobby = client->getActualLobby();
+        std::cout << "El lobby actual de: " << clientName << " es " << lobby->getLobbyName() << std::endl;
+        lobby->interpretCodeDo(code);
     }
 }

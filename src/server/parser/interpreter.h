@@ -34,8 +34,6 @@ public:
     void interpretFile(const char* nameFile);
     ~Interpreter();
 
-    void initializeMorphs(Lobby* lobbyContainer);
-    void moveMorph(std::string morphName, double newX, double newY);
 };
 
 #endif /*INTERPRETER_H*/

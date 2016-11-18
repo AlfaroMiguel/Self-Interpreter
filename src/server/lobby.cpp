@@ -4,6 +4,8 @@
 Lobby::Lobby(std::string lobbyName, bool isShared, Object* lobbyReference) :
 lobbyName(lobbyName), isShared(isShared), lobbyReference(lobbyReference){
     interpreter = new Interpreter(lobbyReference, this);
+    std::string shellCode = "lobby _AddSlots: (| shell = (|  |).  |)."; //Ni bien se crea un interpreter le agrego la shell al lobby
+    this->interpretCodeGet(shellCode);
 }
 
 Lobby::~Lobby() {}
@@ -55,7 +57,7 @@ void Lobby::notifyClients(std::string eventName, Morph& morph){
     for(auto itClient = clientsConnected.begin(); itClient != clientsConnected.end(); itClient++){
         std::cout << "Entra a iterar los clientes" << std::endl;
         std::cout << clientsConnected.size() << std::endl;
-        std::cout <<  "Notifica a " << itClient->second->getClientName() << std::endl;
+        //std::cout <<  "Notifica a " << itClient->second->getClientName() << std::endl;
         if(itClient->second != nullptr){
             itClient->second->notify(eventName, morph);
         }
@@ -67,14 +69,37 @@ void Lobby::initializeClient(std::string clientName) {
     auto itClient = clientsConnected.find(clientName);
     if(itClient != clientsConnected.end())
         if(itClient->second != nullptr)
-            interpreter->initializeMorphs(this);
+            this->initializeMorphs();
 
 }
 
 void Lobby::moveMorph(std::string morphName, double newX, double newY){
-    interpreter->moveMorph(morphName, newX, newY);
+    auto itObject = visibleObjects.find(morphName);
+    if (itObject == visibleObjects.end())return;
+    Object *object = itObject->second;
+    object->moveMorph(newX, newY);
 }
 
-void Lobby::interpretCode(std::string code){
-    interpreter->interpretChar(code.c_str());
+void Lobby::interpretCodeGet(std::string code){
+    std::cout << "Soy el lobby: " << lobbyName << " me llego Get con el codigo: " << code << std::endl;
+    std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
+    for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
+        std::cout << "En esta interpretacion se creo: " << (*itObject)->getName() << std::endl;
+        visibleObjects.insert(std::make_pair((*itObject)->getName(), *itObject));
+        (*itObject)->notifyClients("crear");
+    }
+}
+
+void Lobby::interpretCodeDo(std::string code){
+    std::cout << "Soy el lobby: " << lobbyName << " me llego Do con el codigo: " << code << std::endl;
+    interpreter->interpretChar((code.c_str()));
+}
+
+
+void Lobby::initializeMorphs() {
+    std::cout << "Initialize Morphs" << std::endl;
+    for (auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++) {
+        std::cout << "Notifica: " << itObject->second->getName() << std::endl;
+        itObject->second->notifyClients("crear");
+    }
 }

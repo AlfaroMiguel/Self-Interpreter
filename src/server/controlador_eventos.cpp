@@ -52,11 +52,11 @@ void ControladorDeEventos::resolverMoverMorph(std::string idMorph, double newX, 
 }
 
 void ControladorDeEventos::resolverGet(std::string codigo){
-    cliente.vm.interpretCode(cliente.clientName, codigo);
+    cliente.vm.interpretCodeGet(cliente.clientName, codigo);
 }
 
 void ControladorDeEventos::resolverDo(std::string codigo){
-    //El do no notifica a los clientes del morph
+    cliente.vm.interpretCodeDo(cliente.clientName, codigo);
 }
 
 void ControladorDeEventos::resolverEvento(std::string evento) {

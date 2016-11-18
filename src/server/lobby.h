@@ -17,6 +17,8 @@ private:
     Object* lobbyReference;
     std::map<std::string, Client*> clientsConnected;
     Interpreter* interpreter;
+    std::map<std::string, Object*> visibleObjects;
+    std::map<std::string, Object*> allObject;
 
 public:
     Lobby(std::string lobbyName, bool isShared, Object* lobbyReference);
@@ -38,7 +40,10 @@ public:
 
     void moveMorph(std::string morphName, double newX, double newY);
 
-    void interpretCode(std::string code);
+    void interpretCodeGet(std::string code);
+    void interpretCodeDo(std::string code);
+    void initializeMorphs();
+
 };
 
 #endif
