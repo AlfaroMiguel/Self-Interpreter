@@ -32,6 +32,5 @@ class Objeto: public Representacion{
   	Objeto& operator=(const Objeto& otra) = delete;
 
   	bool on_cambiar_posicion(Posicion* pos);
-  	bool on_mover(const Posicion* pos);
 };
 #endif

@@ -3,7 +3,6 @@
 
 #include "cont_eventos.h"
 #include "event_handler.h"
-
 class NewMorphHandler: public EventHandler{
  public:
   NewMorphHandler(ControladorEventos* cont_eventos);

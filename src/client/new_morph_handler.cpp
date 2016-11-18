@@ -1,16 +1,11 @@
 #include "new_morph_handler.h"
 #include <string>
 #include <map>
-#include <mutex>
-#include "../common/lock.h"
-
 NewMorphHandler::NewMorphHandler(ControladorEventos* cont_eventos): EventHandler(cont_eventos) {}
 
 NewMorphHandler::~NewMorphHandler() {}
 
 void NewMorphHandler::run(json j) {
-	std::mutex mutex;
-	Lock lock(mutex);
 	std::map<std::string, std::string> dic_slots;
 	std::string nombre = j["nombre"];
 	double x = j["posicion"]["x"];
