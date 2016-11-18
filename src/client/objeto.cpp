@@ -55,14 +55,18 @@ void Objeto::cambiar_posicion(Posicion* pos){
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_cambiar_posicion), pos));
 }
 
-void Objeto::mover(const Posicion& new_pos){
-	double new_x = new_pos.get_x();
-	double new_y = new_pos.get_y();
+bool Objeto::on_mover(const Posicion* new_pos){
+	double new_x = new_pos->get_x();
+	double new_y = new_pos->get_y();
 	translate(new_x, new_y);
-	actualizar_posicion(new_pos);
+	actualizar_posicion(*new_pos);
 	for (unsigned int i = 0; i < slots.size(); i++)
-		slots[i]->mover(new_pos);
-	std::cout << "La posicion del objeto es: " << posicion.get_x() << ", " << posicion.get_y() << std::endl;
+		slots[i]->mover(*new_pos);
+	return false;
+}
+void Objeto::mover(const Posicion& new_pos){
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_mover), &new_pos));
+	//std::cout << "La posicion del objeto es: " << posicion.get_x() << ", " << posicion.get_y() << std::endl;
 }
 
 void Objeto::editar_nombre(const Glib::ustring& nombre_nuevo){
