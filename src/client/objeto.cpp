@@ -2,6 +2,7 @@
 #define ALTO 23
 #define ANCHO 200
 
+#include "../common/lock.h"
 Objeto::Objeto(const Posicion& pos, const Glib::ustring& nombre): Representacion(pos, nombre){}
 
 Glib::RefPtr<Objeto> Objeto::create(const Posicion& pos, const Glib::ustring& nombre){
@@ -40,10 +41,13 @@ void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 bool Objeto::on_cambiar_posicion(Posicion* pos){
 	double x = pos->get_x();
 	double y = pos->get_y();
-	double offset_x = x - posicion.get_x();
-	double offset_y = y - posicion.get_y();
 	posicion.set_x(x);
 	posicion.set_y(y);
+	std::cout << "Posicion del objeto: "<< posicion.get_x() << ", " << posicion.get_y() << std::endl;
+	std::cout << "Posicion del otro objeto (la que llega): " << x << ", " << y << std::endl;
+	double offset_x = x - posicion.get_x();
+	double offset_y = y - posicion.get_y();
+	std::cout << "Muevo el morph a posicion: " << offset_x << ", " << offset_y << std::endl;
 	translate(offset_x, offset_y);
 	Posicion pos_slot(offset_x, offset_y);
 	for (unsigned int i = 0; i < slots.size(); i++)
@@ -54,15 +58,18 @@ bool Objeto::on_cambiar_posicion(Posicion* pos){
 void Objeto::cambiar_posicion(Posicion* pos){
 	double x = pos->get_x();
 	double y = pos->get_y();
+	std::cout << "Posicion del objeto: " << posicion.get_x() << ", " << posicion.get_y() << std::endl;
+	std::cout << "Posicion del otro objeto " << x << ", " << y << std::endl;
 	double offset_x = x - posicion.get_x();
 	double offset_y = y - posicion.get_y();
 	posicion.set_x(x);
 	posicion.set_y(y);
+	std::cout << "Muevo el morph a posicion: " << offset_x << ", " << offset_y << std::endl;
 	translate(offset_x, offset_y);
 	Posicion pos_slot(offset_x, offset_y);
 	for (unsigned int i = 0; i < slots.size(); i++)
 		slots[i]->mover(pos_slot);
-		//Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_cambiar_posicion), pos));
+	//Lock l(mutex);
 }
 
 bool Objeto::on_mover(const Posicion* new_pos){

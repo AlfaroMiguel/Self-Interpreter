@@ -147,5 +147,6 @@ bool Morph::es_slot(const Posicion& pos) const{
 }
 
 void Morph::cambiar_posicion(Posicion* pos){
+	std::cout << "En morph la posicion es: " << pos->get_x() << ", " << pos->get_y() << std::endl;
 	objeto->cambiar_posicion(pos);
 }

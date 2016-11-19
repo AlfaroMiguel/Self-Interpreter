@@ -102,6 +102,7 @@ void ControladorEventos::dibujar_morph(Glib::RefPtr<Morph> morph){
 }
 
 void ControladorEventos::cambiar_pos_morph(const std::string& nombre, Posicion* pos){
+	std::cout << "En cambiar pos morph: " << pos->get_x() << ", " << pos->get_y() << std::endl;
 	modelo->cambiar_pos_morph(nombre, pos);
 }
 

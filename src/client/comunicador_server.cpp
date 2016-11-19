@@ -112,7 +112,7 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 	EventHandler *event_handler =
 		event_handler_selector.get_event_handler(evento);
 	event_handler->handle(j);
-//	std::map<std::string, std::string> dic_slots;
+	std::map<std::string, std::string> dic_slots;
 //	if(evento == EVENTO_CREAR) {
 //		std::string nombre = j["nombre"];
 //		double x = j["posicion"]["x"];

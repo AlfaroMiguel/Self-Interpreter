@@ -10,5 +10,6 @@ class MoveMorphHandler: public EventHandler{
   void operator()();
  private:
   void handle(json j);
+  bool on_handle(json j);
 };
 #endif
