@@ -9,3 +9,8 @@ Librerias necesarias:
 gtkmm-3.0
 goocanvas-2.0
 bison y flex (si se quiere generar el parser)
+
+Informe:
+Manual del usuario: https://www.overleaf.com/7090924zfjbtsqfghrk#/24374756/
+Manual de proyecto:
+Documentacion tecnica:
