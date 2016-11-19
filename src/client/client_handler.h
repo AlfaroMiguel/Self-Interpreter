@@ -1,23 +1,28 @@
 #ifndef CLIENT_HANDLER_H
 #define CLIENT_HANDLER_H
 
-#include <string>
-#include <map>
-#include <gtkmm.h>
 #include "morph.h"
 #include "comunicador_server.h"
 #include "posicion.h"
 
+#include <string>
+#include <map>
+#include <gtkmm.h>
+
 class ViewHandler;
 class Modelo;
 
+/* Clase que se encarga de manejar las interacciones entre el servidor
+ * y las distintas clases del cliente */
 class ClientHandler{
  	public:
   		ClientHandler(Modelo* modelo, ComunicadorServer* com_server);
   		~ClientHandler();
 
   		void set_control(ViewHandler* view_handler);
-  		void set_lobby(const std::string& id);
+  		/* Agrega un lobby a los lobbies en los que puede
+  		 * participar el cliente */
+  		void set_lobby(const std::string& id); //esta funcion se tiene que llamar add_lobby
   		void iniciar();
   		void crear_vm();
   		void mover_morph(int morph_id, const Posicion& new_pos);

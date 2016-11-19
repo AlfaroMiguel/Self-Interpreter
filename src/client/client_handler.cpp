@@ -6,6 +6,7 @@
 #include "view_handler.h"
 
 #include <iostream>
+
 ClientHandler::ClientHandler(Modelo* modelo, ComunicadorServer* com_server): modelo(modelo),
 																		 com_server(com_server) {}
 
@@ -88,10 +89,6 @@ void ClientHandler::crear_morph(const std::string& nombre,
 									 int id){
 	modelo->crear_morph(nombre, pos, dic_slots, id);
 }
-//
-//void ClientHandler::crear_morph(const std::string& nombre, const Posicion& pos) {
-//	com_server->enviar_datos_morph(nombre, pos);
-//}
 
 void ClientHandler::dibujar_morph(Glib::RefPtr<Morph> morph){
 	view_handler->dibujar_morph(morph);
