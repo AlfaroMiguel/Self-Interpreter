@@ -3,7 +3,7 @@
 #include "modelo.h"
 #include "comunicador_server.h"
 #include "ventana_inicio.h"
-#include "cont_vistas.h"
+#include "view_handler.h"
 
 #include <iostream>
 ClientHandler::ClientHandler(Modelo* modelo, ComunicadorServer* com_server): modelo(modelo),
@@ -12,19 +12,19 @@ ClientHandler::ClientHandler(Modelo* modelo, ComunicadorServer* com_server): mod
 ClientHandler::~ClientHandler() {}
 
 void ClientHandler::set_lobby(const std::string& id){
-	cont_vistas->set_lobby(id);
+	view_handler->set_lobby(id);
 }
 
 void ClientHandler::iniciar(){
-	cont_vistas->iniciar();
+	view_handler->iniciar();
 }
 
 void ClientHandler::crear_vm(){
-	cont_vistas->crear_vm();
+	view_handler->crear_vm();
 }
 
-void ClientHandler::mover_morph(const std::string& morph, const Posicion& new_pos){
-	modelo->mover_morph(morph, new_pos);
+void ClientHandler::mover_morph(int morph_id, const Posicion& new_pos){
+	modelo->mover_morph(morph_id, new_pos);
 }
 
 void ClientHandler::actualizar_posicion(int morph_id, const Posicion& pos){
@@ -40,11 +40,11 @@ void ClientHandler::ingresar_cliente(const std::string &nombre_cliente) {
 }
 
 void ClientHandler::eliminar_morph(Glib::RefPtr<Morph> morph) {
-	cont_vistas->eliminar_morph(morph);
+	view_handler->eliminar_morph(morph);
 }
 
 void ClientHandler::editar(){
-	cont_vistas->editar();
+	view_handler->editar();
 }
 
 bool ClientHandler::button_event(GdkEventButton *event) {
@@ -77,8 +77,8 @@ void ClientHandler::enviar_mensaje(const std::string& mensaje, const std::string
 	com_server->enviar_mensaje(mensaje, evento);
 }
 
-void ClientHandler::set_control(ControladorVistas* contr_vistas) {
-	this->cont_vistas = contr_vistas;
+void ClientHandler::set_control(ViewHandler* view_handler) {
+	this->view_handler = view_handler;
 }
 
 void ClientHandler::crear_morph(const std::string& nombre,
@@ -94,21 +94,20 @@ void ClientHandler::crear_morph(const std::string& nombre,
 //}
 
 void ClientHandler::dibujar_morph(Glib::RefPtr<Morph> morph){
-	cont_vistas->dibujar_morph(morph);
+	view_handler->dibujar_morph(morph);
 }
 
-void ClientHandler::cambiar_pos_morph(const std::string& nombre, Posicion* pos){
-	std::cout << "En cambiar pos morph: " << pos->get_x() << ", " << pos->get_y() << std::endl;
-	modelo->cambiar_pos_morph(nombre, pos);
+void ClientHandler::cambiar_pos_morph(int morph_id, Posicion* pos){
+	modelo->cambiar_pos_morph(morph_id, pos);
 }
 
 void ClientHandler::error_ingreso_cliente() {
-	cont_vistas->error_ingreso_cliente();
+	view_handler->error_ingreso_cliente();
 }
 
 void ClientHandler::cliente_conectado(){
 	com_server->inicializar();
-	cont_vistas->ocultar_vista_cliente();
+	view_handler->ocultar_vista_cliente();
 }
 
 void ClientHandler::get_morph_from_slot(int morph_id, const std::string& slot_name) {

@@ -1,25 +1,22 @@
-#ifndef CONT_VISTAS_H
-#define CONT_VISTAS_H
+#ifndef VIEW_HANDLER_H
+#define VIEW_HANDLER_H
 
-
-#include "ventana_edicion.h"
-#include "ventana_objetos.h"
-#include "ventana_inicio.h"
-#include "ventana_cliente.h"
 #include "client_handler.h"
+
 class VentanaVM;
-//class VentanaObjetos;
-//class VentanaInicio;
-//class VentanaEdicion;
+class VentanaObjetos;
+class VentanaInicio;
+class VentanaEdicion;
+class VentanaCliente;
 class Morph;
 
 
-class ControladorVistas{
+class ViewHandler{
  	public:
- 		ControladorVistas(VentanaInicio* inicio, VentanaEdicion* edicion,
+ 		ViewHandler(VentanaInicio* inicio, VentanaEdicion* edicion,
 							VentanaObjetos* objetos, VentanaVM* ventana_principal,
 							VentanaCliente* ventana_cliente);
-  		~ControladorVistas();
+  		~ViewHandler();
 
   		void dibujar_morph(Glib::RefPtr<Morph>);
   		void editar();

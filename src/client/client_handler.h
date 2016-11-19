@@ -8,19 +8,19 @@
 #include "comunicador_server.h"
 #include "posicion.h"
 
+class ViewHandler;
 class Modelo;
-class ControladorVistas;
 
 class ClientHandler{
  	public:
   		ClientHandler(Modelo* modelo, ComunicadorServer* com_server);
   		~ClientHandler();
 
-  		void set_control(ControladorVistas* cont_vistas);
+  		void set_control(ViewHandler* view_handler);
   		void set_lobby(const std::string& id);
   		void iniciar();
   		void crear_vm();
-  		void mover_morph(const std::string& morph, const Posicion& new_pos);
+  		void mover_morph(int morph_id, const Posicion& new_pos);
   		void actualizar_posicion(int morph_id, const Posicion& pos);
   		void abrir_vm(const std::string& lobby, const std::string& nombre_cliente);
   		void editar();
@@ -35,13 +35,13 @@ class ClientHandler{
   		void enviar_mensaje(const std::string& mensaje, const std::string& evento);
 		void ingresar_cliente(const std::string& nombre_cliente);
   		void mostrar_lobbies();
-  		void cambiar_pos_morph(const std::string& nombre, Posicion* pos);
+  		void cambiar_pos_morph(int morph_id, Posicion* pos);
   		void error_ingreso_cliente();
   		void cliente_conectado();
   		void get_morph_from_slot(int morph_id, const std::string& slot_name);
  	private:
   		Modelo* modelo;
   		ComunicadorServer* com_server;
-  		ControladorVistas* cont_vistas;
+  		ViewHandler* view_handler;
 };
 #endif

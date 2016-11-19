@@ -8,7 +8,7 @@
 #include <map>
 #include "morph.h"
 #include "comunicador_server.h"
-#include "cont_vistas.h"
+#include "view_handler.h"
 #include "client_handler.h"
 #include "ventana_cliente.h"
 
@@ -22,7 +22,7 @@ class VentanaVM: public Gtk::Window{
   VentanaObjetos* ventana_objetos;
   VentanaInicio* ventana_inicio;
   VentanaCliente* ventana_cliente;
-  ControladorVistas* cont_vistas;
+  ViewHandler* view_handler;
 
   Glib::RefPtr<Gtk::Builder> builder;
 

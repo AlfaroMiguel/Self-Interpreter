@@ -1,5 +1,4 @@
 #include "modelo.h"
-#include "cont_vistas.h"
 #include "morph.h"
 
 Modelo::Modelo() {}
@@ -76,37 +75,29 @@ void Modelo::crear_morph_de_slot(Posicion& pos){
 	if (morph_editando){
 		const std::string slot_name(morph_editando->obtener_nombre_slot(pos));
 		client_handler->get_morph_from_slot(morph_editando->get_id(), slot_name);
-//		std::map<std::string, std::string> dic_slots;
-//		const std::string nombre(morph_editando->obtener_valor_slot(pos));
-//		if (!nombre.empty() && !existe_morph(nombre)) {
-//			Posicion pos_slot(pos.get_x()+50, pos.get_y()+50);
-//			Glib::RefPtr <Morph> nuevo_morph = crear_morph(nombre, pos_slot, dic_slots);
-//			client_handler->crear_morph(nombre, pos_slot);
-//			//unir_morphs(nuevo_morph, morph_editando, x, y);
-//		}
 	}
 }
 
-void Modelo::cambiar_pos_morph(const std::string& nombre, Posicion* pos){
+void Modelo::cambiar_pos_morph(int morph_id, Posicion* pos){
 	std::cout << "En modelo la posicion es: " << pos->get_x() << ", " << pos->get_y() << std::endl;
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
-		if (morphs[i]->get_nombre() == nombre){
+		if (morphs[i]->get_id() == morph_id){
 			morphs[i]->cambiar_posicion(pos);
 		}
 	}
 }
 
-void Modelo::mover_morph(const std::string& morph, const Posicion& new_pos){
+void Modelo::mover_morph(int morph_id, const Posicion& new_pos){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
-		if (morphs[i]->get_nombre() == morph){
+		if (morphs[i]->get_id() == morph_id){
 			morphs[i]->mover(new_pos);
 		}
 	}
 }
 
-bool Modelo::existe_morph(const std::string& nombre){
+bool Modelo::existe_morph(int morph_id){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
-		if (morphs[i]->get_nombre() == nombre){
+		if (morphs[i]->get_id() == morph_id){
 			return true;
 		}
 	}

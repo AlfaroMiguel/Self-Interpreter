@@ -101,12 +101,8 @@ const std::string Morph::obtener_nombre_slot(const Posicion& pos) const{
 
 bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventMotion* event) {
 	if(item && dragging && item == dragging) {
-		auto new_x = event->x;
-		auto new_y = event->y;
-		std::cout << "New pos: " << new_x << ", " << new_y << std::endl;
-		std::cout << "Drag pos: " << drag_x << ", " << drag_y << std::endl;
-		Posicion new_pos(new_x - drag_x, new_y - drag_y);
- 		client_handler->mover_morph(get_nombre(), new_pos);
+		Posicion new_pos(event->x - drag_x, event->y - drag_y);
+ 		client_handler->mover_morph(get_id(), new_pos);
 	}
 	return false;
 }
@@ -153,6 +149,5 @@ bool Morph::es_slot(const Posicion& pos) const{
 }
 
 void Morph::cambiar_posicion(Posicion* pos){
-	std::cout << "En morph la posicion es: " << pos->get_x() << ", " << pos->get_y() << std::endl;
 	objeto->cambiar_posicion(pos);
 }

@@ -33,12 +33,12 @@ VentanaVM::~VentanaVM() {
 	delete ventana_inicio;
 	delete ventana_objetos;
 	delete ventana_cliente;
-	delete cont_vistas;
+	delete view_handler;
 }
 
 void VentanaVM::set_control(ClientHandler* client_handler){
-	cont_vistas = new ControladorVistas(ventana_inicio, ventana_edicion, ventana_objetos, this, ventana_cliente);
-	cont_vistas->set_control(client_handler);
+	view_handler = new ViewHandler(ventana_inicio, ventana_edicion, ventana_objetos, this, ventana_cliente);
+	view_handler->set_control(client_handler);
 }
 
 bool VentanaVM::do_iniciar() {

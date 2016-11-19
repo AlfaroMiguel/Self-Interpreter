@@ -6,7 +6,6 @@
 #include "ventana_edicion.h"
 #include "ventana_inicio.h"
 #include "ventana_objetos.h"
-#include "cont_vistas.h"
 #include "client_handler.h"
 
 int main (int argc, char **argv) {
