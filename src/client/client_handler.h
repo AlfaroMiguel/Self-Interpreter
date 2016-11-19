@@ -22,7 +22,7 @@ class ClientHandler{
   		void set_control(ViewHandler* view_handler);
   		/* Agrega un lobby a los lobbies en los que puede
   		 * participar el cliente */
-  		void set_lobby(const std::string& id); //esta funcion se tiene que llamar add_lobby
+  		void add_lobby(const std::string& lobby_id);
   		void iniciar();
   		void crear_vm();
   		void mover_morph(int morph_id, const Posicion& new_pos);

@@ -21,8 +21,8 @@ VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Bu
 
 VentanaInicio::~VentanaInicio() {}
 
-void VentanaInicio::set_lobby(const std::string& id){
-	Glib::ustring lobby(id);
+void VentanaInicio::add_lobby(const std::string& lobby_id){
+	Glib::ustring lobby(lobby_id);
 	lobbies.push_back(lobby);
 }
 

@@ -11,8 +11,8 @@ void AddLobbiesHandler::handle(json j) {
 	std::string lobbies_str = j[JSON_ID_LOBBIES];
 	json lobbies = json::parse((char*)lobbies_str.c_str());
 	for (json::iterator it = lobbies.begin(); it != lobbies.end(); ++it) {
-		std::string id = it.value();
-		client_handler->set_lobby(id);
+		std::string lobby_id = it.value();
+		client_handler->add_lobby(lobby_id);
 	}
 	client_handler->iniciar();
 }

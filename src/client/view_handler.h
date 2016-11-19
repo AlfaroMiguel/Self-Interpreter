@@ -20,7 +20,9 @@ class ViewHandler{
 
   		void dibujar_morph(Glib::RefPtr<Morph>);
   		void editar();
-  		void set_lobby(const std::string& id);
+  		/* Agrega un lobby a los lobbies en los que puede
+   		* participar el cliente */
+  		void add_lobby(const std::string& lobby_id);
   		void iniciar();
   		void crear_vm();
   		void eliminar_morph(Glib::RefPtr<Morph> morph);

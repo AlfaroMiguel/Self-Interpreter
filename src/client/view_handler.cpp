@@ -31,8 +31,8 @@ void ViewHandler::ocultar_vista_cliente() {
 	ventana_cliente->ocultar();
 }
 
-void ViewHandler::set_lobby(const std::string& id){
-	ventana_inicio->set_lobby(id);
+void ViewHandler::add_lobby(const std::string& lobby_id){
+	ventana_inicio->add_lobby(lobby_id);
 }
 
 void ViewHandler::iniciar() {

@@ -12,8 +12,8 @@ ClientHandler::ClientHandler(Modelo* modelo, ComunicadorServer* com_server): mod
 
 ClientHandler::~ClientHandler() {}
 
-void ClientHandler::set_lobby(const std::string& id){
-	view_handler->set_lobby(id);
+void ClientHandler::add_lobby(const std::string& lobby_id){
+	view_handler->add_lobby(lobby_id);
 }
 
 void ClientHandler::iniciar(){

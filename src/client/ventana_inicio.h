@@ -10,7 +10,9 @@ class VentanaInicio: public Gtk::Dialog{
   	VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
   	~VentanaInicio();
 
-  	void set_lobby(const std::string& id);
+  	/* Agrega un lobby a los lobbies en los que puede
+	 * participar el cliente */
+  	void add_lobby(const std::string& lobby_id);
   	void iniciar();
   	void set_control(ClientHandler* client_handler);
   	void mostrar_error();
