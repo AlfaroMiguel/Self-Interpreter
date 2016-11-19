@@ -25,6 +25,8 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
  `make`
 * Se generan dos carpetas con los respectivos ejecutables 
  `client` y `server`
+ 
+ UPDATE: solo ejecutar install.sh
 
 ##Run 
 
