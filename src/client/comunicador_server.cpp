@@ -80,6 +80,12 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 	enviar_json(j);
 }
 
+void ComunicadorServer::inicializar() {
+	json j;
+	j["evento"] = "inicializar";
+	enviar_json(j);
+}
+
 void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, const Posicion& pos){
 	json j;
 	j["evento"] = EVENTO_MOVER;
@@ -101,13 +107,12 @@ void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
 void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
 	std::string evento = j["evento"];
+	std::cout << "evento recibido: " << evento << std::endl;
 	EventHandlerSelector event_handler_selector(cont_eventos);
-	if(evento == EVENTO_CREAR) {
-		EventHandler *event_handler =
-			event_handler_selector.get_event_handler(evento);
-		event_handler->handle(j);
-	}
-	std::map<std::string, std::string> dic_slots;
+	EventHandler *event_handler =
+		event_handler_selector.get_event_handler(evento);
+	event_handler->handle(j);
+//	std::map<std::string, std::string> dic_slots;
 //	if(evento == EVENTO_CREAR) {
 //		std::string nombre = j["nombre"];
 //		double x = j["posicion"]["x"];
@@ -122,36 +127,36 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 //		Posicion pos_morph(x, y);
 //		cont_eventos->crear_morph(nombre, pos_morph, dic_slots);
 //	}
-	if (evento == EVENTO_AGREGAR_LOBBIES){
-		std::string lobbies_str = j["lobbies"];
-		json lobbies = json::parse((char*)lobbies_str.c_str());
-		for (json::iterator it = lobbies.begin(); it != lobbies.end(); ++it) {
-			std::string id = it.value();
-			cont_eventos->set_lobby(id);
-		}
-		cont_eventos->iniciar();
-	}
-	if(evento == "cliente conectado"){
-		std::cout << "Se conecta ok" << std::endl;
-		json j;
-		j["evento"] = "inicializar";
-		enviar_json(j);
-		cont_eventos->cliente_conectado();
-	}
-	if(evento == "error"){
-		std::cout << "Ingresa a error" << std::endl;
-		cont_eventos->error_ingreso_cliente();
-	}
-	if (evento == "datos lobby"){
-		//tiene que crear la vm con todos los morphs
-		cont_eventos->crear_vm();
-	}
-	if(evento == EVENTO_MOVER){
-		std::string morph = j["nombre"];
-		double new_x = j["posicion"]["x"];
-		double new_y = j["posicion"]["y"];
-		Posicion new_pos(new_x, new_y);
-		cont_eventos->cambiar_pos_morph(morph, &new_pos);
-	}
+//	if (evento == EVENTO_AGREGAR_LOBBIES){
+//		std::string lobbies_str = j["lobbies"];
+//		json lobbies = json::parse((char*)lobbies_str.c_str());
+//		for (json::iterator it = lobbies.begin(); it != lobbies.end(); ++it) {
+//			std::string id = it.value();
+//			cont_eventos->set_lobby(id);
+//		}
+//		cont_eventos->iniciar();
+//	}
+//	if(evento == "cliente conectado"){
+//		std::cout << "Se conecta ok" << std::endl;
+//		json j;
+//		j["evento"] = "inicializar";
+//		enviar_json(j);
+//		cont_eventos->cliente_conectado();
+//	}
+//	if(evento == "error"){
+//		std::cout << "Ingresa a error" << std::endl;
+//		cont_eventos->error_ingreso_cliente();
+//	}
+//	if (evento == "datos lobby"){
+//		//tiene que crear la vm con todos los morphs
+//		cont_eventos->crear_vm();
+//	}
+//	if(evento == EVENTO_MOVER){
+//		std::string morph = j["nombre"];
+//		double new_x = j["posicion"]["x"];
+//		double new_y = j["posicion"]["y"];
+//		Posicion new_pos(new_x, new_y);
+//		cont_eventos->cambiar_pos_morph(morph, &new_pos);
+//	}
 }
 

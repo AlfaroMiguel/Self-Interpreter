@@ -110,5 +110,6 @@ void ControladorEventos::error_ingreso_cliente() {
 }
 
 void ControladorEventos::cliente_conectado(){
+	com_server->inicializar();
 	cont_vistas->ocultar_vista_cliente();
 }

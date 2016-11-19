@@ -34,8 +34,7 @@ bool VentanaInicio::do_iniciar(){
 	}
 	if (lobbies.size() > 0)
 		comboBox->set_active(0);
-	std::cout << "se crean los lobbies" << std::endl;
-	this->show();
+	show();
 	return false;
 }
 

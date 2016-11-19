@@ -52,7 +52,17 @@ bool Objeto::on_cambiar_posicion(Posicion* pos){
 }
 
 void Objeto::cambiar_posicion(Posicion* pos){
-	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_cambiar_posicion), pos));
+	double x = pos->get_x();
+	double y = pos->get_y();
+	double offset_x = x - posicion.get_x();
+	double offset_y = y - posicion.get_y();
+	posicion.set_x(x);
+	posicion.set_y(y);
+	translate(offset_x, offset_y);
+	Posicion pos_slot(offset_x, offset_y);
+	for (unsigned int i = 0; i < slots.size(); i++)
+		slots[i]->mover(pos_slot);
+		//Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_cambiar_posicion), pos));
 }
 
 bool Objeto::on_mover(const Posicion* new_pos){
