@@ -19,9 +19,9 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
  `./generar.sh`
 * En la carpeta raiz del proyecto:
  `cmake ./src`
-* Finalmente copiar de:
+* Finalmente copiar:
  `src/client/ventana_vm.glade` a `client`
-*Por ultimo en la carpeta raiz del proyecto:
+* Por ultimo en la carpeta raiz del proyecto:
  `make`
 *Se generan dos carpetas con los respectivos ejecutables 
  `client` y `server`
