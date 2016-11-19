@@ -1,4 +1,4 @@
-#include "recibidor.h"
+#include "receiver.h"
 
 Receiver::Receiver(Socket& skt, ProxyClient& client): skt(skt), client(client){
 	isReceiving = true;

@@ -6,15 +6,15 @@ lobby _AddSlots: (| object = (|b = 2.|). |).
 
 b =
 
-** Obtengo el ultimo objeto en el stack y le seteo el nombre a 2**
+** Obtengo el ultimo objectReference en el stack y le seteo el objectName a 2**
 
 (|***|)
-**Creo un objeto y agrego lo que hay en el stack como slot (todos los objetos
+**Creo un objectReference y agrego lo que hay en el stack como slot (todos los objetos
 son sacado)**
 
-objeto =
+objectReference =
 
-**Obtengo el ultimo elemento y le seteo el nombre a object**
+**Obtengo el ultimo elemento y le seteo el objectName a object**
 
 (|****|)
 **Lo mismo que ante**

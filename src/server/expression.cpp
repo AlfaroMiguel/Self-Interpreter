@@ -45,10 +45,10 @@ void Expression::setOperator(std::string operatorString){
 
 
 std::string Expression::getRepresentation() const {
-  std::cout << "Expression::getRepresentation a: "<< nombre << std::endl;
+  std::cout << "Expression::getRepresentation a: "<< objectName << std::endl;
   //Hay que arreglar esto sino no anda
   if ( receiver != nullptr){
-    std::cout << "nombre del receiver" << receiver->getName() << std::endl;
+    std::cout << "objectName del receiver" << receiver->getName() << std::endl;
     return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
   }
   std::string pepe = "lala";
@@ -94,7 +94,7 @@ void Expression::evaluate(){
     }
     else{
       Object* metodo = this->getSlotName(operation);
-      std::cout << "nombre del metodo:" <<metodo->getName()<< std::endl;
+      std::cout << "objectName del metodo:" <<metodo->getName()<< std::endl;
       metodo->evaluate();
     }
 }

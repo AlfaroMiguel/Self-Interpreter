@@ -31,11 +31,11 @@ void SearcherObject::addSlots(std::string id,Object* slot, bool algo, bool otro)
 void SearcherObject::evaluate(){
   std::cout << "SearcherObject::evaluate" << std::endl;
   Object* self = getSlotName("self");
-  Object* expression = Object::buscarObject(nombre,self);
+  Object* expression = Object::searchObject(objectName, self);
   if (expression != nullptr){
     expressionSearched = expression;
   }else{
-    std::cout << "Object not found:" <<nombre<< std::endl;
+    std::cout << "Object not found:" <<objectName<< std::endl;
   }
 }
 

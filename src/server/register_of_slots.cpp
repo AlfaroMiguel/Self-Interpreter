@@ -1,4 +1,4 @@
-#include "registrodeslots.h"
+#include "register_of_slots.h"
 #include "object.h"
 
 RegisterOfSlots::RegisterOfSlots(){}
@@ -25,7 +25,7 @@ Slot RegisterOfSlots::getSlot(std::string &slotName) {
 std::vector<Object*> RegisterOfSlots::getObjects(){
   std::vector<Object*> objects;
   for(auto it = slotMap.begin(); it != slotMap.end(); it++){
-    objects.push_back((it->second).obtenerReferencia());
+    objects.push_back((it->second).getReference());
   }
   return objects;
 }
@@ -38,11 +38,11 @@ RegisterOfSlots RegisterOfSlots::getParentsSlots(){
     RegisterOfSlots registerOfParentsSlots;
     for(auto iter = slotMap.begin(); iter != slotMap.end(); ++iter){
         Slot slot  = iter->second;
-        if(slot.esSlotParent()){
+        if(slot.isParentSlot()){
             registerOfParentsSlots.addSlot(iter->first,
-                                      slot.obtenerReferencia(),
-                                      slot.esSlotMutable(),
-                                      slot.esSlotParent());
+                                           slot.getReference(),
+                                           slot.isMutableSlot(),
+                                           slot.isParentSlot());
         }
     }
     return registerOfParentsSlots;
@@ -58,7 +58,7 @@ Object* RegisterOfSlots::searchSlot(std::string &slotName, Object *object){
         RegisterOfSlots parentsSlots = object->getParentsSlots();
         std::vector<Object*> parentsSlotsFounded;
         for(auto iter = parentsSlots.slotMap.begin(); iter != parentsSlots.slotMap.end(); ++iter){
-            Object* temporalObject = (iter->second).obtenerReferencia();
+            Object* temporalObject = (iter->second).getReference();
             Object* parent = searchSlot(slotName, temporalObject);
             parentsSlotsFounded.push_back(parent);
         }
@@ -71,6 +71,6 @@ Object* RegisterOfSlots::searchSlot(std::string &slotName, Object *object){
         return parentsSlotsFounded[0];
 
     }else{
-        return (slots_it->second).obtenerReferencia();
+        return (slots_it->second).getReference();
     }
 }

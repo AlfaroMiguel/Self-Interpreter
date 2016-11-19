@@ -5,16 +5,16 @@
 #include <string>
 class Morph;
 class Lobby;
-class ComunicadorCliente;
+class ProxyClient;
 
 class Client{
 private:
     std::string clientName;
-    ComunicadorCliente* clientReference;
+    ProxyClient* clientReference;
     Lobby* actualLobby;
 
 public:
-    Client(std::string clientName, ComunicadorCliente* clientReference);
+    Client(std::string clientName, ProxyClient* clientReference);
     ~Client();
 
     std::string getClientName();

@@ -28,7 +28,7 @@ bool Lobby::isLobbyShared(){
 }
 
 void Lobby::connectClient(Client* client){
-    std::cout << "Conecto cliente: " << client->getClientName() << " al lobby: " << this->lobbyName << std::endl;
+    std::cout << "Conecto client: " << client->getClientName() << " al lobby: " << this->lobbyName << std::endl;
     auto itClient = clientsConnected.find((client->getClientName()));
     if(itClient == clientsConnected.end())
         clientsConnected.insert(std::make_pair(client->getClientName(), client));

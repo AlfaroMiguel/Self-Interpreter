@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]) {
 
 #include <iostream>
 #include "../common/socket.h"
-#include "aceptador.h"
+#include "accepter.h"
 
 #define SALIDA 0
 #define POS_PORT 1
@@ -44,13 +44,13 @@ int main(int argc, const char *argv[]) try{
     }
     VirtualMachine vm;
     std::string puerto = argv[POS_PORT];
-    Aceptador aceptador(puerto, vm);
+    Accepter aceptador(puerto, vm);
     aceptador.run();
     std::string entrada;
     while (getline(std::cin, entrada)) {
         std::cerr << entrada << std::endl;
         if (entrada == CARACTER_SALIR) {
-            aceptador.parar();
+            aceptador.stop();
             aceptador.join();
             break;
         }

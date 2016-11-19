@@ -1,25 +1,25 @@
-#include "controlador_eventos.h"
+#include "event_handler.h"
 #include "proxy_client.h"
 #include "../common/json.hpp"
 
 using json = nlohmann::json;
 
-EventHandler::EventHandler(ProxyClient& cliente) : client(cliente){}
+EventHandler::EventHandler(ProxyClient& client) : client(client){}
 
 EventHandler::~EventHandler(){}
 
 void EventHandler::connect(std::string clientName){
-    std::cout << " Se conecta client " << clientName << std::endl;
-    bool sePudoConectar = client.vm.connectClient(clientName, &client);
-    json jrespuesta;
-    if(sePudoConectar){
-        jrespuesta["evento"] = "client conectado";
+    std::cout << " Se conecta client " << clientName << std::endl; //TODO sacar debug
+    bool clientIsConnected = client.vm.connectClient(clientName, &client);
+    json jResponse;
+    if(clientIsConnected){
+        jResponse["evento"] = "client conectado";
         client.clientName = clientName;
     }
     else
-        jrespuesta["evento"] = "error";
+        jResponse["evento"] = "error";
 
-    client.sendEvent(jrespuesta.dump());
+    client.sendEvent(jResponse.dump());
 }
 
 void EventHandler::initialize(){
@@ -28,10 +28,10 @@ void EventHandler::initialize(){
     for(int i = 0; i < lobbies.size(); i++){
         jlobbies[std::to_string(i)] = lobbies[i];
     }
-    json jInicializar;
-    jInicializar["evento"] = "agregar lobbies";
-    jInicializar["lobbies"] = jlobbies.dump();
-    client.sendEvent(jInicializar.dump());
+    json jInitialize;
+    jInitialize["evento"] = "agregar lobbies";
+    jInitialize["lobbies"] = jlobbies.dump();
+    client.sendEvent(jInitialize.dump());
 }
 
 void EventHandler::chooseLobby(std::string lobbyName, std::string lobbyState){
@@ -40,7 +40,6 @@ void EventHandler::chooseLobby(std::string lobbyName, std::string lobbyState){
         client.vm.connectClientToLobby(client.clientName, lobbyName, true);
     else
         client.vm.connectClientToLobby(client.clientName, lobbyName, false);
-
 
     json jDatosLobby;
     jDatosLobby["evento"] = "datos lobby";
@@ -59,31 +58,31 @@ void EventHandler::interpretSelfDo(std::string code){
     client.vm.interpretCodeDo(client.clientName, code);
 }
 
-void EventHandler::handleEvent(std::string event) {
-    json eventoj = json::parse(event);
-    std::cout << eventoj["event"] << std::endl; //Aca dependiendo del event envio o modifico cosas
+void EventHandler::handleEvent(std::string event) { //TODO implementar un map para los eventos
+    json eventJ = json::parse(event);
+    std::cout << eventJ["evento"] << std::endl; //Aca dependiendo del event envio o modifico cosas
 
-    std::string nombreEvento = eventoj["event"];
+    std::string eventName = eventJ["evento"];
 
-    if(nombreEvento == "conectar client"){ //El client me informa su nombre
-        connect(eventoj["nombre"]);
+    if(eventName == "conectar cliente"){ //El client me informa su objectName
+        connect(eventJ["objectName"]);
     }
 
-    if(nombreEvento == "inicializar"){ //El client quiere los lobbys
+    if(eventName == "inicializar"){ //El client quiere los lobbys
         initialize();
     }
 
-    if(nombreEvento == "elegir lobby"){ //EL client elijio un lobby
-        chooseLobby(eventoj["lobby"], eventoj["estado"]);
+    if(eventName == "elegir lobby"){ //EL client elijio un lobby
+        chooseLobby(eventJ["lobby"], eventJ["estado"]);
     }
-    if(nombreEvento == "mover morph"){ //Se movio un morph
-        moveMorph(eventoj["id"], eventoj["x"], eventoj["y"]);
+    if(eventName == "mover morph"){ //Se movio un morph
+        moveMorph(eventJ["id"], eventJ["x"], eventJ["y"]);
     }
-    if (nombreEvento == "get"){//Enviaron codigo y quieren ver los morphs
-        interpretSelfGet(eventoj["codigo"]);
+    if (eventName == "get"){//Enviaron codigo y quieren ver los morphs
+        interpretSelfGet(eventJ["codigo"]);
     }
-    if(nombreEvento == "do"){
-        interpretSelfDo(eventoj["codigo"]);
+    if(eventName == "do"){
+        interpretSelfDo(eventJ["codigo"]);
     }
 
 }

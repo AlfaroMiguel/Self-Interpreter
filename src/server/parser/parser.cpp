@@ -1363,7 +1363,7 @@ yyreduce:
   case 13:
 #line 83 "parser.y" /* yacc.c:1646  */
     {
-		std::cout << "objeto metodo." <<std::endl;
+		std::cout << "objectReference metodo." <<std::endl;
 		/*Lo busco y lo guardo en el stack*/
 		interpreter->pushToken(*(yyvsp[-2].str_val),"find","");
 		/*Le mando el mensaje siguiente*/

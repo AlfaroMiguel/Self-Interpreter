@@ -9,14 +9,14 @@ private:
     std::map<std::string, Lobby*> existingLobbies;
     std::map<std::string, Client*> existingClients;
 
-    Client* newClient(std::string clientName, ComunicadorCliente* clientReference);
+    Client* newClient(std::string clientName, ProxyClient* clientReference);
     Client* searchClient(std::string clientName);
 public:
     VirtualMachine();
     ~VirtualMachine();
 
     std::vector<std::string> getAvailablesLobbies(std::string client);
-    bool connectClient(std::string clientName, ComunicadorCliente* clientReference);
+    bool connectClient(std::string clientName, ProxyClient* clientReference);
     bool connectClientToLobby(std::string clientName, std::string lobbyName, bool isShared);
     void disconnectClient(std::string clientName);
     void clientMovedMorph(std::string clientName, int morphId, double newX, double newY);

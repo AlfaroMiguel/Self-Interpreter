@@ -2,9 +2,9 @@
 
 #include "morph.h"
 #include "lobby.h"
-#include "comunicador_cliente.h"
+#include "proxy_client.h"
 
-Client::Client(std::string clientName, ComunicadorCliente* clientReference) : clientName(clientName), clientReference(clientReference) {
+Client::Client(std::string clientName, ProxyClient* clientReference) : clientName(clientName), clientReference(clientReference) {
     actualLobby = nullptr;
 }
 
@@ -26,5 +26,5 @@ std::string Client::getClientName(){
 
 void Client::notify(std::string eventName, Morph& morph){
     std::string event = morph.getEvent(eventName); //Hardcodeo por ahora
-    clientReference->enviarEvento(event);
+    clientReference->sendEvent(event);
 }

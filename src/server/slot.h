@@ -4,16 +4,16 @@
 class Object;
 
 class Slot{
-    Object* objeto;
-    bool esMutable;
-    bool esParent;
+    Object* objectReference;
+    bool isMutable;
+    bool isParent;
 
 public:
-    Slot(Object* objeto, bool esMutable, bool esParent);
+    Slot(Object* object, bool isMutable, bool isParent);
     ~Slot();
-    Object* obtenerReferencia();
-    bool esSlotMutable();
-    bool esSlotParent();
+    Object* getReference();
+    bool isMutableSlot();
+    bool isParentSlot();
 };
 
 #endif

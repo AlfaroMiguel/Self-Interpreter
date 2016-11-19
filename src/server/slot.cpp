@@ -1,16 +1,16 @@
 #include "slot.h"
 
-Slot::Slot(Object* objeto, bool esMutable, bool esParent) :
-objeto(objeto), esMutable(esMutable), esParent(esParent){}
+Slot::Slot(Object* object, bool isMutable, bool esParent) :
+objectReference(object), isMutable(isMutable), isParent(esParent){}
 
 Slot::~Slot(){}
 
-Object* Slot::obtenerReferencia(){
-    return objeto;
+Object* Slot::getReference(){
+    return objectReference;
 }
-bool Slot::esSlotMutable(){
-    return this->esMutable;
+bool Slot::isMutableSlot(){
+    return this->isMutable;
 }
-bool Slot::esSlotParent(){
-    return this->esParent;
+bool Slot::isParentSlot(){
+    return this->isParent;
 }

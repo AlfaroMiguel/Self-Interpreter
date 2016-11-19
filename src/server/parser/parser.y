@@ -81,7 +81,7 @@ line :
 		std::cout << "atom:_expression)" <<std::endl;
 		}
 		|VARIABLE VARIABLE SEMICOLON{
-		std::cout << "objeto metodo." <<std::endl;
+		std::cout << "objectReference metodo." <<std::endl;
 		/*Lo busco y lo guardo en el stack*/
 		interpreter->pushToken(*$1,"find","");
 		/*Le mando el mensaje siguiente*/

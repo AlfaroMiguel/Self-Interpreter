@@ -6,7 +6,7 @@
 #include <tuple>
 #include <vector>
 #include <string>
-#include "registrodeslots.h"
+#include "register_of_slots.h"
 #include "nativevalue.h"
 
 #include "morph.h"
@@ -14,22 +14,24 @@
 
 class Object{
 protected:
-    std::string nombre;
-    RegistroDeSlots slots;
-    std::string representation; /*represetancion*/
-
+    std::string objectName;
+    RegisterOfSlots slots;
+    std::string representation;
     Morph myMorph;
     Lobby* myLobby;
 
 public:
     Object();
-    Object(const Object& otroObject);
+    Object(const Object& otherObject);
     virtual ~Object();
+
     Object* getSlotName(std::string name);
     virtual void isObject();
-    /*metodos de expression*/
-    RegistroDeSlots obtenerParentsSlots();
-    Object* buscarObject(std::string nombre, Object* object);
+
+
+    RegisterOfSlots getParentsSlots();
+    Object* searchObject(std::string name, Object *object);
+
     virtual void setReceiver(Object* receiverPtr){
       std::cout << "Object::setReceiver:" << std::endl;
     }
@@ -47,19 +49,18 @@ public:
     virtual NativeValue ejecute(std::string operationStr, Object* argumentPtr);
     virtual void evaluate();
 
-    void setName(const std::string nuevoNombre);
+    void setName(const std::string newName);
     std::string getName();
-    RegistroDeSlots getSlots();
-    void addSlots(std::string nombreSlot, Object* object, bool esMutable, bool esParentSlot);
-    void RemoveSlots(std::string nombreSlot);
 
 
-    RegistroDeSlots obtenerSlots();
+    RegisterOfSlots getSlots();
+    void addSlots(std::string slotName, Object* object, bool isMutable, bool isParentSlot);
+    void RemoveSlots(std::string slotName);
 
     Object* clone();
     virtual std::string getRepresentation() const;
-    virtual void setRepresentation(std::string representationStr);
-    virtual Object* print(const std::vector<Object*>& argumentos);
+    virtual void setRepresentation(std::string representationString);
+    virtual Object* print(const std::vector<Object*>& argumnets);
 
     //Object* collect(); Esto va en el Lobby
 

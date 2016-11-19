@@ -138,7 +138,7 @@ void Interpreter::pushToken(string id, string message, string value) {
 
 void Interpreter::cloneObject(std::string id){
     Object* objectToClone = findExpression(id);
-    RegistroDeSlots slots = objectToClone->getSlots();
+    RegisterOfSlots slots = objectToClone->getSlots();
     std::vector<Object*> slotsVector = slots.getObjects();
     std::vector<Object*> slotsRedefined;
     //Saco todos los slots que se redefinieron
@@ -225,7 +225,7 @@ Object *Interpreter::findExpression(string name) {
     if (object != nullptr) {
         return object;
     } else {
-        throw std::runtime_error("Interpreter::objeto no encontrado");
+        throw std::runtime_error("Interpreter::objectReference no encontrado");
     }
 }
 
@@ -243,11 +243,11 @@ void Interpreter::assignationExpression(string name) {
         std::cout << "Get representation: " << std::endl;
         std::cout << expression->getRepresentation() << std::endl;
     } else {
-        std::cout << "Hubo un error no existe objeto al cual asignar nombre" << std::endl;
+        std::cout << "Hubo un error no existe objectReference al cual asignar objectName" << std::endl;
     }
 }
 
-/*Todo lo que haya en el stack lo agrego como slot en un objeto que lo agrego en el stack*/
+/*Todo lo que haya en el stack lo agrego como slot en un objectReference que lo agrego en el stack*/
 void Interpreter::encapsulateStack() {
     Expression* parent = new Expression;
     //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
@@ -260,8 +260,8 @@ void Interpreter::encapsulateStack() {
     stack.push(parent);
 }
 
-/*Voy a tener algo expression addSlot algo, ese algo es un objeto a la cual le
-le pido sus slots y los agreago a objeto*/
+/*Voy a tener algo expression addSlot algo, ese algo es un objectReference a la cual le
+le pido sus slots y los agreago a objectReference*/
 void Interpreter::addSlot(string name) {
     std::cout << "addSlot: " << name << std::endl;
     //Objeto a la que voy agregar slot
@@ -269,7 +269,7 @@ void Interpreter::addSlot(string name) {
     //Objeto a la que le saco el slot
     Object *expressionSlotRemove = stack.top();
     stack.pop();
-    RegistroDeSlots slots = expressionSlotRemove->getSlots();
+    RegisterOfSlots slots = expressionSlotRemove->getSlots();
     std::vector<Object *> slotsVector = slots.getObjects();
     Object *slot = slotsVector[0];
     parent->addSlots(slot->getName(), slot, false, false);

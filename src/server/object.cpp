@@ -1,14 +1,9 @@
 #include "object.h"
 
-#define POS_OBJETO 0
-#define POS_ES_MUTABLE 1
-#define POS_ES_PARENT_SLOT 2
-
-//(Objeto,esMutable,esParent)
+//(Objeto,isMutable,isParent)
 typedef std::tuple<Object*, bool, bool> slot_t;
-//<NombreObjeto, slot>
+//<Object name, slot>
 typedef std::map<std::string, slot_t> slot_map;
-
 
 Object::Object(){
   std::cout << "create___Object____" << std::endl;
@@ -16,25 +11,26 @@ Object::Object(){
     myLobby = nullptr;
 }
 
-Object::Object(const Object &otro) {
-    this->nombre = otro.nombre;
-    this->slots = otro.slots;
-    //this->codigo = otro.codigo;
+Object::Object(const Object &otherObject) {
+    this->objectName = otherObject.objectName;
+    this->slots = otherObject.slots;
+    this->representation = otherObject.representation;
+    this->myLobby = otherObject.myLobby;
+    this->myMorph = otherObject.myMorph;
 }
 
 
-void Object::isObject(){
-  std::cout << "Soy un objeto" << std::endl;
-
+void Object::isObject(){ //TODO este metodo es de debug?
+  std::cout << "Soy un objectReference" << std::endl;
 }
-/*ver que onda*/
+
+//TODO
 NativeValue Object::getValue(){
   NativeValue value;
   return value;
 }
 
-
-/*ver que onda*/
+//TODO
 NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
   std::cout << "object::ejecute" << std::endl;
   NativeValue value;
@@ -42,62 +38,60 @@ NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
 }
 
 Object* Object::getSlotName(std::string name){
-  Slot slot =  slots.obtenerSlot(name);
-  return slot.obtenerReferencia();
+  Slot slot = slots.getSlot(name);
+  return slot.getReference();
 }
 
 Object::~Object(){}
 
-void Object::setName(const std::string nuevoNombre){
-    std::cout << "Object::setName:" << nuevoNombre << std::endl;
-    this->nombre = nuevoNombre;
+void Object::setName(const std::string newName){
+    std::cout << "Object::setName:" << newName << std::endl;
+    this->objectName = newName;
 
-    myMorph.setName(nuevoNombre);
-    if(myLobby != nullptr)this->notifyClients("crear");
+    myMorph.setName(newName);
+    //if(myLobby != nullptr)this->notifyClients("crear");
+    /*TODO no notifico mas cuando se cambia el nombre, notifico al final de la creacion del objectReference*/
 }
 
 std::string Object::getName() {
-    return this->nombre;
+    return this->objectName;
 }
 
-
-void Object::addSlots(std::string nombreSlot,
+void Object::addSlots(std::string slotName,
                       Object* object,
-                      bool esMutable,
-                      bool esParentSlot){
-    std::cout << "Agrego slot: " << nombreSlot << " a " << this->getName() << std::endl;
+                      bool isMutable,
+                      bool isParentSlot){
+    std::cout << "Agrego slot: " << slotName << " a " << this->getName() << std::endl; //TODO sacar debug
 
-    std::cout << "Nombre: " << nombre << " Representacion: " << object->getRepresentation() << std::endl;
+    std::cout << "Nombre: " << objectName << " Representacion: " << object->getRepresentation() << std::endl;
 
-    slots.agregarSlot(nombreSlot, object, esMutable, esParentSlot);
-    if(nombreSlot != "self"){
-        std::cout << "Agrega el slot " << nombreSlot << " al morph" << std::endl;
-        myMorph.addSlot(nombreSlot, object->getRepresentation());
+    slots.addSlot(slotName, object, isMutable, isParentSlot);
+    if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference
+        std::cout << "Agrega el slot " << slotName << " al morph" << std::endl;
+        myMorph.addSlot(slotName, object->getRepresentation());
     }
-
 }
 
-void Object::RemoveSlots(std::string nombreSlot) {
-    slots.removerSlot(nombreSlot);
+void Object::RemoveSlots(std::string slotName) {
+    slots.removeSlot(slotName);
 }
 
 Object* Object::clone() {
     return new Object(*this);
 }
 
-RegistroDeSlots Object::getSlots(){
+RegisterOfSlots Object::getSlots(){
     return slots;
 }
 
-RegistroDeSlots Object::obtenerParentsSlots(){
-    return slots.obtenerParentsSlots();
+RegisterOfSlots Object::getParentsSlots(){
+    return slots.getParentsSlots();
 }
 
-Object* Object::buscarObject(std::string nombre, Object* object) {
-    std::cout << "Busco: " << nombre <<  " en " << object->getName() << std::endl;
-    return slots.buscarSlot(nombre, object);
+Object* Object::searchObject(std::string name, Object *object) {
+    std::cout << "Busco: " << name <<  " en " << object->getName() << std::endl;
+    return slots.searchSlot(name, object);
 }
-
 
 Object* Object::getResult(){
   return this;
@@ -105,22 +99,23 @@ Object* Object::getResult(){
 
 void Object::evaluate(){}
 
-
-/*arreglar este método*/
-void Object::setRepresentation(std::string representationStr){
-  representation = representationStr;
+void Object::setRepresentation(std::string representationString){
+  representation = representationString;
 }
 std::string Object::getRepresentation() const {
   return representation;
 }
 
-/*arreglar este método*/
-Object* Object::print(const std::vector<Object*>& argumentos){
+//TODO "Arreglar este metodo"
+Object* Object::print(const std::vector<Object*>& argumnets){
   return this;
 }
 
+
+/*Metodos de los morphs*/
+
 void Object::setLobby(Lobby *lobby) {
-    std::cout << "Soy el objeto " << nombre << " y estoy adentro del lobby " << lobby->getLobbyName() << std::endl;
+    std::cout << "Soy el objectReference " << objectName << " y estoy adentro del lobby " << lobby->getLobbyName() << std::endl;
     myLobby = lobby;
 }
 

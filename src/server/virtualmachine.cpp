@@ -30,7 +30,7 @@ VirtualMachine::~VirtualMachine() {
     //Aca tendria que entrar la serializacion de los lobbys, cuando se cierra la vm
 }
 
-Client* VirtualMachine::newClient(std::string clientName, ComunicadorCliente *clientReference) {
+Client* VirtualMachine::newClient(std::string clientName, ProxyClient *clientReference) {
     Client* newClient =  new Client(clientName, clientReference);
     existingClients.insert(make_pair(clientName, newClient));
     return newClient;
@@ -39,14 +39,14 @@ Client* VirtualMachine::newClient(std::string clientName, ComunicadorCliente *cl
 std::vector<std::string> VirtualMachine::getAvailablesLobbies(std::string client){
     std::vector<std::string> availablesLobbies;
     for(auto it = existingLobbies.begin(); it != existingLobbies.end(); it++){
-        if(it->second->clientConnected(client) || it->second->isLobbyShared()){//Agrego si se conecto se cliente o el lobby es compartido
+        if(it->second->clientConnected(client) || it->second->isLobbyShared()){//Agrego si se conecto se client o el lobby es compartido
             availablesLobbies.push_back(it->second->getLobbyName());
         }
     }
     return availablesLobbies;
 }
 
-bool VirtualMachine::connectClient(std::string clientName, ComunicadorCliente* clientReference){
+bool VirtualMachine::connectClient(std::string clientName, ProxyClient* clientReference){
     auto itClient = existingClients.find(clientName);
     if(itClient != existingClients.end())
         return false;

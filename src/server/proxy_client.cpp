@@ -1,5 +1,5 @@
-#include "comunicador_cliente.h"
-#include "recibidor.h"
+#include "proxy_client.h"
+#include "receiver.h"
 
 ProxyClient::ProxyClient(Socket skt_aceptar, VirtualMachine& vm): //ademas recibe el modelo
 	socketAccepted(std::move(skt_aceptar)), executing(true), controladorDeEventos(*this), vm(vm){
@@ -10,27 +10,27 @@ ProxyClient::~ProxyClient(){
 
 }
 
-void ProxyClient::atender(){
+void ProxyClient::attend(){
     std::cout << "Empiezo a atender" << std::endl;
-    Recibidor recibidor(socketAccepted, *this);
-    recibidor.run();
+    Receiver receiver(socketAccepted, *this);
+    receiver.run();
     std::cout << "Termino de atender" << std::endl;
     vm.disconnectClient(clientName);
-    std::cout << "Desconecto cliente: " << clientName << std::endl;
+    std::cout << "Desconecto client: " << clientName << std::endl;
 }
 
-void ProxyClient::recibirEvento(std::string evento){
-    controladorDeEventos.resolverEvento(evento);
+void ProxyClient::recieveEvent(std::string event){
+    controladorDeEventos.handleEvent(event);
 }
 
 bool ProxyClient::isExecuting(){
 	return executing;
 }
 
-void ProxyClient::enviarEvento(std::string evento){
-    std::cout << "Envio evento: " << evento << std::endl;
-    char* evento_enviar = (char*)evento.c_str();
-    uint32_t tamanio_32 = (uint32_t)htonl(strlen(evento_enviar) + 1);
+void ProxyClient::sendEvent(std::string event){
+    std::cout << "Envio evento: " << event << std::endl;
+    char* eventToSend = (char*)event.c_str();
+    uint32_t tamanio_32 = (uint32_t)htonl(strlen(eventToSend) + 1);
     socketAccepted.enviar((char*)(&tamanio_32), sizeof(tamanio_32));
-    socketAccepted.enviar(evento_enviar, strlen(evento_enviar) + 1);
+    socketAccepted.enviar(eventToSend, strlen(eventToSend) + 1);
 }

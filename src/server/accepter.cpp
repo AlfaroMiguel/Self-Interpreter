@@ -1,4 +1,4 @@
-#include "aceptador.h"
+#include "accepter.h"
 #include <string>
 #include <vector>
 
@@ -19,55 +19,55 @@ ForwardIterator remove_if(ForwardIterator first,
     return result;
 }
 
-//Funcion que nos indica si un cliente tiene que ser eliminado
-bool hay_que_eliminar_cliente(ComunicadorCliente* cliente){
-    return cliente == NULL;
+//Funcion que nos indica si un client tiene que ser eliminado
+bool deleteClient(ProxyClient *client){
+    return client == NULL;
 }
 
-Aceptador::Aceptador(std::string& puerto, VirtualMachine& vm) :
-        sigo_aceptando(true),
+Accepter::Accepter(std::string& port, VirtualMachine& vm) :
+        keepAcceptingClients(true),
         vm(vm){
-    socket.bind_and_listen(puerto);
+    socket.bind_and_listen(port);
 }
 
-Aceptador::~Aceptador() {}
+Accepter::~Accepter() {}
 
-void Aceptador::eliminar_clientes_atendidos() {
-    std::vector<int> clientes_a_eliminar;
-    for (unsigned int i = 0; i < clientes.size(); i++) {
-        if (!(clientes[i]->esta_ejecutando())) {
-            clientes[i]->join();
-            delete clientes[i];
-            clientes[i] = NULL;
+void Accepter::deleteClients() {
+    std::vector<int> clientsToDelete;
+    for (unsigned int i = 0; i < clients.size(); i++) {
+        if (!(clients[i]->isExecuting())) {
+            clients[i]->join();
+            delete clients[i];
+            clients[i] = NULL;
         }
     }
-    clientes.erase(remove_if(clientes.begin(),
-                                  clientes.end(),
-                                  hay_que_eliminar_cliente),
-                                  clientes.end());
+    clients.erase(remove_if(clients.begin(),
+                             clients.end(),
+                             deleteClient),
+                                  clients.end());
 }
 
-void Aceptador::aceptar() {
-    while (sigo_aceptando) {
+void Accepter::accept() {
+    while (keepAcceptingClients) {
         Socket socket_acpt;
         try { socket.aceptar(socket_acpt); }
         catch (const SocketError &e) {
             std::cerr << "Entro aca" << std::endl;
-            sigo_aceptando = false;
+            keepAcceptingClients = false;
             continue;
         }
         std::cerr << "Cliente conectado." << std::endl;
-        ComunicadorCliente *cliente_nuevo = new ComunicadorCliente(std::move(socket_acpt), vm);
-        cliente_nuevo->start();
-        eliminar_clientes_atendidos();
-        clientes.push_back(cliente_nuevo);
+        ProxyClient *newClient = new ProxyClient(std::move(socket_acpt), vm);
+        newClient->start();
+        deleteClients();
+        clients.push_back(newClient);
     }
-    for (ComunicadorCliente *cliente: clientes) {
-        cliente->join();
-        delete cliente;
+    for (ProxyClient *client: clients) {
+        client->join();
+        delete client;
     }
 }
 
-void Aceptador::parar() {
+void Accepter::stop() {
     socket.shutdown();
 }
