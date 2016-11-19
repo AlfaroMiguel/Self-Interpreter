@@ -9,11 +9,11 @@ EventHandler::EventHandler(ProxyClient& client) : client(client){}
 EventHandler::~EventHandler(){}
 
 void EventHandler::connect(std::string clientName){
-    std::cout << " Se conecta client " << clientName << std::endl; //TODO sacar debug
+    std::cout << " Se conecta cliente " << clientName << std::endl; //TODO sacar debug
     bool clientIsConnected = client.vm.connectClient(clientName, &client);
     json jResponse;
     if(clientIsConnected){
-        jResponse["evento"] = "client conectado";
+        jResponse["evento"] = "cliente conectado";
         client.clientName = clientName;
     }
     else
@@ -65,7 +65,7 @@ void EventHandler::handleEvent(std::string event) { //TODO implementar un map pa
     std::string eventName = eventJ["evento"];
 
     if(eventName == "conectar cliente"){ //El client me informa su objectName
-        connect(eventJ["objectName"]);
+        connect(eventJ["nombre"]);
     }
 
     if(eventName == "inicializar"){ //El client quiere los lobbys

@@ -34,7 +34,7 @@ void Morph::addSlot(std::string nombre, std::string valor) {
 std::string Morph::getEvent(std::string eventName){
     json eventj;
     eventj["evento"] = eventName;
-    eventj["objectName"] = name;
+    eventj["nombre"] = name;
     eventj["id"] = id;
     eventj["posicion"]["x"] = x;
     eventj["posicion"]["y"] = y;
