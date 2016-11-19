@@ -2,6 +2,8 @@
 #include "../common/json.hpp"
 using json = nlohmann::json;
 
+int Morph::idNumber = 0;
+
 Morph::Morph() {
     x = 0.0; //Chequear posiciones
     y = 0.0;
@@ -11,6 +13,7 @@ Morph::~Morph() {}
 
 void Morph::setName(const std::string &newName) {
     name = newName;
+    id = idNumber++;
 }
 
 void Morph::changePosition(double newX, double newY) {
@@ -32,6 +35,7 @@ std::string Morph::getEvent(std::string eventName){
     json eventj;
     eventj["evento"] = eventName;
     eventj["nombre"] = name;
+    eventj["id"] = id;
     eventj["posicion"]["x"] = x;
     eventj["posicion"]["y"] = y;
     json slotsj;
@@ -40,4 +44,8 @@ std::string Morph::getEvent(std::string eventName){
     }
     eventj["slots"] = slotsj.dump();
     return eventj.dump();
+}
+
+int Morph::getId(){
+    return id;
 }

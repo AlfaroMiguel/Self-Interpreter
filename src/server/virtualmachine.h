@@ -19,7 +19,7 @@ public:
     bool connectClient(std::string clientName, ComunicadorCliente* clientReference);
     bool connectClientToLobby(std::string clientName, std::string lobbyName, bool isShared);
     void disconnectClient(std::string clientName);
-    void clientMovedMorph(std::string clientName, std::string morphName, double newX, double newY);
+    void clientMovedMorph(std::string clientName, int morphId, double newX, double newY);
     void interpretCodeGet(std::string clientName, std::string code);
     void interpretCodeDo(std::string clientName, std::string code);
 };

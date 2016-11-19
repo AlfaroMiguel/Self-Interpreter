@@ -128,3 +128,7 @@ void Object::moveMorph(std::string clientName, double newX, double newY){
     myMorph.changePosition(newX, newY);
     notifyClients("mover morph", clientName);
 }
+
+int Object::getMorphId(){
+    return myMorph.getId();
+};
