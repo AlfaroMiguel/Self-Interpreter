@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
     interpreter.interpretChar(createNullObject);
     interpreter.interpretChar(createNullObject1);
     interpreter.interpretChar(createNullObject2);
-    char punto[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |). \n\0\0"; //devuelve el ptr de punto
+    char punto[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. |).  |). \n\0\0"; //devuelve el ptr de punto
     interpreter.interpretChar(punto);
     char algunMetodo[] = "punto xPorDos.\n\0\0";
     interpreter.interpretChar(algunMetodo);

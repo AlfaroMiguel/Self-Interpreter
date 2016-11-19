@@ -66,7 +66,15 @@ void Object::addSlots(std::string nombreSlot,
                       bool esMutable,
                       bool esParentSlot){
     std::cout << "Agrego slot: " << nombreSlot << " a " << this->getName() << std::endl;
+
+    std::cout << "Nombre: " << nombre << " Representacion: " << object->getRepresentation() << std::endl;
+
     slots.agregarSlot(nombreSlot, object, esMutable, esParentSlot);
+    if(nombreSlot != "self"){
+        std::cout << "Agrega el slot " << nombreSlot << " al morph" << std::endl;
+        myMorph.addSlot(nombreSlot, object->getRepresentation());
+    }
+
 }
 
 void Object::RemoveSlots(std::string nombreSlot) {
