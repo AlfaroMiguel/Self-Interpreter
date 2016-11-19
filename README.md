@@ -19,6 +19,6 @@ bison y flex (si se quiere generar el parser)
 
 Manual del usuario: https://www.overleaf.com/7090924zfjbtsqfghrk#/24374756/
 
-Manual de proyecto:
+Manual de proyecto: https://www.overleaf.com/7097737cbmvrznwvpqb
 
-Documentacion tecnica:
+Documentacion tecnica: https://www.overleaf.com/7097755ztvkcsjjjxgv
