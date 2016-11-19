@@ -1,5 +1,10 @@
-# TP-Taller
-TP Final - Taller de programación - 2c2016
+# Self-Interpreter
+Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
+
+##Integrantes
+*[Alfaro Miguel](https://github.com/AlfaroMiguel)
+*[Gonzalez Cristian](https://github.com/Cristian3629)
+*[Mendez Agustina](https://github.com/abmendez)
 
 Como compilar el proyecto:
 Hacer "cmake ./src"
