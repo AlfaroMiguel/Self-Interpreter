@@ -26,7 +26,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 *Se generan dos carpetas con los respectivos ejecutables 
  `client` y `server`
 
-#Run 
+##Run 
 
 * Server `./server port`
 * Client `./client host port`
