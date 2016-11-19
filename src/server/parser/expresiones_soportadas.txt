@@ -5,9 +5,23 @@ x = 1.
 y = 3.
 metodo = (|  | 3 * 2 +  6 * 5 - 8 / 6 + 1. ).
 |).
+//creo un objeto vacio
 lobby _AddSlots: (|shell = (||). |).
+//puede haber varios enters en una linea de código
 OtroObjeto = (|
 x = 1.
 y = 3.
 metodo = (|  | x*y. ).
 |).
+
+lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |).
+//convoco al xPorDos de punto
+punto xPorDos.
+lobby _AddSlots: (| pajaro = (| x = 1. y = 3. algunMetodo = (|  | 3 * 2 + 1. ). |).  |).
+
+//varias lineas de codigo selg un una misma linea
+lobby _AddSlots: (| OtroObjeto = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|). lobby _AddSlots: (| OtroObjeto1 = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|).
+
+//se permite clonar
+lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |).
+lobby _AddSlots: (| punto1 = (| x <- 20. y <- 1. proto* = punto. |). |).

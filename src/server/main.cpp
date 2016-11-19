@@ -4,27 +4,19 @@
 
 
 int main(int argc, char const *argv[]) {
-    Object* lobby = new Object;
-    Interpreter interpreter(lobby,nullptr);
-    std::cout << "pepe" << std::endl;
-    char shellCode[] = "lobby _AddSlots: (| shell = (|  |).  |)."; //devuelve el ptr de shell
-    char createNullObject[] = "lobby _AddSlots: (| punto3 = (|  |).  |)."; //devuelve el ptr de punto
-    char createNullObject1[] = "lobby _AddSlots: (| punto1 = (|  |).  |)."; //devuelve el ptr de punto1
-    char createNullObject2[] = "lobby _AddSlots: (| punto2 = (|  |).  |)."; //devuelve el ptr de punto2
-    interpreter.interpretChar(shellCode);
-    interpreter.interpretChar(createNullObject);
-    interpreter.interpretChar(createNullObject1);
-    interpreter.interpretChar(createNullObject2);
-    char punto[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. |).  |). \n\0\0"; //devuelve el ptr de punto
-    interpreter.interpretChar(punto);
-    char algunMetodo[] = "punto xPorDos.\n\0\0";
-    interpreter.interpretChar(algunMetodo);
-    char pajaro[] = "lobby _AddSlots: (| pajaro = (| x = 1. y = 3. algunMetodo = (|  | 3 * 2 + 1. ). |).  |). \n\0\0"; //devuelve el ptr de pajaro
-    interpreter.interpretChar(pajaro);
-    char multiLinea[] = "lobby _AddSlots: (| OtroObjeto = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|). lobby _AddSlots: (| OtroObjeto1 = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|).|).";
-    interpreter.interpretChar(multiLinea); //devuelve otroObjeto ptr y OtroObjeto1 ptr
-
-    return 0;
+  Object* lobby = new Object;
+  lobby->setName("lobby");
+  Interpreter interpreter(lobby,nullptr);
+  std::cout << "pepe" << std::endl;
+  char puntoCode[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |).";
+  char xPorDos[] = "punto xPorDos.";
+  char puntoCloneCode[] = "lobby _AddSlots: (| punto1 = (| x <- 20. y <- 1. proto* = punto. |). |).";
+  char punto1XPorDos[] = "punto1 xPorDos.";
+  interpreter.interpretChar(puntoCode);
+  interpreter.interpretChar(xPorDos);
+  interpreter.interpretChar(puntoCloneCode);
+  interpreter.interpretChar(punto1XPorDos);
+  return 0;
 } */
 
 

@@ -6,9 +6,9 @@ typedef std::tuple<Object*, bool, bool> slot_t;
 typedef std::map<std::string, slot_t> slot_map;
 
 Object::Object(){
-  std::cout << "create___Object____" << std::endl;
     representation = "";
     myLobby = nullptr;
+    objectName = "Object null";
 }
 
 Object::Object(const Object &otherObject) {
@@ -20,9 +20,7 @@ Object::Object(const Object &otherObject) {
 }
 
 
-void Object::isObject(){ //TODO este metodo es de debug?
-  std::cout << "Soy un objectReference" << std::endl;
-}
+
 
 //TODO
 NativeValue Object::getValue(){
@@ -61,9 +59,8 @@ void Object::addSlots(std::string slotName,
                       Object* object,
                       bool isMutable,
                       bool isParentSlot){
-    std::cout << "Agrego slot: " << slotName << " a " << this->getName() << std::endl; //TODO sacar debug
+    std::cout << "Agrego slot: " << slotName <<" de nombre:"<<object->getName()<< " a " << this->getName() << std::endl; //TODO sacar debug
 
-    std::cout << "Nombre: " << objectName << " Representacion: " << object->getRepresentation() << std::endl;
 
     slots.addSlot(slotName, object, isMutable, isParentSlot);
     if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference
@@ -76,8 +73,9 @@ void Object::RemoveSlots(std::string slotName) {
     slots.removeSlot(slotName);
 }
 
-Object* Object::clone() {
-    return new Object(*this);
+Object* Object::clone(){
+  std::cout << "Object::clone" << std::endl;
+  return new Object(*this);
 }
 
 RegisterOfSlots Object::getSlots(){

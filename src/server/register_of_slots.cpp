@@ -9,6 +9,9 @@ RegisterOfSlots::~RegisterOfSlots(){
 
 void RegisterOfSlots::addSlot(std::string slotName, Object *object, bool isMutable, bool isParent){
     Slot newSlot(object, isMutable, isParent);
+    if(slotMap.count(slotName) == 1){
+      removeSlot(slotName);
+    }
     slotMap.insert(make_pair(slotName, newSlot));
 }
 
@@ -21,6 +24,15 @@ Slot RegisterOfSlots::getSlot(std::string &slotName) {
     return slotMap.at(slotName);
 }
 
+std::vector<Object*> RegisterOfSlots::getObjectsNotParent(){
+  std::vector<Object*> objects;
+  for(auto it = slotMap.begin(); it != slotMap.end(); it++){
+    if (!((it->second).isParentSlot())){
+      objects.push_back((it->second).getReference());
+    }
+  }
+  return objects;
+}
 
 std::vector<Object*> RegisterOfSlots::getObjects(){
   std::vector<Object*> objects;
@@ -59,6 +71,7 @@ Object* RegisterOfSlots::searchSlot(std::string &slotName, Object *object){
         std::vector<Object*> parentsSlotsFounded;
         for(auto iter = parentsSlots.slotMap.begin(); iter != parentsSlots.slotMap.end(); ++iter){
             Object* temporalObject = (iter->second).getReference();
+            std::cout << "temporalObject name:" <<temporalObject->getName()<< std::endl;
             Object* parent = searchSlot(slotName, temporalObject);
             parentsSlotsFounded.push_back(parent);
         }

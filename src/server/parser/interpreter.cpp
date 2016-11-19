@@ -36,36 +36,9 @@ Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_pt
     mapMessages.insert(std::pair<string, int>("create_variable", 14));
     mapMessages.insert(std::pair<string, int>("representation", 15));
     mapMessages.insert(std::pair<string, int>("clone", 16));
+    isClone = false;
+    parentClone = nullptr;
 }
-
-Interpreter::Interpreter() {
-    mapMessages.insert(std::pair<string, int>("create_number", 1));
-    mapMessages.insert(std::pair<string, int>("assignation", 2));
-    mapMessages.insert(std::pair<string, int>("assignation_mutable", 3));
-    mapMessages.insert(std::pair<string, int>("print", 4));
-    mapMessages.insert(std::pair<string, int>("find", 5));
-    mapMessages.insert(std::pair<string, int>("set", 6));
-    mapMessages.insert(std::pair<string, int>("encapsulate", 7));
-    mapMessages.insert(std::pair<string, int>("add", 8));
-    mapMessages.insert(std::pair<string, int>("remove", 9));
-    mapMessages.insert(std::pair<string, int>("+", 10));
-    mapMessages.insert(std::pair<string, int>("-", 11));
-    mapMessages.insert(std::pair<string, int>("*", 12));
-    mapMessages.insert(std::pair<string, int>("/", 13));
-    mapMessages.insert(std::pair<string, int>("create_variable", 14));
-
-    /*Lobby tiene existencia desde un principio*/
-    Object *entornoPtr = new Object;
-    entorno = entornoPtr;
-}
-
-/*id       message    valor
-        create_number
-  id    print
-  id    assignation
-
-  */
-
 
 void Interpreter::pushToken(string id, string message, string value) {
     //TupleString tuple(id,message,value);
@@ -137,29 +110,35 @@ void Interpreter::pushToken(string id, string message, string value) {
 }
 
 void Interpreter::cloneObject(std::string id){
+    isClone = true;
+    std::cout << "Interpreter::cloneObject(" <<id<<")"<< std::endl;
     Object* objectToClone = findExpression(id);
+    parentClone = objectToClone;
     RegisterOfSlots slots = objectToClone->getSlots();
-    std::vector<Object*> slotsVector = slots.getObjects();
+    std::vector<Object*> slotsVector = slots.getObjectsNotParent();
     std::vector<Object*> slotsRedefined;
-    //Saco todos los slots que se redefinieron
+    //Saco todos los slots que se redefinieron (colocar un iterator)
     while (!stack.empty()) {
       slotsRedefined.push_back(stack.top());
       stack.pop();
     }
     //si un un slot nativo estan entre los que se redefinio entonces guardo el
     //redefinido, sino creo un copia y lo inserto
+    std::cout << "cantidad de slots nativos" <<slotsVector.size()<< std::endl;
     for (size_t i = 0; i < slotsVector.size(); i++){
       bool isFound = false;
       Object* slotNative = slotsVector[i];
+      std::cout << "Slot native name" <<slotNative->getName()<< std::endl;
       for (size_t j = 0; j < slotsRedefined.size(); j++){
         Object* slotRedefined = slotsRedefined[j];
         //si un slot fue redefinido
-        if (slotNative->getName().compare(slotRedefined->getName())){
+        if (slotNative->getName().compare(slotRedefined->getName()) == 0){
           isFound = true;
         }
       }
       //sino esta entre los redefinidos entonces lo agrego
       if(!isFound){
+        std::cout << "Slot not found" <<slotNative->getName()<< std::endl;
         Object* newSlot = slotNative->clone();
         stack.push(newSlot);
     }
@@ -169,6 +148,11 @@ void Interpreter::cloneObject(std::string id){
     Object* slot = slotsRedefined[i];
     stack.push(slot);
   }
+  std::cout << "Tamaño del stack:" <<stack.size()<<"despues de clonar el objeto"<< std::endl;
+  if (stack.size() == slotsVector.size()){
+    std::cout << "la cantidad es correcta" << std::endl;
+  }
+
 }
 
 void Interpreter::setRepresentation(std::string value) {
@@ -183,7 +167,6 @@ void Interpreter::sendMessage(string message) {
     std::cout << "Nombre de expression a enviar mensaje:" << expression->getName() << std::endl;
     stack.pop();
     /*tengo que ver cuando tengo mas de un argumento*/
-    expression->isObject();
     expression->setOperator(message);
     expression->evaluate();
 }
@@ -192,7 +175,7 @@ void Interpreter::createNumber(string value) {
     std::cout << "createNumber: " << value << std::endl;
     //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     Number *number = new Number(stof(value));
-    number->setRepresentation(value);
+    //number->setRepresentation(value);
     stack.push(number);
 }
 
@@ -205,7 +188,7 @@ void Interpreter::createVariable(string name) {
 
 void Interpreter::createExpression(string message) {
     std::cout << "Interpreter::createExpression: " << message << std::endl;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
+    std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     Expression *expression = new Expression;
     expression->setArgument(stack.top());
     stack.pop();
@@ -249,13 +232,18 @@ void Interpreter::assignationExpression(string name) {
 
 /*Todo lo que haya en el stack lo agrego como slot en un objectReference que lo agrego en el stack*/
 void Interpreter::encapsulateStack() {
+    std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     Expression* parent = new Expression;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     while (!stack.empty()) {
         Object *slot = stack.top();
         stack.pop();
         parent->addSlots(slot->getName(), slot, false, false);
         slot->addSlots("self", parent, false, true);
+    }
+    if(isClone){
+      parent->addSlots("parent", parentClone, false, true);
+      isClone = false;
+      parentClone = nullptr;
     }
     stack.push(parent);
 }

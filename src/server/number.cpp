@@ -2,9 +2,12 @@
 #include <iostream> //cout //stof
 #include "nativevalue.h"
 #include "object.h"
+#include <string>
 
 Number::Number(int valueAux):Object(){
   std::cout << "create Number" << std::endl;
+  setName(std::to_string(valueAux));
+  setRepresentation(std::to_string(valueAux));
   value.setValue(valueAux);
   setReceiver(this);
   setResult(this);
@@ -12,6 +15,14 @@ Number::Number(int valueAux):Object(){
 
 Number::~Number(){}
 
+
+Object* Number::clone(){
+  std::cout << "Namber::clone()" << std::endl;
+  int valueInt = value.getInt();
+  Number* newNumber = new Number(valueInt);
+  setName(this->getName());
+  return newNumber;
+}
 
 void Number::setValue(int valueAux){
   /*Un nativeValue no es modificable*/

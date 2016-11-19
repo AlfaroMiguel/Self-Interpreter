@@ -11,6 +11,8 @@ class Lobby;
 
 class Interpreter{
 private:
+  bool isClone;
+  Object* parentClone;
   std::map<std::string,int> mapMessages;
   std::stack<Object*> stack;
   std::map<std::string,Object*> map;
@@ -29,7 +31,6 @@ private:
     Lobby* lobby;
 public:
     Interpreter(Object* entorno_ptr, Lobby* lobby);
-    Interpreter();
     void pushToken(std::string id,std::string message,std::string value);
     std::vector<Object*> interpretChar(const char* buffer);
     void interpretFile(const char* nameFile);
