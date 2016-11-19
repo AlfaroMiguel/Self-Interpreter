@@ -23,7 +23,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
  `src/client/ventana_vm.glade` a `client`
 * Por ultimo en la carpeta raiz del proyecto:
  `make`
-*Se generan dos carpetas con los respectivos ejecutables 
+* Se generan dos carpetas con los respectivos ejecutables 
  `client` y `server`
 
 ##Run 
