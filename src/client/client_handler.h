@@ -1,5 +1,5 @@
-#ifndef CONT_EVENTOS_H
-#define CONT_EVENTOS_H
+#ifndef CLIENT_HANDLER_H
+#define CLIENT_HANDLER_H
 
 #include <string>
 #include <map>
@@ -7,24 +7,25 @@
 #include "morph.h"
 #include "comunicador_server.h"
 #include "posicion.h"
+
 class Modelo;
 class ControladorVistas;
 
-class ControladorEventos{
+class ClientHandler{
  	public:
-  		ControladorEventos(Modelo* modelo, ComunicadorServer* com_server);
-  		~ControladorEventos();
+  		ClientHandler(Modelo* modelo, ComunicadorServer* com_server);
+  		~ClientHandler();
 
   		void set_control(ControladorVistas* cont_vistas);
   		void set_lobby(const std::string& id);
   		void iniciar();
   		void crear_vm();
   		void mover_morph(const std::string& morph, const Posicion& new_pos);
-  		void actualizar_posicion(const std::string& morph, const Posicion& pos);
+  		void actualizar_posicion(int morph_id, const Posicion& pos);
   		void abrir_vm(const std::string& lobby, const std::string& nombre_cliente);
   		void editar();
-  		void crear_morph(const std::string& nombre, const Posicion& pos, std::map<std::string, std::string> dic_slots);
-  		void crear_morph(const std::string& nombre, const Posicion& pos);
+  		void crear_morph(const std::string& nombre, const Posicion& pos,
+						 std::map<std::string, std::string> dic_slots, int id);
   		void dibujar_morph(Glib::RefPtr<Morph> morph);
   		bool button_event(GdkEventButton *event);
   		void cambio_nombre(const std::string& nuevo_nombre);
@@ -37,6 +38,7 @@ class ControladorEventos{
   		void cambiar_pos_morph(const std::string& nombre, Posicion* pos);
   		void error_ingreso_cliente();
   		void cliente_conectado();
+  		void get_morph_from_slot(int morph_id, const std::string& slot_name);
  	private:
   		Modelo* modelo;
   		ComunicadorServer* com_server;

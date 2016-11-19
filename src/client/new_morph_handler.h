@@ -1,11 +1,10 @@
 #ifndef NEW_MORPH_HANDLER_H
 #define NEW_MORPH_HANDLER_H
 
-#include "cont_eventos.h"
 #include "event_handler.h"
 class NewMorphHandler: public EventHandler{
  public:
-  NewMorphHandler(ControladorEventos* cont_eventos);
+  NewMorphHandler(ClientHandler* client_handler);
   ~NewMorphHandler();
   void operator()();
  private:

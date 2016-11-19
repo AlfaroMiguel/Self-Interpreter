@@ -6,7 +6,7 @@ class AddLobbiesHandler: public EventHandler{
  private:
   void handle(json j);
  public:
-  AddLobbiesHandler(ControladorEventos* cont_eventos);
+  AddLobbiesHandler(ClientHandler* client_handler);
   ~AddLobbiesHandler();
 };
 #endif

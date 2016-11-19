@@ -36,9 +36,9 @@ VentanaVM::~VentanaVM() {
 	delete cont_vistas;
 }
 
-void VentanaVM::set_control(ControladorEventos* cont_eventos){
+void VentanaVM::set_control(ClientHandler* client_handler){
 	cont_vistas = new ControladorVistas(ventana_inicio, ventana_edicion, ventana_objetos, this, ventana_cliente);
-	cont_vistas->set_control(cont_eventos);
+	cont_vistas->set_control(client_handler);
 }
 
 bool VentanaVM::do_iniciar() {

@@ -4,10 +4,10 @@
 #include <mutex>
 
 ConnectedClientHandler::ConnectedClientHandler
-	(ControladorEventos *cont_eventos) : EventHandler(cont_eventos) {}
+	(ClientHandler *client_handler) : EventHandler(client_handler) {}
 
 ConnectedClientHandler::~ConnectedClientHandler() {}
 
 void ConnectedClientHandler::handle(json j) {
-	cont_eventos->cliente_conectado();
+	client_handler->cliente_conectado();
 }

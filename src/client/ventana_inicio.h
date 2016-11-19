@@ -2,7 +2,7 @@
 #define VENTANA_INICIO_H
 
 #include "modelo.h"
-#include "cont_eventos.h"
+#include "client_handler.h"
 #include <gtkmm.h>
 
 class VentanaInicio: public Gtk::Dialog{
@@ -12,11 +12,11 @@ class VentanaInicio: public Gtk::Dialog{
 
   	void set_lobby(const std::string& id);
   	void iniciar();
-  	void set_control(ControladorEventos* cont_eventos);
+  	void set_control(ClientHandler* client_handler);
   	void mostrar_error();
  private:
   	std::vector<Glib::ustring> lobbies;
-  	ControladorEventos* cont_eventos;
+  	ClientHandler* client_handler;
 
 
   	Gtk::ComboBoxText* comboBox;

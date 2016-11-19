@@ -40,12 +40,12 @@ void ControladorVistas::crear_vm() {
 	ventana_principal->iniciar();
 }
 
-void ControladorVistas::set_control(ControladorEventos *cont_eventos) {
-	ventana_objetos->set_control(cont_eventos);
-	ventana_inicio->set_control(cont_eventos);
-	ventana_edicion->set_control(cont_eventos);
-	ventana_cliente->set_control(cont_eventos);
-	cont_eventos->set_control(this);
+void ControladorVistas::set_control(ClientHandler *client_handler) {
+	ventana_objetos->set_control(client_handler);
+	ventana_inicio->set_control(client_handler);
+	ventana_edicion->set_control(client_handler);
+	ventana_cliente->set_control(client_handler);
+	client_handler->set_control(this);
 }
 
 void ControladorVistas::error_ingreso_cliente() {

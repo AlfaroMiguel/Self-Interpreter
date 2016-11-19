@@ -1,6 +1,6 @@
 #include "morph.h"
 #include "modelo.h"
-#include "cont_eventos.h"
+#include "client_handler.h"
 #include <vector>
 #include <map>
 
@@ -12,16 +12,16 @@ bool Morph::on_create(Glib::RefPtr<Objeto>){
 	return false;
 }
 
-Morph::Morph(const Posicion& pos, const Glib::ustring& nombre) {
+Morph::Morph(const Posicion& pos, const Glib::ustring& nombre, int id): id(id) {
 	objeto = Objeto::create(pos, nombre);
-//	add_child(objeto);
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Morph::on_create), objeto));
 }
 
 Morph::~Morph(){}
 
 Morph::Morph(Morph&& otra): dragging(otra.dragging), drag_x(otra.drag_x), drag_y(otra.drag_y),
-							siendo_editado(otra.siendo_editado), objeto(otra.objeto){}
+							siendo_editado(otra.siendo_editado), objeto(otra.objeto),
+							id(otra.id){}
 
 Morph& Morph::operator=(Morph&& otra){
 	dragging = otra.dragging;
@@ -29,19 +29,24 @@ Morph& Morph::operator=(Morph&& otra){
 	drag_y = otra.drag_y;
 	siendo_editado = otra.siendo_editado;
 	objeto = otra.objeto;
+	id = otra.id;
 	return *this;
 }
 
-Glib::RefPtr<Morph> Morph::create(const Posicion& pos, const Glib::ustring& nombre){
-	return Glib::RefPtr<Morph>(new Morph(pos, nombre));
+Glib::RefPtr<Morph> Morph::create(const Posicion& pos, const Glib::ustring& nombre, int id){
+	return Glib::RefPtr<Morph>(new Morph(pos, nombre, id));
 }
 
-double Morph::get_x() {
+double Morph::get_x() const {
 	return objeto->get_x();
 }
 
-double Morph::get_y() {
+double Morph::get_y() const {
 	return objeto->get_y();
+}
+
+int Morph::get_id() const{
+	return id;
 }
 
 void Morph::agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea){
@@ -101,7 +106,7 @@ bool Morph::on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& ite
 		std::cout << "New pos: " << new_x << ", " << new_y << std::endl;
 		std::cout << "Drag pos: " << drag_x << ", " << drag_y << std::endl;
 		Posicion new_pos(new_x - drag_x, new_y - drag_y);
- 		cont_eventos->mover_morph(get_nombre(), new_pos);
+ 		client_handler->mover_morph(get_nombre(), new_pos);
 	}
 	return false;
 }
@@ -121,21 +126,22 @@ bool Morph::on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>&  i
 	return false;
 }
 
-const std::string Morph::get_nombre(){
+const std::string Morph::get_nombre() const{
 	return objeto->get_nombre();
 }
 
 void Morph::mover(const Posicion& new_pos){
 	objeto->mover(new_pos);
-	cont_eventos->actualizar_posicion(get_nombre(), get_posicion());
+	client_handler->actualizar_posicion(get_id(), get_posicion());
 	//if (linea) linea->translate(x, y);
 }
 
 const Posicion& Morph::get_posicion() const{
 	return objeto->get_posicion();
 }
-void Morph::set_control(ControladorEventos *cont_eventos) {
-	this->cont_eventos = cont_eventos;
+
+void Morph::set_control(ClientHandler *client_handler) {
+	this->client_handler = client_handler;
 }
 
 bool Morph::es_objeto(const Posicion& pos) const{

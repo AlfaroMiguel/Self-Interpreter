@@ -7,7 +7,7 @@
 #include "ventana_inicio.h"
 #include "ventana_objetos.h"
 #include "cont_vistas.h"
-#include "cont_eventos.h"
+#include "client_handler.h"
 
 int main (int argc, char **argv) {
 
@@ -19,15 +19,15 @@ int main (int argc, char **argv) {
 
 	ComunicadorServer com_server(hostname, puerto);
 	Modelo modelo;
-	ControladorEventos cont_eventos(&modelo, &com_server);
+	ClientHandler client_handler(&modelo, &com_server);
 
-	com_server.set_control(&cont_eventos);
-	modelo.set_control(&cont_eventos);
+	com_server.set_control(&client_handler);
+	modelo.set_control(&client_handler);
 
 	VentanaVM* ventana_vm = nullptr;
 	builder->get_widget_derived("ventanaPpal", ventana_vm);
 
-	ventana_vm->set_control(&cont_eventos);
+	ventana_vm->set_control(&client_handler);
 
 	app->run(*ventana_vm);
 

@@ -42,8 +42,8 @@ void VentanaInicio::iniciar() {
 	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_iniciar));
 }
 
-void VentanaInicio::set_control(ControladorEventos* cont_eventos) {
-	this->cont_eventos = cont_eventos;
+void VentanaInicio::set_control(ClientHandler* client_handler) {
+	this->client_handler = client_handler;
 }
 
 void VentanaInicio::on_confirmar(){
@@ -59,7 +59,7 @@ void VentanaInicio::on_confirmar(){
 			estado = boton_lobby_compartido->get_label();
 	}
 	hide();
-	cont_eventos->abrir_vm(lobby.raw(), estado.raw());
+	client_handler->abrir_vm(lobby.raw(), estado.raw());
 }
 
 bool VentanaInicio::do_mostrar_error(){

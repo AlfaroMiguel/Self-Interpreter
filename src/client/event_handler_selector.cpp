@@ -14,19 +14,19 @@
 #define EVENTO_DATOS_LOBBY "datos lobby"
 #define EVENTO_MOVER "mover morph"
 
-EventHandlerSelector::EventHandlerSelector(ControladorEventos *cont_eventos) {
+EventHandlerSelector::EventHandlerSelector(ClientHandler *client_handler) {
 	event_handlers.insert(std::pair<std::string, EventHandler *>
-		(EVENTO_CREAR, new NewMorphHandler(cont_eventos)));
+		(EVENTO_CREAR, new NewMorphHandler(client_handler)));
 	event_handlers.insert(std::pair<std::string, EventHandler *>
-		(EVENTO_AGREGAR_LOBBIES, new AddLobbiesHandler(cont_eventos)));
+		(EVENTO_AGREGAR_LOBBIES, new AddLobbiesHandler(client_handler)));
 	event_handlers.insert(std::pair<std::string, EventHandler *>
-		(EVENTO_CLIENTE_CONECTADO, new ConnectedClientHandler(cont_eventos)));
+		(EVENTO_CLIENTE_CONECTADO, new ConnectedClientHandler(client_handler)));
 	event_handlers.insert(std::pair<std::string, EventHandler *>
-		(EVENTO_ERROR_CLIENTE, new ClientErrorHandler(cont_eventos)));
+		(EVENTO_ERROR_CLIENTE, new ClientErrorHandler(client_handler)));
 	event_handlers.insert(std::pair<std::string, EventHandler *>
-		(EVENTO_DATOS_LOBBY, new LobbyDataHandler(cont_eventos)));
+		(EVENTO_DATOS_LOBBY, new LobbyDataHandler(client_handler)));
 	event_handlers.insert(std::pair<std::string, EventHandler *>
-		(EVENTO_MOVER, new MoveMorphHandler(cont_eventos)));
+		(EVENTO_MOVER, new MoveMorphHandler(client_handler)));
 }
 
 EventHandlerSelector::~EventHandlerSelector() {}

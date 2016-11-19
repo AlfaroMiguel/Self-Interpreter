@@ -9,7 +9,7 @@
 #include "morph.h"
 #include "comunicador_server.h"
 #include "cont_vistas.h"
-#include "cont_eventos.h"
+#include "client_handler.h"
 #include "ventana_cliente.h"
 
 class VentanaEdicion;
@@ -37,7 +37,7 @@ class VentanaVM: public Gtk::Window{
 
   //void actualizar_morph(std::string nombre, double x, double y, std::map<std::string, std::string> slots);
   void on_quit_click();
-  void set_control(ControladorEventos* cont_eventos);
+  void set_control(ClientHandler* client_handler);
   void iniciar();
   void editar();
   void mostrar_lobbies();

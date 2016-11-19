@@ -1,13 +1,14 @@
 #include "new_morph_handler.h"
 #include <string>
 #include <map>
-NewMorphHandler::NewMorphHandler(ControladorEventos* cont_eventos): EventHandler(cont_eventos) {}
+NewMorphHandler::NewMorphHandler(ClientHandler* client_handler): EventHandler(client_handler) {}
 
 NewMorphHandler::~NewMorphHandler() {}
 
 void NewMorphHandler::handle(json j) {
 	std::map<std::string, std::string> dic_slots;
 	std::string nombre = j["nombre"];
+	int id = j["id"];
 	double x = j["posicion"]["x"];
 	double y = j["posicion"]["y"];
 	std::string slots_str = j["slots"];
@@ -18,5 +19,5 @@ void NewMorphHandler::handle(json j) {
 		dic_slots.insert(std::make_pair(nombre, valor));
 	}
 	Posicion pos_morph(x, y);
-	cont_eventos->crear_morph(nombre, pos_morph, dic_slots);
+	client_handler->crear_morph(nombre, pos_morph, dic_slots, id);
 }

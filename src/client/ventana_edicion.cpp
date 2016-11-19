@@ -32,18 +32,18 @@ VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 
 VentanaEdicion::~VentanaEdicion(){}
 
-void VentanaEdicion::set_control(ControladorEventos* cont_eventos){
-	this->cont_eventos = cont_eventos;
+void VentanaEdicion::set_control(ClientHandler* client_handler){
+	this->client_handler = client_handler;
 }
 
 void VentanaEdicion::on_aceptar_nombre_event() {
 	const Glib::ustring nuevo_nombre = entrada_nombre->get_buffer()->get_text();
-	cont_eventos->cambio_nombre(nuevo_nombre.raw());
+	client_handler->cambio_nombre(nuevo_nombre.raw());
 	entrada_nombre->delete_text(0, nuevo_nombre.size());
 }
 
 void VentanaEdicion::on_finalizar_edicion_event(){
-	cont_eventos->finalizar_edicion();
+	client_handler->finalizar_edicion();
 	ocultar_barra_edicion();
 }
 
@@ -55,7 +55,7 @@ void VentanaEdicion::ocultar_barra_edicion(){
 
 
 void VentanaEdicion::on_eliminar_obj_event(){
-	cont_eventos->eliminar_morph(x_editando, y_editando);
+	client_handler->eliminar_morph(x_editando, y_editando);
 	ocultar_barra_edicion();
 }
 
@@ -71,6 +71,6 @@ void VentanaEdicion::on_do_event(){
 
 void VentanaEdicion::enviar_mensaje(const std::string& evento){
 	Glib::ustring mensaje = entrada_msj->get_buffer()->get_text();
-	cont_eventos->enviar_mensaje(mensaje.raw(), evento);
+	client_handler->enviar_mensaje(mensaje.raw(), evento);
 	entrada_msj->delete_text(0, mensaje.size());
 }

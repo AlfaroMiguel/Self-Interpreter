@@ -1,6 +1,6 @@
 #include "event_handler.h"
 
-EventHandler::EventHandler(ControladorEventos* cont_eventos): cont_eventos(cont_eventos) {}
+EventHandler::EventHandler(ClientHandler* client_handler): client_handler(client_handler) {}
 
 EventHandler::~EventHandler() {}
 

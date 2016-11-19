@@ -28,12 +28,12 @@ void VentanaObjetos::eliminar_morph(Glib::RefPtr<Morph> morph) {
 	morph->eliminar();
 }
 
-void VentanaObjetos::set_control(ControladorEventos* cont_eventos) {
-	this->cont_eventos = cont_eventos;
+void VentanaObjetos::set_control(ClientHandler* client_handler) {
+	this->client_handler = client_handler;
 }
 
 bool VentanaObjetos::on_button_press_event(GdkEventButton *event) {
-	return cont_eventos->button_event(event);
+	return client_handler->button_event(event);
 }
 
 bool VentanaObjetos::do_iniciar() {

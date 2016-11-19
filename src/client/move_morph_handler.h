@@ -2,10 +2,10 @@
 #define MOVE_MORPH_HANDLER_H
 
 #include "event_handler.h"
-#include "cont_eventos.h"
+#include "client_handler.h"
 class MoveMorphHandler: public EventHandler{
  public:
-  MoveMorphHandler(ControladorEventos* cont_eventos);
+  MoveMorphHandler(ClientHandler* client_handler);
   ~MoveMorphHandler();
   void operator()();
  private:

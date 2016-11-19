@@ -15,10 +15,10 @@ class VentanaObjetos: public Gtk::Box{
 
   		void dibujar_morph(Glib::RefPtr<Morph> morph);
   		void eliminar_morph(Glib::RefPtr<Morph> morph);
-  		void set_control(ControladorEventos* cont_eventos);
+  		void set_control(ClientHandler* client_handler);
   		void iniciar();
  	private:
-  		ControladorEventos* cont_eventos;
+  		ClientHandler* client_handler;
   		Goocanvas::Canvas* canvas;
   		Glib::RefPtr<Goocanvas::Group> root;
 

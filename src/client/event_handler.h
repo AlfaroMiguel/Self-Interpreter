@@ -1,16 +1,16 @@
 #ifndef EVENT_HANDLER_H
 #define EVENT_HANDLER_H
 
-#include "cont_eventos.h"
+#include "client_handler.h"
 
 class EventHandler{
  protected:
   EventHandler(const EventHandler& otra) = delete;
   EventHandler& operator=(const EventHandler& otra) = delete;
 
-  ControladorEventos* cont_eventos;
+  ClientHandler* client_handler;
  public:
-  EventHandler(ControladorEventos* cont_eventos);
+  EventHandler(ClientHandler* client_handler);
   virtual ~EventHandler();
   EventHandler(EventHandler&& otra);
   EventHandler& operator=(EventHandler&& otra);

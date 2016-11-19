@@ -9,7 +9,7 @@ class ClientErrorHandler : public EventHandler {
   void handle(json j);
   void client_error(json j);
  public:
-  ClientErrorHandler(ControladorEventos *cont_eventos);
+  ClientErrorHandler(ClientHandler *client_handler);
   ~ClientErrorHandler();
 };
 #endif

@@ -4,7 +4,7 @@
 #include "event_handler.h"
 class LobbyDataHandler: public EventHandler{
  public:
-  LobbyDataHandler(ControladorEventos* cont_eventos);
+  LobbyDataHandler(ClientHandler* client_handler);
   ~LobbyDataHandler();
   void operator()();
  private:

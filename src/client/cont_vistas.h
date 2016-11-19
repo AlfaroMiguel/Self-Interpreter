@@ -6,7 +6,7 @@
 #include "ventana_objetos.h"
 #include "ventana_inicio.h"
 #include "ventana_cliente.h"
-#include "cont_eventos.h"
+#include "client_handler.h"
 class VentanaVM;
 //class VentanaObjetos;
 //class VentanaInicio;
@@ -27,7 +27,7 @@ class ControladorVistas{
   		void iniciar();
   		void crear_vm();
   		void eliminar_morph(Glib::RefPtr<Morph> morph);
-  		void set_control(ControladorEventos* cont_eventos);
+  		void set_control(ClientHandler* client_handler);
 		void mostrar_lobbies();
   		void error_ingreso_cliente();
   		void ocultar_vista_cliente();

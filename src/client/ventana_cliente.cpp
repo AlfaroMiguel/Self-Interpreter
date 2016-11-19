@@ -11,14 +11,14 @@ VentanaCliente::VentanaCliente(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 VentanaCliente::~VentanaCliente() {}
 
 
-void VentanaCliente::set_control(ControladorEventos* cont_eventos) {
-	this->cont_eventos = cont_eventos;
+void VentanaCliente::set_control(ClientHandler* client_handler) {
+	this->client_handler = client_handler;
 }
 
 void VentanaCliente::on_ingresar(){
 	Glib::ustring nombre_cliente = entrada_texto->get_buffer()->get_text();
 	std::cout << "Nombre cliente: " << nombre_cliente.raw() << std::endl;
-	cont_eventos->ingresar_cliente(nombre_cliente.raw());
+	client_handler->ingresar_cliente(nombre_cliente.raw());
 }
 
 bool VentanaCliente::on_ocultar() {

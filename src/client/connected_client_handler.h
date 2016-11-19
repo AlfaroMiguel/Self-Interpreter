@@ -8,7 +8,7 @@ class ConnectedClientHandler : public EventHandler {
  private:
   void handle(json j);
  public:
-  ConnectedClientHandler(ControladorEventos *cont_eventos);
+  ConnectedClientHandler(ClientHandler *client_handler);
   ~ConnectedClientHandler();
 };
 #endif
