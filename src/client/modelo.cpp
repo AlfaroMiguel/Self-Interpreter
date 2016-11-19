@@ -49,6 +49,7 @@ void Modelo::eliminar_morph(double x, double y){
 	}
 }
 
+
 Glib::RefPtr<Morph> Modelo::crear_morph(const std::string& nombre,
 										const Posicion& pos, std::map<std::string, std::string> dic_slots) {
 	std::cout << "Crea morph: " << nombre << std::endl;
@@ -84,6 +85,7 @@ void Modelo::crear_morph_de_slot(Posicion& pos){
 }
 
 void Modelo::cambiar_pos_morph(const std::string& nombre, Posicion* pos){
+	std::cout << "En modelo la posicion es: " << pos->get_x() << ", " << pos->get_y() << std::endl;
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
 		if (morphs[i]->get_nombre() == nombre){
 			morphs[i]->cambiar_posicion(pos);

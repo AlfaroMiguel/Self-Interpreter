@@ -27,9 +27,12 @@ class Representacion: public Goocanvas::Group {
   	Glib::ustring nombre;
   	Glib::RefPtr<Goocanvas::Rect> base;
   	Glib::RefPtr<Goocanvas::Text> texto;
+
+  	bool on_create();
  private:
   	Representacion(const Representacion& otra) = delete;
   	Representacion& operator=(const Representacion& otra) = delete;
+
 
 };
 #endif

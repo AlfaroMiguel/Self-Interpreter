@@ -4,6 +4,7 @@
 #include "representacion.h"
 #include "slot.h"
 #include "posicion.h"
+#include <mutex>
 
 class Objeto: public Representacion{
  public:
@@ -26,6 +27,7 @@ class Objeto: public Representacion{
   	void cambiar_posicion(Posicion* pos);
   	const Posicion& get_posicion() const;
  private:
+  	std::mutex mutex;
   	std::vector<Glib::RefPtr<Slot>> slots;
 
   	Objeto(const Objeto& otra) = delete;

@@ -6,9 +6,9 @@ LobbyDataHandler::LobbyDataHandler(ControladorEventos *cont_eventos):EventHandle
 
 LobbyDataHandler::~LobbyDataHandler() {}
 
-void LobbyDataHandler::run(json j) {
-	std::mutex mutex;
-	Lock lock(mutex);
+void LobbyDataHandler::handle(json j) {
+//	std::mutex mutex;
+//	Lock lock(mutex);
 	//tiene que crear la vm con todos los morphs
 	cont_eventos->crear_vm();
 }

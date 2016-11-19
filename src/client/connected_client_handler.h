@@ -2,13 +2,13 @@
 #define CONNECTED_CLIENT_HANDLER_H
 
 #include "event_handler.h"
-#include "cont_eventos.h"
-class ConnectedClientHandler: public EventHandler{
- public:
-  ConnectedClientHandler(ControladorEventos* cont_eventos);
-  ~ConnectedClientHandler();
-  void operator()();
+
+/* Clase functor que se ocupa de manejar el evento "cliente conectado" */
+class ConnectedClientHandler : public EventHandler {
  private:
-  void run(json j);
+  void handle(json j);
+ public:
+  ConnectedClientHandler(ControladorEventos *cont_eventos);
+  ~ConnectedClientHandler();
 };
 #endif

@@ -3,8 +3,7 @@
 #define ALTO 23
 #define ANCHO 200
 
-Representacion::Representacion(const Posicion& pos, const Glib::ustring &nombre):
-				posicion(std::move(pos)), nombre(nombre){
+bool Representacion::on_create(){
 	double pos_x = posicion.get_x();
 	double pos_y = posicion.get_y();
 	base = Goocanvas::Rect::create(pos_x, pos_y, ANCHO, ALTO);
@@ -13,6 +12,20 @@ Representacion::Representacion(const Posicion& pos, const Glib::ustring &nombre)
 	texto->property_fill_color().set_value("black");
 	add_child(base);
 	add_child(texto);
+	return false;
+}
+
+Representacion::Representacion(const Posicion& pos, const Glib::ustring &nombre):
+				posicion(std::move(pos)), nombre(nombre){
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &Representacion::on_create));
+//	double pos_x = posicion.get_x();
+//	double pos_y = posicion.get_y();
+//	base = Goocanvas::Rect::create(pos_x, pos_y, ANCHO, ALTO);
+//	texto = Goocanvas::Text::create(nombre, pos_x+2, pos_y+2);
+//	base->property_fill_color().set_value("white");
+//	texto->property_fill_color().set_value("black");
+//	add_child(base);
+//	add_child(texto);
 }
 
 Representacion::~Representacion() {}

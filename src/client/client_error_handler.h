@@ -3,12 +3,13 @@
 
 #include "event_handler.h"
 
-class ClientErrorHandler: public EventHandler{
- public:
-  ClientErrorHandler(ControladorEventos* cont_eventos);
-  ~ClientErrorHandler();
-  void operator()();
+/*Clase functor que se ocupa de manejar el evento "error"*/
+class ClientErrorHandler : public EventHandler {
  private:
-  void run(json j);
+  void handle(json j);
+  void client_error(json j);
+ public:
+  ClientErrorHandler(ControladorEventos *cont_eventos);
+  ~ClientErrorHandler();
 };
 #endif

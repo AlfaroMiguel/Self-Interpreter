@@ -56,5 +56,7 @@ class Morph: public Goocanvas::Group {
   	bool do_eliminar();
   	Morph(const Morph& otra) = delete;
   	Morph& operator=(const Morph& otra) = delete;
+
+  	bool on_create(Glib::RefPtr<Objeto>);
 };
 #endif

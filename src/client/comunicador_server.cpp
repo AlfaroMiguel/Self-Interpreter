@@ -9,7 +9,6 @@
 #include "cont_eventos.h"
 #include "event_handler.h"
 #include "event_handler_selector.h"
-
 #define EVENTO_MODIFICAR "modificar"
 #define EVENTO_CREAR "crear"
 #define EVENTO_AGREGAR_LOBBIES "agregar lobbies"
@@ -81,6 +80,12 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 	enviar_json(j);
 }
 
+void ComunicadorServer::inicializar() {
+	json j;
+	j["evento"] = "inicializar";
+	enviar_json(j);
+}
+
 void ComunicadorServer::enviar_nueva_posicion_morph(const std::string& morph, const Posicion& pos){
 	json j;
 	j["evento"] = EVENTO_MOVER;
@@ -99,20 +104,15 @@ void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
 	recibidor->start();
 }
 
-void ComunicadorServer::inicializar() {
-	json j;
-	j["evento"] = "inicializar";
-	enviar_json(j);
-}
-
 void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
 	std::string evento = j["evento"];
+	std::cout << "evento recibido: " << evento << std::endl;
 	EventHandlerSelector event_handler_selector(cont_eventos);
-	EventHandler* event_handler = event_handler_selector.get_event_handler(evento);
-	event_handler->run(j);
-//	std::map<std::string, std::string> dic_slots;
-//	//ya hay handler
+	EventHandler *event_handler =
+		event_handler_selector.get_event_handler(evento);
+	event_handler->handle(j);
+	std::map<std::string, std::string> dic_slots;
 //	if(evento == EVENTO_CREAR) {
 //		std::string nombre = j["nombre"];
 //		double x = j["posicion"]["x"];
@@ -127,7 +127,6 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 //		Posicion pos_morph(x, y);
 //		cont_eventos->crear_morph(nombre, pos_morph, dic_slots);
 //	}
-//	//ya hay handler
 //	if (evento == EVENTO_AGREGAR_LOBBIES){
 //		std::string lobbies_str = j["lobbies"];
 //		json lobbies = json::parse((char*)lobbies_str.c_str());
@@ -137,22 +136,21 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 //		}
 //		cont_eventos->iniciar();
 //	}
-//	//ya tiene handler
 //	if(evento == "cliente conectado"){
 //		std::cout << "Se conecta ok" << std::endl;
+//		json j;
+//		j["evento"] = "inicializar";
+//		enviar_json(j);
 //		cont_eventos->cliente_conectado();
 //	}
-//	//ya tiene handler
 //	if(evento == "error"){
 //		std::cout << "Ingresa a error" << std::endl;
 //		cont_eventos->error_ingreso_cliente();
 //	}
-//	//ya tiene handler
 //	if (evento == "datos lobby"){
 //		//tiene que crear la vm con todos los morphs
 //		cont_eventos->crear_vm();
 //	}
-//	//ya tiene handler
 //	if(evento == EVENTO_MOVER){
 //		std::string morph = j["nombre"];
 //		double new_x = j["posicion"]["x"];

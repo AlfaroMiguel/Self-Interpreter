@@ -50,12 +50,18 @@ void ControladorEventos::editar(){
 
 bool ControladorEventos::button_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
+//		double x = event->x;
+//		double y = event->y;
 		Posicion pos_evento(event->x, event->y);
 		modelo->seleccionar_morph(pos_evento);
-		if (modelo->es_objeto(pos_evento))
+		if (modelo->es_objeto(pos_evento)) {
+			std::cout << "Encuentra objeto" << std::endl;
 			modelo->editar_morph();
-		if (modelo->es_slot(pos_evento))
+		}
+		if (modelo->es_slot(pos_evento)) {
+			std::cout << "Encuentra slot" << std::endl;
 			modelo->crear_morph_de_slot(pos_evento);
+		}
 		return true;
 	}
 	return false;
@@ -96,6 +102,7 @@ void ControladorEventos::dibujar_morph(Glib::RefPtr<Morph> morph){
 }
 
 void ControladorEventos::cambiar_pos_morph(const std::string& nombre, Posicion* pos){
+	std::cout << "En cambiar pos morph: " << pos->get_x() << ", " << pos->get_y() << std::endl;
 	modelo->cambiar_pos_morph(nombre, pos);
 }
 
