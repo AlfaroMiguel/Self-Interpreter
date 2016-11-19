@@ -66,6 +66,7 @@ public:
     void setLobby(Lobby* lobby);
     void notifyClients(std::string eventName, std::string clientName = "");
     void moveMorph(std::string clientName, double newX, double newY);
+    int getMorphId();
 };
 
 #endif

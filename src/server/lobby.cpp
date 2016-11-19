@@ -73,13 +73,13 @@ void Lobby::initializeClient(std::string clientName) {
 
 }
 
-void Lobby::moveMorph(std::string clientName, std::string morphName, double newX, double newY){
-    auto itObject = visibleObjects.find(morphName);
+void Lobby::moveMorph(std::string clientName, int morphId, double newX, double newY){
+    auto itObject = visibleObjects.find(morphId);
     if (itObject == visibleObjects.end()){
-        std::cout << "No encontre el morph" << morphName << std::endl;
+        std::cout << "No encontre el morph" << morphId << std::endl;
         return;
     }
-    std::cout << "Encontre el morph" << morphName << std::endl;
+    std::cout << "Encontre el morph" << morphId << std::endl;
     Object *object = itObject->second;
     object->moveMorph(clientName, newX, newY);
 }
@@ -89,7 +89,7 @@ void Lobby::interpretCodeGet(std::string code){
     std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
         std::cout << "En esta interpretacion se creo: " << (*itObject)->getName() << std::endl;
-        visibleObjects.insert(std::make_pair((*itObject)->getName(), *itObject));
+        visibleObjects.insert(std::make_pair((*itObject)->getMorphId(), *itObject));
         (*itObject)->notifyClients("crear");
     }
 }

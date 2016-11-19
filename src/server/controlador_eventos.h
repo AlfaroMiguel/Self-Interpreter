@@ -11,7 +11,7 @@ private:
     void resolverConectar(std::string nombre);
     void resolverInicializar();
     void resolverElegirLobby(std::string nombreLobby, std::string estadoLobby);
-    void resolverMoverMorph(std::string idMorph, double newX, double newY);
+    void resolverMoverMorph(int idMorph, double newX, double newY);
     void resolverGet(std::string codigo);
     void resolverDo(std::string codigo);
 

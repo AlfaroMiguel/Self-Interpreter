@@ -47,7 +47,7 @@ void ControladorDeEventos::resolverElegirLobby(std::string nombreLobby, std::str
     cliente.enviarEvento(jDatosLobby.dump());
 }
 
-void ControladorDeEventos::resolverMoverMorph(std::string idMorph, double newX, double newY) {
+void ControladorDeEventos::resolverMoverMorph(int idMorph, double newX, double newY) {
     cliente.vm.clientMovedMorph(cliente.clientName, idMorph, newX, newY);
 }
 

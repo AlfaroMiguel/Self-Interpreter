@@ -88,14 +88,14 @@ bool VirtualMachine::connectClientToLobby(std::string clientName, std::string lo
     client->setActualLobby(lobby);
 }
 
-void VirtualMachine::clientMovedMorph(std::string clientName, std::string morphName, double newX, double newY){
+void VirtualMachine::clientMovedMorph(std::string clientName, int morphId, double newX, double newY){
     auto itClient = existingClients.find(clientName);
     if(itClient == existingClients.end())
         return;
 
     Client* client = itClient->second;
     Lobby* lobby = client->getActualLobby();
-    lobby->moveMorph(clientName, morphName, newX, newY);
+    lobby->moveMorph(clientName, morphId, newX, newY);
 }
 
 void VirtualMachine::interpretCodeGet(std::string clientName, std::string code){
