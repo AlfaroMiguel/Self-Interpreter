@@ -7,10 +7,14 @@ Glib::RefPtr<Slot> Slot::create(const Posicion& pos, const Glib::ustring& nombre
 	return Glib::RefPtr<Slot>(new Slot(pos, nombre, valor));
 }
 
+bool Slot::on_create(Glib::ustring cadena_texto){
+	texto->property_text() = cadena_texto;
+	return false;
+}
 Slot::Slot(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor):
 			Representacion(pos, nombre), valor(valor){
 	Glib::ustring cadena_texto = nombre + ": " + valor;
-	texto->property_text() = cadena_texto;
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Slot::on_create), cadena_texto));
 }
 
 Slot::~Slot(){}

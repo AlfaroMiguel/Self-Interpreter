@@ -22,5 +22,7 @@ class Slot: public Representacion{
 
   	Slot(const Slot& otra) = delete;
   	Slot& operator=(const Slot& otra) = delete;
+
+  	bool on_create(Glib::ustring cadena_texto);
 };
 #endif

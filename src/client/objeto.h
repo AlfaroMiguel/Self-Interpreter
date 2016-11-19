@@ -35,5 +35,6 @@ class Objeto: public Representacion{
 
   	bool on_cambiar_posicion(Posicion* pos);
   	bool on_mover(const Posicion* pos);
+  	bool on_agregar_slot(Glib::RefPtr<Slot> slot);
 };
 #endif

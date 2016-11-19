@@ -24,6 +24,11 @@ bool Objeto::esta_en_posicion(const Posicion& pos_comparar) const{
 	return false;
 }
 
+bool Objeto::on_agregar_slot(Glib::RefPtr<Slot> slot){
+	add_child(slot);
+	return false;
+}
+
 void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 	std::map<std::string, std::string>::iterator it = slots_a_agregar.begin();
 	while(it != slots_a_agregar.end()) {
@@ -33,7 +38,7 @@ void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 		Posicion pos_slot(posicion.get_x(), posicion.get_y()+offset);
 		Glib::RefPtr<Slot> slot_nuevo = Slot::create(pos_slot, nombre, valor);
 		slots.push_back(slot_nuevo);
-		add_child(slot_nuevo);
+		Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_agregar_slot), slot_nuevo));
 		it++;
 	}
 }
