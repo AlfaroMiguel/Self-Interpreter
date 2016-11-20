@@ -6,6 +6,7 @@ SearcherObject::SearcherObject(std::string nameString):Object(){
   std::cout << "new SearcherObject" << std::endl;
   setName(nameString);
   setRepresentation(nameString);
+  expressionSearched =  nullptr;
 }
 
 SearcherObject::~SearcherObject(){
