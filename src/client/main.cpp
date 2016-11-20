@@ -1,6 +1,6 @@
 #include <gtkmm.h>
 #include <iostream>
-#include "ventanaVM.h"
+#include "main_view.h"
 #include "comunicador_server.h"
 #include "modelo.h"
 #include "ventana_edicion.h"
@@ -23,14 +23,14 @@ int main (int argc, char **argv) {
 	com_server.set_control(&client_handler);
 	modelo.set_control(&client_handler);
 
-	VentanaVM* ventana_vm = nullptr;
-	builder->get_widget_derived("ventanaPpal", ventana_vm);
+	MainView* main_view = nullptr;
+	builder->get_widget_derived("ventanaPpal", main_view);
 
-	ventana_vm->set_control(&client_handler);
+	main_view->set_control(&client_handler);
 
-	app->run(*ventana_vm);
+	app->run(*main_view);
 
-	delete ventana_vm;
+	delete main_view;
 
 	return 0;
 }

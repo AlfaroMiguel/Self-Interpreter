@@ -1,5 +1,5 @@
 #include "view_handler.h"
-#include "ventanaVM.h"
+#include "main_view.h"
 #include "morph.h"
 #include "ventana_cliente.h"
 #include "ventana_edicion.h"
@@ -10,7 +10,7 @@
 ViewHandler::ViewHandler(VentanaInicio *inicio,
 									 VentanaEdicion *edicion,
 									 VentanaObjetos *objetos,
-									VentanaVM* ppal, VentanaCliente* cliente): ventana_principal(ppal), ventana_inicio(inicio),
+									MainView* main_view, VentanaCliente* cliente): main_view(main_view), ventana_inicio(inicio),
 										ventana_edicion(edicion), ventana_objetos(objetos), ventana_cliente(cliente){}
 
 ViewHandler::~ViewHandler() {}
@@ -23,8 +23,8 @@ void ViewHandler::eliminar_morph(Glib::RefPtr<Morph> morph){
 	ventana_objetos->eliminar_morph(morph);
 }
 
-void ViewHandler::editar() {
-	ventana_principal->editar();
+void ViewHandler::enable_editing() {
+	ventana_edicion->start();
 }
 
 void ViewHandler::ocultar_vista_cliente() {
@@ -35,12 +35,12 @@ void ViewHandler::add_lobby(const std::string& lobby_id){
 	ventana_inicio->add_lobby(lobby_id);
 }
 
-void ViewHandler::iniciar() {
-	ventana_principal->inicializar();
+void ViewHandler::set_lobbies() {
+	ventana_inicio->inicializar();
 }
 
-void ViewHandler::crear_vm() {
-	ventana_principal->iniciar();
+void ViewHandler::open_lobby() {
+	ventana_objetos->start();
 }
 
 void ViewHandler::set_control(ClientHandler *client_handler) {

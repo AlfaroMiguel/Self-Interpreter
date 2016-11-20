@@ -11,6 +11,7 @@ class VentanaEdicion: public Gtk::Box{
   		~VentanaEdicion();
 
   		void set_control(ClientHandler* client_handler);
+  		void start();
  	private:
   		Gtk::Entry* entrada_nombre;
   		Gtk::Entry* entrada_msj;
@@ -30,6 +31,7 @@ class VentanaEdicion: public Gtk::Box{
   		void on_do_event();
   		void on_finalizar_edicion_event();
   		void ocultar_barra_edicion();
+  		bool do_start();
 
   		void enviar_mensaje(const std::string& evento);
 
