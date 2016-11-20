@@ -8,7 +8,6 @@ Expression::Expression(){
   receiver = nullptr;
   argument = nullptr;
   result = nullptr;
-  std::cout << "create expression" << std::endl;
   if (receiver != nullptr){
     std::cout << "receive not null" << std::endl;
   }
@@ -24,12 +23,6 @@ void Expression::setReceiver(Object* receiverPtr){
   receiver = receiverPtr;
   receiver->addSlots("self",this,false,true);
 }
-
-void Expression::isObject(){
-  std::cout << "no soy un object" << std::endl;
-}
-
-
 
 
 void Expression::setArgument(Object* argumentPtr){
@@ -48,7 +41,7 @@ std::string Expression::getRepresentation() const {
   std::cout << "Expression::getRepresentation a: "<< objectName << std::endl;
   //Hay que arreglar esto sino no anda
   if ( receiver != nullptr){
-    std::cout << "objectName del receiver" << receiver->getName() << std::endl;
+    //std::cout << "objectName del receiver" << receiver->getName() << std::endl;
     return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
   }
   std::string pepe = "lala";
@@ -80,6 +73,22 @@ void Expression::setResult(Object* resultPtr){
   result = resultPtr;
 }
 
+Object* Expression::clone(){
+  std::cout << "Expression::clone" << std::endl;
+  Expression* newExpression = new Expression;
+  if (receiver != nullptr){
+    newExpression->setReceiver(receiver->clone());
+  }
+  if(argument != nullptr){
+    newExpression->setArgument(argument->clone());
+  }
+  if (result != nullptr){
+    newExpression->setResult(result->clone());
+  }
+  newExpression->setOperator(operation);
+  newExpression->setName(objectName);
+  return newExpression;
+}
 
 void Expression::evaluate(){
     std::cout << "Expression::evaluate" << std::endl;
@@ -96,5 +105,7 @@ void Expression::evaluate(){
       Object* metodo = this->getSlotName(operation);
       std::cout << "objectName del metodo:" <<metodo->getName()<< std::endl;
       metodo->evaluate();
+      std::cout << "Resultado final:" <<metodo->getResult()->getValue().getInt()<< std::endl;
+      this->setResult(metodo->getResult());
     }
 }

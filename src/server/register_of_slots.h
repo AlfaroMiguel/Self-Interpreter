@@ -19,6 +19,7 @@ public:
     RegisterOfSlots getParentsSlots();
     Object* searchSlot(std::string &slotName, Object *object);
     std::vector<Object*> getObjects();
+    std::vector<Object*> getObjectsNotParent();
 };
 
 #endif

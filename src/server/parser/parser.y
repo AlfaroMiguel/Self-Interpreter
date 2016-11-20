@@ -110,10 +110,15 @@ atom_expression:
 							}
 							|VARIABLE EQUALSMUTAL expression SEMICOLON {
 							interpreter->pushToken(*$1,"assignation_mutable","");
+							interpreter->pushToken(*$1,"assignation","");
 							}
 							|VARIABLE SET expression SEMICOLON{
 							interpreter->pushToken(*$1,"find","");
 							interpreter->pushToken("","set","");
+							}
+							|VARIABLE ASTERISK EQUALS VARIABLE SEMICOLON{
+							std::cout << "clonacion objeto" <<std::endl;
+							interpreter->pushToken(*$4,"clone","");
 							}
 							|ARGS
 							{
@@ -149,14 +154,8 @@ inner2:
 		std::cout << "VARIABLE" <<std::endl;
 		//interpreter->pushToken(*$1,"find","");
 		interpreter->pushToken(*$1,"create_variable","");
-		if (! vars . count (* $1 ))
-				//UnknownVarError (* $1 );
-				std::cout << "la letra no se guardó" <<std::endl;
-		else
-			$$ = vars [* $1 ];
-			//delete $1 ;
-			std::cout << "VARIABLE" <<std::endl;
-			}
+		std::cout << "VARIABLE" <<std::endl;
+		}
 		|NUMBER
 		{
 		interpreter->pushToken("","create_number",to_string($1));

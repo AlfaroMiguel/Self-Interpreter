@@ -26,7 +26,6 @@ public:
     virtual ~Object();
 
     Object* getSlotName(std::string name);
-    virtual void isObject();
 
 
     RegisterOfSlots getParentsSlots();
@@ -54,10 +53,10 @@ public:
 
 
     RegisterOfSlots getSlots();
-    void addSlots(std::string slotName, Object* object, bool isMutable, bool isParentSlot);
+    virtual void addSlots(std::string slotName, Object* object, bool isMutable, bool isParentSlot);
     void RemoveSlots(std::string slotName);
 
-    Object* clone();
+    virtual Object* clone();
     virtual std::string getRepresentation() const;
     virtual void setRepresentation(std::string representationString);
     virtual Object* print(const std::vector<Object*>& argumnets);

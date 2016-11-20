@@ -9,10 +9,11 @@ public:
     SearcherObject(std::string nameString);
     ~SearcherObject();
     void setValue(int valueAux);
-    void addSlots(std::string id,Object* slot, bool algo, bool otro);
+    void addSlots(std::string slotName,Object* slot, bool isMutable, bool isParentSlot);
     NativeValue getValue();
     NativeValue ejecute(std::string operation, Object* expression);
     void evaluate();
+    Object* clone();
 };
 
 #endif

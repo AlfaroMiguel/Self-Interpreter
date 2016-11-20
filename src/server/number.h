@@ -23,6 +23,7 @@ public:
     void setOperator(std::string operatorString);
     void setReceiver(Object* receiverPtr);
     NativeValue ejecute(std::string operation, Object* expression);
+    Object* clone();
 };
 
 #endif

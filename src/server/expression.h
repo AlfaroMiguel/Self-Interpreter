@@ -14,7 +14,6 @@ class Expression:public Object{
 public:
     Expression();
     ~Expression();
-    void isObject();
     /*Sets*/
     void setReceiver(Object* receiverPtr);
     void setOperator(std::string operatorString);
@@ -25,6 +24,7 @@ public:
     Object* getResult();
     virtual NativeValue ejecute(std::string operationStr, Object* argumentPtr);
     virtual void evaluate();
-};
+    Object* clone()
+;};
 
 #endif

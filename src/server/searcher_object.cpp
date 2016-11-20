@@ -3,8 +3,10 @@
 #include <stdexcept>
 
 SearcherObject::SearcherObject(std::string nameString):Object(){
+  std::cout << "new SearcherObject" << std::endl;
   setName(nameString);
   setRepresentation(nameString);
+  expressionSearched =  nullptr;
 }
 
 SearcherObject::~SearcherObject(){
@@ -20,11 +22,12 @@ NativeValue SearcherObject::getValue(){
 }
 
 
-void SearcherObject::addSlots(std::string id,Object* slot, bool algo, bool otro){
+void SearcherObject::addSlots(std::string slotName,Object* slot, bool isMutable, bool isParentSlot){
+  std::cout << "SearcherObject::addSlots" << std::endl;
   if(expressionSearched != nullptr){
-    expressionSearched->addSlots(id,slot,algo,otro);
+    expressionSearched->addSlots(slotName,slot,isMutable,isParentSlot);
   }else{
-    std::cout << "SearcherObject No se puede addSlots a un objet Null" << std::endl;
+    slots.addSlot(slotName, slot, isMutable, isParentSlot);
   }
 }
 
@@ -45,4 +48,13 @@ NativeValue SearcherObject::ejecute(std::string operation, Object* argument){
   }else{
     throw std::runtime_error("ObjectNull not cannot ejecute operation");
   }
+}
+
+Object* SearcherObject::clone(){
+  std::cout << "SearcherObject::clone" << std::endl;
+  SearcherObject* newSearcheObject = new SearcherObject(objectName);
+  newSearcheObject->setRepresentation(objectName);
+  Object* self = getSlotName("self");
+  newSearcheObject->addSlots("self",self,false,true);
+  return newSearcheObject;
 }
