@@ -3,6 +3,7 @@
 
 #include "object.h"
 
+/*Modela un tipo generico que internamente puede ser un int, float o string*/
 NativeValue::NativeValue(){
     isIntBool = false;
     isFloatBool = false;

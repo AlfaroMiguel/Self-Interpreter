@@ -5,12 +5,16 @@ typedef std::tuple<Object*, bool, bool> slot_t;
 //<Object name, slot>
 typedef std::map<std::string, slot_t> slot_map;
 
+
+/*Objeto generico de Self*/
 Object::Object(){
     representation = "";
     myLobby = nullptr;
     objectName = "Object null";
 }
 
+
+/*Constructor por copia*/
 Object::Object(const Object &otherObject) {
     this->objectName = otherObject.objectName;
     this->slots = otherObject.slots;
@@ -19,6 +23,9 @@ Object::Object(const Object &otherObject) {
     this->myMorph = otherObject.myMorph;
 }
 
+
+
+
 //TODO
 NativeValue Object::getValue(){
   NativeValue value;
@@ -26,33 +33,35 @@ NativeValue Object::getValue(){
 }
 
 //TODO
-NativeValue Object::ejecute(const std::string& operationStr, Object* argumentPtr){
+NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
   std::cout << "object::ejecute" << std::endl;
   NativeValue value;
   return value;
 }
 
-Object* Object::getSlotName(const std::string& name){
+/*Obtiene el objet de un slot*/
+Object* Object::getSlotName(std::string name){
   Slot slot = slots.getSlot(name);
   return slot.getReference();
 }
 
 Object::~Object(){}
 
-void Object::setName(const std::string& newName){
+/*Setea el nombre*/
+void Object::setName(const std::string newName){
     std::cout << "Object::setName:" << newName << std::endl;
     this->objectName = newName;
 
     myMorph.setName(newName);
-    //if(myLobby != nullptr)this->notifyClients("crear");
     /*TODO no notifico mas cuando se cambia el nombre, notifico al final de la creacion del objectReference*/
 }
-
+/*Devuelve el nombre*/
 std::string Object::getName() {
     return this->objectName;
 }
 
-void Object::addSlots(const std::string& slotName,
+/*Agrega un slot*/
+void Object::addSlots(std::string slotName,
                       Object* object,
                       bool isMutable,
                       bool isParentSlot){
@@ -66,37 +75,44 @@ void Object::addSlots(const std::string& slotName,
     }
 }
 
-void Object::RemoveSlots(const std::string& slotName) {
+void Object::RemoveSlots(std::string slotName) {
     slots.removeSlot(slotName);
 }
 
+/*Devuelve un copia de si mismo*/
 Object* Object::clone(){
   std::cout << "Object::clone" << std::endl;
   return new Object(*this);
 }
 
+/*Devuelve su RegisterOfSlots*/
 RegisterOfSlots Object::getSlots(){
     return slots;
 }
 
+/*Devuelve un RegisterOfSlots solo con parentsSlots*/
 RegisterOfSlots Object::getParentsSlots(){
     return slots.getParentsSlots();
 }
 
-Object* Object::searchObject(const std::string& name, Object *object) {
+/*Buscar el objeto de nombre name en el objeto object*/
+Object* Object::searchObject(std::string name, Object *object) {
     std::cout << "Busco: " << name <<  " en " << object->getName() << std::endl;
     return slots.searchSlot(name, object);
 }
 
+/*Devuelve el resultado*/
 Object* Object::getResult(){
   return this;
 }
 
 void Object::evaluate(){}
 
-void Object::setRepresentation(const std::string& representationString){
+/*Setea su representacion*/
+void Object::setRepresentation(std::string representationString){
   representation = representationString;
 }
+/*Devuelve su representation*/
 std::string Object::getRepresentation() const {
   return representation;
 }
@@ -114,14 +130,15 @@ void Object::setLobby(Lobby *lobby) {
     myLobby = lobby;
 }
 
-void Object::notifyClients(const std::string& eventName,const std::string& clientName){
+void Object::notifyClients(std::string eventName, std::string clientName){
     if(myLobby != nullptr) {
         std::cout << "Notifico clientes" << std::endl;
         myLobby->notifyClients(eventName, myMorph, clientName);
+
     }
 }
 
-void Object::moveMorph(const std::string& clientName, double newX, double newY){
+void Object::moveMorph(std::string clientName, double newX, double newY){
     myMorph.changePosition(newX, newY);
     notifyClients("mover morph", clientName);
 }
