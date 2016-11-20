@@ -19,6 +19,9 @@ extern void reset_parser(void);
 
 using std::string;
 
+
+/*Se crea un interpreter y se carga todos los tipos de mensajes que puede llegar
+a recibir por parte de Parser*/
 Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_ptr), lobby(lobby) {
     mapMessages.insert(std::pair<string, int>("create_number", 1));
     mapMessages.insert(std::pair<string, int>("assignation", 2));
@@ -40,9 +43,9 @@ Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_pt
     parentClone = nullptr;
 }
 
+/*Este el método que invoca Parser, acá se identifica cuál es el mensaje y se
+lo ejecuta*/
 void Interpreter::pushToken(string id, string message, string value) {
-    //TupleString tuple(id,message,value);
-    //myStack.push(tuple);
     int id_message = mapMessages[message];
     switch (id_message) {
         case 1:
@@ -109,6 +112,9 @@ void Interpreter::pushToken(string id, string message, string value) {
     }
 }
 
+/*Dado que se quiere clonar un objeto se lo busca en el lobby y se clona todos
+sus slots, tambien se guarda el estado isClone para luego guardarle el slot
+parent*/
 void Interpreter::cloneObject(std::string id){
     isClone = true;
     std::cout << "Interpreter::cloneObject(" <<id<<")"<< std::endl;
@@ -154,13 +160,17 @@ void Interpreter::cloneObject(std::string id){
   }
 
 }
-
+/*En caso de que me pidan redefinir un objeto, saco el objeto del stack que se
+supone que es el objeto al cual se mando el mensaje*/
 void Interpreter::setRepresentation(std::string value) {
     Object *object = stack.top();
     object->setRepresentation(value);
 }
 
 
+/*Cunado se invoca un método de un objeto, se supone que este la cabeza del stack
+se setea la operacion que debe realizar y se pide que se evalue, luego se le pide
+el resultado para que muestre graficamente*/
 void Interpreter::sendMessage(string message) {
     std::cout << "sendMessage" << std::endl;
     Object *expression = stack.top();
@@ -175,21 +185,23 @@ void Interpreter::sendMessage(string message) {
     result->setLobby(lobby);
 }
 
+/*Se crea un numero con el el valor que se encuentre en el string*/
 void Interpreter::createNumber(string value) {
     std::cout << "createNumber: " << value << std::endl;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     Number *number = new Number(stof(value));
-    //number->setRepresentation(value);
     stack.push(number);
 }
 
+/*Se crea una variable con un objeto del SearcherObject que luego buscar en su
+entorno a que tipo corresponde*/
 void Interpreter::createVariable(string name) {
     std::cout << "createVariable" << std::endl;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     SearcherObject *object = new SearcherObject(name);
     stack.push(object);
 }
 
+/*Aca se crea una expression generica y se le setea el message, por eso se sabe que
+ los 2 objetos que se encuentran son su receiver y argument*/
 void Interpreter::createExpression(string message) {
     std::cout << "Interpreter::createExpression: " << message << std::endl;
     std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
@@ -216,12 +228,10 @@ Object *Interpreter::findExpression(string name) {
     }
 }
 
-/*Si existia un Expression, se piza sino no pasa nada*/
+/*Se setea el nombre al objeto ultimo que se inserto en el stack*/
 void Interpreter::assignationExpression(string name) {
     std::cout << "assginationExpression: " << name << std::endl;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     if (!stack.empty()) {
-        //std::cout << "stack not empty" << std::endl;
         Object *expression = stack.top();
         expression->setName(name);
 
@@ -273,9 +283,8 @@ void Interpreter::addSlot(string name) {
         map.insert(std::pair<string, Object *>(slot->getName(), slot));
     }
 }
-
+/*Este metodo es invocado por el server para que interprete un cadena*/
 std::vector<Object *> Interpreter::interpretChar(const char *buffer) {
-    //Sacar comentarios si se quiere compilar con el parser
     temporalObjects.clear();
     std::cout << "Empieza a interpretar" << buffer << std::endl;
     yy_scan_string(buffer);

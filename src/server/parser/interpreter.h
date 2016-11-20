@@ -28,7 +28,7 @@ private:
   void setRepresentation(std::string value);
   void cloneObject(std::string id);
   Object* entorno;
-    Lobby* lobby;
+  Lobby* lobby;
 public:
     Interpreter(Object* entorno_ptr, Lobby* lobby);
     void pushToken(std::string id,std::string message,std::string value);
