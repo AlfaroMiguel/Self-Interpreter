@@ -172,6 +172,7 @@ void Interpreter::sendMessage(string message) {
     Object* result = expression->getResult();
     std::cout << "Interpreter::resultado" <<result->getValue().getInt()<< std::endl;
     temporalObjects.push_back(result);
+    result->setLobby(lobby);
 }
 
 void Interpreter::createNumber(string value) {
@@ -279,7 +280,7 @@ std::vector<Object *> Interpreter::interpretChar(const char *buffer) {
     std::cout << "Empieza a interpretar" << buffer << std::endl;
     yy_scan_string(buffer);
     yyparse(this);
-    std::cout << "Termine de interpretar" << std::endl;
+    std::cout << "Termine de interpretar:" << temporalObjects.size()<< std::endl;
     return temporalObjects;
 }
 
