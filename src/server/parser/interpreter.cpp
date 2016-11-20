@@ -169,6 +169,9 @@ void Interpreter::sendMessage(string message) {
     /*tengo que ver cuando tengo mas de un argumento*/
     expression->setOperator(message);
     expression->evaluate();
+    Object* result = expression->getResult();
+    std::cout << "Interpreter::resultado" <<result->getValue().getInt()<< std::endl;
+    temporalObjects.push_back(result);
 }
 
 void Interpreter::createNumber(string value) {

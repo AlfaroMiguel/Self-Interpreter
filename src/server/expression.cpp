@@ -105,5 +105,7 @@ void Expression::evaluate(){
       Object* metodo = this->getSlotName(operation);
       std::cout << "objectName del metodo:" <<metodo->getName()<< std::endl;
       metodo->evaluate();
+      std::cout << "Resultado final:" <<metodo->getResult()->getValue().getInt()<< std::endl;
+      this->setResult(metodo->getResult());
     }
 }
