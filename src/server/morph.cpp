@@ -22,7 +22,7 @@ void Morph::changePosition(double newX, double newY) {
     y = newY;
 }
 
-void Morph::addSlot(std::string nombre, std::string valor) {
+void Morph::addSlot(const std::string& nombre, const std::string& valor) {
     auto itSlot = slots.find(nombre);
     if(itSlot == slots.end())
         slots.insert(std::make_pair(nombre, valor));
@@ -31,7 +31,7 @@ void Morph::addSlot(std::string nombre, std::string valor) {
         itSlot->second = valor;
 }
 
-std::string Morph::getEvent(std::string eventName){
+std::string Morph::getEvent(const std::string& eventName){
     json eventj;
     eventj["evento"] = eventName;
     eventj["nombre"] = name;

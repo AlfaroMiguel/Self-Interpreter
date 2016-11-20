@@ -25,3 +25,6 @@ lobby _AddSlots: (| OtroObjeto = (|x = 1. y <- 3. metodo = (|  | 4 + 2 + 1. ).|)
 //se permite clonar
 lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |).
 lobby _AddSlots: (| punto1 = (| x <- 20. y <- 1. proto* = punto. |). |).
+
+//Ejemplo del punto del enunciado
+lobby _AddSlots: (| punto = (| x = 5. y = 3. squareNorm = (|  | x * x + y * y. ). |).  |).

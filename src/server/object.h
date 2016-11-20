@@ -25,16 +25,15 @@ public:
     Object(const Object& otherObject);
     virtual ~Object();
 
-    Object* getSlotName(std::string name);
-
+    Object* getSlotName(const std::string& name);
 
     RegisterOfSlots getParentsSlots();
-    Object* searchObject(std::string name, Object *object);
+    Object* searchObject(const std::string& name, Object *object);
 
     virtual void setReceiver(Object* receiverPtr){
       std::cout << "Object::setReceiver:" << std::endl;
     }
-    virtual void setOperator(std::string operatorString){
+    virtual void setOperator(const std::string& operatorString){
       std::cout << "Object::setOperator:" << std::endl;
     }
     virtual void setArgument(Object* argumentPtr){
@@ -45,27 +44,26 @@ public:
     }
     virtual NativeValue getValue();
     virtual Object* getResult();
-    virtual NativeValue ejecute(std::string operationStr, Object* argumentPtr);
+    virtual NativeValue ejecute(const std::string& operationStr, Object* argumentPtr);
     virtual void evaluate();
 
-    void setName(const std::string newName);
+    void setName(const std::string& newName);
     std::string getName();
 
-
     RegisterOfSlots getSlots();
-    virtual void addSlots(std::string slotName, Object* object, bool isMutable, bool isParentSlot);
-    void RemoveSlots(std::string slotName);
+    virtual void addSlots(const std::string& slotName, Object* object, bool isMutable, bool isParentSlot);
+    void RemoveSlots(const std::string& slotName);
 
     virtual Object* clone();
     virtual std::string getRepresentation() const;
-    virtual void setRepresentation(std::string representationString);
+    virtual void setRepresentation(const std::string& representationString);
     virtual Object* print(const std::vector<Object*>& argumnets);
 
     //Object* collect(); Esto va en el Lobby
 
     void setLobby(Lobby* lobby);
-    void notifyClients(std::string eventName, std::string clientName = "");
-    void moveMorph(std::string clientName, double newX, double newY);
+    void notifyClients(const std::string& eventName, const std::string& clientName = "");
+    void moveMorph(const std::string& clientName, double newX, double newY);
     int getMorphId();
 };
 

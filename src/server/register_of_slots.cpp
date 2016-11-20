@@ -7,8 +7,7 @@ RegisterOfSlots::~RegisterOfSlots(){
     slotMap.clear();
 }
 
-/*Agrega un slot*/
-void RegisterOfSlots::addSlot(std::string slotName, Object *object, bool isMutable, bool isParent){
+void RegisterOfSlots::addSlot(const std::string& slotName, Object *object, bool isMutable, bool isParent){
     Slot newSlot(object, isMutable, isParent);
     if(slotMap.count(slotName) == 1){
       removeSlot(slotName);
@@ -16,8 +15,7 @@ void RegisterOfSlots::addSlot(std::string slotName, Object *object, bool isMutab
     slotMap.insert(make_pair(slotName, newSlot));
 }
 
-/*Devulve un slot del nombre slotName*/
-Slot RegisterOfSlots::getSlot(std::string &slotName) {
+Slot RegisterOfSlots::getSlot(const std::string& slotName) {
     auto slotIt = slotMap.find(slotName);
     if (slotIt == slotMap.end()){
         std::string error = "No se encontro el slot";
@@ -26,9 +24,6 @@ Slot RegisterOfSlots::getSlot(std::string &slotName) {
     return slotMap.at(slotName);
 }
 
-
-/*Devuelve los objetos que se encuentran en los slots pero no aquellos que
-son parents slots*/
 std::vector<Object*> RegisterOfSlots::getObjectsNotParent(){
   std::vector<Object*> objects;
   for(auto it = slotMap.begin(); it != slotMap.end(); it++){
@@ -38,8 +33,7 @@ std::vector<Object*> RegisterOfSlots::getObjectsNotParent(){
   }
   return objects;
 }
-}
-/*Devuelve TODOS los objetos que se encuentra en sus slots*/
+
 std::vector<Object*> RegisterOfSlots::getObjects(){
   std::vector<Object*> objects;
   for(auto it = slotMap.begin(); it != slotMap.end(); it++){
@@ -48,13 +42,10 @@ std::vector<Object*> RegisterOfSlots::getObjects(){
   return objects;
 }
 
-
-/*Remueve un slot con cierto nombre*/
-void RegisterOfSlots::removeSlot(std::string &slotName){
+void RegisterOfSlots::removeSlot(const std::string &slotName){
     slotMap.erase(slotName);
 }
 
-/*Crea un RegisterOfSlots, inserta los parentsSlot y lo devuelve*/
 RegisterOfSlots RegisterOfSlots::getParentsSlots(){
     RegisterOfSlots registerOfParentsSlots;
     for(auto iter = slotMap.begin(); iter != slotMap.end(); ++iter){
@@ -69,9 +60,7 @@ RegisterOfSlots RegisterOfSlots::getParentsSlots(){
     return registerOfParentsSlots;
 }
 
-/*Busca el slot de nombre slotName en el objeto Object, sino no lo encuentra
-en object busca en los parentsSlots de object*/
-Object* RegisterOfSlots::searchSlot(std::string &slotName, Object *object){
+Object* RegisterOfSlots::searchSlot(const  std::string &slotName, Object *object){
     if (slotName == object->getName()){ //Si es el object lo devuelvo
         return object;
     }

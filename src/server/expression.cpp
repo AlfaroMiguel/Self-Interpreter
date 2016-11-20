@@ -3,7 +3,7 @@
 #include <iostream> //cout //stof
 #include "number.h"
 
-/*Esta clase modela un Composite*/
+
 Expression::Expression(){
   receiver = nullptr;
   argument = nullptr;
@@ -18,28 +18,25 @@ Expression::Expression(){
 
 Expression::~Expression(){}
 
-/*Se setea el receiver y se le agrega el slot self*/
 void Expression::setReceiver(Object* receiverPtr){
   std::cout << "Expression::setReceiver" << std::endl;
   receiver = receiverPtr;
   receiver->addSlots("self",this,false,true);
 }
 
-/*Se setea el argument y se le agrega el slot self*/
+
 void Expression::setArgument(Object* argumentPtr){
   std::cout << "Expression::setArgument" << std::endl;
   argument = argumentPtr;
   argument->addSlots("self",this,false,true);
 }
 
-/*Se setea la operation que se va a ejecutar*/
 void Expression::setOperator(std::string operatorString){
   std::cout << "Expression::setOperator" << std::endl;
   this->operation = operatorString;
 }
 
-/*De forma recursiva va pidiendo la representacion de sus componentes para
-devolver su representacion*/
+
 std::string Expression::getRepresentation() const {
   std::cout << "Expression::getRepresentation a: "<< objectName << std::endl;
   //Hay que arreglar esto sino no anda
@@ -51,7 +48,6 @@ std::string Expression::getRepresentation() const {
   return pepe;
 }
 
-/*Devuelve el NativeValue del result luego de evaluar la expression*/
 NativeValue Expression::getValue(){
   return result->getValue();
 }
@@ -62,7 +58,6 @@ Object* Expression::getResult(){
 
 
 
-/*Esto permite que se pueda acoplar mas mensaje a una expression que ya fue evaluada*/
 NativeValue Expression::ejecute(std::string operationStr, Object* argumentPtr){
   std::cout << "Error, cannot ejecute() in Expression class" << std::endl;
   /*A la expression ya se le mando el mensaje evaluate, ahora pide ejecutar*/
@@ -78,8 +73,6 @@ void Expression::setResult(Object* resultPtr){
   result = resultPtr;
 }
 
-
-/*Devuelve una copia de si mismo*/
 Object* Expression::clone(){
   std::cout << "Expression::clone" << std::endl;
   Expression* newExpression = new Expression;
@@ -97,9 +90,9 @@ Object* Expression::clone(){
   return newExpression;
 }
 
-/*Envia el mensaje a receiver con el argument seteado*/
 void Expression::evaluate(){
     std::cout << "Expression::evaluate" << std::endl;
+    //std::cout << "Expression::evaluate" <<receiver->getName()<< std::endl;
     if (receiver != nullptr){
       std::cout << "dentro del if" << std::endl;
       receiver->evaluate();

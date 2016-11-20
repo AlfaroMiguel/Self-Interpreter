@@ -1,25 +1,19 @@
-#ifndef CONTROLADOR_EVENTOS_H
-#define CONTROLADOR_EVENTOS_H
+#ifndef EVENT_HANDLER_H
+#define EVENT_HANDLER_H
 
-#include <string>
-class ProxyClient;
+#include "server_handler.h"
 
-class EventHandler {
-private:
-    ProxyClient& client;
+class EventHandler{
+ protected:
+  EventHandler(const EventHandler& otra) = delete;
+  EventHandler& operator=(const EventHandler& otra) = delete;
 
-    void connect(std::string clientName);
-    void initialize();
-    void chooseLobby(std::string lobbyName, std::string lobbyState);
-    void moveMorph(int idMorph, double newX, double newY);
-    void interpretSelfGet(std::string code);
-    void interpretSelfDo(std::string code);
-
-public:
-    EventHandler(ProxyClient& client);
-    ~EventHandler();
-    void handleEvent(std::string event);
+  ServerHandler* server_handler;
+ public:
+  EventHandler(ServerHandler* server_handler);
+  virtual ~EventHandler();
+  EventHandler(EventHandler&& otra);
+  EventHandler& operator=(EventHandler&& otra);
+  virtual void handle(json j) = 0;
 };
-
-
 #endif
