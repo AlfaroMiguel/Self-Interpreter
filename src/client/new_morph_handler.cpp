@@ -19,5 +19,5 @@ void NewMorphHandler::handle(json j) {
 		dic_slots.insert(std::make_pair(nombre, valor));
 	}
 	Posicion pos_morph(x, y);
-	client_handler->crear_morph(nombre, pos_morph, dic_slots, id);
+	client_handler->create_morph(nombre, pos_morph, dic_slots, id);
 }

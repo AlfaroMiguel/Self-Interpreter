@@ -23,14 +23,21 @@ class ClientHandler{
   		/* Agrega un lobby a los lobbies en los que puede
   		 * participar el cliente */
   		void add_lobby(const std::string& lobby_id);
-  		void iniciar();
-  		void crear_vm();
-  		void mover_morph(int morph_id, const Posicion& new_pos);
-  		void actualizar_posicion(int morph_id, const Posicion& pos);
+  		/* Establece los lobbies que se mostraran al
+  		 * usuario para que elija cual usar */
+  		void set_lobbies();
+  		/* Muestra el lobby seleccionado por el cliente */
+  		void open_lobby();
+  		/* Mueve el morph a la posicion indicada */
+  		void move_morph(int morph_id, const Posicion& new_pos);
+  		/* Actualiza la posicion del morph */
+  		void update_morph_position(int morph_id, const Posicion& pos);
   		void abrir_vm(const std::string& lobby, const std::string& nombre_cliente);
-  		void editar();
-  		void crear_morph(const std::string& nombre, const Posicion& pos,
-						 std::map<std::string, std::string> dic_slots, int id);
+  		/* Habilita la edicion del morph seleccionado */
+  		void enable_editing();
+  		/* Crea un morph nuevo */
+  		void create_morph(const std::string& name, const Posicion& pos,
+						 std::map<std::string, std::string> slots, int id);
   		void dibujar_morph(Glib::RefPtr<Morph> morph);
   		bool button_event(GdkEventButton *event);
   		void cambio_nombre(const std::string& nuevo_nombre);

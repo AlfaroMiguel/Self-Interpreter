@@ -16,20 +16,20 @@ void ClientHandler::add_lobby(const std::string& lobby_id){
 	view_handler->add_lobby(lobby_id);
 }
 
-void ClientHandler::iniciar(){
-	view_handler->iniciar();
+void ClientHandler::set_lobbies(){
+	view_handler->set_lobbies();
 }
 
-void ClientHandler::crear_vm(){
-	view_handler->crear_vm();
+void ClientHandler::open_lobby(){
+	view_handler->open_lobby();
 }
 
-void ClientHandler::mover_morph(int morph_id, const Posicion& new_pos){
-	modelo->mover_morph(morph_id, new_pos);
+void ClientHandler::move_morph(int morph_id, const Posicion& new_pos){
+	modelo->move_morph(morph_id, new_pos);
 }
 
-void ClientHandler::actualizar_posicion(int morph_id, const Posicion& pos){
-	com_server->enviar_nueva_posicion_morph(morph_id, pos);
+void ClientHandler::update_morph_position(int morph_id, const Posicion& pos){
+	com_server->send_morph_position(morph_id, pos);
 }
 
 void ClientHandler::abrir_vm(const std::string& lobby, const std::string& estado_lobby){
@@ -44,8 +44,8 @@ void ClientHandler::eliminar_morph(Glib::RefPtr<Morph> morph) {
 	view_handler->eliminar_morph(morph);
 }
 
-void ClientHandler::editar(){
-	view_handler->editar();
+void ClientHandler::enable_editing(){
+	view_handler->enable_editing();
 }
 
 bool ClientHandler::button_event(GdkEventButton *event) {
@@ -82,12 +82,11 @@ void ClientHandler::set_control(ViewHandler* view_handler) {
 	this->view_handler = view_handler;
 }
 
-void ClientHandler::crear_morph(const std::string& nombre,
+void ClientHandler::create_morph(const std::string& name,
 									 const Posicion& pos,
-									 std::map<std::string,
-											  std::string> dic_slots,
+									 std::map<std::string, std::string> slots,
 									 int id){
-	modelo->crear_morph(nombre, pos, dic_slots, id);
+	modelo->create_morph(name, pos, slots, id);
 }
 
 void ClientHandler::dibujar_morph(Glib::RefPtr<Morph> morph){

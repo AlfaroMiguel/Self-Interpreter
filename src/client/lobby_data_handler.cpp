@@ -7,5 +7,5 @@ LobbyDataHandler::LobbyDataHandler(ClientHandler *client_handler):EventHandler(c
 LobbyDataHandler::~LobbyDataHandler() {}
 
 void LobbyDataHandler::handle(json j) {
-	client_handler->crear_vm();
+	client_handler->open_lobby();
 }

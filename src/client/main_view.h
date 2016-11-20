@@ -1,5 +1,5 @@
-#ifndef VENTANAVM_H
-#define VENTANAVM_H
+#ifndef MAIN_VIEW_H
+#define MAIN_VIEW_H
 
 #include <gtkmm.h>
 #include <goocanvasmm.h>
@@ -16,7 +16,7 @@ class VentanaEdicion;
 class VentanaObjetos;
 class VentanaInicio;
 
-class VentanaVM: public Gtk::Window{
+class MainView: public Gtk::Window{
  private:
   VentanaEdicion* ventana_edicion;
   VentanaObjetos* ventana_objetos;
@@ -29,18 +29,15 @@ class VentanaVM: public Gtk::Window{
   bool do_iniciar();
   bool do_editar();
  public:
-  VentanaVM(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
-  virtual ~VentanaVM();
+  MainView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
+  virtual ~MainView();
 
-  VentanaVM(VentanaVM&& otra);
-  VentanaVM& operator=(VentanaVM&& otra);
+  MainView(MainView&& otra);
+  MainView& operator=(MainView&& otra);
 
-  //void actualizar_morph(std::string nombre, double x, double y, std::map<std::string, std::string> slots);
   void on_quit_click();
   void set_control(ClientHandler* client_handler);
-  void iniciar();
   void editar();
   void mostrar_lobbies();
-  void inicializar();
 };
 #endif

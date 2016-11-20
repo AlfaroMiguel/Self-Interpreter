@@ -1,12 +1,14 @@
 #include "ventana_objetos.h"
 #include <iostream>
 #include "morph.h"
+
 VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 								Gtk::Box(cobject){
 	set_size_request(800, 800);
 	canvas = Gtk::manage(new Goocanvas::Canvas());
 	canvas->set_hexpand(true);
 	canvas->set_size_request(800,800);
+	canvas->property_background_color_rgb() = 0xE0E0E0;
 	add(*canvas);
 	root = Goocanvas::Group::create();
 	canvas->set_root_item(root);
@@ -36,12 +38,12 @@ bool VentanaObjetos::on_button_press_event(GdkEventButton *event) {
 	return client_handler->button_event(event);
 }
 
-bool VentanaObjetos::do_iniciar() {
+bool VentanaObjetos::do_start() {
 	this->show();
 	return false;
 }
 
-void VentanaObjetos::iniciar() {
-	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaObjetos::do_iniciar));
+void VentanaObjetos::start() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaObjetos::do_start));
 }
 

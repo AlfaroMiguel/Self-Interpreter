@@ -94,13 +94,12 @@ void ComunicadorServer::inicializar() {
 	send_json(j);
 }
 
-void ComunicadorServer::enviar_nueva_posicion_morph(int morph_id, const Posicion& pos){
+void ComunicadorServer::send_morph_position(int morph_id, const Posicion& pos){
 	json j;
 	j["evento"] = EVENTO_MOVER;
 	j["id"] = morph_id;
 	j["x"] = pos.get_x();
 	j["y"] = pos.get_y();
-	std::cout << "Envio posicion: " << pos.get_x() << ", "<< pos.get_y() << std::endl;
 	send_json(j);
 }
 
@@ -121,50 +120,5 @@ void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 		event_handler_selector.get_event_handler(evento);
 	event_handler->handle(j);
 	std::map<std::string, std::string> dic_slots;
-//	if(evento == EVENTO_CREAR) {
-//		std::string nombre = j["nombre"];
-//		double x = j["posicion"]["x"];
-//		double y = j["posicion"]["y"];
-//		std::string slots_str = j["slots"];
-//		json slots = json::parse((char*)slots_str.c_str());
-//		for (json::iterator it = slots.begin(); it != slots.end(); ++it) {
-//			std::string nombre = it.key();
-//			std::string valor = it.value();
-//			dic_slots.insert(std::make_pair(nombre, valor));
-//		}
-//		Posicion pos_morph(x, y);
-//		client_handler->crear_morph(nombre, pos_morph, dic_slots);
-//	}
-//	if (evento == EVENTO_AGREGAR_LOBBIES){
-//		std::string lobbies_str = j["lobbies"];
-//		json lobbies = json::parse((char*)lobbies_str.c_str());
-//		for (json::iterator it = lobbies.begin(); it != lobbies.end(); ++it) {
-//			std::string id = it.value();
-//			client_handler->set_lobby(id);
-//		}
-//		client_handler->iniciar();
-//	}
-//	if(evento == "cliente conectado"){
-//		std::cout << "Se conecta ok" << std::endl;
-//		json j;
-//		j["evento"] = "inicializar";
-//		send_json(j);
-//		client_handler->cliente_conectado();
-//	}
-//	if(evento == "error"){
-//		std::cout << "Ingresa a error" << std::endl;
-//		client_handler->error_ingreso_cliente();
-//	}
-//	if (evento == "datos lobby"){
-//		//tiene que crear la vm con todos los morphs
-//		client_handler->crear_vm();
-//	}
-//	if(evento == EVENTO_MOVER){
-//		std::string morph = j["nombre"];
-//		double new_x = j["posicion"]["x"];
-//		double new_y = j["posicion"]["y"];
-//		Posicion new_pos(new_x, new_y);
-//		client_handler->cambiar_pos_morph(morph, &new_pos);
-//	}
 }
 

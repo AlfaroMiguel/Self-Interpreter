@@ -13,7 +13,7 @@ class VentanaInicio: public Gtk::Dialog{
   	/* Agrega un lobby a los lobbies en los que puede
 	 * participar el cliente */
   	void add_lobby(const std::string& lobby_id);
-  	void iniciar();
+  	void inicializar();
   	void set_control(ClientHandler* client_handler);
   	void mostrar_error();
  private:
@@ -32,7 +32,7 @@ class VentanaInicio: public Gtk::Dialog{
   	Gtk::Label* label_error;
 
   	void on_confirmar();
-  	bool do_iniciar();
+  	bool do_inicializar();
   	bool do_mostrar_error();
 };
 #endif

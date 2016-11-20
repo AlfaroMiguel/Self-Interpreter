@@ -20,7 +20,6 @@ VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 	builder->get_widget(GLD_BTN_DO, boton_do);
 	builder->get_widget(GLD_BTN_ELIMINAR, boton_eliminar_obj);
 	builder->get_widget(GLD_BTN_FINALIZAR, boton_finalizar_edicion);
-
 	boton_aceptar_nombre->signal_clicked().connect(sigc::mem_fun(*this, &VentanaEdicion::on_aceptar_nombre_event));
 	boton_get->signal_clicked().connect(sigc::mem_fun(*this, &VentanaEdicion::on_get_event));
 	boton_do->signal_clicked().connect(sigc::mem_fun(*this, &VentanaEdicion::on_do_event));
@@ -73,4 +72,13 @@ void VentanaEdicion::enviar_mensaje(const std::string& evento){
 	Glib::ustring mensaje = entrada_msj->get_buffer()->get_text();
 	client_handler->enviar_mensaje(mensaje.raw(), evento);
 	entrada_msj->delete_text(0, mensaje.size());
+}
+
+bool VentanaEdicion::do_start(){
+	show();
+	return false;
+}
+
+void VentanaEdicion::start(){
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaEdicion::do_start));
 }

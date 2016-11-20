@@ -26,7 +26,7 @@ void VentanaInicio::add_lobby(const std::string& lobby_id){
 	lobbies.push_back(lobby);
 }
 
-bool VentanaInicio::do_iniciar(){
+bool VentanaInicio::do_inicializar(){
 	std::cout << lobbies.size() << std::endl;
 	for(unsigned  int i = 0; i < lobbies.size(); i++) {
 		std::cout << lobbies[i] << std::endl;
@@ -38,8 +38,8 @@ bool VentanaInicio::do_iniciar(){
 	return false;
 }
 
-void VentanaInicio::iniciar() {
-	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_iniciar));
+void VentanaInicio::inicializar() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_inicializar));
 }
 
 void VentanaInicio::set_control(ClientHandler* client_handler) {
