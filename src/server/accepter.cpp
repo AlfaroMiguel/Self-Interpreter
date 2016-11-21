@@ -52,7 +52,6 @@ void Accepter::accept() {
         Socket socket_acpt;
         try { socket.aceptar(socket_acpt); }
         catch (const SocketError &e) {
-            std::cerr << "Entro aca" << std::endl;
             keepAcceptingClients = false;
             continue;
         }

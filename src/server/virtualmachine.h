@@ -44,6 +44,7 @@ public:
     /*Recibe una referencia al nombre del cliente, y una referencia al codigo self.
      * Interpreta el codigo self*/
     void interpretCodeDo(const std::string& clientName, const std::string& code);
+
 };
 
 #endif
