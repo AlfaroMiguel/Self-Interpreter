@@ -1,8 +1,13 @@
 #include "proxy_client.h"
 #include "receiver.h"
+#include "event_handler_selector.h"
+#include "server_handler.h"
+#include "event_handler.h"
+
+using json = nlohmann::json;
 
 ProxyClient::ProxyClient(Socket skt_aceptar, VirtualMachine& vm): //ademas recibe el modelo
-	socketAccepted(std::move(skt_aceptar)), executing(true), controladorDeEventos(*this), vm(vm){
+	socketAccepted(std::move(skt_aceptar)), executing(true), vm(vm), eventHandlerSelector(new ServerHandler(*this)){
 }
 
 ProxyClient::~ProxyClient(){
@@ -20,7 +25,10 @@ void ProxyClient::attend(){
 }
 
 void ProxyClient::recieveEvent(std::string event){
-    controladorDeEventos.handleEvent(event);
+    json eventJ = json::parse(event);
+    EventHandler* eventHandler = eventHandlerSelector.get_event_handler(eventJ["evento"]);
+    if(eventHandler != nullptr)
+        eventHandler->handle(eventJ);
 }
 
 bool ProxyClient::isExecuting(){

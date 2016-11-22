@@ -7,7 +7,7 @@ RegisterOfSlots::~RegisterOfSlots(){
     slotMap.clear();
 }
 
-void RegisterOfSlots::addSlot(std::string slotName, Object *object, bool isMutable, bool isParent){
+void RegisterOfSlots::addSlot(const std::string& slotName, Object *object, bool isMutable, bool isParent){
     Slot newSlot(object, isMutable, isParent);
     if(slotMap.count(slotName) == 1){
       removeSlot(slotName);
@@ -15,7 +15,7 @@ void RegisterOfSlots::addSlot(std::string slotName, Object *object, bool isMutab
     slotMap.insert(make_pair(slotName, newSlot));
 }
 
-Slot RegisterOfSlots::getSlot(std::string &slotName) {
+Slot RegisterOfSlots::getSlot(const std::string& slotName) {
     auto slotIt = slotMap.find(slotName);
     if (slotIt == slotMap.end()){
         std::string error = "No se encontro el slot";
@@ -42,7 +42,7 @@ std::vector<Object*> RegisterOfSlots::getObjects(){
   return objects;
 }
 
-void RegisterOfSlots::removeSlot(std::string &slotName){
+void RegisterOfSlots::removeSlot(const std::string &slotName){
     slotMap.erase(slotName);
 }
 
@@ -60,7 +60,7 @@ RegisterOfSlots RegisterOfSlots::getParentsSlots(){
     return registerOfParentsSlots;
 }
 
-Object* RegisterOfSlots::searchSlot(std::string &slotName, Object *object){
+Object* RegisterOfSlots::searchSlot(const  std::string &slotName, Object *object){
     if (slotName == object->getName()){ //Si es el object lo devuelvo
         return object;
     }

@@ -6,9 +6,11 @@
 #include <vector>
 #include <iostream>
 #include "../common/thread.h"
-#include "event_handler.h"
 #include "virtualmachine.h"
 
+#include "event_handler_selector.h"
+#include "../common/json.hpp"
+using json = nlohmann::json;
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del client. */
 class ProxyClient : public Thread {
@@ -16,7 +18,7 @@ private:
     Socket socketAccepted;
     bool executing;
     void attend();
-    EventHandler controladorDeEventos;
+    EventHandlerSelector eventHandlerSelector;
 
 
 public:

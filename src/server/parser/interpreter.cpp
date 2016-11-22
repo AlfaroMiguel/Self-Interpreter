@@ -19,7 +19,10 @@ extern void reset_parser(void);
 
 using std::string;
 
-Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_ptr), lobby(lobby) {
+
+/*Se crea un interpreter y se carga todos los tipos de mensajes que puede llegar
+a recibir por parte de Parser*/
+Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_ptr), lobby(lobby),garbage(entorno_ptr){
     mapMessages.insert(std::pair<string, int>("create_number", 1));
     mapMessages.insert(std::pair<string, int>("assignation", 2));
     mapMessages.insert(std::pair<string, int>("assignation_mutable", 3));
@@ -40,9 +43,9 @@ Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_pt
     parentClone = nullptr;
 }
 
+/*Este el método que invoca Parser, acá se identifica cuál es el mensaje y se
+lo ejecuta*/
 void Interpreter::pushToken(string id, string message, string value) {
-    //TupleString tuple(id,message,value);
-    //myStack.push(tuple);
     int id_message = mapMessages[message];
     switch (id_message) {
         case 1:
@@ -73,7 +76,7 @@ void Interpreter::pushToken(string id, string message, string value) {
             addSlot(id);
             break;
         case 9:
-            std::cout << "Expression [remove_slot]" << std::endl;
+        removeSlot(id);
             break;
         case 10:
             //std::cout<<"Expression [sum] Expression"<<std::endl;
@@ -109,6 +112,31 @@ void Interpreter::pushToken(string id, string message, string value) {
     }
 }
 
+
+
+
+
+
+void Interpreter::removeSlot(std::string name){
+  Object* objectToDeleteSlots = findExpression(name);
+  Object* objectEncapsulate = stack.top();
+  stack.pop();
+  RegisterOfSlots slots = objectEncapsulate->getSlots();
+  std::vector<Object*> slotsVector = slots.getObjects();
+  for (size_t i = 0; i < slotsVector.size(); i++) {
+    Object* slot = slotsVector[i];
+    std::string nameSlot = slot->getName();
+    std::cout << "name of slots"<<nameSlot<< std::endl;
+    objectToDeleteSlots->RemoveSlots(nameSlot);
+    //delete(slot);
+  }
+  //delete(objectEncapsulate);
+  temporalObjects.push_back(objectToDeleteSlots);
+}
+
+/*Dado que se quiere clonar un objeto se lo busca en el lobby y se clona todos
+sus slots, tambien se guarda el estado isClone para luego guardarle el slot
+parent*/
 void Interpreter::cloneObject(std::string id){
     isClone = true;
     std::cout << "Interpreter::cloneObject(" <<id<<")"<< std::endl;
@@ -139,7 +167,8 @@ void Interpreter::cloneObject(std::string id){
       //sino esta entre los redefinidos entonces lo agrego
       if(!isFound){
         std::cout << "Slot not found" <<slotNative->getName()<< std::endl;
-        Object* newSlot = slotNative->clone();
+        //Object* newSlot = slotNative->clone();
+        Object* newSlot = garbage.cloneObject(slotNative);
         stack.push(newSlot);
     }
   }
@@ -154,14 +183,18 @@ void Interpreter::cloneObject(std::string id){
   }
 
 }
-
+/*En caso de que me pidan redefinir un objeto, saco el objeto del stack que se
+supone que es el objeto al cual se mando el mensaje*/
 void Interpreter::setRepresentation(std::string value) {
     Object *object = stack.top();
     object->setRepresentation(value);
 }
 
 
-void Interpreter::sendMessage(string message) {
+/*Cunado se invoca un método de un objeto, se supone que este la cabeza del stack
+se setea la operacion que debe realizar y se pide que se evalue, luego se le pide
+el resultado para que muestre graficamente*/
+void Interpreter::sendMessage(string message){
     std::cout << "sendMessage" << std::endl;
     Object *expression = stack.top();
     std::cout << "Nombre de expression a enviar mensaje:" << expression->getName() << std::endl;
@@ -170,30 +203,36 @@ void Interpreter::sendMessage(string message) {
     expression->setOperator(message);
     expression->evaluate();
     Object* result = expression->getResult();
+    garbage.registerObject(result);
     std::cout << "Interpreter::resultado" <<result->getValue().getInt()<< std::endl;
     temporalObjects.push_back(result);
     result->setLobby(lobby);
 }
 
+/*Se crea un numero con el el valor que se encuentre en el string*/
 void Interpreter::createNumber(string value) {
     std::cout << "createNumber: " << value << std::endl;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
-    Number *number = new Number(stof(value));
-    //number->setRepresentation(value);
+    //Number *number = new Number(stof(value));
+    Object* number = garbage.createNumber(value);
     stack.push(number);
 }
 
+/*Se crea una variable con un objeto del SearcherObject que luego buscar en su
+entorno a que tipo corresponde*/
 void Interpreter::createVariable(string name) {
     std::cout << "createVariable" << std::endl;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
-    SearcherObject *object = new SearcherObject(name);
+    //SearcherObject *object = new SearcherObject(name);
+    Object* object = garbage.createSearcherObject(name);
     stack.push(object);
 }
 
+/*Aca se crea una expression generica y se le setea el message, por eso se sabe que
+ los 2 objetos que se encuentran son su receiver y argument*/
 void Interpreter::createExpression(string message) {
     std::cout << "Interpreter::createExpression: " << message << std::endl;
     std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
-    Expression *expression = new Expression;
+    //Expression *expression = new Expression;
+    Object* expression = garbage.createExpression();
     expression->setArgument(stack.top());
     stack.pop();
     expression->setOperator(message);
@@ -216,12 +255,10 @@ Object *Interpreter::findExpression(string name) {
     }
 }
 
-/*Si existia un Expression, se piza sino no pasa nada*/
+/*Se setea el nombre al objeto ultimo que se inserto en el stack*/
 void Interpreter::assignationExpression(string name) {
     std::cout << "assginationExpression: " << name << std::endl;
-    //std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
     if (!stack.empty()) {
-        //std::cout << "stack not empty" << std::endl;
         Object *expression = stack.top();
         expression->setName(name);
 
@@ -237,7 +274,8 @@ void Interpreter::assignationExpression(string name) {
 /*Todo lo que haya en el stack lo agrego como slot en un objectReference que lo agrego en el stack*/
 void Interpreter::encapsulateStack() {
     std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
-    Expression* parent = new Expression;
+    //Expression* parent = new Expression;
+    Object* parent = garbage.createExpression();
     while (!stack.empty()) {
         Object *slot = stack.top();
         stack.pop();
@@ -272,15 +310,20 @@ void Interpreter::addSlot(string name) {
         std::cout << "Lo guarde en el lobby" << std::endl;
         map.insert(std::pair<string, Object *>(slot->getName(), slot));
     }
+    //delete(expressionSlotRemove);
 }
-
+/*Este metodo es invocado por el server para que interprete un cadena*/
 std::vector<Object *> Interpreter::interpretChar(const char *buffer) {
-    //Sacar comentarios si se quiere compilar con el parser
     temporalObjects.clear();
     std::cout << "Empieza a interpretar" << buffer << std::endl;
     yy_scan_string(buffer);
     yyparse(this);
-    std::cout << "Termine de interpretar:" << temporalObjects.size()<< std::endl;
+    std::cout << "Objectos notificados" << std::endl;
+    for (size_t i = 0; i < temporalObjects.size(); i++) {
+      std::cout << "Name:"<< temporalObjects[i]->getName()<< std::endl;
+    }
+    std::cout << "Termine de interpretar"<< std::endl;
+    garbage.collect();
     return temporalObjects;
 }
 

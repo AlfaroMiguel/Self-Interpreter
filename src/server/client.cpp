@@ -4,7 +4,6 @@
 #include "lobby.h"
 #include "proxy_client.h"
 
-
 Client::Client(std::string clientName, ProxyClient* clientReference) : clientName(clientName), clientReference(clientReference) {
     actualLobby = nullptr;
 }

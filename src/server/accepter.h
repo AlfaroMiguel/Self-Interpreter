@@ -32,7 +32,7 @@ class Accepter : public Thread {
 
 public:
     /*Constructor del aceptador recibe un puerto de donde va a crear el socket
-     * y receive los clientes nuevos, y la referencia al modelo*/
+     * y recibe los clientes nuevos, y la referencia al modelo*/
     Accepter(std::string& port, VirtualMachine &vm);
     /*Destructor del aceptador*/
     ~Accepter();

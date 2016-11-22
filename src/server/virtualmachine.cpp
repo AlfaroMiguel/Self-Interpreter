@@ -1,9 +1,13 @@
 #include "virtualmachine.h"
 #include "object.h"
 
-//Aux functions
+Client* VirtualMachine::newClient(const std::string& clientName, ProxyClient *clientReference) {
+    Client* newClient =  new Client(clientName, clientReference);
+    existingClients.insert(make_pair(clientName, newClient));
+    return newClient;
+}
 
-Client* VirtualMachine::searchClient(std::string clientName){
+Client* VirtualMachine::searchClient(const std::string& clientName){
     auto itClient = existingClients.find(clientName);
     if(itClient == existingClients.end())
         return nullptr;
@@ -11,32 +15,19 @@ Client* VirtualMachine::searchClient(std::string clientName){
     return itClient->second;
 }
 
-//Methods
-
 VirtualMachine::VirtualMachine() {
     //Tengo que tener un lobby principal, por ahora lo hago compartido entre todos los clientes
-    std::cout << "Creo maquina virtual" << std::endl;
-
+    std::cout << "Iniciando maquina virtual" << std::endl;
     Object* lobbyObject = new Object();
     lobbyObject->setName("Lobby Principal");
     Lobby* lobby = new Lobby("Lobby Principal", true, lobbyObject);
-
     existingLobbies.insert(std::make_pair(lobby->getLobbyName(), lobby));
-
-    std::cout << "Termino de crear maquina virtual" << std::endl;
+    std::cout << "Maquina virtual de Self corriendo" << std::endl;
 }
 
-VirtualMachine::~VirtualMachine() {
-    //Aca tendria que entrar la serializacion de los lobbys, cuando se cierra la vm
-}
+VirtualMachine::~VirtualMachine() {}
 
-Client* VirtualMachine::newClient(std::string clientName, ProxyClient *clientReference) {
-    Client* newClient =  new Client(clientName, clientReference);
-    existingClients.insert(make_pair(clientName, newClient));
-    return newClient;
-}
-
-std::vector<std::string> VirtualMachine::getAvailablesLobbies(std::string client){
+std::vector<std::string> VirtualMachine::getAvailablesLobbies(const std::string& client){
     std::vector<std::string> availablesLobbies;
     for(auto it = existingLobbies.begin(); it != existingLobbies.end(); it++){
         if(it->second->clientConnected(client) || it->second->isLobbyShared()){//Agrego si se conecto se client o el lobby es compartido
@@ -46,7 +37,7 @@ std::vector<std::string> VirtualMachine::getAvailablesLobbies(std::string client
     return availablesLobbies;
 }
 
-bool VirtualMachine::connectClient(std::string clientName, ProxyClient* clientReference){
+bool VirtualMachine::connectClient(const std::string& clientName, ProxyClient* clientReference){
     auto itClient = existingClients.find(clientName);
     if(itClient != existingClients.end())
         return false;
@@ -56,7 +47,7 @@ bool VirtualMachine::connectClient(std::string clientName, ProxyClient* clientRe
     return true;
 }
 
-void VirtualMachine::disconnectClient(std::string clientName){
+void VirtualMachine::disconnectClient(const std::string& clientName){
     auto itClient = existingClients.find(clientName);
     if(itClient != existingClients.end())
         existingClients.erase(clientName);
@@ -65,7 +56,7 @@ void VirtualMachine::disconnectClient(std::string clientName){
     }
 }
 
-bool VirtualMachine::connectClientToLobby(std::string clientName, std::string lobbyName, bool isShared) {
+bool VirtualMachine::connectClientToLobby(const std::string& clientName,const std::string& lobbyName, bool isShared) {
     auto itClient = existingClients.find(clientName);
     if(itClient == existingClients.end())
         return false;
@@ -88,7 +79,7 @@ bool VirtualMachine::connectClientToLobby(std::string clientName, std::string lo
     client->setActualLobby(lobby);
 }
 
-void VirtualMachine::clientMovedMorph(std::string clientName, int morphId, double newX, double newY){
+void VirtualMachine::clientMovedMorph(const std::string& clientName, int morphId, double newX, double newY){
     auto itClient = existingClients.find(clientName);
     if(itClient == existingClients.end())
         return;
@@ -98,7 +89,7 @@ void VirtualMachine::clientMovedMorph(std::string clientName, int morphId, doubl
     lobby->moveMorph(clientName, morphId, newX, newY);
 }
 
-void VirtualMachine::interpretCodeGet(std::string clientName, std::string code){
+void VirtualMachine::interpretCodeGet(const std::string& clientName, const std::string& code){
     Client* client = searchClient(clientName);
     if(client != nullptr){
         Lobby* lobby = client->getActualLobby();
@@ -107,7 +98,7 @@ void VirtualMachine::interpretCodeGet(std::string clientName, std::string code){
     }
 }
 
-void VirtualMachine::interpretCodeDo(std::string clientName, std::string code){
+void VirtualMachine::interpretCodeDo(const std::string& clientName, const std::string& code){
     Client* client = searchClient(clientName);
     if(client != nullptr){
         Lobby* lobby = client->getActualLobby();

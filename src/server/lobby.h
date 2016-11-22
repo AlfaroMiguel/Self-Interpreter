@@ -10,6 +10,13 @@
 class Interpreter;
 class Object;
 
+/*Clase Lobby que contiene toda la informacion de un Lobby de Self
+ * El nombre del lobby
+ * Si es compartido o no
+ * Una referencia al objeto lobby
+ * Informacion sobre los clientes conectados este lobby
+ * Una referencia al interpreter que interpretara el codigo self
+ * Informacion sobre los objetos que son visibles en el lobby*/
 class Lobby{
 private:
     std::string lobbyName;
@@ -18,32 +25,44 @@ private:
     std::map<std::string, Client*> clientsConnected;
     Interpreter* interpreter;
     std::map<int, Object*> visibleObjects;
-    std::map<int, Object*> allObject;
+    //std::map<int, Object*> allObject; No es necesario
 
 public:
-    Lobby(std::string lobbyName, bool isShared, Object* lobbyReference);
+    /*Constructor: recibe el nombre del lobby, un valor booleano que indica si el lobby es compartiod, y
+     * una referencia al objeto lobby*/
+    Lobby(const std::string& lobbyName, bool isShared, Object* lobbyReference);
+    /*Destructor del lobby*/
     ~Lobby();
-
+    /*Devuelve el nombre del lobby*/
     std::string getLobbyName();
-
-    bool clientConnected(std::string clientName);
+    /*Indica si un cliente esta conectado recibiendo el nombre del cliente*/
+    bool clientConnected(const std::string& clientName);
+    /*Indica si un cliente esta conectado al lobby recibiendo la referencia al clietne*/
     bool clientConnected(Client* client);
-
+    /*Devuelve si el lobby es compartido*/
     bool isLobbyShared();
-
+    /*Recibe una referencia a un cliente y lo conecta al lobby*/
     void connectClient(Client* client);
+    /*Recibe una referencia a un cliente y lo desconecta del lobby*/
     void disconnectClient(Client* client);
-
-    void notifyClient(std::string eventName, std::string clientName, Morph& morph);
-    void notifyClients(std::string eventName, Morph& morph, std::string clientNameUnnoified);
-    void initializeClient(std::string clientName);
-
-    void moveMorph(std::string clientName, int morphId, double newX, double newY);
-
-    void interpretCodeGet(std::string code);
-    void interpretCodeDo(std::string code);
+    /*Recibe el nombre de evento a notificar, el nombre del cliente a notificar y una referncia al morph
+     * notifica al cliente en cuestion con el nombre del evento y con el morph pasados por parametros*/
+    void notifyClient(const std::string& eventName, const std::string& clientName, Morph& morph);
+    /*Recibe un evento y un morph, opcionalmente puede recibir un nombre de un cliente
+     * Notifica a todos los clientes con el nombre del evento excepto al cliente pasado por parametro*/
+    void notifyClients(const std::string& eventName, Morph& morph, const std::string& clientNameUnnoified);
+    /*Recibe el nombre de un cliente e inicializa a este cliente notificandole todos los morphs visibles*/
+    void initializeClient(const std::string& clientName);
+    /*Recibe el nombre del cliente que movio el morph, el id del morph, y su nueva posicion, actualica la posicion
+     * de este morph y notifica a todos los clientes conectados al lobby excepto a si mismo del cambio*/
+    void moveMorph(const std::string& clientName, int morphId, double newX, double newY);
+    /*Recibe codigo self y lo interpreta ademas notifica a todos los clientes de los cambios producidos
+     * y agrega a los objetos visibles los objetos creados o generados en la interpretacion del codigo*/
+    void interpretCodeGet(const std::string& code);
+    /*Recibe codigo self y lo interpreta*/
+    void interpretCodeDo(const std::string& code);
+    /*Inicializa todos los morphs visibles a los clientes conectados al lobby*/
     void initializeMorphs();
-
 };
 
 #endif

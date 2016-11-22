@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-//Template del remove_if si hacia el include<algorithm> rompia el SERCOM
+/*//Template del remove_if si hacia el include<algorithm> rompia el SERCOM
 template <class ForwardIterator, class UnaryPredicate>
 ForwardIterator remove_if(ForwardIterator first,
                            ForwardIterator last,
@@ -17,7 +17,7 @@ ForwardIterator remove_if(ForwardIterator first,
         ++first;
     }
     return result;
-}
+}*/
 
 //Funcion que nos indica si un client tiene que ser eliminado
 bool deleteClient(ProxyClient *client){
@@ -52,7 +52,6 @@ void Accepter::accept() {
         Socket socket_acpt;
         try { socket.aceptar(socket_acpt); }
         catch (const SocketError &e) {
-            std::cerr << "Entro aca" << std::endl;
             keepAcceptingClients = false;
             continue;
         }

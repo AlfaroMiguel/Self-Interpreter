@@ -5,12 +5,16 @@ typedef std::tuple<Object*, bool, bool> slot_t;
 //<Object name, slot>
 typedef std::map<std::string, slot_t> slot_map;
 
+
+/*Objeto generico de Self*/
 Object::Object(){
     representation = "";
     myLobby = nullptr;
     objectName = "Object null";
 }
 
+
+/*Constructor por copia*/
 Object::Object(const Object &otherObject) {
     this->objectName = otherObject.objectName;
     this->slots = otherObject.slots;
@@ -35,6 +39,7 @@ NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
   return value;
 }
 
+/*Obtiene el objet de un slot*/
 Object* Object::getSlotName(std::string name){
   Slot slot = slots.getSlot(name);
   return slot.getReference();
@@ -42,19 +47,20 @@ Object* Object::getSlotName(std::string name){
 
 Object::~Object(){}
 
+/*Setea el nombre*/
 void Object::setName(const std::string newName){
     std::cout << "Object::setName:" << newName << std::endl;
     this->objectName = newName;
 
     myMorph.setName(newName);
-    //if(myLobby != nullptr)this->notifyClients("crear");
     /*TODO no notifico mas cuando se cambia el nombre, notifico al final de la creacion del objectReference*/
 }
-
+/*Devuelve el nombre*/
 std::string Object::getName() {
     return this->objectName;
 }
 
+/*Agrega un slot*/
 void Object::addSlots(std::string slotName,
                       Object* object,
                       bool isMutable,
@@ -64,42 +70,53 @@ void Object::addSlots(std::string slotName,
 
     slots.addSlot(slotName, object, isMutable, isParentSlot);
     if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference
-        std::cout << "Agrega el slot " << slotName << " al morph" << std::endl;
+        //std::cout << "Agrega el slot " << slotName << " al morph" << std::endl;
         myMorph.addSlot(slotName, object->getRepresentation());
     }
 }
 
 void Object::RemoveSlots(std::string slotName) {
     slots.removeSlot(slotName);
+    if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference
+        std::cout << "Elimina el slot " << slotName << " del morph "  << std::endl;
+        myMorph.removeSlot(slotName);
+    }
 }
 
+/*Devuelve un copia de si mismo*/
 Object* Object::clone(){
   std::cout << "Object::clone" << std::endl;
   return new Object(*this);
 }
 
+/*Devuelve su RegisterOfSlots*/
 RegisterOfSlots Object::getSlots(){
     return slots;
 }
 
+/*Devuelve un RegisterOfSlots solo con parentsSlots*/
 RegisterOfSlots Object::getParentsSlots(){
     return slots.getParentsSlots();
 }
 
+/*Buscar el objeto de nombre name en el objeto object*/
 Object* Object::searchObject(std::string name, Object *object) {
     std::cout << "Busco: " << name <<  " en " << object->getName() << std::endl;
     return slots.searchSlot(name, object);
 }
 
+/*Devuelve el resultado*/
 Object* Object::getResult(){
   return this;
 }
 
 void Object::evaluate(){}
 
+/*Setea su representacion*/
 void Object::setRepresentation(std::string representationString){
   representation = representationString;
 }
+/*Devuelve su representation*/
 std::string Object::getRepresentation() const {
   return representation;
 }
@@ -129,6 +146,13 @@ void Object::moveMorph(std::string clientName, double newX, double newY){
     myMorph.changePosition(newX, newY);
     notifyClients("mover morph", clientName);
 }
+
+//Por defecto devuelve los slots
+std::vector<Object*> Object::getReferences(){
+  RegisterOfSlots slots = this->getSlots();
+  return slots.getObjectsNotParent();
+}
+
 
 int Object::getMorphId(){
     return myMorph.getId();

@@ -51,7 +51,7 @@ public:
     void setName(const std::string newName);
     std::string getName();
 
-
+    virtual std::vector<Object*> getReferences();
     RegisterOfSlots getSlots();
     virtual void addSlots(std::string slotName, Object* object, bool isMutable, bool isParentSlot);
     void RemoveSlots(std::string slotName);
