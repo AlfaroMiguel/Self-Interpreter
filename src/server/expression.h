@@ -19,6 +19,7 @@ public:
     void setOperator(std::string operatorString);
     void setArgument(Object* argumentPtr);
     void setResult(Object* resultPtr);
+    std::vector<Object*> getReferences();
     std::string getRepresentation() const ;
     virtual NativeValue getValue();
     Object* getResult();

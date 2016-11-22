@@ -78,6 +78,19 @@ void Expression::setResult(Object* resultPtr){
   result = resultPtr;
 }
 
+std::vector<Object*> Expression::getReferences(){
+  RegisterOfSlots slots = this->getSlots();
+  std::vector<Object*> references =  slots.getObjectsNotParent();
+  if (receiver != nullptr){
+    references.push_back(receiver);
+    references.push_back(argument);
+  }
+  if (result != nullptr){
+    references.push_back(result);
+  }
+  return references;
+}
+
 
 /*Devuelve una copia de si mismo*/
 Object* Expression::clone(){
