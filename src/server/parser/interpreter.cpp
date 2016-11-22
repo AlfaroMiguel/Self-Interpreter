@@ -76,7 +76,7 @@ void Interpreter::pushToken(string id, string message, string value) {
             addSlot(id);
             break;
         case 9:
-            std::cout << "Expression [remove_slot]" << std::endl;
+        removeSlot(id);
             break;
         case 10:
             //std::cout<<"Expression [sum] Expression"<<std::endl;
@@ -110,6 +110,32 @@ void Interpreter::pushToken(string id, string message, string value) {
             std::cout << "Interpreter::ERROR: message not found: " << message << std::endl;
             sendMessage(message);
     }
+}
+
+
+void Interpreter::registerObject(Object* object){
+  createdObjects.push_back(object);
+}
+
+std::vector<Object*> Interpreter::getCreatedObjects(){
+  return createdObjects;
+}
+
+void Interpreter::removeSlot(std::string name){
+  Object* objectToDeleteSlots = findExpression(name);
+  Object* objectEncapsulate = stack.top();
+  stack.pop();
+  RegisterOfSlots slots = objectEncapsulate->getSlots();
+  std::vector<Object*> slotsVector = slots.getObjects();
+  for (size_t i = 0; i < slotsVector.size(); i++) {
+    Object* slot = slotsVector[i];
+    std::string nameSlot = slot->getName();
+    std::cout << "name of slots"<<nameSlot<< std::endl;
+    objectToDeleteSlots->RemoveSlots(nameSlot);
+    delete(slot);
+  }
+  delete(objectEncapsulate);
+  temporalObjects.push_back(objectToDeleteSlots);
 }
 
 /*Dado que se quiere clonar un objeto se lo busca en el lobby y se clona todos
@@ -282,6 +308,7 @@ void Interpreter::addSlot(string name) {
         std::cout << "Lo guarde en el lobby" << std::endl;
         map.insert(std::pair<string, Object *>(slot->getName(), slot));
     }
+    delete(expressionSlotRemove);
 }
 /*Este metodo es invocado por el server para que interprete un cadena*/
 std::vector<Object *> Interpreter::interpretChar(const char *buffer) {
@@ -289,7 +316,11 @@ std::vector<Object *> Interpreter::interpretChar(const char *buffer) {
     std::cout << "Empieza a interpretar" << buffer << std::endl;
     yy_scan_string(buffer);
     yyparse(this);
-    std::cout << "Termine de interpretar:" << temporalObjects.size()<< std::endl;
+    std::cout << "Objectos notificados" << std::endl;
+    for (size_t i = 0; i < temporalObjects.size(); i++) {
+      std::cout << "Name:"<< temporalObjects[i]->getName()<< std::endl;
+    }
+    std::cout << "Termine de interpretar"<< std::endl;
     return temporalObjects;
 }
 

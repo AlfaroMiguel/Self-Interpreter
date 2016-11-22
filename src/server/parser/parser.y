@@ -65,8 +65,7 @@ line :
 		}
 		|VARIABLE RM line SEMICOLON
 		{
-		interpreter->pushToken("","remove","");
-		interpreter->pushToken(*$1,"find","");
+		interpreter->pushToken(*$1,"remove","");
 		}
 		|VARIABLE EQUALS lines SEMICOLON
 		{
@@ -106,7 +105,8 @@ argument:/*nada*/
 atom_expression:
 							VARIABLE SEMICOLON
 							{
-							interpreter->pushToken((*$1),"assignation","");
+							std::cout << "uh entró" <<std::endl;
+							interpreter->pushToken(*$1,"create_variable","");
 							}
 							|VARIABLE EQUALSMUTAL expression SEMICOLON {
 							interpreter->pushToken(*$1,"assignation_mutable","");

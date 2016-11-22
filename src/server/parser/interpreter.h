@@ -17,6 +17,7 @@ private:
   std::stack<Object*> stack;
   std::map<std::string,Object*> map;
   std::vector<Object*> temporalObjects;
+  std::vector<Object*> createdObjects;
   void createNumber(std::string value);
   void createVariable(std::string name);
   void assignationExpression(std::string name);
@@ -27,6 +28,9 @@ private:
   void sendMessage(std::string message);
   void setRepresentation(std::string value);
   void cloneObject(std::string id);
+  void removeSlot(std::string name);
+  void registerObject(Object* object);
+  std::vector<Object*> getCreatedObjects();
   Object* entorno;
   Lobby* lobby;
 public:
