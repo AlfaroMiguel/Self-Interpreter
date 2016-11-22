@@ -31,6 +31,11 @@ void Morph::addSlot(const std::string& nombre, const std::string& valor) {
         itSlot->second = valor;
 }
 
+void Morph::removeSlot(const std::string& nombre){
+    auto itSlot = slots.find(nombre);
+    if(itSlot != slots.end()) slots.erase(nombre);
+}
+
 std::string Morph::getEvent(const std::string& eventName){
     json eventj;
     eventj["evento"] = eventName;

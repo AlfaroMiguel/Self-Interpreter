@@ -31,6 +31,8 @@ public:
     /*Recibe dos cadenas, una siendo el nombre del slot a agregar y la otra
      * la represetnacion del valor del slot, se agrega al morph*/
     void addSlot(const std::string& nombre,const std::string& valor);
+    /*Recibe el nombre de un slot y lo remueve del Morph*/
+    void removeSlot(const std::string& nombre);
     /*Obtiene la representacion para notificarle al cliente en el protocolo establecido*/
     std::string getEvent(const std::string &eventName);
     /*Devuelve el id del morph*/

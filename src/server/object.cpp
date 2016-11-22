@@ -70,13 +70,17 @@ void Object::addSlots(std::string slotName,
 
     slots.addSlot(slotName, object, isMutable, isParentSlot);
     if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference
-        std::cout << "Agrega el slot " << slotName << " al morph" << std::endl;
+        //std::cout << "Agrega el slot " << slotName << " al morph" << std::endl;
         myMorph.addSlot(slotName, object->getRepresentation());
     }
 }
 
 void Object::RemoveSlots(std::string slotName) {
     slots.removeSlot(slotName);
+    if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference
+        std::cout << "Elimina el slot " << slotName << " del morph "  << std::endl;
+        myMorph.removeSlot(slotName);
+    }
 }
 
 /*Devuelve un copia de si mismo*/

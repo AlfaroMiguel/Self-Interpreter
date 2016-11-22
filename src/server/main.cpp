@@ -43,7 +43,6 @@ int main(int argc, const char *argv[]) try{
     aceptador.start();
     std::string entrada;
     while (getline(std::cin, entrada)) {
-        std::cerr << entrada << std::endl;
         if (entrada == EXIT) {
             aceptador.stop();
             aceptador.join();
@@ -54,6 +53,9 @@ int main(int argc, const char *argv[]) try{
             aceptador.stop();
             aceptador.join();
             break;
+        }else{
+            std::cout << "Ingrese 'shutdown' si se quiere cerrar el servidor sin persistencia" << std::endl;
+            std::cout << "Ingrese 'serialization' si se quiere cerrar el servidor con persistencia" << std::endl;
         }
     }
     return RET_EXIT;
