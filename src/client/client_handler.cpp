@@ -93,7 +93,7 @@ void ClientHandler::draw_morph(Glib::RefPtr<Morph> morph){
 	view_handler->draw_morph(morph);
 }
 
-void ClientHandler::cambiar_pos_morph(int morph_id, Posicion* pos){
+void ClientHandler::cambiar_pos_morph(int morph_id, const Posicion& pos){
 	modelo->cambiar_pos_morph(morph_id, pos);
 }
 

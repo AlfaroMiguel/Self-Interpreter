@@ -36,7 +36,7 @@ class Modelo{
   	bool es_slot(const Posicion& pos) const;
   	void seleccionar_morph(const Posicion& pos);
   	bool existe_morph(int morph_id);
-  	void cambiar_pos_morph(int morph_id, Posicion* pos);
+  	void cambiar_pos_morph(int morph_id, const Posicion& pos);
  private:
   	Modelo(const Modelo& otra) = delete;
   	Modelo& operator=(const Modelo& otra) = delete;

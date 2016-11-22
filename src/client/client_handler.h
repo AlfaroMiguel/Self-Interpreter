@@ -49,7 +49,7 @@ class ClientHandler{
   		void enviar_mensaje(const std::string& mensaje, const std::string& evento);
 		void ingresar_cliente(const std::string& nombre_cliente);
   		void mostrar_lobbies();
-  		void cambiar_pos_morph(int morph_id, Posicion* pos);
+  		void cambiar_pos_morph(int morph_id, const Posicion& pos);
   		void error_ingreso_cliente();
   		void cliente_conectado();
   		void get_morph_from_slot(int morph_id, const std::string& slot_name);

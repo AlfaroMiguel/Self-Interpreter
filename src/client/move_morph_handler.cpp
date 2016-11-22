@@ -14,7 +14,7 @@ bool MoveMorphHandler::on_handle(json j){
 	double new_x = j["posicion"]["x"];
 	double new_y = j["posicion"]["y"];
 	Posicion new_pos(new_x, new_y);
-	client_handler->cambiar_pos_morph(morph_id, &new_pos);
+	client_handler->cambiar_pos_morph(morph_id, new_pos);
 	return false;
 }
 

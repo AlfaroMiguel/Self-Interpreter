@@ -42,7 +42,7 @@ class Morph: public Goocanvas::Group {
   	void set_control(ClientHandler* client_handler);
   	bool es_objeto(const Posicion& pos) const;
   	bool es_slot(const Posicion& pos) const;
-  	void cambiar_posicion(Posicion* pos);
+  	void cambiar_posicion(const Posicion& pos);
   	const Posicion& get_posicion() const;
   	void update(const std::string& name, const Posicion& pos,
 			  std::map<std::string, std::string> slots);

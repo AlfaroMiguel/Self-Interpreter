@@ -55,8 +55,10 @@ Glib::RefPtr<Morph> Modelo::create_morph(const std::string& name,
 												 std::string> slots,
 										int id) {
 	for(unsigned int i = 0; i < morphs.size(); i++)
-		if (morphs[i]->get_id() == id)
-			update_morph(morphs[i], name, pos, slots);
+		if (morphs[i]->get_id() == id) {
+			client_handler->dismiss_morph(morphs[i]);
+			morphs.erase(morphs.begin()+i);
+		}
 	const Glib::ustring morph_name(name);
 	Glib::RefPtr<Morph> morph = Morph::create(pos, morph_name, id);
 	morphs.push_back(morph);
@@ -82,8 +84,7 @@ void Modelo::crear_morph_de_slot(Posicion& pos){
 	}
 }
 
-void Modelo::cambiar_pos_morph(int morph_id, Posicion* pos){
-	std::cout << "En modelo la posicion es: " << pos->get_x() << ", " << pos->get_y() << std::endl;
+void Modelo::cambiar_pos_morph(int morph_id, const Posicion& pos){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
 		if (morphs[i]->get_id() == morph_id){
 			morphs[i]->cambiar_posicion(pos);

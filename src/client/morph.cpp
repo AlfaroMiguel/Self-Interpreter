@@ -55,7 +55,10 @@ void Morph::agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea){
 
 void Morph::update(const std::string& name, const Posicion& pos,
 				   std::map<std::string, std::string> slots){
-	objeto->update(name, pos, slots);
+	editar_nombre(name);
+	objeto->remove_slots();
+	objeto->agregar_slots(slots);
+	objeto->cambiar_posicion(pos);
 }
 bool Morph::do_dismiss(){
 	objeto->remove();
@@ -152,6 +155,6 @@ bool Morph::es_slot(const Posicion& pos) const{
 	return objeto->slot_en_posicion(pos);
 }
 
-void Morph::cambiar_posicion(Posicion* pos){
+void Morph::cambiar_posicion(const Posicion& pos){
 	objeto->cambiar_posicion(pos);
 }
