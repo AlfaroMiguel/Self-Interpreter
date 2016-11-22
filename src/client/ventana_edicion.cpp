@@ -54,7 +54,7 @@ void VentanaEdicion::ocultar_barra_edicion(){
 
 
 void VentanaEdicion::on_eliminar_obj_event(){
-	client_handler->eliminar_morph(x_editando, y_editando);
+	client_handler->dismiss_morph();
 	ocultar_barra_edicion();
 }
 

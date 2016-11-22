@@ -29,6 +29,18 @@ bool Objeto::on_agregar_slot(Glib::RefPtr<Slot> slot){
 	return false;
 }
 
+void Objeto::update(const std::string& name, const Posicion& pos,
+					std::map<std::string, std::string> slots){
+	nombre = name;
+	actualizar_posicion(pos);
+	remove_slots();
+	agregar_slots(slots);
+}
+
+void Objeto::remove_slots(){
+	slots.clear();
+}
+
 void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 	std::map<std::string, std::string>::iterator it = slots_a_agregar.begin();
 	while(it != slots_a_agregar.end()) {

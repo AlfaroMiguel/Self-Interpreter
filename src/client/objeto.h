@@ -26,6 +26,8 @@ class Objeto: public Representacion{
   	const std::string get_nombre();
   	void cambiar_posicion(Posicion* pos);
   	const Posicion& get_posicion() const;
+  	void update(const std::string& name, const Posicion& pos,
+			  std::map<std::string, std::string> slots);
  private:
   	std::mutex mutex;
   	std::vector<Glib::RefPtr<Slot>> slots;
@@ -36,5 +38,6 @@ class Objeto: public Representacion{
   	bool on_cambiar_posicion(Posicion* pos);
   	bool on_mover(const Posicion* pos);
   	bool on_agregar_slot(Glib::RefPtr<Slot> slot);
+  	void remove_slots();
 };
 #endif

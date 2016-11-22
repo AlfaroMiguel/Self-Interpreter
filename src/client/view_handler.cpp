@@ -15,12 +15,12 @@ ViewHandler::ViewHandler(VentanaInicio *inicio,
 
 ViewHandler::~ViewHandler() {}
 
-void ViewHandler::dibujar_morph(Glib::RefPtr<Morph> morph){
-	ventana_objetos->dibujar_morph(morph);
+void ViewHandler::draw_morph(Glib::RefPtr<Morph> morph){
+	ventana_objetos->draw_morph(morph);
 }
 
-void ViewHandler::eliminar_morph(Glib::RefPtr<Morph> morph){
-	ventana_objetos->eliminar_morph(morph);
+void ViewHandler::dismiss_morph(Glib::RefPtr<Morph> morph){
+	ventana_objetos->dismiss_morph(morph);
 }
 
 void ViewHandler::enable_editing() {

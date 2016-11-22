@@ -17,17 +17,17 @@ VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 VentanaObjetos::~VentanaObjetos() {}
 
 
-bool VentanaObjetos::do_dibujar_morph(Glib::RefPtr<Morph> morph) {
+bool VentanaObjetos::do_draw_morph(Glib::RefPtr<Morph> morph) {
 	root->add_child(morph);
 	return false;
 }
 
-void VentanaObjetos::dibujar_morph(Glib::RefPtr <Morph> morph) {
-	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_dibujar_morph), morph));
+void VentanaObjetos::draw_morph(Glib::RefPtr <Morph> morph) {
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_draw_morph), morph));
 }
 
-void VentanaObjetos::eliminar_morph(Glib::RefPtr<Morph> morph) {
-	morph->eliminar();
+void VentanaObjetos::dismiss_morph(Glib::RefPtr<Morph> morph) {
+	morph->dismiss();
 }
 
 void VentanaObjetos::set_control(ClientHandler* client_handler) {

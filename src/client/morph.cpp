@@ -53,14 +53,18 @@ void Morph::agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea){
 	add_child(linea);
 }
 
-bool Morph::do_eliminar(){
+void Morph::update(const std::string& name, const Posicion& pos,
+				   std::map<std::string, std::string> slots){
+	objeto->update(name, pos, slots);
+}
+bool Morph::do_dismiss(){
 	objeto->remove();
 	remove();
 	return false;
 }
 
-void Morph::eliminar() {
-	Glib::signal_idle().connect(sigc::mem_fun(*this, &Morph::do_eliminar));
+void Morph::dismiss() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &Morph::do_dismiss));
 }
 
 void Morph::agregar_slots(std::map<std::string, std::string> slots_a_agregar){

@@ -40,8 +40,8 @@ void ClientHandler::ingresar_cliente(const std::string &nombre_cliente) {
 	com_server->ingresar_cliente(nombre_cliente);
 }
 
-void ClientHandler::eliminar_morph(Glib::RefPtr<Morph> morph) {
-	view_handler->eliminar_morph(morph);
+void ClientHandler::dismiss_morph(Glib::RefPtr<Morph> morph) {
+	view_handler->dismiss_morph(morph);
 }
 
 void ClientHandler::enable_editing(){
@@ -69,8 +69,8 @@ void ClientHandler::finalizar_edicion() {
 	modelo->finalizar_edicion();
 }
 
-void ClientHandler::eliminar_morph(double x, double y){
-	modelo->eliminar_morph(x, y);
+void ClientHandler::dismiss_morph(){
+	modelo->dismiss_morph();
 }
 
 void ClientHandler::enviar_mensaje(const std::string& mensaje, const std::string& evento){
@@ -89,8 +89,8 @@ void ClientHandler::create_morph(const std::string& name,
 	modelo->create_morph(name, pos, slots, id);
 }
 
-void ClientHandler::dibujar_morph(Glib::RefPtr<Morph> morph){
-	view_handler->dibujar_morph(morph);
+void ClientHandler::draw_morph(Glib::RefPtr<Morph> morph){
+	view_handler->draw_morph(morph);
 }
 
 void ClientHandler::cambiar_pos_morph(int morph_id, Posicion* pos){
