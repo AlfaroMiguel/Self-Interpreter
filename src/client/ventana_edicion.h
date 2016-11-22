@@ -14,7 +14,7 @@ class VentanaEdicion: public Gtk::Box{
   		void start();
  	private:
   		Gtk::Entry* entrada_nombre;
-  		Gtk::Entry* entrada_msj;
+  		Gtk::Entry* code_entry;
   		Gtk::Button* boton_aceptar_nombre;
   		Gtk::Button* boton_get;
   		Gtk::Button* boton_do;
@@ -33,7 +33,7 @@ class VentanaEdicion: public Gtk::Box{
   		void ocultar_barra_edicion();
   		bool do_start();
 
-  		void enviar_mensaje(const std::string& evento);
+  		void send_code(const std::string& event);
 
   		VentanaEdicion(const VentanaEdicion& otra) = delete;
   		VentanaEdicion& operator=(const VentanaEdicion& otra) = delete;

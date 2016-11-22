@@ -26,9 +26,6 @@ class Objeto: public Representacion{
   	const std::string get_nombre();
   	void cambiar_posicion(const Posicion& pos);
   	const Posicion& get_posicion() const;
-  	void update(const std::string& name, const Posicion& pos,
-			  std::map<std::string, std::string> slots);
-  	void remove_slots();
  private:
   	std::mutex mutex;
   	std::vector<Glib::RefPtr<Slot>> slots;

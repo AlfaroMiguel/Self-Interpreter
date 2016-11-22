@@ -43,10 +43,11 @@ class ClientHandler{
   		/* Elimina el morph editado de la interfaz */
   		void dismiss_morph();
   		bool button_event(GdkEventButton *event);
-  		void cambio_nombre(const std::string& nuevo_nombre);
+  		void change_morph_name(const std::string& nuevo_nombre);
+  		void change_morph_name(const std::string& new_name, int morph_id);
   		void finalizar_edicion();
   		void dismiss_morph(Glib::RefPtr<Morph> morph);
-  		void enviar_mensaje(const std::string& mensaje, const std::string& evento);
+  		void send_code(const std::string& code, const std::string& event);
 		void ingresar_cliente(const std::string& nombre_cliente);
   		void mostrar_lobbies();
   		void cambiar_pos_morph(int morph_id, const Posicion& pos);

@@ -26,8 +26,11 @@ void Modelo::seleccionar_morph(const Posicion& pos){
 	}
 }
 
-void Modelo::cambiar_nombre_morph(const std::string& nuevo_nombre){
-	if(edited_morph) edited_morph->editar_nombre(nuevo_nombre);
+void Modelo::cambiar_nombre_morph(const std::string& new_name){
+	if(edited_morph) {
+		edited_morph->editar_nombre(new_name);
+		client_handler->change_morph_name(new_name, edited_morph->get_id());
+	}
 }
 
 void Modelo::finalizar_edicion(){
@@ -41,12 +44,6 @@ void Modelo::dismiss_morph(){
 			if (morphs[i] == edited_morph)
 				morphs.erase(morphs.begin()+i);
 	}
-}
-
-void Modelo::update_morph(Glib::RefPtr<Morph> morph, const std::string& name,
-						  const Posicion& pos, std::map<std::string,
-														std::string> slots){
-	morph->update(name, pos, slots);
 }
 
 Glib::RefPtr<Morph> Modelo::create_morph(const std::string& name,
@@ -77,7 +74,7 @@ void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2,
 	morph2->agregar_union(linea);
 }
 
-void Modelo::crear_morph_de_slot(Posicion& pos){
+void Modelo::get_morph_from_slot(Posicion& pos){
 	if (edited_morph){
 		const std::string slot_name(edited_morph->obtener_nombre_slot(pos));
 		client_handler->get_morph_from_slot(edited_morph->get_id(), slot_name);

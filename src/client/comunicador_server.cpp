@@ -13,6 +13,8 @@
 #define EVENTO_CREAR "crear"
 #define EVENTO_AGREGAR_LOBBIES "agregar lobbies"
 #define EVENTO_MOVER "mover morph"
+#define JSON_ID_EVENT "evento"
+#define JSON_ID_CODE "codigo"
 
 using json = nlohmann::json;
 
@@ -42,16 +44,16 @@ ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 }
 
 //que esto se llame enviar codigo
-void ComunicadorServer::enviar_mensaje(const std::string& mensaje, const std::string& evento){
+void ComunicadorServer::send_code(const std::string& code, const std::string& event){
 	json j;
-	j["evento"] = evento.c_str();
-	j["codigo"] = mensaje.c_str();
+	j[JSON_ID_EVENT] = event.c_str();
+	j[JSON_ID_CODE] = code.c_str();
 	send_json(j);
 }
 
 void ComunicadorServer::enviar_datos_morph(const std::string& nombre, const Posicion& pos){
 	json j;
-	j["evento"] = "crear morph";
+	j[JSON_ID_EVENT] = "crear morph";
 	j["id"] = nombre;
 	j["x"] = pos.get_x();
 	j["y"] = pos.get_y();
@@ -60,7 +62,7 @@ void ComunicadorServer::enviar_datos_morph(const std::string& nombre, const Posi
 
 void ComunicadorServer::get_morph_from_slot(int morph_id, const std::string& slot_name) {
 	json j;
-	j["evento"] = "get morph";
+	j[JSON_ID_EVENT] = "get morph";
 	j["morph id"] = morph_id;
 	j["slot name"] = slot_name;
 	send_json(j);
@@ -82,7 +84,7 @@ void ComunicadorServer::send_json(json j){
 
 void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std::string& estado_lobby){
 	json j;
-	j["evento"] = "elegir lobby";
+	j[JSON_ID_EVENT] = "elegir lobby";
 	j["lobby"] = lobby;
 	j["estado"] = estado_lobby;
 	send_json(j);
@@ -90,13 +92,13 @@ void ComunicadorServer::enviar_datos_cliente(const std::string& lobby, const std
 
 void ComunicadorServer::inicializar() {
 	json j;
-	j["evento"] = "inicializar";
+	j[JSON_ID_EVENT] = "inicializar";
 	send_json(j);
 }
 
 void ComunicadorServer::send_morph_position(int morph_id, const Posicion& pos){
 	json j;
-	j["evento"] = EVENTO_MOVER;
+	j[JSON_ID_EVENT] = EVENTO_MOVER;
 	j["id"] = morph_id;
 	j["x"] = pos.get_x();
 	j["y"] = pos.get_y();
@@ -105,15 +107,30 @@ void ComunicadorServer::send_morph_position(int morph_id, const Posicion& pos){
 
 void ComunicadorServer::ingresar_cliente(const std::string& nombre_cliente){
 	json j;
-	j["evento"] = "conectar cliente";
+	j[JSON_ID_EVENT] = "conectar cliente";
 	j["nombre"] = nombre_cliente;
 	send_json(j);
 	recibidor->start();
 }
 
+void ComunicadorServer::change_morph_name(const std::string& new_name, int morph_id){
+	json j;
+	j[JSON_ID_EVENT] = "change name";
+	j["id"] = morph_id;
+	j["new name"] = new_name;
+	send_json(j);
+}
+
+void ComunicadorServer::dismiss_morph(int morph_id){
+	json j;
+	j[JSON_ID_EVENT] = "dismiss";
+	j["id"] = morph_id;
+	send_json(j);
+}
+
 void ComunicadorServer::recibir_mensaje(const std::string &msj) {
 	json j = json::parse((char*)msj.c_str());
-	std::string evento = j["evento"];
+	std::string evento = j[JSON_ID_EVENT];
 	std::cout << "evento recibido: " << evento << std::endl;
 	EventHandlerSelector event_handler_selector(client_handler);
 	EventHandler *event_handler =

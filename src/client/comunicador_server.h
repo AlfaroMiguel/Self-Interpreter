@@ -36,10 +36,12 @@ class ComunicadorServer {
   		void recibir_mensaje(const std::string& msj);
   		void enviar_datos_cliente(const std::string& lobby, const std::string& nombre_cliente);
   		void enviar_datos_morph(const std::string& mensaje, const Posicion& pos);
-  		void enviar_mensaje(const std::string& consulta, const std::string& evento);
+  		void send_code(const std::string& consulta, const std::string& evento);
   		/* Envia al servidor la posicion actual del morph */
   		void send_morph_position(int morph_id, const Posicion& pos);
   		void ingresar_cliente(const std::string& nombre_cliente);
   		void get_morph_from_slot(int morph_id, const std::string& slot_name);
+  		void change_morph_name(const std::string& new_name, int morph_id);
+  		void dismiss_morph(int morph_id);
 };
 #endif
