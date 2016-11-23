@@ -1,3 +1,9 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
 #ifndef OBJECT_H
 #define OBJECT_H
 
@@ -10,7 +16,7 @@
 #include "nativevalue.h"
 
 #include "morph.h"
-#include "lobby.h"
+class Lobby;
 
 class Object{
 protected:
@@ -21,6 +27,40 @@ protected:
     Lobby* myLobby;
 
 public:
+
+    //Serializacion TEST
+
+    //Serializacion recursiva
+    void serialize(json& jserialization){
+        std::cout << "Serializo recursivamente: " << objectName << std::endl;
+        jserialization["objectName"] = objectName;
+        jserialization["representation"] = representation;
+
+        json jRegisterOfSlots;
+        slots.serialize(jRegisterOfSlots);
+        jserialization["slots"] = jRegisterOfSlots;
+
+        json jMorph;
+        myMorph.serialize(jMorph);
+        jserialization["myMorph"] = jMorph;
+
+    }
+
+    //Serializacion base
+    void serializeBase(json& jserialization){
+        std::cout << "Serializo base: " << objectName << std::endl;
+        jserialization["objectName"] = objectName;
+        jserialization["representation"] = representation;
+
+        json jRegisterOfSlots;
+        slots.serializeBase(jRegisterOfSlots);
+        jserialization["slots"] = jRegisterOfSlots;
+
+        json jMorph;
+        myMorph.serialize(jMorph);
+        jserialization["myMorph"] = jMorph;
+    }
+
     Object();
     Object(const Object& otherObject);
     virtual ~Object();

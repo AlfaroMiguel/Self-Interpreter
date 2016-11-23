@@ -1,5 +1,5 @@
 #include "object.h"
-
+#include "lobby.h"
 //(Objeto,isMutable,isParent)
 typedef std::tuple<Object*, bool, bool> slot_t;
 //<Object name, slot>
