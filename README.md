@@ -59,3 +59,5 @@ Marcar (DONE) cuando se implemente.
 * Parser: resolver multiples parametros
 * Documentacion mas ordenada -> en los .h
 
+- [x] esta es una tarea completa
+- [ ] esta es una tarea incompleta
