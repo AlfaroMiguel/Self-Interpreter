@@ -4,14 +4,14 @@
 #define GLD_ENTRADA_NOMBRE "entradaNombre"
 #define GLD_BTN_GET "btnGet"
 #define GLD_BTN_DO "btnDo"
-#define GLD_ENTRADA_MSJ "entradaMsj"
+#define GLD_code_entry "entradaMsj"
 #define GLD_BTN_ELIMINAR "btnEliminar"
 #define GLD_BTN_FINALIZAR "btnFinalizar"
 
 VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 								Gtk::Box(cobject){
 	builder->get_widget(GLD_ENTRADA_NOMBRE, entrada_nombre);
-	builder->get_widget(GLD_ENTRADA_MSJ, entrada_msj);
+	builder->get_widget(GLD_code_entry, code_entry);
 
 	add_events(Gdk::BUTTON_PRESS_MASK);
 
@@ -36,9 +36,9 @@ void VentanaEdicion::set_control(ClientHandler* client_handler){
 }
 
 void VentanaEdicion::on_aceptar_nombre_event() {
-	const Glib::ustring nuevo_nombre = entrada_nombre->get_buffer()->get_text();
-	client_handler->cambio_nombre(nuevo_nombre.raw());
-	entrada_nombre->delete_text(0, nuevo_nombre.size());
+	const Glib::ustring new_name = entrada_nombre->get_buffer()->get_text();
+	client_handler->change_morph_name(new_name.raw());
+	entrada_nombre->delete_text(0, new_name.size());
 }
 
 void VentanaEdicion::on_finalizar_edicion_event(){
@@ -48,30 +48,30 @@ void VentanaEdicion::on_finalizar_edicion_event(){
 
 void VentanaEdicion::ocultar_barra_edicion(){
 	entrada_nombre->delete_text(0, entrada_nombre->get_buffer()->get_text().size());
-	entrada_msj->delete_text(0, entrada_msj->get_buffer()->get_text().size());
+	code_entry->delete_text(0, code_entry->get_buffer()->get_text().size());
 	hide();
 }
 
 
 void VentanaEdicion::on_eliminar_obj_event(){
-	client_handler->eliminar_morph(x_editando, y_editando);
+	client_handler->dismiss_morph();
 	ocultar_barra_edicion();
 }
 
 void VentanaEdicion::on_get_event(){
-	const std::string evento("get");
-	enviar_mensaje(evento);
+	const std::string event("get");
+	send_code(event);
 }
 
 void VentanaEdicion::on_do_event(){
-	const std::string evento("do");
-	enviar_mensaje(evento);
+	const std::string event("do");
+	send_code(event);
 }
 
-void VentanaEdicion::enviar_mensaje(const std::string& evento){
-	Glib::ustring mensaje = entrada_msj->get_buffer()->get_text();
-	client_handler->enviar_mensaje(mensaje.raw(), evento);
-	entrada_msj->delete_text(0, mensaje.size());
+void VentanaEdicion::send_code(const std::string& event){
+	Glib::ustring code = code_entry->get_buffer()->get_text();
+	client_handler->send_code(code.raw(), event);
+	code_entry->delete_text(0, code.size());
 }
 
 bool VentanaEdicion::do_start(){

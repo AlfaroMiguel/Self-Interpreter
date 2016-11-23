@@ -38,16 +38,19 @@ class ClientHandler{
   		/* Crea un morph nuevo */
   		void create_morph(const std::string& name, const Posicion& pos,
 						 std::map<std::string, std::string> slots, int id);
-  		void dibujar_morph(Glib::RefPtr<Morph> morph);
+  		/* Dibuja el morph en la interfaz */
+  		void draw_morph(Glib::RefPtr<Morph> morph);
+  		/* Elimina el morph editado de la interfaz */
+  		void dismiss_morph();
   		bool button_event(GdkEventButton *event);
-  		void cambio_nombre(const std::string& nuevo_nombre);
+  		void change_morph_name(const std::string& nuevo_nombre);
+  		void change_morph_name(const std::string& new_name, int morph_id);
   		void finalizar_edicion();
-  		void eliminar_morph(double x, double y);
-  		void eliminar_morph(Glib::RefPtr<Morph> morph);
-  		void enviar_mensaje(const std::string& mensaje, const std::string& evento);
+  		void dismiss_morph(Glib::RefPtr<Morph> morph);
+  		void send_code(const std::string& code, const std::string& event);
 		void ingresar_cliente(const std::string& nombre_cliente);
   		void mostrar_lobbies();
-  		void cambiar_pos_morph(int morph_id, Posicion* pos);
+  		void cambiar_pos_morph(int morph_id, const Posicion& pos);
   		void error_ingreso_cliente();
   		void cliente_conectado();
   		void get_morph_from_slot(int morph_id, const std::string& slot_name);

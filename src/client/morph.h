@@ -15,7 +15,8 @@ class ClientHandler;
 
 class Morph: public Goocanvas::Group {
  public:
-  	static Glib::RefPtr<Morph> create(const Posicion& pos, const Glib::ustring& nombre, int id);
+  	static Glib::RefPtr<Morph> create(const Posicion& pos,
+									  const Glib::ustring& nombre, int id);
   	Morph(const Posicion& pos, const Glib::ustring& nombre, int id);
   	~Morph();
 
@@ -23,7 +24,8 @@ class Morph: public Goocanvas::Group {
   	Morph& operator=(Morph&& otra);
 
   	void conectar_seniales();
-  	void eliminar();
+  	/* Elimina al morph de la interfaz */
+  	void dismiss();
   	bool esta_en_posicion(const Posicion& pos) const;
   	void editar_nombre(const std::string& nombre_nuevo);
   	void editando(bool valor);
@@ -40,7 +42,7 @@ class Morph: public Goocanvas::Group {
   	void set_control(ClientHandler* client_handler);
   	bool es_objeto(const Posicion& pos) const;
   	bool es_slot(const Posicion& pos) const;
-  	void cambiar_posicion(Posicion* pos);
+  	void cambiar_posicion(const Posicion& pos);
   	const Posicion& get_posicion() const;
  private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
@@ -51,13 +53,17 @@ class Morph: public Goocanvas::Group {
 	int id;
   	ClientHandler* client_handler;
 
-  	bool on_item_button_press_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);
-  	bool on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventButton* event);
-  	bool on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& item, GdkEventMotion* event);
-  	bool do_eliminar();
+  	bool on_item_button_press_event(const Glib::RefPtr<Goocanvas::Item>& item,
+									GdkEventButton* event);
+  	bool on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>& item,
+									  GdkEventButton* event);
+  	bool on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& item,
+									 GdkEventMotion* event);
+
   	Morph(const Morph& otra) = delete;
   	Morph& operator=(const Morph& otra) = delete;
 
   	bool on_create(Glib::RefPtr<Objeto>);
+  	bool do_dismiss();
 };
 #endif

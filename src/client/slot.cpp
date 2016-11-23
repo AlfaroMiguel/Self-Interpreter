@@ -9,8 +9,11 @@ Glib::RefPtr<Slot> Slot::create(const Posicion& pos, const Glib::ustring& nombre
 
 bool Slot::on_create(Glib::ustring cadena_texto){
 	texto->property_text() = cadena_texto;
+	//if (base->property_width() < (cadena_texto.raw().size())*10)
+		base->property_width().set_value((cadena_texto.raw().size())*10);
 	return false;
 }
+
 Slot::Slot(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor):
 			Representacion(pos, nombre), valor(valor){
 	Glib::ustring cadena_texto = nombre + ": " + valor;
@@ -28,7 +31,6 @@ Slot& Slot::operator=(const Slot&& otra){
 
 bool Slot::esta_en_posicion(const Posicion& pos_comparar) const{
 	Posicion pos_max(posicion.get_x()+ANCHO, posicion.get_y()+ALTO);
-	//return pos_x < x && pos_x + ANCHO > x  && pos_y < y && pos_y + ALTO > y;
 	return posicion < pos_comparar && pos_max > pos_comparar;
 }
 

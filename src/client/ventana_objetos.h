@@ -13,8 +13,10 @@ class VentanaObjetos: public Gtk::Box{
   		VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
   		~VentanaObjetos();
 
-  		void dibujar_morph(Glib::RefPtr<Morph> morph);
-  		void eliminar_morph(Glib::RefPtr<Morph> morph);
+  		/* Dibuja el morph en la interfaz */
+  		void draw_morph(Glib::RefPtr<Morph> morph);
+  		/* Elimina el morph de la interfaz */
+  		void dismiss_morph(Glib::RefPtr<Morph> morph);
   		void set_control(ClientHandler* client_handler);
   		void start();
  	private:
@@ -23,7 +25,9 @@ class VentanaObjetos: public Gtk::Box{
   		Glib::RefPtr<Goocanvas::Group> root;
 
   		bool on_button_press_event(GdkEventButton* event);
+  		/* Estos metodos permiten enviar las acciones de Gtk
+  		 * al hilo principal */
   		bool do_start();
-  		bool do_dibujar_morph(Glib::RefPtr<Morph> morph);
+  		bool do_draw_morph(Glib::RefPtr<Morph> morph);
 };
 #endif

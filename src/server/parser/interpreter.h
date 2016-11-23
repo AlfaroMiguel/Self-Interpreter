@@ -6,6 +6,7 @@
 
 #include <string>
 #include "../object.h"
+#include "../garbage_collector.h"
 
 class Lobby;
 
@@ -29,8 +30,7 @@ private:
   void setRepresentation(std::string value);
   void cloneObject(std::string id);
   void removeSlot(std::string name);
-  void registerObject(Object* object);
-  std::vector<Object*> getCreatedObjects();
+  GarbageCollector garbage;
   Object* entorno;
   Lobby* lobby;
 public:

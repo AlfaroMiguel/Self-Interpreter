@@ -24,7 +24,7 @@ class Objeto: public Representacion{
   	bool objeto_en_posicion(const Posicion& pos_comparar) const;
   	bool slot_en_posicion(const Posicion& pos_comparar) const;
   	const std::string get_nombre();
-  	void cambiar_posicion(Posicion* pos);
+  	void cambiar_posicion(const Posicion& pos);
   	const Posicion& get_posicion() const;
  private:
   	std::mutex mutex;
@@ -33,7 +33,7 @@ class Objeto: public Representacion{
   	Objeto(const Objeto& otra) = delete;
   	Objeto& operator=(const Objeto& otra) = delete;
 
-  	bool on_cambiar_posicion(Posicion* pos);
+  	bool on_cambiar_posicion(const Posicion* pos);
   	bool on_mover(const Posicion* pos);
   	bool on_agregar_slot(Glib::RefPtr<Slot> slot);
 };

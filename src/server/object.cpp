@@ -147,6 +147,13 @@ void Object::moveMorph(std::string clientName, double newX, double newY){
     notifyClients("mover morph", clientName);
 }
 
+//Por defecto devuelve los slots
+std::vector<Object*> Object::getReferences(){
+  RegisterOfSlots slots = this->getSlots();
+  return slots.getObjectsNotParent();
+}
+
+
 int Object::getMorphId(){
     return myMorph.getId();
 };

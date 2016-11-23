@@ -40,8 +40,9 @@ void ClientHandler::ingresar_cliente(const std::string &nombre_cliente) {
 	com_server->ingresar_cliente(nombre_cliente);
 }
 
-void ClientHandler::eliminar_morph(Glib::RefPtr<Morph> morph) {
-	view_handler->eliminar_morph(morph);
+void ClientHandler::dismiss_morph(Glib::RefPtr<Morph> morph) {
+	view_handler->dismiss_morph(morph);
+	com_server->dismiss_morph(morph->get_id());
 }
 
 void ClientHandler::enable_editing(){
@@ -50,32 +51,36 @@ void ClientHandler::enable_editing(){
 
 bool ClientHandler::button_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
-		Posicion pos_evento(event->x, event->y);
-		modelo->seleccionar_morph(pos_evento);
-		if (modelo->es_objeto(pos_evento))
+		Posicion event_pos(event->x, event->y);
+		modelo->seleccionar_morph(event_pos);
+		if (modelo->es_objeto(event_pos))
 			modelo->editar_morph();
-		if (modelo->es_slot(pos_evento))
-			modelo->crear_morph_de_slot(pos_evento);
+		if (modelo->es_slot(event_pos))
+			modelo->get_morph_from_slot(event_pos);
 		return true;
 	}
 	return false;
 }
 
-void ClientHandler::cambio_nombre(const std::string& nuevo_nombre){
-	modelo->cambiar_nombre_morph(nuevo_nombre);
+void ClientHandler::change_morph_name(const std::string& new_name){
+	modelo->cambiar_nombre_morph(new_name);
+}
+
+void ClientHandler::change_morph_name(const std::string& new_name, int morph_id){
+	com_server->change_morph_name(new_name, morph_id);
 }
 
 void ClientHandler::finalizar_edicion() {
 	modelo->finalizar_edicion();
 }
 
-void ClientHandler::eliminar_morph(double x, double y){
-	modelo->eliminar_morph(x, y);
+void ClientHandler::dismiss_morph(){
+	modelo->dismiss_morph();
 }
 
-void ClientHandler::enviar_mensaje(const std::string& mensaje, const std::string& evento){
-	if (mensaje.empty()) return;
-	com_server->enviar_mensaje(mensaje, evento);
+void ClientHandler::send_code(const std::string& code, const std::string& event){
+	if (code.empty()) return;
+	com_server->send_code(code, event);
 }
 
 void ClientHandler::set_control(ViewHandler* view_handler) {
@@ -89,11 +94,11 @@ void ClientHandler::create_morph(const std::string& name,
 	modelo->create_morph(name, pos, slots, id);
 }
 
-void ClientHandler::dibujar_morph(Glib::RefPtr<Morph> morph){
-	view_handler->dibujar_morph(morph);
+void ClientHandler::draw_morph(Glib::RefPtr<Morph> morph){
+	view_handler->draw_morph(morph);
 }
 
-void ClientHandler::cambiar_pos_morph(int morph_id, Posicion* pos){
+void ClientHandler::cambiar_pos_morph(int morph_id, const Posicion& pos){
 	modelo->cambiar_pos_morph(morph_id, pos);
 }
 
