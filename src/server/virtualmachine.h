@@ -1,5 +1,13 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
 #ifndef VIRTUALMACHINE_H
 #define VIRTUALMACHINE_H
+
+
 
 #include "lobby.h"
 #include <map>
@@ -15,6 +23,25 @@ private:
     /*Recibe el nombre del cliente y devuelve un puntero al cliente existente en la maquina virtual*/
     Client* searchClient(const std::string& clientName);
 public:
+
+    //Serializacion TEST
+
+    void serialize(json& jserialization){
+        json jExistingLobbies;
+        for(auto itLobby = existingLobbies.begin(); itLobby != existingLobbies.end(); itLobby++){
+            json jLobby;
+            itLobby->second->serialize(jLobby);
+            jExistingLobbies.push_back(std::make_pair(itLobby->first, jLobby));
+        }
+        jserialization["existingLobbies"] = jExistingLobbies;
+    }
+
+    //Deserializacion TEST
+
+    VirtualMachine(json& jdeserialization){
+        std::cout << "Deserealizando VirtualMachine" << std::endl;
+    }
+
     /*Constructor de la maquina virtual, no recibe argumentos, crea un lobby
      * por defecto que es compartido llamado "Lobby principal"*/
     VirtualMachine();

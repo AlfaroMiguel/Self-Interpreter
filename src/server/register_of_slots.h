@@ -1,3 +1,9 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
 #ifndef REGISTEROFSLOTS_H
 #define REGISTEROFSLOTS_H
 
@@ -14,6 +20,28 @@ class Object;
 class RegisterOfSlots{
     std::map<std::string,Slot> slotMap;
 public:
+    //TEST SERIALIZATION
+
+    void serialize(json& jserialization){
+        for(auto itSlot = slotMap.begin(); itSlot != slotMap.end(); itSlot++) {
+            json jSlot;
+            if (itSlot->first != "self") {
+                std::cout << "Serializo (REC) el slot: " << itSlot->first << std::endl;
+                itSlot->second.serialize(jSlot);
+                jserialization.push_back(std::make_pair(itSlot->first, jSlot));
+            }
+        }
+    }
+
+    void serializeBase(json& jserialization){
+        for(auto itSlot = slotMap.begin(); itSlot != slotMap.end(); itSlot++) {
+                json jSlot;
+                std::cout << "Serializo (BASE) el slot: " << itSlot->first << std::endl;
+                itSlot->second.serializeBase(jSlot);
+                jserialization.push_back(std::make_pair(itSlot->first, jSlot));
+        }
+    }
+
     /*Constructor, inicialmente el slotMap esta vacio*/
     RegisterOfSlots();
     /*Destructo, no se libera ningun recurso*/

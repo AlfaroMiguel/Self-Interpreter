@@ -11,11 +11,6 @@
 #include "get_client_handler.h"
 #include "do_client_handler.h"
 
-//ServerHandler::chooseLobby(std::string lobbyName, std::string lobbyState)
-//ServerHandler::moveMorph(int idMorph, double newX, double newY)
-//ServerHandler::interpretSelfGet(std::string code)
-//ServerHandler::interpretSelfDo(std::string code)
-
 #define CONNNECT_EVENT "conectar cliente"
 #define INITIALIZE_EVENT "inicializar"
 #define CHOOSE_LOBBY_EVENT "elegir lobby"

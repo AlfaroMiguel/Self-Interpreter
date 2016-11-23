@@ -1,49 +1,56 @@
-
-//Descomentar si se quiere probar el main del parser
-/*#include "parser/interpreter.h"
-
-
-int main(int argc, char const *argv[]) {
-  Object* lobby = new Object;
-  lobby->setName("lobby");
-  Interpreter interpreter(lobby,nullptr);
-  std::cout << "pepe" << std::endl;
-  char puntoCode[] = "lobby _AddSlots: (| punto = (| x = 5. y = 3. xPorDos = (|  | x * 2. ). |).  |).";
-  char xPorDos[] = "punto xPorDos.";
-  //char puntoCloneCode[] = "lobby _AddSlots: (| punto1 = (| x <- 20. y <- 1. proto* = punto. |). |).";
-  //char punto1XPorDos[] = "punto1 xPorDos.";
-  char removeX[] = "punto _RemoveSlots:(| x.|).";
-  char removeY[] = "punto _RemoveSlots:(| y.|).";
-  interpreter.interpretChar(puntoCode);
-  interpreter.interpretChar(xPorDos);
-  //interpreter.interpretChar(puntoCloneCode);
-  //interpreter.interpretChar(punto1XPorDos);
-  interpreter.interpretChar(removeX);
-  interpreter.interpretChar(removeY);
-  return 0;
-} */
-
-
+#include "../common/json.hpp"
+using json = nlohmann::json;
 
 #include <iostream>
 #include "../common/socket.h"
 #include "accepter.h"
 
+#include <iostream>
+#include <fstream>
+
 #define RET_EXIT 0
 #define POS_PORT 1
 #define MIN_PARAM 2
-#define EXIT "sh"
-#define SERIALIZATION "serialization"
+
+#define EXIT "sht"
+#define SERIALIZATION "ser"
+#define DEL_SERIALIZATION_FILE "del"
+
+#define SERIALIZATION_FILE "server.txt"
+
+#define SH_MSG "Ingrese 'sht' si se quiere cerrar el servidor sin persistencia"
+#define SER_MSG "Ingrese 'ser' si se quiere cerrar el servidor con persistencia"
+#define DEL_MSG "Ingrese 'del' si se quiere eliminar la persistencia"
 
 int main(int argc, const char *argv[]) try{
     if(argc != MIN_PARAM){
         return RET_EXIT;
     }
 
-    VirtualMachine vm;
+    std::ifstream jsonFile (SERIALIZATION_FILE);
+    std::string linea;
+    std::string jsonString;
+    if (jsonFile.is_open()) {
+        while ( getline (jsonFile,linea))jsonString.append(linea);
+        jsonFile.close();
+    }
+
+    VirtualMachine* vm;
+
+    if(jsonString != ""){
+        std::cout << "Voy a serializar" << std::endl;
+        json jSerialization = json::parse(jsonString);
+        vm = new VirtualMachine(jSerialization);
+
+    }
+    else{
+        vm = new VirtualMachine();
+    }
+
+    std::cout << "Termino de crearse la VirtualMachine" << std::endl; //TODO debug
 
     std::string puerto = argv[POS_PORT];
-    Accepter aceptador(puerto, vm);
+    Accepter aceptador(puerto, *vm);
     aceptador.start();
     std::string entrada;
     while (getline(std::cin, entrada)) {
@@ -56,10 +63,28 @@ int main(int argc, const char *argv[]) try{
             std::cerr << "Serializando Virtual Machine" << std::endl;
             aceptador.stop();
             aceptador.join();
+            json jserialize;
+            (*vm).serialize(jserialize);
+
+            std::cout << jserialize.dump(4) << std::endl;
+
+            std::ofstream out(SERIALIZATION_FILE);
+            out << jserialize.dump();
+            out.close();
             break;
-        }else{
-            std::cout << "Ingrese 'sh' si se quiere cerrar el servidor sin persistencia" << std::endl;
-            std::cout << "Ingrese 'serialization' si se quiere cerrar el servidor con persistencia" << std::endl;
+        }else if(entrada == DEL_SERIALIZATION_FILE){
+            if(remove(SERIALIZATION_FILE) != 0 )
+                std::cerr << "Error eliminando el archivo de persistencia" << std::endl;
+            else
+                std::cerr << "Archivo de persistencia eliminado exitosamente" << std::endl;
+            aceptador.stop();
+            aceptador.join();
+            break;
+        }
+        else {
+            std::cout << SH_MSG << std::endl;
+            std::cout << SER_MSG << std::endl;
+            std::cout << DEL_MSG << std::endl;
         }
     }
     return RET_EXIT;

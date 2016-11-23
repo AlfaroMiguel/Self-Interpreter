@@ -69,9 +69,9 @@ void Lobby::initializeClient(const std::string& clientName) {
 }
 
 void Lobby::moveMorph(const std::string& clientName, int morphId, double newX, double newY){
-    auto itObject = visibleObjects.find(morphId);
-    if (itObject == visibleObjects.end())return;
-    Object *object = itObject->second;
+    auto itObjectID = visibleObjects.find(morphId);
+    if (itObjectID == visibleObjects.end())return;
+    Object *object = allObjects.find(*itObjectID)->second;
     object->moveMorph(clientName, newX, newY);
 }
 
@@ -80,22 +80,36 @@ void Lobby::interpretCodeGet(const std::string& code){
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
         auto itMorph = visibleObjects.find((*itObject)->getMorphId());
         if(itMorph == visibleObjects.end()) {
-            visibleObjects.insert(std::make_pair((*itObject)->getMorphId(), *itObject));
+            visibleObjects.insert((*itObject)->getMorphId());
+            allObjects.insert(std::make_pair((*itObject)->getMorphId(), *itObject));
         }
         else{
-            itMorph->second = *itObject;
+            allObjects.find(*itMorph)->second = *itObject;
         }
         (*itObject)->notifyClients("crear");
     }
 }
 
 void Lobby::interpretCodeDo(const std::string& code){
-    interpreter->interpretChar((code.c_str()));
+    std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
+    for (auto itObjectCreated = objectsCreated.begin(); itObjectCreated != objectsCreated.end(); itObjectCreated++){
+        auto itObject = allObjects.find((*itObjectCreated)->getMorphId());
+        if(itObject == allObjects.end()){
+            allObjects.insert(std::make_pair((*itObjectCreated)->getMorphId(), (*itObjectCreated)));
+        } else{
+            itObject->second = *itObjectCreated;
+        }
+    }
+
+    for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
+        Object* visibleObject = allObjects.find(*itVisibleObject)->second;
+        visibleObject->notifyClients("crear"); //TODO cambiar nombre de evento
+    }
 }
 
 
 void Lobby::initializeMorphs() {
     for (auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++) {
-        itObject->second->notifyClients("crear");
+        allObjects.find(*itObject)->second->notifyClients("crear");
     }
 }

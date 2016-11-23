@@ -1,9 +1,14 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
 #ifndef INITIALIZE_CLIENT_HANDLER_H
 #define INITIALIZE_CLIENT_HANDLER_H
 
 #include "event_handler.h"
 #include "server_handler.h"
-#include "../common/json.hpp"
 
 class InitializeClientHandler : public EventHandler{
 private:

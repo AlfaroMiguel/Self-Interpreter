@@ -1,3 +1,9 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
 #ifndef MORPH_H
 #define MORPH_H
 
@@ -19,6 +25,22 @@ private:
     std::map<std::string, std::string> slots;
     int id;
 public:
+
+    //Serialization TEST
+
+    void serialize(json& jserialization){
+        jserialization["name"] = name;
+        jserialization["x"] = x;
+        jserialization["y"] = y;
+
+        json jSlots;
+        for(auto itSlot = slots.begin(); itSlot != slots.end(); itSlot++){
+            jSlots.push_back(std::make_pair(itSlot->first, itSlot->second));
+        }
+        jserialization["slots"] = jSlots;
+        jserialization["id"] = id;
+    }
+
     static int idNumber;
     /*Crea un morph, se le setea un unico id*/
     Morph();

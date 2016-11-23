@@ -3,7 +3,6 @@
 
 #include "event_handler.h"
 #include "server_handler.h"
-#include "../common/json.hpp"
 
 class MoveMorphClientHandler : public EventHandler{
 private:

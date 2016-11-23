@@ -1,3 +1,9 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
 #ifndef COMUNICADOR_CLIENTE_H
 #define COMUNICADOR_CLIENTE_H
 
@@ -9,8 +15,7 @@
 #include "virtualmachine.h"
 
 #include "event_handler_selector.h"
-#include "../common/json.hpp"
-using json = nlohmann::json;
+
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del client. */
 class ProxyClient : public Thread {

@@ -1,3 +1,9 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
 #ifndef SELFTP_SLOT_H
 #define SELFTP_SLOT_H
 
@@ -11,6 +17,13 @@ class Slot{
     bool isParent;
 
 public:
+
+    //TEST SERIALIZATION
+
+    void serialize(json& jserialization); //Definida en cpp
+    void serializeBase(json& jserialization); //Definida en cpp
+
+
     /*Constructor recibe la refernecia al objeto, si es mutable y parent*/
     Slot(Object* object, bool isMutable, bool isParent);
     /*Destructor de la clase Slot*/
