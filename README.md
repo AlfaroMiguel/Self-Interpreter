@@ -39,8 +39,8 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 * Manual del usuario: https://www.overleaf.com/7090924zfjbtsqfghrk#/24374756/
 
 
-##Features List (23/09) En orden de importancia
-Marcar (DONE) cuando se implemente el feature.
+##TODO List (23/09) En orden de importancia
+Marcar (DONE) cuando se implemente.
 * Pasar por referencia (no por copia!) usar const cuando lo amerite
 * Serializacion/Persistencia
 * Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
