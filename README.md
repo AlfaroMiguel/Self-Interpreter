@@ -46,7 +46,7 @@ Marcar (DONE) cuando se implemente el feature.
 * Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
 * Mensajes con contexto en los objetos
 * Actualizacion de Slots (incluso cuando se hace DO)
-* Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph)
+* Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph (si se encuentra visualizado))
 * Cambiar de Lobby dentro de la app
 * Agregar linea en la interfaz uniendo Morph con el Morph de su Slot.
 * Interfaz en un solo idioma (Ingles)
