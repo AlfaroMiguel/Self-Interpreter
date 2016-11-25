@@ -76,7 +76,8 @@ void Lobby::moveMorph(const std::string& clientName, int morphId, double newX, d
 }
 
 void Lobby::interpretCodeGet(const std::string& code){
-    std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
+    //std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
+    std::vector<Object*> objectsCreated;
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
         auto itMorph = visibleObjects.find((*itObject)->getMorphId());
         if(itMorph == visibleObjects.end()) {
@@ -91,7 +92,8 @@ void Lobby::interpretCodeGet(const std::string& code){
 }
 
 void Lobby::interpretCodeDo(const std::string& code){
-    std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
+    //std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
+    std::vector<Object*> objectsCreated;
     for (auto itObjectCreated = objectsCreated.begin(); itObjectCreated != objectsCreated.end(); itObjectCreated++){
         auto itObject = allObjects.find((*itObjectCreated)->getMorphId());
         if(itObject == allObjects.end()){

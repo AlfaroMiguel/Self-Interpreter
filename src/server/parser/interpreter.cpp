@@ -107,7 +107,7 @@ void Interpreter::pushToken(string id, string message, string value) {
               cloneObject(id);
               break;
         default:
-            std::cout << "Interpreter::ERROR: message not found: " << message << std::endl;
+            std::cout << "Message not found: " << message << std::endl;
             sendMessage(message);
     }
 }
@@ -119,6 +119,7 @@ void Interpreter::pushToken(string id, string message, string value) {
 
 void Interpreter::removeSlot(std::string name){
   Object* objectToDeleteSlots = findExpression(name);
+  modifiedObjects.push_back(objectToDeleteSlots);
   Object* objectEncapsulate = stack.top();
   stack.pop();
   RegisterOfSlots slots = objectEncapsulate->getSlots();
@@ -131,7 +132,7 @@ void Interpreter::removeSlot(std::string name){
     //delete(slot);
   }
   //delete(objectEncapsulate);
-  temporalObjects.push_back(objectToDeleteSlots);
+  createdObjects.push_back(objectToDeleteSlots);
 }
 
 /*Dado que se quiere clonar un objeto se lo busca en el lobby y se clona todos
@@ -205,7 +206,7 @@ void Interpreter::sendMessage(string message){
     Object* result = expression->getResult();
     garbage.registerObject(result);
     std::cout << "Interpreter::resultado" <<result->getValue().getInt()<< std::endl;
-    temporalObjects.push_back(result);
+    createdObjects.push_back(result);
     result->setLobby(lobby);
 }
 
@@ -296,6 +297,7 @@ void Interpreter::addSlot(string name) {
     std::cout << "addSlot: " << name << std::endl;
     //Objeto a la que voy agregar slot
     Object *parent = findExpression(name);
+    modifiedObjects.push_back(parent);
     //Objeto a la que le saco el slot
     Object *expressionSlotRemove = stack.top();
     stack.pop();
@@ -304,7 +306,7 @@ void Interpreter::addSlot(string name) {
     Object *slot = slotsVector[0];
     parent->addSlots(slot->getName(), slot, false, false);
     std::cout << "Se creo elemento: " << slot->getName() << std::endl;
-    temporalObjects.push_back(slot);
+    createdObjects.push_back(slot);
     slot->addSlots("self", parent, false, true);
     if (name.compare("lobby") == 0) {
         std::cout << "Lo guarde en el lobby" << std::endl;
@@ -312,19 +314,38 @@ void Interpreter::addSlot(string name) {
     }
     //delete(expressionSlotRemove);
 }
+
+
+
+void Interpreter::clearVectors(){
+  createdObjects.clear();
+  modifiedObjects.clear();
+}
+
 /*Este metodo es invocado por el server para que interprete un cadena*/
-std::vector<Object *> Interpreter::interpretChar(const char *buffer) {
-    temporalObjects.clear();
-    std::cout << "Empieza a interpretar" << buffer << std::endl;
+void Interpreter::interpretChar(const char *buffer) {
+    reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
+    clearVectors();
+    std::string bufferToInterpreter(buffer);
+    reportFile << "Empieza a interpretar:" +bufferToInterpreter+"\n";
     yy_scan_string(buffer);
     yyparse(this);
-    std::cout << "Objectos notificados" << std::endl;
-    for (size_t i = 0; i < temporalObjects.size(); i++) {
-      std::cout << "Name:"<< temporalObjects[i]->getName()<< std::endl;
+    reportFile << "Objectos notificados:\n";
+    for (size_t i = 0; i < createdObjects.size(); i++) {
+      reportFile << "      *Nombre:"+ createdObjects[i]->getName()+"\n";
     }
-    std::cout << "Termine de interpretar"<< std::endl;
+    reportFile << "Termine de interpretar\n";
+    reportFile << "Se llama al recolector de basura";
     garbage.collect();
-    return temporalObjects;
+    reportFile.close();
+}
+
+std::vector<Object*> Interpreter::getCreatedObjets(){
+  return createdObjects;
+}
+
+std::vector<Object*> Interpreter::getModifiedObjets(){
+  return modifiedObjects;
 }
 
 //Tiene que interpretar codigo de un archivo

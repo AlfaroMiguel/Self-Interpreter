@@ -5,20 +5,26 @@
 #include "expression.h"
 #include <iostream> //cout //stof
 
-GarbageCollector::GarbageCollector(Object* lobbyPtr):objectLobby(lobbyPtr),reportFile("Garbage_Collector_Report.txt",std::ofstream::out){
+GarbageCollector::GarbageCollector(Object* lobbyPtr):objectLobby(lobbyPtr),reportFile("Garbage_Collector_LOG.txt"){
+  reportFile << "==LOG==\n";
+  reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
   registerObject(lobbyPtr);
+  reportFile.close();
 }
 
 
 
 GarbageCollector::~GarbageCollector(){
-  std::cout << "destructor" << std::endl;
   reportFile.close();
 }
 
 
 void GarbageCollector::registerObject(Object* object){
-  std::cout << "Se registro:" <<object->getName()<<"pointer"<<object<< std::endl;
+  reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
+  std::string report = "Se registró:" + object->getName() + "\n";
+  reportFile << report;
+  //std::cout << "Se registro:" <<object->getName()<<"pointer"<<object<< std::endl;
+  reportFile.close();
   createdObjects.push_back(object);
 }
 
@@ -47,16 +53,20 @@ Object* GarbageCollector::createExpression(){
 }
 
 void GarbageCollector::visit(Object* object){
+  reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
   if (object != nullptr){
-    std::cout << "distinto a nullptr" << std::endl;
-    std::cout << "Object visit:" <<object->getName()<<","<< std::endl;
+    std::string report = "Object visit name:" + object->getName()+" " ;
+    reportFile  << report;
     markObject(object);
     std::vector<Object*> pointers = object->getReferences();
-    std::cout << "Cantidad a visitar:" <<pointers.size()<< std::endl;
+    report = "cantidad de slots a visitar:" +std::to_string(pointers.size())+"\n";
+    reportFile << report;
     for (size_t i = 0; i < pointers.size(); i++){
+      std::cout << "nombre del slot:" <<pointers[i]->getName()<< std::endl;
       visit(pointers[i]);
     }
   }
+  reportFile.close();
 }
 
 
@@ -64,13 +74,14 @@ bool GarbageCollector::isMarked(Object* object){
   return map.count(object) == 1;
 }
 void GarbageCollector::freeResources(){
-  std::cout << "free resources-elementos registrados:" <<createdObjects.size()<< std::endl;
+  //std::cout << "free resources-elementos registrados:" <<createdObjects.size()<< std::endl;
+  reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
+  reportFile << "free resources\n";
   std::list<Object*>::iterator it;
   std::vector<Object*> vectorTem;
   for (it=createdObjects.begin(); it != createdObjects.end(); ++it){
     Object* object = *it;
     if(!isMarked(object)){
-      std::cout << "Se va a eliminar" <<object<<"name:"<<object->getName()<< std::endl;
       std::string input = "Se eliminó el object:" + object->getName() + " .\n";
       reportFile << input;
       vectorTem.push_back(object);
@@ -80,12 +91,15 @@ void GarbageCollector::freeResources(){
     createdObjects.remove(vectorTem[i]);
     delete(vectorTem[i]);
   }
+  reportFile.close();
 }
+
 void GarbageCollector::collect(){
-  reportFile.open("Garbage_Collector_Report.txt",std::ofstream::out);
+  reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
+  reportFile << "Cantidad de objetos registrados:"+ std::to_string(createdObjects.size())+ "\n";
+  reportFile.close();
   visit(objectLobby);
   freeResources();
-  reportFile.close();
 }
 
 void GarbageCollector::setObjectLobby(Object* object){
