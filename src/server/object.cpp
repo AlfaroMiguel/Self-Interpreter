@@ -40,7 +40,7 @@ NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
 }
 
 /*Obtiene el objet de un slot*/
-Object* Object::getSlotName(std::string& name) const{
+Object* Object::getSlotName(const std::string& name) const{
   Slot slot = slots.getSlot(name);
   return slot.getReference();
 }

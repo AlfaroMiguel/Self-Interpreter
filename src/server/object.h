@@ -65,7 +65,7 @@ public:
     Object(const Object& otherObject);
     virtual ~Object();
 
-    Object* getSlotName(std::string& name) const;
+    Object* getSlotName(const std::string& name) const;
 
 
     RegisterOfSlots getParentsSlots() const;
