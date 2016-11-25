@@ -51,11 +51,11 @@ public:
      * Crea el slot y lo agrega al registro*/
     void addSlot(const std::string& slotName, Object *object, bool isMutable, bool isParent);
     /*Recibe el nombre de un slot y devuelve el slot si se encuentra*/
-    Slot getSlot(const std::string &slotName);
+    Slot getSlot(const std::string &slotName) const;
     /*Recibe el nombre de un slot y lo elimina del registro*/
     void removeSlot(const std::string &slotName);
     /*Devuelve otro registro de slots pero con los parents slots encontrados*/
-    RegisterOfSlots getParentsSlots();
+    RegisterOfSlots getParentsSlots() const;
     /*Recibe el nombre de un slot, y el puntero a un objeto, busca el slot en este objeto
      * realizando el respectivo lookup en los parents slots devuelve la referencia al objeto si lo encontro
      * Lanza excepcion si se encontro mas de un slot o ninguno en el objeto llamado de esa manera*/

@@ -15,7 +15,7 @@ void RegisterOfSlots::addSlot(const std::string& slotName, Object *object, bool 
     slotMap.insert(make_pair(slotName, newSlot));
 }
 
-Slot RegisterOfSlots::getSlot(const std::string& slotName) {
+Slot RegisterOfSlots::getSlot(const std::string& slotName) const {
     auto slotIt = slotMap.find(slotName);
     if (slotIt == slotMap.end()){
         std::string error = "No se encontro el slot";
@@ -46,7 +46,7 @@ void RegisterOfSlots::removeSlot(const std::string &slotName){
     slotMap.erase(slotName);
 }
 
-RegisterOfSlots RegisterOfSlots::getParentsSlots(){
+RegisterOfSlots RegisterOfSlots::getParentsSlots() const{
     RegisterOfSlots registerOfParentsSlots;
     for(auto iter = slotMap.begin(); iter != slotMap.end(); ++iter){
         Slot slot  = iter->second;
