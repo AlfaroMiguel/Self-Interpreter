@@ -43,18 +43,18 @@ ComunicadorServer& ComunicadorServer::operator=(ComunicadorServer&& otra){
 	return *this;
 }
 
-//que esto se llame enviar codigo
-void ComunicadorServer::send_code(const std::string& code, const std::string& event){
+void ComunicadorServer::send_code(const std::string& code, const std::string& event, int morph_id){
 	json j;
 	j[JSON_ID_EVENT] = event.c_str();
 	j[JSON_ID_CODE] = code.c_str();
+	j["morph id"] = morph_id;
 	send_json(j);
 }
 
 void ComunicadorServer::enviar_datos_morph(const std::string& nombre, const Posicion& pos){
 	json j;
 	j[JSON_ID_EVENT] = "crear morph";
-	j["id"] = nombre;
+	j["nombre"] = nombre;
 	j["x"] = pos.get_x();
 	j["y"] = pos.get_y();
 	send_json(j);
@@ -68,7 +68,7 @@ void ComunicadorServer::get_morph_from_slot(int morph_id, const std::string& slo
 	send_json(j);
 }
 
-void ComunicadorServer::send_json(json j){
+void ComunicadorServer::send_json(const json& j){
 	std::string s = j.dump();
 
 	char* evento_enviar = (char*)s.c_str();

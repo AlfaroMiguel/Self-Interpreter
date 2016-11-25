@@ -22,7 +22,7 @@ class ComunicadorServer {
   		ComunicadorServer(const ComunicadorServer& otra) = delete;
   		ComunicadorServer& operator=(const ComunicadorServer& otra) = delete;
 
-  		void send_json(json j);
+  		void send_json(const json& j);
  	public:
   		ComunicadorServer(const std::string& hostname, const std::string& puerto);
   		ComunicadorServer();
@@ -36,7 +36,7 @@ class ComunicadorServer {
   		void recibir_mensaje(const std::string& msj);
   		void enviar_datos_cliente(const std::string& lobby, const std::string& nombre_cliente);
   		void enviar_datos_morph(const std::string& mensaje, const Posicion& pos);
-  		void send_code(const std::string& consulta, const std::string& evento);
+  		void send_code(const std::string& consulta, const std::string& evento, int morph_id);
   		/* Envia al servidor la posicion actual del morph */
   		void send_morph_position(int morph_id, const Posicion& pos);
   		void ingresar_cliente(const std::string& nombre_cliente);
