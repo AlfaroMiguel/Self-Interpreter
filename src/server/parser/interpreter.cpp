@@ -22,7 +22,7 @@ using std::string;
 
 /*Se crea un interpreter y se carga todos los tipos de mensajes que puede llegar
 a recibir por parte de Parser*/
-Interpreter::Interpreter(Object *entorno_ptr, Lobby *lobby) : entorno(entorno_ptr), lobby(lobby),garbage(entorno_ptr){
+Interpreter::Interpreter(Object *lobbyObjectPtr, Lobby *lobby) : lobbyObject(lobbyObjectPtr), lobby(lobby),garbage(lobbyObjectPtr){
     mapMessages.insert(std::pair<string, int>("create_number", 1));
     mapMessages.insert(std::pair<string, int>("assignation", 2));
     mapMessages.insert(std::pair<string, int>("assignation_mutable", 3));
@@ -79,31 +79,24 @@ void Interpreter::pushToken(string id, string message, string value) {
         removeSlot(id);
             break;
         case 10:
-            //std::cout<<"Expression [sum] Expression"<<std::endl;
             createExpression(message);
             break;
         case 11:
-            //std::cout<<"Expression [less] Expression"<<std::endl;
             createExpression(message);
             break;
         case 12:
-            //std::cout<<"Expression [multiplication] Expression"<<std::endl;
             createExpression(message);
             break;
         case 13:
-            //std::cout<<"Expression [division] Expression"<<std::endl;
             createExpression(message);
             break;
         case 14:
-            //std::cout<<"Expression [division] Expression"<<std::endl;
             createVariable(id);
             break;
         case 15:
-            //std::cout<<"Expression [division] Expression"<<std::endl;
             setRepresentation(value);
             break;
         case 16:
-                //std::cout<<"Expression [division] Expression"<<std::endl;
               cloneObject(id);
               break;
         default:
@@ -129,9 +122,7 @@ void Interpreter::removeSlot(std::string name){
     std::string nameSlot = slot->getName();
     std::cout << "name of slots"<<nameSlot<< std::endl;
     objectToDeleteSlots->RemoveSlots(nameSlot);
-    //delete(slot);
   }
-  //delete(objectEncapsulate);
   createdObjects.push_back(objectToDeleteSlots);
 }
 
@@ -168,7 +159,6 @@ void Interpreter::cloneObject(std::string id){
       //sino esta entre los redefinidos entonces lo agrego
       if(!isFound){
         std::cout << "Slot not found" <<slotNative->getName()<< std::endl;
-        //Object* newSlot = slotNative->clone();
         Object* newSlot = garbage.cloneObject(slotNative);
         stack.push(newSlot);
     }
@@ -232,7 +222,6 @@ void Interpreter::createVariable(string name) {
 void Interpreter::createExpression(string message) {
     std::cout << "Interpreter::createExpression: " << message << std::endl;
     std::cout << "Tamaño del stack:" <<stack.size()<< std::endl;
-    //Expression *expression = new Expression;
     Object* expression = garbage.createExpression();
     expression->setArgument(stack.top());
     stack.pop();
@@ -246,9 +235,12 @@ void Interpreter::createExpression(string message) {
 Object *Interpreter::findExpression(string name) {
     std::cout << "findExpression:" << name << std::endl;
     if (name.compare("lobby") == 0) {
-        return entorno;
+        return lobbyObject;
     }
-    Object *object = entorno->getSlotName(name);
+    if (name.compare("self") == 0){
+      return entorno;
+    }
+    Object *object = lobbyObject->getSlotName(name);
     if (object != nullptr) {
         return object;
     } else {
@@ -323,7 +315,8 @@ void Interpreter::clearVectors(){
 }
 
 /*Este metodo es invocado por el server para que interprete un cadena*/
-void Interpreter::interpretChar(const char *buffer) {
+void Interpreter::interpretChar(const char *buffer,Object* entorno_ptr) {
+    entorno = entorno_ptr;
     reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
     clearVectors();
     std::string bufferToInterpreter(buffer);

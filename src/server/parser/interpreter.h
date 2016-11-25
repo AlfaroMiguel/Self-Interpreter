@@ -33,13 +33,14 @@ private:
   void removeSlot(std::string name);
   void clearVectors();
   GarbageCollector garbage;
+  Object* lobbyObject;
   Object* entorno;
   Lobby* lobby;
   std::ofstream reportFile;
 public:
     Interpreter(Object* entorno_ptr, Lobby* lobby);
     void pushToken(std::string id,std::string message,std::string value);
-    void interpretChar(const char* buffer);
+    void interpretChar(const char* buffer,Object* entorno_ptr);
     std::vector<Object*> getCreatedObjets();
     std::vector<Object*> getModifiedObjets();
     void interpretFile(const char* nameFile);
