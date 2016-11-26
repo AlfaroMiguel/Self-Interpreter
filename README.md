@@ -52,8 +52,8 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Interfaz en un solo idioma (Ingles)
 - [ ] Seleccionar slot -> Cambia de color el borde
 - [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
-- [ ] Borde del nombre del Morph mas grueso
-- [ ] Borde de los slots mas fino
+- [x] Borde del nombre del Morph mas grueso
+- [x] Borde de los slots mas fino
 - [ ] Nombre de Morph en negrita
 - [ ] No repetir Morphs que ya estan visualizados
 - [ ] Parser: resolver multiples parametros
