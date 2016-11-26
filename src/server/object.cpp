@@ -157,3 +157,7 @@ std::vector<Object*> Object::getReferences(){
 int Object::getMorphId(){
     return myMorph.getId();
 };
+
+void Object::changeMorphName(std::string& newName){
+    myMorph.setName(newName);
+}

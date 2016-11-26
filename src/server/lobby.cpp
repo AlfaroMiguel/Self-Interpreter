@@ -66,30 +66,27 @@ void Lobby::notifyClients(const std::string& eventName, Morph& morph, const std:
 }
 
 void Lobby::initializeClient(const std::string& clientName) {
+    std::cout << "Lobby::initializeClient start" << std::endl;
     auto itClient = clientsConnected.find(clientName);
     if(itClient != clientsConnected.end()) {
         if (itClient->second != nullptr) {
             this->initializeMorphs();
         }
     }
-    std::cout << "Termino Lobby::initializeClient" << std::endl;
+    std::cout << "Lobby::initializeClient end" << std::endl;
 }
 
 void Lobby::moveMorph(const std::string& clientName, int morphId, double newX, double newY){
     auto itObjectID = visibleObjects.find(morphId);
     if (itObjectID == visibleObjects.end())return;
-    std::cout << "Lobby:moveMorph: busco object" << std::endl;
-    if(lobbyReference == nullptr) std::cout << "Lobby:moveMorph: lobbyReference es null " << morphId << std::endl;
     Object *object = lobbyReference->searchForId(*itObjectID);
-    if(object == nullptr) std::cout << "Lobby:moveMorph: encontre object " << morphId << std::endl;
-    std::cout << "Lobby:moveMorph: encontre object" << object->getName() << std::endl;
     object->moveMorph(clientName, newX, newY);
 }
 
 void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
-
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
+    std::cout << "Lobby::interpretCodeGet: interpreta: " << code << " y el Objecto contexto es " << objectContext->getName() << std::endl;
     interpreter->interpretChar(code.c_str(), objectContext);
     std::vector<Object*> objectsCreated  = interpreter->getCreatedObjets();
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
@@ -105,6 +102,7 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
 void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
+    std::cout << "Lobby::interpretCodeDo: interpreta: " << code << " y el Objecto contexto es " << objectContext->getName() << std::endl;
     interpreter->interpretChar(code.c_str(), objectContext); //TODO notificar solo modificados
     for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
         Object* visibleObject = lobbyReference->searchForId(*itVisibleObject);
@@ -114,10 +112,11 @@ void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
 
 
 void Lobby::initializeMorphs() {
-    std::cout << "Lobby::initializeMorphs: Empieza metodo" << std::endl;
+    std::cout << "Lobby::initializeMorphs: start" << std::endl;
     for (auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++) {
         std::cout << "Lobby::initializeMorphs Busco object" << *itObject << std::endl;
         std::cout << "Encuentro: " << lobbyReference->searchForId(*itObject)->getName() << std::endl;
-        lobbyReference->searchForId(*itObject)->notifyClients("crear");
+        lobbyReference->searchForId(*itObject)->notifyClients("crear"); //TODO cambiar nombre de evento
     }
+    std::cout << "Lobby::initializeMorphs: end" << std::endl;
 }

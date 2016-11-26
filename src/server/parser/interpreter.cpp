@@ -188,7 +188,10 @@ void Interpreter::sendMessage(const string message){
     expression->evaluate();
     Object* result = expression->getResult();
     garbage.registerObject(result);
-    reportFile << "Interpreter::resultado" <<result->getValue().getInt()<< "\n";
+    int resultado = result->getValue().getInt();
+    reportFile << "Interpreter::resultado" <<resultado<< "\n";
+    std::string resultSTR = std::to_string(resultado);
+    result->changeMorphName(resultSTR); //TEST
     createdObjects.push_back(result);
     result->setLobby(lobby);
 }
@@ -247,8 +250,7 @@ void Interpreter::assignationExpression(const string name) {
     if (!stack.empty()) {
         Object *expression = stack.top();
         expression->setName(name);
-
-        expression->setLobby(lobby); //Test
+        expression->setLobby(lobby);
 
         reportFile << "Get representation: " + expression->getRepresentation() + "\n";
     } else {

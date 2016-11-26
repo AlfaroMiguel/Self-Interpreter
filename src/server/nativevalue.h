@@ -23,10 +23,12 @@ public:
 
     void serialize(json& jserialization){
         std::cout << "NativeValue::serialize" << std::endl;
+
         jserialization["isIntBool"] = isIntBool;
         jserialization["isFloatBool"] = isFloatBool;
-        jserialization["isBoolBool"] = isIntBool;
+        jserialization["isBoolBool"] = isBoolBool;
         jserialization["isStringBool"] = isStringBool;
+
         if(isIntBool)jserialization["value"] = intValue;
         if(isFloatBool)jserialization["value"] = floatValue;
         if(isBoolBool)jserialization["value"] = boolValue;
@@ -34,15 +36,20 @@ public:
     }
 
     void deserialize(json& jdeserialization){
-        std::cout << "NativeValue::deserialize" << std::endl;
+        std::cout << "NativeValue::deserialize start" << std::endl;
+        std::cout << jdeserialization.dump(4) << std::endl;
+
         this->isIntBool = jdeserialization["isIntBool"];
         this->isFloatBool = jdeserialization["isFloatBool"];
         this->isBoolBool = jdeserialization["isBoolBool"];
         this->isStringBool = jdeserialization["isStringBool"];
-        if(isIntBool)intValue = jdeserialization["value"];
-        if(isFloatBool)floatValue = jdeserialization["value"];
-        if(isBoolBool)boolValue = jdeserialization["value"];
-        if(isStringBool)stringValue = jdeserialization["value"];
+
+        if(isIntBool)this->intValue = jdeserialization["value"];
+        if(isFloatBool)this->floatValue = jdeserialization["value"];
+        if(isBoolBool)this->boolValue = jdeserialization["value"];
+        if(isStringBool)this->stringValue = jdeserialization["value"];
+
+        std::cout << "NativeValue::deserialize end" << std::endl;
     }
 
     NativeValue();
