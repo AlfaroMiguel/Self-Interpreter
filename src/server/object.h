@@ -132,6 +132,7 @@ public:
     void notifyClients(std::string eventName, std::string clientName = "");
     void moveMorph(const std::string clientName, double newX, double newY);
     int getMorphId();
+    void changeMorphName(std::string& newName);
 };
 
 #endif
