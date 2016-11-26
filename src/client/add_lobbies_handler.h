@@ -7,7 +7,7 @@
  * de agregar lobbies */
 class AddLobbiesHandler: public EventHandler{
  private:
-  void handle(json j);
+  void handle(const json& j) const;
  public:
   AddLobbiesHandler(ClientHandler* client_handler);
   ~AddLobbiesHandler();

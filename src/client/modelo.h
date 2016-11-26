@@ -36,7 +36,7 @@ class Modelo{
   	bool es_slot(const Posicion& pos) const;
   	void seleccionar_morph(const Posicion& pos);
   	bool existe_morph(int morph_id);
-  	void cambiar_pos_morph(int morph_id, const Posicion& pos);
+  	void change_morph_position(int morph_id, const Posicion& new_pos);
   	Glib::RefPtr<Morph> get_selected_morph() const;
  private:
   	Modelo(const Modelo& otra) = delete;

@@ -6,7 +6,7 @@
 /* Clase functor que se ocupa de manejar el evento "cliente conectado" */
 class ConnectedClientHandler : public EventHandler {
  private:
-  void handle(json j);
+  void handle(const json& j) const;
  public:
   ConnectedClientHandler(ClientHandler *client_handler);
   ~ConnectedClientHandler();

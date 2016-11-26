@@ -14,7 +14,7 @@ Modelo& Modelo::operator=(Modelo&& otra){
 }
 
 void Modelo::editar_morph() const{
-	client_handler->enable_editing();
+	client_handler->enable_editing(selected_morph);
 }
 
 void Modelo::seleccionar_morph(const Posicion& pos){
@@ -29,11 +29,10 @@ void Modelo::seleccionar_morph(const Posicion& pos){
 Glib::RefPtr<Morph> Modelo::get_selected_morph() const {
 	return selected_morph;
 }
+
 void Modelo::cambiar_nombre_morph(const std::string& new_name){
-	if(selected_morph) {
+	if(selected_morph)
 		selected_morph->editar_nombre(new_name);
-		client_handler->change_morph_name(new_name, selected_morph->get_id());
-	}
 }
 
 void Modelo::finalizar_edicion(){
@@ -55,7 +54,7 @@ Glib::RefPtr<Morph> Modelo::create_morph(const std::string& name,
 												 std::string> slots,
 										int id) {
 	for(unsigned int i = 0; i < morphs.size(); i++)
-		if (morphs[i]->get_id() == id) {
+		if (morphs[i]->has_id(id)) {
 			client_handler->dismiss_morph(morphs[i]);
 			morphs.erase(morphs.begin()+i);
 		}
@@ -84,10 +83,10 @@ void Modelo::get_morph_from_slot(Posicion& pos){
 	}
 }
 
-void Modelo::cambiar_pos_morph(int morph_id, const Posicion& pos){
+void Modelo::change_morph_position(int morph_id, const Posicion& new_pos){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
-		if (morphs[i]->get_id() == morph_id){
-			morphs[i]->cambiar_posicion(pos);
+		if (morphs[i]->has_id(morph_id)){
+			morphs[i]->cambiar_posicion(new_pos);
 		}
 	}
 }

@@ -6,8 +6,7 @@ class NewMorphHandler: public EventHandler{
  public:
   NewMorphHandler(ClientHandler* client_handler);
   ~NewMorphHandler();
-  void operator()();
  private:
-  void handle(json j);
+  void handle(const json& j) const;
 };
 #endif

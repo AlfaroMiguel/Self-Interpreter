@@ -16,9 +16,9 @@ void VentanaCliente::set_control(ClientHandler* client_handler) {
 }
 
 void VentanaCliente::on_ingresar(){
-	Glib::ustring nombre_cliente = entrada_texto->get_buffer()->get_text();
-	std::cout << "Nombre cliente: " << nombre_cliente.raw() << std::endl;
-	client_handler->ingresar_cliente(nombre_cliente.raw());
+	Glib::ustring client_name = entrada_texto->get_buffer()->get_text();
+	std::cout << "Nombre cliente: " << client_name.raw() << std::endl;
+	client_handler->connect_client(client_name.raw());
 }
 
 bool VentanaCliente::on_ocultar() {

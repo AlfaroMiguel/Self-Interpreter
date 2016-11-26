@@ -59,6 +59,10 @@ bool Morph::do_dismiss(){
 	return false;
 }
 
+bool Morph::has_id(int id) {
+	return id == this->id;
+}
+
 void Morph::dismiss() {
 	Glib::signal_idle().connect(sigc::mem_fun(*this, &Morph::do_dismiss));
 }

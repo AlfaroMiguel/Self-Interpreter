@@ -21,7 +21,7 @@ class ViewHandler{
   		/* Dibuja el morph en la interfaz */
   		void draw_morph(Glib::RefPtr<Morph>);
   		/* Habilita la edicion del morph seleccionado */
-  		void enable_editing();
+  		void enable_editing(Glib::RefPtr<Morph> morph);
   		/* Agrega un lobby a los lobbies en los que puede
    		* participar el cliente */
   		void add_lobby(const std::string& lobby_id);
@@ -34,7 +34,7 @@ class ViewHandler{
   		void dismiss_morph(Glib::RefPtr<Morph> morph);
   		void set_control(ClientHandler* client_handler);
 		void mostrar_lobbies();
-  		void error_ingreso_cliente();
+  		void client_connection_error();
   		void ocultar_vista_cliente();
  	private:
   		MainView* main_view;

@@ -8,6 +8,6 @@ class LobbyDataHandler: public EventHandler{
   ~LobbyDataHandler();
   void operator()();
  private:
-  void handle(json j);
+  void handle(const json& j) const;
 };
 #endif

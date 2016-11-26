@@ -8,6 +8,6 @@ ConnectedClientHandler::ConnectedClientHandler
 
 ConnectedClientHandler::~ConnectedClientHandler() {}
 
-void ConnectedClientHandler::handle(json j) {
-	client_handler->cliente_conectado();
+void ConnectedClientHandler::handle(const json& j) const{
+	client_handler->connected_client();
 }

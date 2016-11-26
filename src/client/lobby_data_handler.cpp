@@ -6,6 +6,6 @@ LobbyDataHandler::LobbyDataHandler(ClientHandler *client_handler):EventHandler(c
 
 LobbyDataHandler::~LobbyDataHandler() {}
 
-void LobbyDataHandler::handle(json j) {
+void LobbyDataHandler::handle(const json& j) const{
 	client_handler->open_lobby();
 }

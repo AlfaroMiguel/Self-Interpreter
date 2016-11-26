@@ -5,7 +5,7 @@ NewMorphHandler::NewMorphHandler(ClientHandler* client_handler): EventHandler(cl
 
 NewMorphHandler::~NewMorphHandler() {}
 
-void NewMorphHandler::handle(json j) {
+void NewMorphHandler::handle(const json& j) const{
 	std::map<std::string, std::string> dic_slots;
 	std::string nombre = j["nombre"];
 	int id = j["id"];
