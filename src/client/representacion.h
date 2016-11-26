@@ -21,8 +21,10 @@ class Representacion: public Goocanvas::Group {
   	virtual void editar_nombre(const Glib::ustring& nombre_nuevo) = 0;
   	void actualizar_posicion(const Posicion& new_pos);
 	void resize(double new_size);
-  	double get_x();
-  	double get_y();
+  	double get_x() const ;
+  	double get_y() const ;
+  	bool needs_resize(double max_width);
+
  protected:
   	Posicion posicion;
   	Glib::ustring nombre;
@@ -32,6 +34,7 @@ class Representacion: public Goocanvas::Group {
 
   	bool on_create();
   	bool do_resize(double new_size);
+  	virtual void set_line_width() = 0;
  private:
   	Representacion(const Representacion& otra) = delete;
   	Representacion& operator=(const Representacion& otra) = delete;

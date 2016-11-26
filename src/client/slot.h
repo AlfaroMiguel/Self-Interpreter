@@ -28,5 +28,6 @@ class Slot: public Representacion{
   	Slot& operator=(const Slot& otra) = delete;
 
   	bool on_create(Glib::ustring cadena_texto);
+  	void set_line_width();
 };
 #endif

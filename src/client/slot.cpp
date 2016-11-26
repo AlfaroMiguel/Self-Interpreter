@@ -3,7 +3,7 @@
 #include <iostream>
 #define ALTO 23
 #define ANCHO 200
-
+#define WIDTH_PER_CHARACTER 10
 Glib::RefPtr<Slot> Slot::create(const Posicion& pos,
 								const Glib::ustring& nombre,
 								const Glib::ustring& valor,
@@ -13,8 +13,8 @@ Glib::RefPtr<Slot> Slot::create(const Posicion& pos,
 
 bool Slot::on_create(Glib::ustring cadena_texto){
 	texto->property_text() = cadena_texto;
-	if (base->property_width() < (cadena_texto.raw().size())*10){
-		parent_morph.resize((cadena_texto.raw().size()) * 10);
+	if (needs_resize(cadena_texto.raw().size()*WIDTH_PER_CHARACTER)){
+		parent_morph.resize((cadena_texto.raw().size()) * WIDTH_PER_CHARACTER);
 	}
 	return false;
 }
@@ -27,13 +27,13 @@ Slot::Slot(const Posicion& pos, const Glib::ustring& nombre,
 }
 
 Slot::~Slot(){}
-//
-//Slot::Slot(const Slot&& otra): Representacion(otra.posicion, otra.nombre), valor(otra.valor){}
-//
-//Slot& Slot::operator=(const Slot&& otra){
-//	valor = otra.valor;
-//	return *this;
-//}
+
+Slot::Slot(const Slot&& otra): Representacion(otra.posicion, otra.nombre, otra.parent_morph), valor(otra.valor){}
+
+Slot& Slot::operator=(const Slot&& otra){
+	valor = otra.valor;
+	return *this;
+}
 
 bool Slot::esta_en_posicion(const Posicion& pos_comparar) const{
 	Posicion pos_max(posicion.get_x()+ANCHO, posicion.get_y()+ALTO);
@@ -56,4 +56,8 @@ Glib::ustring& Slot::obtener_valor(){
 
 Glib::ustring& Slot::obtener_nombre(){
 	return nombre;
+}
+
+void Slot::set_line_width() {
+	base->property_line_width() = 0.5;
 }

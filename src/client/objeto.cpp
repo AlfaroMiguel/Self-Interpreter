@@ -2,6 +2,7 @@
 #include "morph.h"
 #define ALTO 23
 #define ANCHO 200
+#define WIDTH_PER_CHARACTER 10
 
 #include "../common/lock.h"
 Objeto::Objeto(const Posicion& pos, const Glib::ustring& nombre,
@@ -16,13 +17,13 @@ Glib::RefPtr<Objeto> Objeto::create(const Posicion& pos,
 
 Objeto::~Objeto(){}
 
-//Objeto::Objeto(Objeto&& otra): Representacion(otra.posicion, otra.nombre),
-//							   slots(otra.slots){}
-//
-//Objeto& Objeto::operator=(Objeto&& otra){
-//	slots = otra.slots;
-//	return *this;
-//}
+Objeto::Objeto(Objeto&& otra): Representacion(otra.posicion, otra.nombre, otra.parent_morph),
+							   slots(otra.slots){}
+
+Objeto& Objeto::operator=(Objeto&& otra){
+	slots = otra.slots;
+	return *this;
+}
 
 bool Objeto::esta_en_posicion(const Posicion& pos_comparar) const{
 	if (objeto_en_posicion(pos_comparar)) return true;
@@ -37,16 +38,22 @@ bool Objeto::on_agregar_slot(Glib::RefPtr<Slot> slot){
 
 
 void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
+	int slots_agregados = 0;
+	int offset;
 	std::map<std::string, std::string>::iterator it = slots_a_agregar.begin();
 	while(it != slots_a_agregar.end()) {
 		Glib::ustring nombre(it->first);
 		Glib::ustring valor(it->second);
-		int offset = ALTO*(slots.size()+1);
+		if (slots_agregados == 0)
+			offset = (ALTO*(slots.size()+1)) + 2.5;
+		else
+			offset =(ALTO*(slots.size()+1));
 		Posicion pos_slot(posicion.get_x(), posicion.get_y()+offset);
 		Glib::RefPtr<Slot> slot_nuevo = Slot::create(pos_slot, nombre, valor, parent_morph);
 		slots.push_back(slot_nuevo);
 		Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_agregar_slot), slot_nuevo));
 		it++;
+		slots_agregados++;
 	}
 }
 
@@ -83,8 +90,8 @@ void Objeto::mover(const Posicion& new_pos){
 
 void Objeto::editar_nombre(const Glib::ustring& nombre_nuevo){
 	nombre = nombre_nuevo;
-	if (base->property_width() < (nombre.raw().size())*10)
-		resize_all((nombre.raw().size())*10);
+	if (needs_resize(nombre.raw().size()*WIDTH_PER_CHARACTER))
+		resize_all((nombre.raw().size())*WIDTH_PER_CHARACTER);
 	texto->property_text() = nombre_nuevo;
 }
 
@@ -130,4 +137,8 @@ void Objeto::resize_all(double new_size){
 	resize(new_size);
 	for (unsigned int i = 0; i < slots.size(); i++)
 		slots[i]->resize(new_size);
+}
+
+void Objeto::set_line_width() {
+	base->property_line_width() = 4;
 }
