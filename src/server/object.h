@@ -31,7 +31,7 @@ public:
     //Serializacion TEST
 
     //Serializacion recursiva
-    void serialize(json& jserialization){
+    virtual void serialize(json& jserialization){
         std::cout << "Serializo recursivamente: " << objectName << std::endl;
         jserialization["objectName"] = objectName;
         jserialization["representation"] = representation;
@@ -46,19 +46,39 @@ public:
 
     }
 
-    //Serializacion base
-    void serializeBase(json& jserialization){
-        std::cout << "Serializo base: " << objectName << std::endl;
-        jserialization["objectName"] = objectName;
-        jserialization["representation"] = representation;
+    //Deserealizacion
+
+    static Object* deserialize(json& jdeserialization, Lobby* lobby){
+        Object* object = new Object();
+        object->objectName = jdeserialization["objectName"];
+        object->representation = jdeserialization["representation"];
 
         json jRegisterOfSlots;
-        slots.serializeBase(jRegisterOfSlots);
-        jserialization["slots"] = jRegisterOfSlots;
+        jRegisterOfSlots = jdeserialization["slots"];
+        object->slots.deserialize(jRegisterOfSlots, object, lobby);
 
         json jMorph;
-        myMorph.serialize(jMorph);
-        jserialization["myMorph"] = jMorph;
+        jMorph = jdeserialization["myMorph"];
+        object->myMorph.deserialize(jMorph);
+
+        object->myLobby = lobby;
+
+        return object;
+    }
+
+    //Metodo TEST serchForId
+
+    Object* searchForId(int objectId){
+        std::cout << "Busco " << objectId << " en " << this->getName() << std::endl;
+        if(this->getMorphId() == objectId)return this;
+        std::vector<Object*> mySlotsObjects = this->slots.getObjectsWhitoutParents(); //Para que no haya ciclos de busqueda
+        for(auto itObjectSlot = mySlotsObjects.begin(); itObjectSlot != mySlotsObjects.end(); itObjectSlot++){
+            if((*itObjectSlot)->getName() != "self") {
+                Object *objectFound = (*itObjectSlot)->searchForId(objectId);
+                if (objectFound != nullptr) return objectFound;
+            }
+        }
+        return nullptr;
     }
 
     Object();

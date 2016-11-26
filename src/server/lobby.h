@@ -14,9 +14,8 @@ using json = nlohmann::json;
 
 #include "client.h"
 #include "morph.h"
-#include "object.h"
+#include "parser/interpreter.h"
 
-class Interpreter;
 /*Clase Lobby que contiene toda la informacion de un Lobby de Self
  * El nombre del lobby
  * Si es compartido o no
@@ -32,7 +31,6 @@ private:
     std::map<std::string, Client*> clientsConnected;
     Interpreter* interpreter;
     std::set<int> visibleObjects;
-    std::map<int, Object*> allObjects;
 
 public:
 
@@ -58,7 +56,7 @@ public:
             jVisibleObjects.push_back(*itObject);
         }
         jserialization["visibleObjects"] = jVisibleObjects;
-
+        /*
         json jAllObjects;
         for (auto itObject = allObjects.begin(); itObject != allObjects.end(); itObject++){
             json jObject;
@@ -66,8 +64,41 @@ public:
             itObject->second->serializeBase(jObject);
             jAllObjects.push_back(std::make_pair(id,jObject));
         }
-        jserialization["allObjects"] = jAllObjects;
+        jserialization["allObjects"] = jAllObjects;*/
     }
+
+    static Lobby* deserialize(json& jdeserialize){
+        Lobby* lobby = new Lobby();
+
+        lobby->lobbyName = jdeserialize["lobbyName"];
+        lobby->isShared = jdeserialize["isShared"];
+
+        json jLobby;
+        jLobby = jdeserialize["lobbyReference"];
+
+        lobby->lobbyReference = Object::deserialize(jLobby, lobby);
+
+        json jClientsConnected = jdeserialize["clientsConnected"];
+        for(auto it = jClientsConnected.begin(); it != jClientsConnected.end(); it++){
+            std::string clientName = *it;
+            Client* client = nullptr;
+            lobby->clientsConnected.insert(std::make_pair(clientName, client));
+        }
+
+        lobby->interpreter = new Interpreter(lobby->lobbyReference, lobby);
+
+        json jVisibleObjects = jdeserialize["visibleObjects"];
+        for(auto it = jVisibleObjects.begin(); it != jVisibleObjects.end(); it++){
+            int visibleObjectID = *it;
+            lobby->visibleObjects.insert(visibleObjectID);
+        }
+
+        return lobby;
+
+    }
+    /*Constructor vacio*/
+    Lobby();
+
 
     /*Constructor: recibe el nombre del lobby, un valor booleano que indica si el lobby es compartiod, y
      * una referencia al objeto lobby*/

@@ -12,7 +12,7 @@ Client::~Client() {}
 
 void Client::setActualLobby(Lobby *newActualLobby) {
     actualLobby = newActualLobby;
-    std::cout << "entre aca" << std::endl;
+    std::cout << "Client::SetActualLobby" << std::endl;
     actualLobby->initializeClient(clientName);
 }
 

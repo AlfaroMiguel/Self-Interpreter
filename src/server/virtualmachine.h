@@ -38,13 +38,26 @@ public:
 
     //Deserializacion TEST
 
-    VirtualMachine(json& jdeserialization){
+    static VirtualMachine* deserialize(json& jdeserialization){
+        VirtualMachine* vm = new VirtualMachine();
         std::cout << "Deserealizando VirtualMachine" << std::endl;
+
+        json jExistingLobbies = jdeserialization["existingLobbies"];
+        for(auto it = jExistingLobbies.begin(); it !=  jExistingLobbies.end(); it++){
+            std::string lobbyName = it.key();
+            json jLobby = it.value();
+            std::cout << "Deserializo lobby: " << lobbyName << std::endl;
+            Lobby* lobby = Lobby::deserialize(jLobby);
+            (vm->existingLobbies).insert(std::make_pair(lobbyName, lobby));
+        }
+        return vm;
     }
 
     /*Constructor de la maquina virtual, no recibe argumentos, crea un lobby
      * por defecto que es compartido llamado "Lobby principal"*/
     VirtualMachine();
+    /*Inicializador de la maquina virtual*/
+    void initialize();
     /*Destructor de la maquina virtual*/
     ~VirtualMachine();
     /*Recibe el nombre de un cliente y devuelve un vector con los nombres de los lobbies

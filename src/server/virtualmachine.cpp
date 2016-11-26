@@ -15,7 +15,9 @@ Client* VirtualMachine::searchClient(const std::string& clientName){
     return itClient->second;
 }
 
-VirtualMachine::VirtualMachine() {
+VirtualMachine::VirtualMachine() {}
+
+void VirtualMachine::initialize(){
     //Tengo que tener un lobby principal, por ahora lo hago compartido entre todos los clientes
     std::cout << "Iniciando maquina virtual" << std::endl;
     Object* lobbyObject = new Object();
@@ -44,6 +46,7 @@ bool VirtualMachine::connectClient(const std::string& clientName, ProxyClient* c
 
     Client* client = newClient(clientName, clientReference);
     existingClients.insert(std::make_pair(clientName, client));
+    std::cout << "VirtualMachine::connectClient: " << clientName << std::endl;
     return true;
 }
 
@@ -76,7 +79,9 @@ bool VirtualMachine::connectClientToLobby(const std::string& clientName,const st
 
     std::cout << "Connect Client: "<< clientName << "to lobby: "<< lobbyName << std::endl;
     lobby->connectClient(client);
+    std::cout << "lobby->connectClient(client); OK"<< lobbyName << std::endl;
     client->setActualLobby(lobby);
+    std::cout << "client->setActualLobby(lobby); OK"<< lobbyName << std::endl;
 }
 
 void VirtualMachine::clientMovedMorph(const std::string& clientName, int morphId, double newX, double newY){

@@ -42,6 +42,15 @@ std::vector<Object*> RegisterOfSlots::getObjects(){
   return objects;
 }
 
+std::vector<Object*> RegisterOfSlots::getObjectsWhitoutParents(){
+    std::vector<Object*> objects;
+    for(auto it = slotMap.begin(); it != slotMap.end(); it++){
+        if(it->first != "self" && !it->second.isParentSlot())
+            objects.push_back((it->second).getReference());
+    }
+    return objects;
+}
+
 void RegisterOfSlots::removeSlot(const std::string &slotName){
     slotMap.erase(slotName);
 }

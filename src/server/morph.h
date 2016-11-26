@@ -41,6 +41,16 @@ public:
         jserialization["id"] = id;
     }
 
+    void deserialize(json& jdeserialization){
+        this->setName(jdeserialization["name"]);
+        this->changePosition(jdeserialization["x"], jdeserialization["y"]);
+        json jSlots = jdeserialization["slots"];
+        for(auto itSLots = jSlots.begin(); itSLots != jSlots.end(); itSLots++){
+            this->addSlot(itSLots.key(), itSLots.value());
+        }
+        this->id = jdeserialization["id"];
+    }
+
     static int idNumber;
     /*Crea un morph, se le setea un unico id*/
     Morph();

@@ -113,10 +113,6 @@ void Interpreter::pushToken(string id, string message, string value) {
 }
 
 
-
-
-
-
 void Interpreter::removeSlot(std::string name){
   Object* objectToDeleteSlots = findExpression(name);
   Object* objectEncapsulate = stack.top();

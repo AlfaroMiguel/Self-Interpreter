@@ -42,6 +42,20 @@ public:
         }
     }
 
+    void deserialize(json& jdeserialization, Object* selfObject, Lobby* lobby){
+        std::cout << "Empieza a deserealizar registro de slots" << std::endl;
+        this->addSlot("self", selfObject, false, true);
+        for(auto itSlot = jdeserialization.begin(); itSlot != jdeserialization.end(); itSlot++){
+            std::string slotName = itSlot.key();
+            Slot slot;
+            slot.deserialize(itSlot.value(), lobby);
+            this->slotMap.insert(std::make_pair(slotName, slot));
+        }
+        std::cout << "Termina de deserealizar registro de slots" << std::endl;
+
+    }
+    std::vector<Object*> getObjectsWhitoutParents();
+
     /*Constructor, inicialmente el slotMap esta vacio*/
     RegisterOfSlots();
     /*Destructo, no se libera ningun recurso*/

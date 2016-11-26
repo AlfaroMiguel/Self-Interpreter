@@ -6,7 +6,7 @@ using json = nlohmann::json;
 
 #ifndef SELFTP_SLOT_H
 #define SELFTP_SLOT_H
-
+class Lobby;
 class Object;
 /*Encapsula la informacion de un slot de self
  * Contiene la referencia al puntero del objeto
@@ -22,8 +22,10 @@ public:
 
     void serialize(json& jserialization); //Definida en cpp
     void serializeBase(json& jserialization); //Definida en cpp
+    void deserialize(json& jdeserialization, Lobby* lobby); //Definida en cpp
 
-
+    /*Constructor vacio*/
+    Slot();
     /*Constructor recibe la refernecia al objeto, si es mutable y parent*/
     Slot(Object* object, bool isMutable, bool isParent);
     /*Destructor de la clase Slot*/

@@ -40,11 +40,12 @@ int main(int argc, const char *argv[]) try{
     if(jsonString != ""){
         std::cout << "Voy a serializar" << std::endl;
         json jSerialization = json::parse(jsonString);
-        vm = new VirtualMachine(jSerialization);
+        vm = VirtualMachine::deserialize(jSerialization);
 
     }
     else{
         vm = new VirtualMachine();
+        vm->initialize();
     }
 
     std::cout << "Termino de crearse la VirtualMachine" << std::endl; //TODO debug

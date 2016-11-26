@@ -1,3 +1,10 @@
+#ifndef JSON_LIB
+#define JSON_LIB
+#include "../common/json.hpp"
+using json = nlohmann::json;
+#endif
+
+
 #ifndef NATIVEVALUE_H
 #define NATIVEVALUE_H
 
@@ -9,11 +16,15 @@ private:
     float floatValue;
     bool boolValue;
     std::string stringValue;
-
     bool isIntBool, isFloatBool, isBoolBool, isStringBool;
     bool valueSetted();
 
 public:
+
+    void serialize(json& jserialization){
+
+    }
+
     NativeValue();
     ~NativeValue();
     void setValue(int newValue);
