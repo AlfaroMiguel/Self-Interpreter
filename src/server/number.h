@@ -9,10 +9,10 @@
 
 class Number : public Object{
 private:
-  Object* receiver;
+  //Object* receiver;
   std::string operation;
-  Object* argument;
-  Object* result;
+  //Object* argument;
+  //Object* result;
   NativeValue value;
 public:
     Number(int valueAux);
@@ -21,9 +21,10 @@ public:
     void setValue(int valueAux);
     NativeValue getValue();
     void setOperator(std::string operatorString);
-    void setReceiver(Object* receiverPtr);
+    //void setReceiver(Object* receiverPtr);
     NativeValue ejecute(std::string operation, Object* expression);
     Object* clone();
+    Object* getResult();
 };
 
 #endif
