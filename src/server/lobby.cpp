@@ -97,6 +97,11 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
         (*itObject)->notifyClients("crear");
     }
     interpreter->clearVectors();
+
+    for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
+        Object* visibleObject = lobbyReference->searchForId(*itVisibleObject);
+        visibleObject->notifyClients("crear"); //TODO cambiar nombre de evento
+    }
 }
 
 void Lobby::interpretCodeDo(const std::string& code, int objectContextID){

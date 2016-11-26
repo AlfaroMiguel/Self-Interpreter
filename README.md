@@ -51,7 +51,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot.
 - [ ] Interfaz en un solo idioma (Ingles)
 - [ ] Seleccionar slot -> Cambia de color el borde
-- [ ] Fixear los anchos de los slots al ancho del Morph que lo contiene
+- [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
 - [ ] Borde del nombre del Morph mas grueso
 - [ ] Borde de los slots mas fino
 - [ ] Nombre de Morph en negrita
