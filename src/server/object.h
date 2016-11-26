@@ -32,7 +32,7 @@ public:
 
     //Serializacion recursiva
     virtual void serialize(json& jserialization){
-        std::cout << "Serializo recursivamente: " << objectName << std::endl;
+        std::cout << "Object::serialize: " << objectName << std::endl;
         jserialization["objectName"] = objectName;
         jserialization["representation"] = representation;
 
@@ -44,11 +44,14 @@ public:
         myMorph.serialize(jMorph);
         jserialization["myMorph"] = jMorph;
 
+        jserialization["isNumber"] = false;
+
     }
 
     //Deserealizacion
 
     static Object* deserialize(json& jdeserialization, Lobby* lobby){
+        std::cout << "Object::deserialize start" << std::endl;
         Object* object = new Object();
         object->objectName = jdeserialization["objectName"];
         object->representation = jdeserialization["representation"];
@@ -62,6 +65,8 @@ public:
         object->myMorph.deserialize(jMorph);
 
         object->myLobby = lobby;
+
+        std::cout << "Object::deserialize end" << std::endl;
 
         return object;
     }

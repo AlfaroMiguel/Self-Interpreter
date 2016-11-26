@@ -46,6 +46,7 @@ public:
         std::cout << "Empieza a deserealizar registro de slots" << std::endl;
         this->addSlot("self", selfObject, false, true);
         for(auto itSlot = jdeserialization.begin(); itSlot != jdeserialization.end(); itSlot++){
+            std::cout << "RegisterOfSlots::deserialize: "<< itSlot.key() << std::endl;
             std::string slotName = itSlot.key();
             Slot slot;
             slot.deserialize(itSlot.value(), lobby);
