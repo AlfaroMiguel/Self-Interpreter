@@ -7,6 +7,7 @@
 #include <string>
 #include "../object.h"
 #include "../garbage_collector.h"
+#include <fstream>
 
 class Lobby;
 
@@ -17,29 +18,34 @@ private:
   std::map<std::string,int> mapMessages;
   std::stack<Object*> stack;
   std::map<std::string,Object*> map;
-  std::vector<Object*> temporalObjects;
   std::vector<Object*> createdObjects;
-  void createNumber(std::string value);
-  void createVariable(std::string name);
-  void assignationExpression(std::string name);
-  void addSlot(std::string name);
+  std::vector<Object*> modifiedObjects;
+  void createNumber(const std::string value);
+  void createVariable(const std::string name);
+  void assignationExpression(const std::string name);
+  void addSlot(const std::string name);
   void encapsulateStack();
-  Object* findExpression(std::string name);
-  void createExpression(std::string message);
-  void sendMessage(std::string message);
-  void setRepresentation(std::string value);
-  void cloneObject(std::string id);
-  void removeSlot(std::string name);
+  Object* findExpression(const std::string name);
+  void createExpression(const std::string message);
+  void sendMessage(const  std::string message);
+  void setRepresentation(const  std::string value);
+  void cloneObject(const std::string id);
+  void removeSlot(const std::string name);
+
   GarbageCollector garbage;
+  Object* lobbyObject;
   Object* entorno;
   Lobby* lobby;
+  std::ofstream reportFile;
 public:
     Interpreter(Object* entorno_ptr, Lobby* lobby);
-    void pushToken(std::string id,std::string message,std::string value);
-    std::vector<Object*> interpretChar(const char* buffer);
+    void pushToken(const std::string id,const  std::string message,const std::string value);
+    void interpretChar(const char* buffer,Object* entorno_ptr);
+    std::vector<Object*> getCreatedObjets();
+    std::vector<Object*> getModifiedObjets();
+    void clearVectors();
     void interpretFile(const char* nameFile);
     ~Interpreter();
-
 };
 
 #endif /*INTERPRETER_H*/

@@ -21,7 +21,7 @@
 %define parse.error verbose
 %token <int_val> PLUS MINUS ASTERISK FSLASH EQUALS PRINT LPAREN RPAREN SEMICOLON
 EQUALSMUTAL SET BAR ADD RM CREATEOBJECTINIT CREATEOBJECTEND ARGS WORD COMMENT
-%token <str_val> VARIABLE
+%token <str_val> VARIABLE SELF
 %token <double_val> NUMBER
 %type <double_val> expression;
 %type <double_val> argument;

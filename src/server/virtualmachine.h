@@ -80,10 +80,10 @@ public:
     /*Recibe una referencia al nombre del cliente, y una referencia al codigo self.
      * Interpreta el codigo self, y ademas notifica a los clientes de los cambios que fueron
      * producidos en los morphs*/
-    void interpretCodeGet(const std::string& clientName, const std::string& code);
+    void interpretCodeGet(const std::string& clientName, const std::string& code, int morphID);
     /*Recibe una referencia al nombre del cliente, y una referencia al codigo self.
      * Interpreta el codigo self*/
-    void interpretCodeDo(const std::string& clientName, const std::string& code);
+    void interpretCodeDo(const std::string& clientName, const std::string& code, int morphID);
 
 };
 

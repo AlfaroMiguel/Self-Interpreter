@@ -5,11 +5,11 @@ Modelo::Modelo() {}
 
 Modelo::~Modelo() {}
 
-Modelo::Modelo(Modelo&& otra): morphs(otra.morphs), edited_morph(otra.edited_morph) {}
+Modelo::Modelo(Modelo&& otra): morphs(otra.morphs), selected_morph(otra.selected_morph) {}
 
 Modelo& Modelo::operator=(Modelo&& otra){
 	morphs = otra.morphs;
-	edited_morph = otra.edited_morph;
+	selected_morph = otra.selected_morph;
 	return *this;
 }
 
@@ -21,27 +21,30 @@ void Modelo::seleccionar_morph(const Posicion& pos){
 	for(unsigned int i = 0; i < morphs.size(); i++) {
 		if (morphs[i]->esta_en_posicion(pos)) {
 			morphs[i]->editando(true);
-			edited_morph = morphs[i];
+			selected_morph = morphs[i];
 		}
 	}
 }
 
+Glib::RefPtr<Morph> Modelo::get_selected_morph() const {
+	return selected_morph;
+}
 void Modelo::cambiar_nombre_morph(const std::string& new_name){
-	if(edited_morph) {
-		edited_morph->editar_nombre(new_name);
-		client_handler->change_morph_name(new_name, edited_morph->get_id());
+	if(selected_morph) {
+		selected_morph->editar_nombre(new_name);
+		client_handler->change_morph_name(new_name, selected_morph->get_id());
 	}
 }
 
 void Modelo::finalizar_edicion(){
-	if (edited_morph) edited_morph->editando(false);
+	if (selected_morph) selected_morph->editando(false);
 }
 
 void Modelo::dismiss_morph(){
-	if (edited_morph){
-		client_handler->dismiss_morph(edited_morph);
+	if (selected_morph){
+		client_handler->dismiss_morph(selected_morph);
 		for(unsigned int i = 0; i < morphs.size(); i++)
-			if (morphs[i] == edited_morph)
+			if (morphs[i] == selected_morph)
 				morphs.erase(morphs.begin()+i);
 	}
 }
@@ -75,9 +78,9 @@ void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2,
 }
 
 void Modelo::get_morph_from_slot(Posicion& pos){
-	if (edited_morph){
-		const std::string slot_name(edited_morph->obtener_nombre_slot(pos));
-		client_handler->get_morph_from_slot(edited_morph->get_id(), slot_name);
+	if (selected_morph){
+		const std::string slot_name(selected_morph->obtener_nombre_slot(pos));
+		client_handler->get_morph_from_slot(selected_morph->get_id(), slot_name);
 	}
 }
 

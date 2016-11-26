@@ -26,9 +26,9 @@ public:
      * y notificar a los debidos clientes que acutalicen su posicion*/
     void moveMorph(int idMorph, double newX, double newY);
     /*Recibe el codigo self y resuelve el evento get*/
-    void interpretSelfGet(const std::string& code);
+    void interpretSelfGet(const std::string& code, int morphID);
     /*Recibe el codigo self y resuelve el evento do*/
-    void interpretSelfDo(const std::string& code);
+    void interpretSelfDo(const std::string& code, int morphID);
 };
 
 #endif

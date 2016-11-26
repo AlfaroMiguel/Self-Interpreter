@@ -85,11 +85,11 @@ public:
     Object(const Object& otherObject);
     virtual ~Object();
 
-    Object* getSlotName(std::string name);
+    Object* getSlotName(const std::string& name) const;
 
 
-    RegisterOfSlots getParentsSlots();
-    Object* searchObject(std::string name, Object *object);
+    RegisterOfSlots getParentsSlots() const;
+    Object* searchObject(const std::string& name, Object *object);
 
     virtual void setReceiver(Object* receiverPtr){
       std::cout << "Object::setReceiver:" << std::endl;
@@ -109,23 +109,23 @@ public:
     virtual void evaluate();
 
     void setName(const std::string newName);
-    std::string getName();
+    std::string getName() const;
 
     virtual std::vector<Object*> getReferences();
     RegisterOfSlots getSlots();
     virtual void addSlots(std::string slotName, Object* object, bool isMutable, bool isParentSlot);
     void RemoveSlots(std::string slotName);
 
-    virtual Object* clone();
+    virtual Object* clone() const;
     virtual std::string getRepresentation() const;
-    virtual void setRepresentation(std::string representationString);
+    virtual void setRepresentation(const std::string representationString);
     virtual Object* print(const std::vector<Object*>& argumnets);
 
     //Object* collect(); Esto va en el Lobby
 
     void setLobby(Lobby* lobby);
     void notifyClients(std::string eventName, std::string clientName = "");
-    void moveMorph(std::string clientName, double newX, double newY);
+    void moveMorph(const std::string clientName, double newX, double newY);
     int getMorphId();
 };
 

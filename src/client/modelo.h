@@ -37,12 +37,13 @@ class Modelo{
   	void seleccionar_morph(const Posicion& pos);
   	bool existe_morph(int morph_id);
   	void cambiar_pos_morph(int morph_id, const Posicion& pos);
+  	Glib::RefPtr<Morph> get_selected_morph() const;
  private:
   	Modelo(const Modelo& otra) = delete;
   	Modelo& operator=(const Modelo& otra) = delete;
 	ClientHandler* client_handler;
 
   	std::vector<Glib::RefPtr<Morph>> morphs;
-  	Glib::RefPtr<Morph> edited_morph;
+  	Glib::RefPtr<Morph> selected_morph;
 };
 #endif

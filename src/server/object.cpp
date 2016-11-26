@@ -40,7 +40,7 @@ NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
 }
 
 /*Obtiene el objet de un slot*/
-Object* Object::getSlotName(std::string name){
+Object* Object::getSlotName(const std::string& name) const{
   Slot slot = slots.getSlot(name);
   return slot.getReference();
 }
@@ -56,7 +56,7 @@ void Object::setName(const std::string newName){
     /*TODO no notifico mas cuando se cambia el nombre, notifico al final de la creacion del objectReference*/
 }
 /*Devuelve el nombre*/
-std::string Object::getName() {
+std::string Object::getName() const {
     return this->objectName;
 }
 
@@ -84,7 +84,7 @@ void Object::RemoveSlots(std::string slotName) {
 }
 
 /*Devuelve un copia de si mismo*/
-Object* Object::clone(){
+Object* Object::clone() const{
   std::cout << "Object::clone" << std::endl;
   return new Object(*this);
 }
@@ -95,12 +95,12 @@ RegisterOfSlots Object::getSlots(){
 }
 
 /*Devuelve un RegisterOfSlots solo con parentsSlots*/
-RegisterOfSlots Object::getParentsSlots(){
+RegisterOfSlots Object::getParentsSlots() const{
     return slots.getParentsSlots();
 }
 
 /*Buscar el objeto de nombre name en el objeto object*/
-Object* Object::searchObject(std::string name, Object *object) {
+Object* Object::searchObject(const std::string& name, Object *object) {
     std::cout << "Busco: " << name <<  " en " << object->getName() << std::endl;
     return slots.searchSlot(name, object);
 }
@@ -113,7 +113,7 @@ Object* Object::getResult(){
 void Object::evaluate(){}
 
 /*Setea su representacion*/
-void Object::setRepresentation(std::string representationString){
+void Object::setRepresentation(const std::string representationString){
   representation = representationString;
 }
 /*Devuelve su representation*/
@@ -142,7 +142,7 @@ void Object::notifyClients(std::string eventName, std::string clientName){
     }
 }
 
-void Object::moveMorph(std::string clientName, double newX, double newY){
+void Object::moveMorph(const std::string clientName, double newX, double newY){
     myMorph.changePosition(newX, newY);
     notifyClients("mover morph", clientName);
 }

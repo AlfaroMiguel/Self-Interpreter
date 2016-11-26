@@ -130,9 +130,9 @@ public:
     void moveMorph(const std::string& clientName, int morphId, double newX, double newY);
     /*Recibe codigo self y lo interpreta ademas notifica a todos los clientes de los cambios producidos
      * y agrega a los objetos visibles los objetos creados o generados en la interpretacion del codigo*/
-    void interpretCodeGet(const std::string& code);
+    void interpretCodeGet(const std::string& code, int objectContextID);
     /*Recibe codigo self y lo interpreta*/
-    void interpretCodeDo(const std::string& code);
+    void interpretCodeDo(const std::string& code, int objectContextID);
     /*Inicializa todos los morphs visibles a los clientes conectados al lobby*/
     void initializeMorphs();
 };

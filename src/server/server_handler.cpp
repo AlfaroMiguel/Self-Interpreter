@@ -51,10 +51,10 @@ void ServerHandler::moveMorph(int idMorph, double newX, double newY) {
     client.vm.clientMovedMorph(client.clientName, idMorph, newX, newY);
 }
 
-void ServerHandler::interpretSelfGet(const std::string& code){
-    client.vm.interpretCodeGet(client.clientName, code);
+void ServerHandler::interpretSelfGet(const std::string& code, int morphID){
+    client.vm.interpretCodeGet(client.clientName, code, morphID);
 }
 
-void ServerHandler::interpretSelfDo(const std::string& code){
-    client.vm.interpretCodeDo(client.clientName, code);
+void ServerHandler::interpretSelfDo(const std::string& code, int morphID){
+    client.vm.interpretCodeDo(client.clientName, code, morphID);
 }

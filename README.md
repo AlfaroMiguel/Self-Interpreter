@@ -45,7 +45,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Serializacion/Persistencia
 - [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
 - [ ] Mensajes con contexto en los objetos
-- [ ] Actualizacion de Slots (incluso cuando se hace DO)
+- [x] Actualizacion de Slots (incluso cuando se hace DO)
 - [ ] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado])
 - [ ] Cambiar de Lobby dentro de la app
 - [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot.
@@ -58,3 +58,4 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] No repetir Morphs que ya estan visualizados
 - [ ] Parser: resolver multiples parametros
 - [ ] Documentacion mas ordenada -> en los .h
+- [ ] Valgrind Servidor

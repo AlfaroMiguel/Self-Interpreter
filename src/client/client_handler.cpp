@@ -52,9 +52,10 @@ void ClientHandler::enable_editing(){
 bool ClientHandler::button_event(GdkEventButton *event) {
 	if((event->type == GDK_2BUTTON_PRESS) && (event->button == 1)) {
 		Posicion event_pos(event->x, event->y);
-		modelo->seleccionar_morph(event_pos);
-		if (modelo->es_objeto(event_pos))
+		if (modelo->es_objeto(event_pos)) {
+			modelo->seleccionar_morph(event_pos);
 			modelo->editar_morph();
+		}
 		if (modelo->es_slot(event_pos))
 			modelo->get_morph_from_slot(event_pos);
 		return true;
@@ -80,7 +81,7 @@ void ClientHandler::dismiss_morph(){
 
 void ClientHandler::send_code(const std::string& code, const std::string& event){
 	if (code.empty()) return;
-	com_server->send_code(code, event);
+	com_server->send_code(code, event, modelo->get_selected_morph()->get_id());
 }
 
 void ClientHandler::set_control(ViewHandler* view_handler) {

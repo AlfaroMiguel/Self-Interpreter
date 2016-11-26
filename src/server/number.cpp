@@ -4,13 +4,15 @@
 #include "object.h"
 #include <string>
 
+Number::Number():Object(){}
+
 Number::Number(int valueAux):Object(){
   std::cout << "create Number" << std::endl;
   setName(std::to_string(valueAux));
   setRepresentation(std::to_string(valueAux));
   value.setValue(valueAux);
-  setReceiver(this);
-  setResult(this);
+  //setReceiver(this);
+  //setResult(this);
 }
 
 Number::~Number(){}
@@ -29,14 +31,18 @@ void Number::setValue(int valueAux){
   //value = valueAux;
 }
 
+Object* Number::getResult(){
+  return this;
+}
+
 NativeValue Number::getValue(){
   return value;
 }
 
-void Number::setReceiver(Object* receiverPtr){
-  std::cout << "Number::setReceiver" << std::endl;
-  receiver = receiverPtr;
-}
+// void Number::setReceiver(Object* receiverPtr){
+//   std::cout << "Number::setReceiver" << std::endl;
+//   receiver = receiverPtr;
+// }
 
 void Number::setOperator(std::string operatorString){
   std::cout << "Number::setOperator" << std::endl;

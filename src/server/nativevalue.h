@@ -22,7 +22,27 @@ private:
 public:
 
     void serialize(json& jserialization){
+        std::cout << "NativeValue::serialize" << std::endl;
+        jserialization["isIntBool"] = isIntBool;
+        jserialization["isFloatBool"] = isFloatBool;
+        jserialization["isBoolBool"] = isIntBool;
+        jserialization["isStringBool"] = isStringBool;
+        if(isIntBool)jserialization["value"] = intValue;
+        if(isFloatBool)jserialization["value"] = floatValue;
+        if(isBoolBool)jserialization["value"] = boolValue;
+        if(isStringBool)jserialization["value"] = stringValue;
+    }
 
+    void deserialize(json& jdeserialization){
+        std::cout << "NativeValue::deserialize" << std::endl;
+        this->isIntBool = jdeserialization["isIntBool"];
+        this->isFloatBool = jdeserialization["isFloatBool"];
+        this->isBoolBool = jdeserialization["isBoolBool"];
+        this->isStringBool = jdeserialization["isStringBool"];
+        if(isIntBool)intValue = jdeserialization["value"];
+        if(isFloatBool)floatValue = jdeserialization["value"];
+        if(isBoolBool)boolValue = jdeserialization["value"];
+        if(isStringBool)stringValue = jdeserialization["value"];
     }
 
     NativeValue();

@@ -34,7 +34,8 @@ void SearcherObject::addSlots(std::string slotName,Object* slot, bool isMutable,
 objectName*/
 void SearcherObject::evaluate(){
   std::cout << "SearcherObject::evaluate" << std::endl;
-  Object* self = getSlotName("self");
+  std::string selfStr = "self";
+  Object* self = getSlotName(selfStr);
   Object* expression = Object::searchObject(objectName, self);
   if (expression != nullptr){
     expressionSearched = expression;
@@ -58,7 +59,8 @@ Object* SearcherObject::clone(){
   std::cout << "SearcherObject::clone" << std::endl;
   SearcherObject* newSearcheObject = new SearcherObject(objectName);
   newSearcheObject->setRepresentation(objectName);
-  Object* self = getSlotName("self");
-  newSearcheObject->addSlots("self",self,false,true);
+  std::string selfStr = "self";
+  Object* self = getSlotName(selfStr);
+  newSearcheObject->addSlots(selfStr,self,false,true);
   return newSearcheObject;
 }

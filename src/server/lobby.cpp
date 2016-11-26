@@ -8,7 +8,7 @@ Lobby::Lobby(const std::string& lobbyName, bool isShared, Object* lobbyReference
 lobbyName(lobbyName), isShared(isShared), lobbyReference(lobbyReference){
     interpreter = new Interpreter(lobbyReference, this);
     std::string shellCode = "lobby _AddSlots: (| shell = (|  |).  |)."; //Ni bien se crea un interpreter le agrego la shell al lobby
-    this->interpretCodeGet(shellCode);
+    this->interpretCodeGet(shellCode, lobbyReference->getMorphId());
 }
 
 Lobby::~Lobby() {}
@@ -86,8 +86,12 @@ void Lobby::moveMorph(const std::string& clientName, int morphId, double newX, d
     object->moveMorph(clientName, newX, newY);
 }
 
-void Lobby::interpretCodeGet(const std::string& code){
-    std::vector<Object*> objectsCreated  = interpreter->interpretChar(code.c_str());
+void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
+
+    Object* objectContext = lobbyReference->searchForId(objectContextID);
+    if(objectContext->getName() == "shell")objectContext = lobbyReference;
+    interpreter->interpretChar(code.c_str(), objectContext);
+    std::vector<Object*> objectsCreated  = interpreter->getCreatedObjets();
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
         auto itMorph = visibleObjects.find((*itObject)->getMorphId());
         if(itMorph == visibleObjects.end()) {
@@ -95,9 +99,13 @@ void Lobby::interpretCodeGet(const std::string& code){
         }
         (*itObject)->notifyClients("crear");
     }
+    interpreter->clearVectors();
 }
 
-void Lobby::interpretCodeDo(const std::string& code){
+void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
+    Object* objectContext = lobbyReference->searchForId(objectContextID);
+    if(objectContext->getName() == "shell")objectContext = lobbyReference;
+    interpreter->interpretChar(code.c_str(), objectContext); //TODO notificar solo modificados
     for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
         Object* visibleObject = lobbyReference->searchForId(*itVisibleObject);
         visibleObject->notifyClients("crear"); //TODO cambiar nombre de evento

@@ -71,7 +71,8 @@ extern int yydebug;
     WORD = 275,
     COMMENT = 276,
     VARIABLE = 277,
-    NUMBER = 278
+    SELF = 278,
+    NUMBER = 279
   };
 #endif
 
@@ -86,7 +87,7 @@ union YYSTYPE
 	double double_val ;
   string* str_val;
 
-#line 90 "parser.h" /* yacc.c:1909  */
+#line 91 "parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
