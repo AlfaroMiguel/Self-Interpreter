@@ -13,7 +13,7 @@ bool Morph::on_create(Glib::RefPtr<Objeto>){
 }
 
 Morph::Morph(const Posicion& pos, const Glib::ustring& nombre, int id): id(id) {
-	objeto = Objeto::create(pos, nombre);
+	objeto = Objeto::create(pos, nombre, *this);
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Morph::on_create), objeto));
 }
 
@@ -43,6 +43,10 @@ double Morph::get_x() const {
 
 double Morph::get_y() const {
 	return objeto->get_y();
+}
+
+void Morph::resize(double new_size){
+	objeto->resize_all(new_size);
 }
 
 int Morph::get_id() const{

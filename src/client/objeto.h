@@ -8,8 +8,11 @@
 
 class Objeto: public Representacion{
  public:
-  	Objeto(const Posicion& pos, const Glib::ustring& nombre);
-  	static Glib::RefPtr<Objeto> create(const Posicion& pos, const Glib::ustring& nombre);
+  	Objeto(const Posicion& pos, const Glib::ustring& nombre,
+		   Morph& parent_morph);
+  	static Glib::RefPtr<Objeto> create(const Posicion& pos,
+									   const Glib::ustring& nombre,
+									   Morph& parent_morph);
   	~Objeto();
 
   	Objeto(Objeto&& otra);
@@ -26,6 +29,7 @@ class Objeto: public Representacion{
   	const std::string get_nombre();
   	void cambiar_posicion(const Posicion& pos);
   	const Posicion& get_posicion() const;
+  	void resize_all(double new_size);
  private:
   	std::mutex mutex;
   	std::vector<Glib::RefPtr<Slot>> slots;

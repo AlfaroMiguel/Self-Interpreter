@@ -5,8 +5,12 @@
 #include "posicion.h"
 class Slot: public Representacion{
  public:
-  	static Glib::RefPtr<Slot> create(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor);
-  	Slot(const Posicion& pos, const Glib::ustring& nombre, const Glib::ustring& valor);
+  	static Glib::RefPtr<Slot> create(const Posicion& pos,
+									 const Glib::ustring& nombre,
+									 const Glib::ustring& valor,
+									 Morph& parent_morph);
+  	Slot(const Posicion& pos, const Glib::ustring& nombre,
+		 const Glib::ustring& valor, Morph& parent_morph);
  	~Slot();
 
   	Slot(const Slot&& otra);

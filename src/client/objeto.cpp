@@ -1,22 +1,28 @@
 #include "objeto.h"
+#include "morph.h"
 #define ALTO 23
 #define ANCHO 200
 
 #include "../common/lock.h"
-Objeto::Objeto(const Posicion& pos, const Glib::ustring& nombre): Representacion(pos, nombre){}
+Objeto::Objeto(const Posicion& pos, const Glib::ustring& nombre,
+			   Morph& parent_morph):
+	Representacion(pos, nombre, parent_morph){}
 
-Glib::RefPtr<Objeto> Objeto::create(const Posicion& pos, const Glib::ustring& nombre){
-	return Glib::RefPtr<Objeto>(new Objeto(pos, nombre));
+Glib::RefPtr<Objeto> Objeto::create(const Posicion& pos,
+									const Glib::ustring& nombre,
+									Morph& parent_morph){
+	return Glib::RefPtr<Objeto>(new Objeto(pos, nombre, parent_morph));
 }
 
 Objeto::~Objeto(){}
 
-Objeto::Objeto(Objeto&& otra): Representacion(otra.posicion, otra.nombre), slots(otra.slots){}
-
-Objeto& Objeto::operator=(Objeto&& otra){
-	slots = otra.slots;
-	return *this;
-}
+//Objeto::Objeto(Objeto&& otra): Representacion(otra.posicion, otra.nombre),
+//							   slots(otra.slots){}
+//
+//Objeto& Objeto::operator=(Objeto&& otra){
+//	slots = otra.slots;
+//	return *this;
+//}
 
 bool Objeto::esta_en_posicion(const Posicion& pos_comparar) const{
 	if (objeto_en_posicion(pos_comparar)) return true;
@@ -37,7 +43,7 @@ void Objeto::agregar_slots(std::map<std::string, std::string> slots_a_agregar){
 		Glib::ustring valor(it->second);
 		int offset = ALTO*(slots.size()+1);
 		Posicion pos_slot(posicion.get_x(), posicion.get_y()+offset);
-		Glib::RefPtr<Slot> slot_nuevo = Slot::create(pos_slot, nombre, valor);
+		Glib::RefPtr<Slot> slot_nuevo = Slot::create(pos_slot, nombre, valor, parent_morph);
 		slots.push_back(slot_nuevo);
 		Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_agregar_slot), slot_nuevo));
 		it++;
@@ -116,4 +122,10 @@ bool Objeto::slot_en_posicion(const Posicion& pos_comparar) const{
 
 const Posicion& Objeto::get_posicion() const{
 	return posicion;
+}
+
+void Objeto::resize_all(double new_size){
+	resize(new_size);
+	for (unsigned int i = 0; i < slots.size(); i++)
+		slots[i]->resize(new_size);
 }
