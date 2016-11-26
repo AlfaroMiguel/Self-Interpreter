@@ -13,7 +13,7 @@ Glib::RefPtr<Slot> Slot::create(const Posicion& pos,
 
 bool Slot::on_create(Glib::ustring cadena_texto){
 	texto->property_text() = cadena_texto;
-	if (base->property_width() < (cadena_texto.raw().size())*10) {
+	if (base->property_width() < (cadena_texto.raw().size())*10){
 		parent_morph.resize((cadena_texto.raw().size()) * 10);
 	}
 	return false;

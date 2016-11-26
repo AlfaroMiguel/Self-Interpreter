@@ -50,6 +50,7 @@ void ClientHandler::create_morph(const std::string& name,
 }
 
 void ClientHandler::draw_morph(Glib::RefPtr<Morph> morph){
+	std::cout << "se dibuja el morph nuevo" << std::endl;
 	view_handler->draw_morph(morph);
 }
 

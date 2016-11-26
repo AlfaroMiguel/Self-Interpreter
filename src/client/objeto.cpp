@@ -83,6 +83,8 @@ void Objeto::mover(const Posicion& new_pos){
 
 void Objeto::editar_nombre(const Glib::ustring& nombre_nuevo){
 	nombre = nombre_nuevo;
+	if (base->property_width() < (nombre.raw().size())*10)
+		resize_all((nombre.raw().size())*10);
 	texto->property_text() = nombre_nuevo;
 }
 
