@@ -58,3 +58,4 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] No repetir Morphs que ya estan visualizados
 - [ ] Parser: resolver multiples parametros
 - [ ] Documentacion mas ordenada -> en los .h
+- [ ] Valgrind Servidor
