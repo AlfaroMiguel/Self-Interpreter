@@ -59,7 +59,7 @@ void VentanaInicio::on_confirmar(){
 			estado = boton_lobby_compartido->get_label();
 	}
 	hide();
-	client_handler->abrir_vm(lobby.raw(), estado.raw());
+	client_handler->select_lobby(lobby.raw(), estado.raw());
 }
 
 bool VentanaInicio::do_mostrar_error(){

@@ -7,7 +7,7 @@ AddLobbiesHandler::AddLobbiesHandler(ClientHandler *client_handler):
 
 AddLobbiesHandler::~AddLobbiesHandler() {}
 
-void AddLobbiesHandler::handle(json j) {
+void AddLobbiesHandler::handle(const json& j) const{
 	std::string lobbies_str = j[JSON_ID_LOBBIES];
 	json lobbies = json::parse((char*)lobbies_str.c_str());
 	for (json::iterator it = lobbies.begin(); it != lobbies.end(); ++it) {

@@ -7,16 +7,22 @@
 
 #include <iostream>
 
-ClientHandler::ClientHandler(Modelo* modelo, ComunicadorServer* com_server): modelo(modelo),
-																		 com_server(com_server) {}
+ClientHandler::ClientHandler(Modelo* modelo,
+							 ComunicadorServer* com_server):
+	modelo(modelo),
+	com_server(com_server) {}
 
 ClientHandler::~ClientHandler() {}
 
-void ClientHandler::add_lobby(const std::string& lobby_id){
+void ClientHandler::set_handler(ViewHandler* view_handler) {
+	this->view_handler = view_handler;
+}
+
+void ClientHandler::add_lobby(const std::string& lobby_id) const{
 	view_handler->add_lobby(lobby_id);
 }
 
-void ClientHandler::set_lobbies(){
+void ClientHandler::set_lobbies() const{
 	view_handler->set_lobbies();
 }
 
@@ -32,21 +38,28 @@ void ClientHandler::update_morph_position(int morph_id, const Posicion& pos){
 	com_server->send_morph_position(morph_id, pos);
 }
 
-void ClientHandler::abrir_vm(const std::string& lobby, const std::string& estado_lobby){
-	com_server->enviar_datos_cliente(lobby, estado_lobby);
+void ClientHandler::enable_editing(Glib::RefPtr<Morph> morph){
+	view_handler->enable_editing(morph);
 }
 
-void ClientHandler::ingresar_cliente(const std::string &nombre_cliente) {
-	com_server->ingresar_cliente(nombre_cliente);
+void ClientHandler::create_morph(const std::string& name,
+								 const Posicion& pos,
+								 std::map<std::string, std::string> slots,
+								 int id){
+	modelo->create_morph(name, pos, slots, id);
+}
+
+void ClientHandler::draw_morph(Glib::RefPtr<Morph> morph){
+	view_handler->draw_morph(morph);
+}
+
+void ClientHandler::dismiss_morph() {
+	modelo->dismiss_morph();
 }
 
 void ClientHandler::dismiss_morph(Glib::RefPtr<Morph> morph) {
 	view_handler->dismiss_morph(morph);
 	com_server->dismiss_morph(morph->get_id());
-}
-
-void ClientHandler::enable_editing(){
-	view_handler->enable_editing();
 }
 
 bool ClientHandler::button_event(GdkEventButton *event) {
@@ -65,53 +78,44 @@ bool ClientHandler::button_event(GdkEventButton *event) {
 
 void ClientHandler::change_morph_name(const std::string& new_name){
 	modelo->cambiar_nombre_morph(new_name);
+	com_server->change_morph_name(new_name,
+								  modelo->get_selected_morph()->get_id());
 }
 
-void ClientHandler::change_morph_name(const std::string& new_name, int morph_id){
-	com_server->change_morph_name(new_name, morph_id);
-}
-
-void ClientHandler::finalizar_edicion() {
-	modelo->finalizar_edicion();
-}
-
-void ClientHandler::dismiss_morph(){
-	modelo->dismiss_morph();
-}
-
-void ClientHandler::send_code(const std::string& code, const std::string& event){
+void ClientHandler::send_code(const std::string& code,
+							  const std::string& event){
 	if (code.empty()) return;
 	com_server->send_code(code, event, modelo->get_selected_morph()->get_id());
 }
 
-void ClientHandler::set_control(ViewHandler* view_handler) {
-	this->view_handler = view_handler;
+void ClientHandler::connect_client(const std::string &client_name) {
+	com_server->connect_client(client_name);
 }
 
-void ClientHandler::create_morph(const std::string& name,
-									 const Posicion& pos,
-									 std::map<std::string, std::string> slots,
-									 int id){
-	modelo->create_morph(name, pos, slots, id);
+void ClientHandler::change_morph_position(int morph_id,
+										  const Posicion& new_pos){
+	modelo->change_morph_position(morph_id, new_pos);
 }
 
-void ClientHandler::draw_morph(Glib::RefPtr<Morph> morph){
-	view_handler->draw_morph(morph);
+void ClientHandler::client_connection_error() {
+	view_handler->client_connection_error();
 }
 
-void ClientHandler::cambiar_pos_morph(int morph_id, const Posicion& pos){
-	modelo->cambiar_pos_morph(morph_id, pos);
-}
-
-void ClientHandler::error_ingreso_cliente() {
-	view_handler->error_ingreso_cliente();
-}
-
-void ClientHandler::cliente_conectado(){
+void ClientHandler::connected_client(){
 	com_server->inicializar();
 	view_handler->ocultar_vista_cliente();
 }
 
-void ClientHandler::get_morph_from_slot(int morph_id, const std::string& slot_name) {
+void ClientHandler::get_morph_from_slot(int morph_id,
+										const std::string& slot_name) {
 	com_server->get_morph_from_slot(morph_id, slot_name);
+}
+
+void ClientHandler::select_lobby(const std::string& lobby_name,
+								 const std::string& lobby_property){
+	com_server->send_selected_lobby(lobby_name, lobby_property);
+}
+
+void ClientHandler::finalizar_edicion() {
+	modelo->finalizar_edicion();
 }

@@ -11,15 +11,14 @@ class VentanaEdicion: public Gtk::Box{
   		~VentanaEdicion();
 
   		void set_control(ClientHandler* client_handler);
-  		void start();
+  		void start(const std::string& morph_name);
  	private:
-  		Gtk::Entry* entrada_nombre;
-  		Gtk::Entry* code_entry;
-  		Gtk::Button* boton_aceptar_nombre;
+  		Gtk::Entry* name_entry;
+  		Gtk::TextView* code_entry;
   		Gtk::Button* boton_get;
   		Gtk::Button* boton_do;
   		Gtk::Button* boton_eliminar_obj;
-  		Gtk::Button* boton_finalizar_edicion;
+
 
   		double x_editando, y_editando;
   		ClientHandler* client_handler;
@@ -31,7 +30,8 @@ class VentanaEdicion: public Gtk::Box{
   		void on_do_event();
   		void on_finalizar_edicion_event();
   		void ocultar_barra_edicion();
-  		bool do_start();
+  		bool do_start(const std::string& morph_name);
+  		bool on_key_release_event(GdkEventKey* eventKey);
 
   		void send_code(const std::string& event);
 

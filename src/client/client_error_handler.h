@@ -7,7 +7,7 @@
  * de error en la conexion de un cliente */
 class ClientErrorHandler : public EventHandler {
  private:
-  void handle(json j);
+  void handle(const json& j) const;
  public:
   ClientErrorHandler(ClientHandler *client_handler);
   ~ClientErrorHandler();

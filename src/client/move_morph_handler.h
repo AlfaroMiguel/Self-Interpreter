@@ -7,9 +7,8 @@ class MoveMorphHandler: public EventHandler{
  public:
   MoveMorphHandler(ClientHandler* client_handler);
   ~MoveMorphHandler();
-  void operator()();
  private:
-  void handle(json j);
-  bool on_handle(json j);
+  void handle(const json& j) const;
+  bool on_handle(const json& j) const;
 };
 #endif

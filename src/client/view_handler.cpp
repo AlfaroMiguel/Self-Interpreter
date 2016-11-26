@@ -23,8 +23,8 @@ void ViewHandler::dismiss_morph(Glib::RefPtr<Morph> morph){
 	ventana_objetos->dismiss_morph(morph);
 }
 
-void ViewHandler::enable_editing() {
-	ventana_edicion->start();
+void ViewHandler::enable_editing(Glib::RefPtr<Morph> morph) {
+	ventana_edicion->start(morph->get_nombre());
 }
 
 void ViewHandler::ocultar_vista_cliente() {
@@ -48,9 +48,9 @@ void ViewHandler::set_control(ClientHandler *client_handler) {
 	ventana_inicio->set_control(client_handler);
 	ventana_edicion->set_control(client_handler);
 	ventana_cliente->set_control(client_handler);
-	client_handler->set_control(this);
+	client_handler->set_handler(this);
 }
 
-void ViewHandler::error_ingreso_cliente() {
+void ViewHandler::client_connection_error() {
 	ventana_inicio->mostrar_error();
 }

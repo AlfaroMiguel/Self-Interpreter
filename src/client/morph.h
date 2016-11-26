@@ -44,6 +44,7 @@ class Morph: public Goocanvas::Group {
   	bool es_slot(const Posicion& pos) const;
   	void cambiar_posicion(const Posicion& pos);
   	const Posicion& get_posicion() const;
+  	bool has_id(int id);
  private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;
