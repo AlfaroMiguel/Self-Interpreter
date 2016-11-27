@@ -9,7 +9,8 @@ VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 	canvas->set_hexpand(true);
 	canvas->set_size_request(800,800);
 	canvas->property_background_color_rgb() = 0xE0E0E0;
-	add(*canvas);
+	pack_start(*canvas);
+	reorder_child(*canvas, 0);
 	root = Goocanvas::Group::create();
 	canvas->set_root_item(root);
 }

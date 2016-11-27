@@ -122,3 +122,12 @@ void ClientHandler::select_lobby(const std::string& lobby_name,
 void ClientHandler::quit(){
 	view_handler->quit();
 }
+
+void ClientHandler::change_lobby(){
+	view_handler->show_lobby_options();
+}
+
+void ClientHandler::reset_lobby() {
+	modelo->reset_lobby();
+	//view_handler->reset_lobby();
+}

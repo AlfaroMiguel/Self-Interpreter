@@ -37,12 +37,16 @@ class ViewHandler{
   		void client_connection_error();
   		void ocultar_vista_cliente();
   		void quit();
+  		void show_lobby_options();
+  		void reset_lobby();
  	private:
   		MainView* main_view;
   		VentanaInicio* ventana_inicio;
   		VentanaEdicion* ventana_edicion;
   		VentanaObjetos* ventana_objetos;
   		VentanaCliente* ventana_cliente;
+
+  		bool do_show_lobby_options();
 };
 
 #endif

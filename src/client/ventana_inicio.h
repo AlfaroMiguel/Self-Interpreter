@@ -15,7 +15,6 @@ class VentanaInicio: public Gtk::Dialog{
   	void add_lobby(const std::string& lobby_id);
   	void inicializar();
   	void set_control(ClientHandler* client_handler);
-  	void mostrar_error();
  private:
   	std::vector<Glib::ustring> lobbies;
   	ClientHandler* client_handler;
@@ -28,13 +27,19 @@ class VentanaInicio: public Gtk::Dialog{
   	Gtk::RadioButton* boton_lobby_privado;
   	Gtk::RadioButton* boton_lobby_compartido;
   	Gtk::Entry* entrada_texto;
-  	Gtk::Label* label_error;
+
+  	bool reseted;
+
+  	sigc::connection signal_confirm;
 
   	void on_confirmar();
   	bool do_inicializar();
-  	bool do_mostrar_error();
   	void on_select_lobby();
   	void on_add_lobby();
   	void on_quit();
+  	bool on_key_release_event(GdkEventKey* eventKey);
+  	void reset();
+  	void on_change_lobby();
+  	bool do_reset();
 };
 #endif

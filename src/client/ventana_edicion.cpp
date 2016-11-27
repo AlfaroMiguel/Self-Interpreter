@@ -8,6 +8,8 @@
 #define GLD_BTN_CODE "btnCode"
 #define GLD_BTN_ADD_SLOT "btnAddSlot"
 #define GLD_BTN_REMOVE_SLOT "btnRemoveSlot"
+#define GLD_BTN_FINALIZAR_EDICION "btnFinalizarEdicion"
+#define GLD_BTN_CHANGE_LOBBY "btnChangeLobby"
 
 VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 								Gtk::Box(cobject){
@@ -22,7 +24,8 @@ VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 	builder->get_widget(GLD_BTN_CODE, code_hint);
 	builder->get_widget(GLD_BTN_ADD_SLOT, add_slot_hint);
 	builder->get_widget(GLD_BTN_REMOVE_SLOT, remove_slot_hint);
-
+	builder->get_widget(GLD_BTN_FINALIZAR_EDICION, close_editing_btn);
+	builder->get_widget(GLD_BTN_CHANGE_LOBBY, change_lobby_btn);
 	boton_get->signal_clicked().connect
 		(sigc::mem_fun(*this, &VentanaEdicion::on_get_event));
 	boton_do->signal_clicked().connect
@@ -35,10 +38,18 @@ VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 		(sigc::mem_fun(*this, &VentanaEdicion::on_add_slot_hint_event));
 	remove_slot_hint->signal_clicked().connect
 		(sigc::mem_fun(*this, &VentanaEdicion::on_remove_slot_hint_event));
+	close_editing_btn->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_close_editing_event));
+	change_lobby_btn->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_change_lobby_event));
 	hide();
 }
 
 VentanaEdicion::~VentanaEdicion(){}
+
+void VentanaEdicion::on_change_lobby_event(){
+	client_handler->change_lobby();
+}
 
 void VentanaEdicion::add_to_code_entry(const Glib::ustring& code){
 	code_entry->get_buffer()->insert_at_cursor(code);
@@ -69,6 +80,9 @@ void VentanaEdicion::ocultar_barra_edicion(){
 	hide();
 }
 
+void VentanaEdicion::on_close_editing_event(){
+	ocultar_barra_edicion();
+}
 
 void VentanaEdicion::on_eliminar_obj_event(){
 	client_handler->dismiss_morph();

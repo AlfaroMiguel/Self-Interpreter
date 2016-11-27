@@ -10,6 +10,7 @@ class VentanaCliente: public Gtk::Dialog{
 
   void set_control(ClientHandler* client_handler);
   void ocultar();
+  void mostrar_error();
 
  private:
   ClientHandler* client_handler;
@@ -17,9 +18,11 @@ class VentanaCliente: public Gtk::Dialog{
   Gtk::Button* boton_ingresar;
   Gtk::Button* boton_salir;
   Gtk::Entry* entrada_texto;
+  Gtk::Label* label_error;
 
   void on_ingresar();
   bool on_ocultar();
+  bool do_mostrar_error();
   bool on_key_release_event(GdkEventKey* eventKey);
   void on_quit();
 };

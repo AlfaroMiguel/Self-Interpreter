@@ -52,9 +52,22 @@ void ViewHandler::set_control(ClientHandler *client_handler) {
 }
 
 void ViewHandler::client_connection_error() {
-	ventana_inicio->mostrar_error();
+	ventana_cliente->mostrar_error();
 }
 
 void ViewHandler::quit(){
 	main_view->quit();
+}
+
+bool ViewHandler::do_show_lobby_options(){
+	ventana_inicio->show();
+	return false;
+}
+
+void ViewHandler::show_lobby_options() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &ViewHandler::do_show_lobby_options));
+}
+
+void ViewHandler::reset_lobby() {
+	//ventana_objetos->clear();
 }

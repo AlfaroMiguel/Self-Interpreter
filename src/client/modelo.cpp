@@ -124,3 +124,9 @@ bool Modelo::es_slot(const Posicion& pos) const{
 			return true;
 	return false;
 }
+
+void Modelo::reset_lobby() {
+	for(unsigned int i = 0; i < morphs.size(); i++)
+		client_handler->dismiss_morph(morphs[i]);
+	morphs.clear();
+}

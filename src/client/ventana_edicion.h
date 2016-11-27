@@ -21,7 +21,8 @@ class VentanaEdicion: public Gtk::Box{
   		Gtk::Button* code_hint;
   		Gtk::Button* add_slot_hint;
   		Gtk::Button* remove_slot_hint;
-
+		Gtk::Button* close_editing_btn;
+  		Gtk::Button* change_lobby_btn;
 
   		double x_editando, y_editando;
   		ClientHandler* client_handler;
@@ -37,6 +38,8 @@ class VentanaEdicion: public Gtk::Box{
   		bool do_start(const std::string& morph_name);
   		bool on_key_release_event(GdkEventKey* eventKey);
   		void add_to_code_entry(const Glib::ustring& code);
+  		void on_close_editing_event();
+  		void on_change_lobby_event();
 
   		void send_code(const std::string& event);
 

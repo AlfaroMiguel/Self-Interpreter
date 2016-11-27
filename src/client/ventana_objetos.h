@@ -19,6 +19,7 @@ class VentanaObjetos: public Gtk::Box{
   		void dismiss_morph(Glib::RefPtr<Morph> morph);
   		void set_control(ClientHandler* client_handler);
   		void start();
+  		void clear();
  	private:
   		ClientHandler* client_handler;
   		Goocanvas::Canvas* canvas;

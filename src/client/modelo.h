@@ -38,6 +38,7 @@ class Modelo{
   	bool existe_morph(int morph_id);
   	void change_morph_position(int morph_id, const Posicion& new_pos);
   	Glib::RefPtr<Morph> get_selected_morph() const;
+  	void reset_lobby();
  private:
   	Modelo(const Modelo& otra) = delete;
   	Modelo& operator=(const Modelo& otra) = delete;

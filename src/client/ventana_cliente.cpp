@@ -5,14 +5,15 @@ VentanaCliente::VentanaCliente(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 	builder->get_widget("btnIngresarCliente", boton_ingresar);
 	builder->get_widget("btnSalirCliente", boton_salir);
 	builder->get_widget("entCliente", entrada_texto);
+	builder->get_widget("lblError", label_error);
 	boton_ingresar->signal_clicked().connect(sigc::mem_fun(*this, &VentanaCliente::on_ingresar));
 	boton_salir->signal_clicked().connect(sigc::mem_fun(*this, &VentanaCliente::on_quit));
+	label_error->hide();
 }
 
 VentanaCliente::~VentanaCliente() {}
 
 void VentanaCliente::on_quit(){
-	std::cout << "salir" << std::endl;
 	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaCliente::on_ocultar));
 	client_handler->quit();
 }
@@ -41,4 +42,14 @@ bool VentanaCliente::on_ocultar() {
 
 void VentanaCliente::ocultar(){
 	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaCliente::on_ocultar));
+}
+
+bool VentanaCliente::do_mostrar_error(){
+	label_error->show();
+	entrada_texto->delete_text(0, entrada_texto->get_buffer()->get_text().size());
+	return false;
+}
+
+void VentanaCliente::mostrar_error() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaCliente::do_mostrar_error));
 }

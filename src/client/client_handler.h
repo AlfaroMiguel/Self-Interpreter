@@ -65,6 +65,8 @@ class ClientHandler{
   		void select_lobby(const std::string& lobby_name, const std::string& lobby_property);
   		void hide_morph(Glib::RefPtr<Morph> morph);
   		void quit();
+  		void change_lobby();
+  		void reset_lobby();
  	private:
   		Modelo* modelo;
   		ComunicadorServer* com_server;
