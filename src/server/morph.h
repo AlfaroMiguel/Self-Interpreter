@@ -58,6 +58,7 @@ public:
     ~Morph();
     /*Recibe un nombre y le setea el nombre al morph*/
     void setName(const std::string& newName);
+    void changeName(const std::string& newName);
     /*Recibe dos nuevas posiciones y se le cambia la posicion al morph*/
     void changePosition(double newX, double newY);
     /*Recibe dos cadenas, una siendo el nombre del slot a agregar y la otra

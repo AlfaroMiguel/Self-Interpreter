@@ -16,6 +16,10 @@ void Morph::setName(const std::string &newName) {
     id = idNumber++;
 }
 
+void Morph::changeName(const std::string &newName){
+    name = newName;
+}
+
 void Morph::changePosition(double newX, double newY) {
     std::cout << "Cambio a nueva posicion x = " << newX << " y = " << newY << std::endl;
     x = newX;
