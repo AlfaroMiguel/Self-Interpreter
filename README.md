@@ -43,7 +43,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 
 - [ ] Pasar por referencia (no por copia!) usar const cuando lo amerite
 - [x] Serializacion/Persistencia (TESTING) :microscope:
-- [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase) (EN PROCESO)
+- [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase) (EN PROCESO) :arrows_clockwise:
 - [x] Mensajes con contexto en los objetos (TESTING) :microscope:
 - [x] Actualizacion de Slots (incluso cuando se hace DO)
 - [ ] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado])
