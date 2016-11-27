@@ -1,5 +1,5 @@
 #include "morph.h"
-#include "../common/json.hpp"
+#include "../../common/json.hpp"
 using json = nlohmann::json;
 
 int Morph::idNumber = 0;

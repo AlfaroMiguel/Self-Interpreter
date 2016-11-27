@@ -1,13 +1,13 @@
 #include "interpreter.h"
 #include <iostream> //cout //stof
-#include "../object.h"
-#include "../number.h"
-#include "../searcher_object.h"
+#include "../virtualmachine/object.h"
+#include "../virtualmachine/number.h"
+#include "../virtualmachine/searcher_object.h"
 #include <string>
 #include "scanner.h"
 #include <vector>
 #include <stdexcept>
-#include "../lobby.h"
+#include "../virtualmachine/lobby.h"
 
 extern int yyparse(Interpreter *interpreter);
 

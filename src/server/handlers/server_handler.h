@@ -2,7 +2,7 @@
 #define SERVER_HANDLER_H
 
 #include <string>
-#include "proxy_client.h"
+#include "../proxy_client.h"
 
 /*Clase encargada en resolver todos los eventos posibles que surgan desde el cliente
  * Tiene los metodos encargados de cumplir las diferentes peticiones del mismo*/

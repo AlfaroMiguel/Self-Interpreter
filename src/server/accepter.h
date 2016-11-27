@@ -13,7 +13,7 @@
 #include "../common/thread.h"
 #include "proxy_client.h"
 #include "../common/socket.h"
-#include "virtualmachine.h"
+#include "virtualmachine/virtualmachine.h"
 
 /*Clase encargada de aceptar clientes nuevos que se quieran conectar
  * al servidor, hereda de Thread.

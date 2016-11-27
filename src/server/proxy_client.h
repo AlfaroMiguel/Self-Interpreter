@@ -12,9 +12,9 @@ using json = nlohmann::json;
 #include <vector>
 #include <iostream>
 #include "../common/thread.h"
-#include "virtualmachine.h"
+#include "virtualmachine/virtualmachine.h"
 
-#include "event_handler_selector.h"
+#include "handlers/event_handler_selector.h"
 
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del client. */

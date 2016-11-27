@@ -1,6 +1,6 @@
 #ifndef JSON_LIB
 #define JSON_LIB
-#include "../common/json.hpp"
+#include "../../common/json.hpp"
 using json = nlohmann::json;
 #endif
 

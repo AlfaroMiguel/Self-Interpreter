@@ -1,7 +1,7 @@
 #include "server_handler.h"
 
-#include "proxy_client.h"
-#include "../common/json.hpp"
+#include "../proxy_client.h"
+#include "../../common/json.hpp"
 
 using json = nlohmann::json;
 

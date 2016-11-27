@@ -1,5 +1,5 @@
 #include "lobby.h"
-#include "parser/interpreter.h"
+#include "../parser/interpreter.h"
 #include "iostream"
 
 Lobby::Lobby(){}
@@ -124,4 +124,57 @@ void Lobby::initializeMorphs() {
         lobbyReference->searchForId(*itObject)->notifyClients("crear"); //TODO cambiar nombre de evento
     }
     std::cout << "Lobby::initializeMorphs: end" << std::endl;
+}
+
+
+/*Serializacion*/
+
+void Lobby::serialize(json& jserialization){
+    jserialization["lobbyName"] = lobbyName;
+    jserialization["isShared"] = isShared;
+
+    //Esta es la serializacion recursiva
+    json jLobby;
+    lobbyReference->serialize(jLobby);
+    jserialization["lobbyReference"] = jLobby;
+
+    json jClientsConnected;
+    for(auto itClient = clientsConnected.begin(); itClient != clientsConnected.end(); itClient++){
+        jClientsConnected.push_back(itClient->first);
+    }
+    jserialization["clientsConnected"] = jClientsConnected;
+
+    json jVisibleObjects;
+    for(auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++){
+        jVisibleObjects.push_back(*itObject);
+    }
+    jserialization["visibleObjects"] = jVisibleObjects;
+}
+
+Lobby* Lobby::deserialize(json& jdeserialize){
+    Lobby* lobby = new Lobby();
+
+    lobby->lobbyName = jdeserialize["lobbyName"];
+    lobby->isShared = jdeserialize["isShared"];
+
+    json jLobby;
+    jLobby = jdeserialize["lobbyReference"];
+
+    lobby->lobbyReference = Object::deserialize(jLobby, lobby);
+
+    json jClientsConnected = jdeserialize["clientsConnected"];
+    for(auto it = jClientsConnected.begin(); it != jClientsConnected.end(); it++){
+        std::string clientName = *it;
+        Client* client = nullptr;
+        lobby->clientsConnected.insert(std::make_pair(clientName, client));
+    }
+
+    lobby->interpreter = new Interpreter(lobby->lobbyReference, lobby);
+
+    json jVisibleObjects = jdeserialize["visibleObjects"];
+    for(auto it = jVisibleObjects.begin(); it != jVisibleObjects.end(); it++){
+        int visibleObjectID = *it;
+        lobby->visibleObjects.insert(visibleObjectID);
+    }
+    return lobby;
 }

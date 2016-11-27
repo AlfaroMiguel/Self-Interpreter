@@ -113,3 +113,32 @@ void VirtualMachine::interpretCodeDo(const std::string& clientName, const std::s
         lobby->interpretCodeDo(code, morphID);
     }
 }
+
+
+/*Serializacion*/
+
+void VirtualMachine::serialize(json& jserialization){
+    json jExistingLobbies;
+    for(auto itLobby = existingLobbies.begin(); itLobby != existingLobbies.end(); itLobby++){
+        json jLobby;
+        itLobby->second->serialize(jLobby);
+        jExistingLobbies.push_back(std::make_pair(itLobby->first, jLobby));
+    }
+    jserialization["existingLobbies"] = jExistingLobbies;
+}
+
+
+VirtualMachine* VirtualMachine::deserialize(json& jdeserialization){
+    VirtualMachine* vm = new VirtualMachine();
+    std::cout << "Deserealizando VirtualMachine" << std::endl;
+
+    json jExistingLobbies = jdeserialization["existingLobbies"];
+    for(auto it = jExistingLobbies.begin(); it !=  jExistingLobbies.end(); it++){
+        std::string lobbyName = it.key();
+        json jLobby = it.value();
+        std::cout << "Deserializo lobby: " << lobbyName << std::endl;
+        Lobby* lobby = Lobby::deserialize(jLobby);
+        (vm->existingLobbies).insert(std::make_pair(lobbyName, lobby));
+    }
+    return vm;
+}

@@ -1,6 +1,6 @@
 #ifndef JSON_LIB
 #define JSON_LIB
-#include "../common/json.hpp"
+#include "../../common/json.hpp"
 using json = nlohmann::json;
 #endif
 
@@ -14,7 +14,7 @@ using json = nlohmann::json;
 
 #include "client.h"
 #include "morph.h"
-#include "parser/interpreter.h"
+#include "../parser/interpreter.h"
 
 /*Clase Lobby que contiene toda la informacion de un Lobby de Self
  * El nombre del lobby
@@ -33,73 +33,8 @@ private:
     std::set<int> visibleObjects;
 
 public:
-
-    //Serialization TEST
-
-    void serialize(json& jserialization){
-        jserialization["lobbyName"] = lobbyName;
-        jserialization["isShared"] = isShared;
-
-        //Esta es la serializacion recursiva
-        json jLobby;
-        lobbyReference->serialize(jLobby);
-        jserialization["lobbyReference"] = jLobby;
-
-        json jClientsConnected;
-        for(auto itClient = clientsConnected.begin(); itClient != clientsConnected.end(); itClient++){
-            jClientsConnected.push_back(itClient->first);
-        }
-        jserialization["clientsConnected"] = jClientsConnected;
-
-        json jVisibleObjects;
-        for(auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++){
-            jVisibleObjects.push_back(*itObject);
-        }
-        jserialization["visibleObjects"] = jVisibleObjects;
-        /*
-        json jAllObjects;
-        for (auto itObject = allObjects.begin(); itObject != allObjects.end(); itObject++){
-            json jObject;
-            std::string id = std::to_string(itObject->first); //Tengo que pasar el id a string sino no me lo toma el pushback
-            itObject->second->serializeBase(jObject);
-            jAllObjects.push_back(std::make_pair(id,jObject));
-        }
-        jserialization["allObjects"] = jAllObjects;*/
-    }
-
-    static Lobby* deserialize(json& jdeserialize){
-        Lobby* lobby = new Lobby();
-
-        lobby->lobbyName = jdeserialize["lobbyName"];
-        lobby->isShared = jdeserialize["isShared"];
-
-        json jLobby;
-        jLobby = jdeserialize["lobbyReference"];
-
-        lobby->lobbyReference = Object::deserialize(jLobby, lobby);
-
-        json jClientsConnected = jdeserialize["clientsConnected"];
-        for(auto it = jClientsConnected.begin(); it != jClientsConnected.end(); it++){
-            std::string clientName = *it;
-            Client* client = nullptr;
-            lobby->clientsConnected.insert(std::make_pair(clientName, client));
-        }
-
-        lobby->interpreter = new Interpreter(lobby->lobbyReference, lobby);
-
-        json jVisibleObjects = jdeserialize["visibleObjects"];
-        for(auto it = jVisibleObjects.begin(); it != jVisibleObjects.end(); it++){
-            int visibleObjectID = *it;
-            lobby->visibleObjects.insert(visibleObjectID);
-        }
-
-        return lobby;
-
-    }
     /*Constructor vacio*/
     Lobby();
-
-
     /*Constructor: recibe el nombre del lobby, un valor booleano que indica si el lobby es compartiod, y
      * una referencia al objeto lobby*/
     Lobby(const std::string& lobbyName, bool isShared, Object* lobbyReference);
@@ -135,6 +70,12 @@ public:
     void interpretCodeDo(const std::string& code, int objectContextID);
     /*Inicializa todos los morphs visibles a los clientes conectados al lobby*/
     void initializeMorphs();
+
+    /*Serializacion*/
+
+    void serialize(json& jserialization);
+    static Lobby* deserialize(json& jdeserialize);
+
 };
 
 #endif

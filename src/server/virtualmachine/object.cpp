@@ -161,3 +161,56 @@ int Object::getMorphId(){
 void Object::changeMorphName(std::string& newName){
     myMorph.changeName(newName);
 }
+
+/*Serializacion*/
+
+void Object::serialize(json& jserialization){
+    std::cout << "Object::serialize: " << objectName << std::endl;
+    jserialization["objectName"] = objectName;
+    jserialization["representation"] = representation;
+
+    json jRegisterOfSlots;
+    slots.serialize(jRegisterOfSlots);
+    jserialization["slots"] = jRegisterOfSlots;
+
+    json jMorph;
+    myMorph.serialize(jMorph);
+    jserialization["myMorph"] = jMorph;
+
+    jserialization["type"] = "object";
+}
+
+Object* Object::deserialize(json& jdeserialization, Lobby* lobby){
+    std::cout << "Object::deserialize start" << std::endl;
+    Object* object = new Object();
+    object->objectName = jdeserialization["objectName"];
+    object->representation = jdeserialization["representation"];
+
+    json jRegisterOfSlots;
+    jRegisterOfSlots = jdeserialization["slots"];
+    object->slots.deserialize(jRegisterOfSlots, object, lobby);
+
+    json jMorph;
+    jMorph = jdeserialization["myMorph"];
+    object->myMorph.deserialize(jMorph);
+
+    object->myLobby = lobby;
+
+    std::cout << "Object::deserialize end" << std::endl;
+
+    return object;
+}
+
+Object* Object::searchForId(int objectId){
+    std::cout << "Busco " << objectId << " en " << this->getName() << std::endl;
+    std::cout << "Busco " << objectId << " mi ID: " << this->getMorphId() << std::endl;
+    if(this->getMorphId() == objectId)return this;
+    std::vector<Object*> mySlotsObjects = this->slots.getObjectsWhitoutParents(); //Para que no haya ciclos de busqueda
+    for(auto itObjectSlot = mySlotsObjects.begin(); itObjectSlot != mySlotsObjects.end(); itObjectSlot++){
+        if((*itObjectSlot)->getName() != "self") {
+            Object *objectFound = (*itObjectSlot)->searchForId(objectId);
+            if (objectFound != nullptr) return objectFound;
+        }
+    }
+    return nullptr;
+}

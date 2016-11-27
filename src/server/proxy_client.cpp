@@ -1,8 +1,8 @@
 #include "proxy_client.h"
 #include "receiver.h"
-#include "event_handler_selector.h"
-#include "server_handler.h"
-#include "event_handler.h"
+#include "handlers/event_handler_selector.h"
+#include "handlers/server_handler.h"
+#include "handlers/event_handler.h"
 
 using json = nlohmann::json;
 

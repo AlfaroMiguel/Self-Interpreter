@@ -5,8 +5,8 @@
 #include <map>
 
 #include <string>
-#include "../object.h"
-#include "../garbage_collector.h"
+#include "../virtualmachine/object.h"
+#include "../virtualmachine/garbage_collector.h"
 #include <fstream>
 
 class Lobby;
