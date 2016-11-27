@@ -159,6 +159,7 @@ NativeValue Expression::getValue(){
 
 Object* Expression::getResult(){
   if(result != nullptr){
+    std::cout << "/* result es distinto de nulltpr */" << std::endl;
     return result;
   }
   return this;
@@ -226,8 +227,7 @@ void Expression::evaluate(){
       std::cout << "Resultado de la expression:" << result->getValue().getInt() << std::endl;
     }
     else{
-      if(!operation.compare("")){
-
+      if(operation.compare("") != 0){
         Object* metodo = this->getSlotName(operation);
         std::cout << "objectName del metodo:" <<metodo->getName()<< std::endl;
         metodo->evaluate();

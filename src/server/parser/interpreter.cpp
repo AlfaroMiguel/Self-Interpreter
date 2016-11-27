@@ -189,7 +189,7 @@ void Interpreter::sendMessage(const string message){
     Object* result = expression->getResult();
     garbage.registerObject(result);
     //int resultado = result->getValue().getInt();
-    //reportFile << "Interpreter::resultado" <<resultado<< "\n";
+    reportFile << "Interpreter::name" <<result->getName()<< "\n";
     std::string resultSTR = result->getRepresentation();
     result->changeMorphName(resultSTR); //TEST
     createdObjects.push_back(result);
