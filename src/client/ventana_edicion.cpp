@@ -5,6 +5,9 @@
 #define GLD_CODE_ENTRY "entryCode"
 #define GLD_BTN_ELIMINAR "btnDelete"
 #define GLD_NAME_ENTRY "entryName"
+#define GLD_BTN_CODE "btnCode"
+#define GLD_BTN_ADD_SLOT "btnAddSlot"
+#define GLD_BTN_REMOVE_SLOT "btnRemoveSlot"
 
 VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 								Gtk::Box(cobject){
@@ -16,24 +19,49 @@ VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 	builder->get_widget(GLD_BTN_GET, boton_get);
 	builder->get_widget(GLD_BTN_DO, boton_do);
 	builder->get_widget(GLD_BTN_ELIMINAR, boton_eliminar_obj);
-	boton_get->signal_clicked().connect(sigc::mem_fun(*this, &VentanaEdicion::on_get_event));
-	boton_do->signal_clicked().connect(sigc::mem_fun(*this, &VentanaEdicion::on_do_event));
-	boton_eliminar_obj->signal_clicked().connect(sigc::mem_fun(*this, &VentanaEdicion::on_eliminar_obj_event));
+	builder->get_widget(GLD_BTN_CODE, code_hint);
+	builder->get_widget(GLD_BTN_ADD_SLOT, add_slot_hint);
+	builder->get_widget(GLD_BTN_REMOVE_SLOT, remove_slot_hint);
 
+	boton_get->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_get_event));
+	boton_do->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_do_event));
+	boton_eliminar_obj->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_eliminar_obj_event));
+	code_hint->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_code_hint_event));
+	add_slot_hint->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_add_slot_hint_event));
+	remove_slot_hint->signal_clicked().connect
+		(sigc::mem_fun(*this, &VentanaEdicion::on_remove_slot_hint_event));
 	hide();
 }
 
 VentanaEdicion::~VentanaEdicion(){}
 
+void VentanaEdicion::add_to_code_entry(const Glib::ustring& code){
+	code_entry->get_buffer()->insert_at_cursor(code);
+}
+
+void VentanaEdicion::on_code_hint_event() {
+	add_to_code_entry("(||).");
+	code_entry->grab_focus();
+}
+
+void VentanaEdicion::on_add_slot_hint_event() {
+	add_to_code_entry("self _AddSlot: (||).");
+	code_entry->grab_focus();
+}
+
+void VentanaEdicion::on_remove_slot_hint_event() {
+	add_to_code_entry("self _RemoveSlot: (||).");
+	code_entry->grab_focus();
+}
+
 void VentanaEdicion::set_control(ClientHandler* client_handler){
 	this->client_handler = client_handler;
 }
-
-//void VentanaEdicion::on_aceptar_nombre_event() {
-//	const Glib::ustring new_name = name_entry->get_buffer()->get_text();
-//	client_handler->change_morph_name(new_name.raw());
-//	name_entry->delete_text(0, new_name.size());
-//}
 
 void VentanaEdicion::ocultar_barra_edicion(){
 	name_entry->delete_text(0, name_entry->get_buffer()->get_text().size());

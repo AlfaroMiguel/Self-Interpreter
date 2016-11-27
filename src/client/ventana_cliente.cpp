@@ -21,6 +21,13 @@ void VentanaCliente::on_ingresar(){
 	client_handler->connect_client(client_name.raw());
 }
 
+bool VentanaCliente::on_key_release_event(GdkEventKey* eventKey){
+	if (eventKey->keyval == GDK_KEY_Return){
+		on_ingresar();
+	}
+	return true;
+}
+
 bool VentanaCliente::on_ocultar() {
 	hide();
 	return false;
