@@ -188,9 +188,9 @@ void Interpreter::sendMessage(const string message){
     expression->evaluate();
     Object* result = expression->getResult();
     garbage.registerObject(result);
-    int resultado = result->getValue().getInt();
-    reportFile << "Interpreter::resultado" <<resultado<< "\n";
-    std::string resultSTR = std::to_string(resultado);
+    //int resultado = result->getValue().getInt();
+    //reportFile << "Interpreter::resultado" <<resultado<< "\n";
+    std::string resultSTR = result->getRepresentation();
     result->changeMorphName(resultSTR); //TEST
     createdObjects.push_back(result);
     result->setLobby(lobby);
@@ -315,21 +315,33 @@ void Interpreter::interpretChar(const char *buffer,Object* entorno_ptr) {
     reportFile << "Empieza a interpretar:" +bufferToInterpreter+"\n";
     yy_scan_string(buffer);
     yyparse(this);
-    reportFile << "Objectos notificados:\n";
-    for (size_t i = 0; i < createdObjects.size(); i++) {
-      reportFile << "      *Nombre:"+ createdObjects[i]->getName()+"\n";
-    }
     reportFile << "Termine de interpretar\n";
-    reportFile << "Se llama al recolector de basura";
+    reportFile << "Se llama al recolector de basura\n";
     garbage.collect();
     reportFile.close();
 }
 
 std::vector<Object*> Interpreter::getCreatedObjets(){
+  reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
+  reportFile  << "Objetos creados\n";
+  std::cout  << "Objetos creados\n";
+  for (size_t i = 0; i < createdObjects.size(); i++) {
+    reportFile << "      *Nombre:"+ createdObjects[i]->getName()+"\n";
+    std::cout << "       *Nombre:"+ createdObjects[i]->getName()+"\n";
+  }
+  reportFile.close();
   return createdObjects;
 }
 
 std::vector<Object*> Interpreter::getModifiedObjets(){
+  reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
+  reportFile  << "Objetos modificados\n";
+  std::cout  << "Objetos modificados\n";
+  for (size_t i = 0; i < modifiedObjects.size(); i++) {
+    reportFile << "      *Nombre:"+ modifiedObjects[i]->getName()+"\n";
+    std::cout << "      *Nombre:"+ modifiedObjects[i]->getName()+"\n";
+  }
+  reportFile.close();
   return modifiedObjects;
 }
 
