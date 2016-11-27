@@ -59,3 +59,7 @@ void ServerHandler::interpretSelfGet(const std::string& code, int morphID){
 void ServerHandler::interpretSelfDo(const std::string& code, int morphID){
     client.vm.interpretCodeDo(client.clientName, code, morphID);
 }
+
+void ServerHandler::changeObjectName(int objectID, const std::string& newName){
+    client.vm.changeObjectName(client.clientName, objectID, newName);
+}

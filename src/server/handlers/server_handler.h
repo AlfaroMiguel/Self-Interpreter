@@ -29,6 +29,9 @@ public:
     void interpretSelfGet(const std::string& code, int morphID);
     /*Recibe el codigo self y resuelve el evento do*/
     void interpretSelfDo(const std::string& code, int morphID);
+
+    //TODO DOCUMENTAR
+    void changeObjectName(int objectID, const std::string& newName);
 };
 
 #endif

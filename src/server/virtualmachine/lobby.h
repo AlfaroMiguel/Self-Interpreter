@@ -71,6 +71,10 @@ public:
     /*Inicializa todos los morphs visibles a los clientes conectados al lobby*/
     void initializeMorphs();
 
+    //TODO DOCUMENTAR
+
+    void changeObjectName(int objectID, const std::string& newName);
+
     /*Serializacion*/
 
     void serialize(json& jserialization);

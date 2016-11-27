@@ -51,9 +51,8 @@ Object::~Object(){}
 void Object::setName(const std::string newName){
     std::cout << "Object::setName:" << newName << std::endl;
     this->objectName = newName;
-
     myMorph.setName(newName);
-    /*TODO no notifico mas cuando se cambia el nombre, notifico al final de la creacion del objectReference*/
+    /*No notifico mas cuando se cambia el nombre, notifico al final de la creacion del objectReference*/
 }
 /*Devuelve el nombre*/
 std::string Object::getName() const {
@@ -160,6 +159,11 @@ int Object::getMorphId(){
 
 void Object::changeMorphName(std::string& newName){
     myMorph.changeName(newName);
+}
+
+void Object::changeObjectName(const std::string& newName) {
+    this->objectName = newName;
+    this->changeMorphName((std::string&)newName);
 }
 
 /*Serializacion*/

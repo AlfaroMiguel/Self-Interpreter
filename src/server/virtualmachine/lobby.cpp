@@ -126,6 +126,14 @@ void Lobby::initializeMorphs() {
     std::cout << "Lobby::initializeMorphs: end" << std::endl;
 }
 
+void Lobby::changeObjectName(int objectID, const std::string& newName){
+    Object* object = lobbyReference->searchForId(objectID);
+    if(object != nullptr){
+        object->changeObjectName(newName);
+        object->notifyClients("crear"); //TODO CAMBIAR NOMBRE DE EVENTO
+    }
+}
+
 
 /*Serializacion*/
 

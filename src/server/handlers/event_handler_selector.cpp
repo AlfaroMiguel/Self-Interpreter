@@ -10,6 +10,7 @@
 #include "move_morph_client_handler.h"
 #include "get_client_handler.h"
 #include "do_client_handler.h"
+#include "change_name_client_handler.h"
 
 #define CONNNECT_EVENT "conectar cliente"
 #define INITIALIZE_EVENT "inicializar"
@@ -17,6 +18,7 @@
 #define MOVE_MORPH_EVENT "mover morph"
 #define GET_EVENT "get"
 #define DO_EVENT "do"
+#define CHANGE_NAME_EVENT "change name"
 
 EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) {
     event_handlers.insert(std::pair<std::string, EventHandler *>
@@ -31,6 +33,8 @@ EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) {
                                   (GET_EVENT, new GetClientHandler(server_handler)));
     event_handlers.insert(std::pair<std::string, EventHandler *>
                                   (DO_EVENT, new DoClientHandler(server_handler)));
+    event_handlers.insert(std::pair<std::string, EventHandler *>
+                                  (CHANGE_NAME_EVENT, new ChangeNameClientHandler(server_handler)));
 }
 
 EventHandlerSelector::~EventHandlerSelector() {}

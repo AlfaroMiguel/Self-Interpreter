@@ -115,6 +115,15 @@ void VirtualMachine::interpretCodeDo(const std::string& clientName, const std::s
 }
 
 
+void VirtualMachine::changeObjectName(const std::string& clientName, int objectId, const std::string& newName){
+    Client* client = searchClient(clientName);
+    if(client != nullptr){
+        Lobby* lobby = client->getActualLobby();
+        lobby->changeObjectName(objectId, newName);
+    }
+}
+
+
 /*Serializacion*/
 
 void VirtualMachine::serialize(json& jserialization){
