@@ -55,7 +55,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [x] Borde del nombre del Morph mas grueso
 - [x] Borde de los slots mas fino
 - [ ] Nombre de Morph en negrita :no_entry_sign:
-- [ ] No repetir Morphs que ya estan visualizados 
+- [x] No repetir Morphs que ya estan visualizados (TESTING) :microscope:
 - [ ] Parser: resolver multiples parametros
 - [ ] Documentacion mas ordenada -> en los .h (EN PROCESO) :recycle:
 - [ ] Valgrind Servidor
