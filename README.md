@@ -42,14 +42,14 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 ##TODO List (23/09) En orden de importancia
 
 - [ ] Pasar por referencia (no por copia!) usar const cuando lo amerite
-- [ ] Serializacion/Persistencia
+- [x] Serializacion/Persistencia (TESTING) :microscope:
 - [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
-- [ ] Mensajes con contexto en los objetos
+- [x] Mensajes con contexto en los objetos (TESTTING) :microscope:
 - [x] Actualizacion de Slots (incluso cuando se hace DO)
 - [ ] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado])
 - [ ] Cambiar de Lobby dentro de la app
 - [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot.
-- [ ] Interfaz en un solo idioma (Ingles)
+- [x] Interfaz en un solo idioma (Ingles)
 - [ ] Seleccionar slot -> Cambia de color el borde
 - [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
 - [x] Borde del nombre del Morph mas grueso

@@ -159,5 +159,5 @@ int Object::getMorphId(){
 };
 
 void Object::changeMorphName(std::string& newName){
-    myMorph.setName(newName);
+    myMorph.changeName(newName);
 }

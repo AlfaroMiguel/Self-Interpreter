@@ -8,6 +8,8 @@ using json = nlohmann::json;
 #define SELFTP_SLOT_H
 class Lobby;
 class Object;
+
+#include <string>
 /*Encapsula la informacion de un slot de self
  * Contiene la referencia al puntero del objeto
  * Y dos valores booleanos que indican si son mutables o parent slot*/

@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include "nativevalue.h"
-#include "object.h"
+#include "searcher_object.h"
 
 class Expression:public Object{
     Object* receiver;
@@ -12,6 +12,9 @@ class Expression:public Object{
     Object* argument;
     Object* result;
 public:
+    virtual void serialize(json& jserialization);
+    static Expression* deserialize(json& jdeserialization, Lobby* lobby);
+
     Expression();
     ~Expression();
     /*Sets*/
