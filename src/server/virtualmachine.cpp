@@ -51,6 +51,8 @@ bool VirtualMachine::connectClient(const std::string& clientName, ProxyClient* c
 }
 
 void VirtualMachine::disconnectClient(const std::string& clientName){
+    std::cout << "Voy a desconectar a un cliente" << std::endl;
+    std::cout << clientName << std::endl;
     auto itClient = existingClients.find(clientName);
     if(itClient != existingClients.end())
         existingClients.erase(clientName);

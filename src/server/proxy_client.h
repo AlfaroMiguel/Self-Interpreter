@@ -24,11 +24,14 @@ private:
     bool executing;
     void attend();
     EventHandlerSelector eventHandlerSelector;
+    bool validClient;
+    std::string clientName;
+    VirtualMachine& vm;
+    friend class ServerHandler;
 
 
 public:
-    std::string clientName;
-    VirtualMachine& vm;
+
 
     ProxyClient(Socket socketAccepted, VirtualMachine& vm);
 
