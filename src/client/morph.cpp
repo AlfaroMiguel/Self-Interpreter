@@ -156,6 +156,6 @@ bool Morph::es_slot(const Posicion& pos) const{
 	return objeto->slot_en_posicion(pos);
 }
 
-void Morph::cambiar_posicion(const Posicion& pos){
-	objeto->cambiar_posicion(pos);
+void Morph::cambiar_posicion(const Posicion& new_pos){
+	objeto->cambiar_posicion(new_pos);
 }

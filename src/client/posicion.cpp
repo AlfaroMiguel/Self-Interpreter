@@ -36,13 +36,6 @@ Posicion& Posicion::operator+=(const Posicion& otra){
 	y += otra.y;
 	return *this;
 }
-//void Posicion::add_x(double x) {
-//	this->x += x;
-//}
-//
-//void Posicion::add_y(double y) {
-//	this->y += y;
-//}
 
 void Posicion::set_x(double x) {
 	this->x = x;
