@@ -2,9 +2,9 @@
 Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 
 ##Integrantes
-* [Alfaro Miguel](https://github.com/AlfaroMiguel)
-* [Gonzalez Cristian](https://github.com/Cristian3629)
-* [Mendez Agustina](https://github.com/abmendez)
+* [Alfaro Miguel](https://github.com/AlfaroMiguel) :boy:
+* [Gonzalez Cristian](https://github.com/Cristian3629) :boy:
+* [Mendez Agustina](https://github.com/abmendez) :girl:
 
 ##Pre-Build
 * Cmake >= 2.8.4
@@ -41,21 +41,21 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 
 ##TODO List (23/09) En orden de importancia
 
-- [ ] Pasar por referencia (no por copia!) usar const cuando lo amerite
-- [ ] Serializacion/Persistencia
-- [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
-- [ ] Mensajes con contexto en los objetos
+- [ ] Pasar por referencia (no por copia!) usar const cuando lo amerite (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
+- [x] Serializacion/Persistencia (TESTING) :microscope:
+- [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase) (EN PROCESO) :recycle:
+- [x] Mensajes con contexto en los objetos (TESTING) :microscope:
 - [x] Actualizacion de Slots (incluso cuando se hace DO)
-- [ ] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado])
-- [ ] Cambiar de Lobby dentro de la app
-- [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot.
+- [ ] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado]) (EN PROCESO) :recycle:
+- [ ] Cambiar de Lobby dentro de la app :soon:
+- [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot. (PROBLEMA CON IMPLEMENTACION) :no_entry_sign:
 - [x] Interfaz en un solo idioma (Ingles)
 - [ ] Seleccionar slot -> Cambia de color el borde
 - [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
 - [x] Borde del nombre del Morph mas grueso
 - [x] Borde de los slots mas fino
-- [ ] Nombre de Morph en negrita
-- [ ] No repetir Morphs que ya estan visualizados
+- [ ] Nombre de Morph en negrita (PROBLEMA CON IMPLEMENTACION) :no_entry_sign:
+- [ ] No repetir Morphs que ya estan visualizados 
 - [ ] Parser: resolver multiples parametros
-- [ ] Documentacion mas ordenada -> en los .h
+- [ ] Documentacion mas ordenada -> en los .h :soon:
 - [ ] Valgrind Servidor

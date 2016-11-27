@@ -155,7 +155,7 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox" id="box3">
+              <object class="GtkBox" id="cajaSelect">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
@@ -193,7 +193,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="box4">
+              <object class="GtkBox" id="cajaAgregar">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
@@ -445,7 +445,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkButton" id="btnNew">
+                  <object class="GtkButton" id="btnCode">
                     <property name="label" translatable="yes">(||.).</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>

@@ -55,8 +55,7 @@ Glib::RefPtr<Morph> Modelo::create_morph(const std::string& name,
 										int id) {
 	for(unsigned int i = 0; i < morphs.size(); i++)
 		if (morphs[i]->has_id(id)) {
-			std::cout << "se elimina morph porque ya existe" << std::endl;
-			client_handler->dismiss_morph(morphs[i]);
+			client_handler->hide_morph(morphs[i]);
 			morphs.erase(morphs.begin()+i);
 		}
 	const Glib::ustring morph_name(name);

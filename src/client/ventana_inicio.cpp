@@ -16,11 +16,26 @@ VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Bu
 	boton_seleccionar_lobby->set_active();
 	boton_lobby_privado->set_active();
 	boton_confirmar->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_confirmar));
+	boton_seleccionar_lobby->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_select_lobby));
+	boton_agregar_lobby->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_add_lobby));
 	label_error->hide();
 }
 
 VentanaInicio::~VentanaInicio() {}
 
+void VentanaInicio::on_select_lobby(){
+	comboBox->set_sensitive(true);
+	entrada_texto->set_sensitive(false);
+	boton_lobby_compartido->set_sensitive(false);
+	boton_lobby_privado->set_sensitive(false);
+}
+
+void VentanaInicio::on_add_lobby(){
+	entrada_texto->set_sensitive(true);
+	boton_lobby_compartido->set_sensitive(true);
+	boton_lobby_privado->set_sensitive(true);
+	comboBox->set_sensitive(false);
+}
 void VentanaInicio::add_lobby(const std::string& lobby_id){
 	Glib::ustring lobby(lobby_id);
 	lobbies.push_back(lobby);
@@ -34,6 +49,9 @@ bool VentanaInicio::do_inicializar(){
 	}
 	if (lobbies.size() > 0)
 		comboBox->set_active(0);
+	entrada_texto->set_sensitive(false);
+	boton_lobby_compartido->set_sensitive(false);
+	boton_lobby_privado->set_sensitive(false);
 	show();
 	return false;
 }
