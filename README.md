@@ -60,5 +60,5 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Documentacion mas ordenada -> en los .h :soon:
 - [ ] Valgrind Servidor
 - [ ] Manejar excepciones correctamente
-- [ ] Verificar errores de sintaxis en el codigo Self
+- [x] Verificar errores de sintaxis en el codigo Self
 - [ ] Codigo presentable (EN PROCESO) :recycle:
