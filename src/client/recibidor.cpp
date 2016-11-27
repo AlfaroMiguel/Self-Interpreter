@@ -1,15 +1,15 @@
 #include "recibidor.h"
 
 Recibidor::Recibidor(Socket& skt, ComunicadorServer& com_server): skt(skt), com_server(com_server){
-	esta_recibiendo = false;
+	active = false;
 }
 
 Recibidor::~Recibidor(){}
 
 void Recibidor::recibir(){
-	if (! esta_recibiendo) {
+	if (! active) {
 		std::cout << "Empiezo a recibir" << std::endl;
-		esta_recibiendo = true;
+		active = true;
 		char *tam_buffer = (char *) malloc(sizeof(uint32_t));
 		while (skt.recibir(tam_buffer, sizeof(uint32_t))) {
 			uint32_t tam = (ntohl)(*(uint32_t *) tam_buffer);
@@ -22,5 +22,9 @@ void Recibidor::recibir(){
 		}
 		free(tam_buffer);
 	}
+}
+
+bool Recibidor::is_active() {
+	return active;
 }
 

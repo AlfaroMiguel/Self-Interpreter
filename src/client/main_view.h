@@ -28,6 +28,7 @@ class MainView: public Gtk::Window{
 
   bool do_iniciar();
   bool do_editar();
+  bool do_quit();
  public:
   MainView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
   virtual ~MainView();
@@ -35,7 +36,7 @@ class MainView: public Gtk::Window{
   MainView(MainView&& otra);
   MainView& operator=(MainView&& otra);
 
-  void on_quit_click();
+  void quit();
   void set_control(ClientHandler* client_handler);
   void editar();
   void mostrar_lobbies();

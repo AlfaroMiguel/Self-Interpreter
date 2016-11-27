@@ -54,3 +54,7 @@ void ViewHandler::set_control(ClientHandler *client_handler) {
 void ViewHandler::client_connection_error() {
 	ventana_inicio->mostrar_error();
 }
+
+void ViewHandler::quit(){
+	main_view->quit();
+}

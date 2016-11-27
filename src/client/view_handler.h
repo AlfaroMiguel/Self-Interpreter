@@ -36,6 +36,7 @@ class ViewHandler{
 		void mostrar_lobbies();
   		void client_connection_error();
   		void ocultar_vista_cliente();
+  		void quit();
  	private:
   		MainView* main_view;
   		VentanaInicio* ventana_inicio;

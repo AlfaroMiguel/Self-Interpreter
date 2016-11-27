@@ -21,12 +21,12 @@ using json = nlohmann::json;
 ComunicadorServer::ComunicadorServer(const std::string &hostname, const std::string &puerto) {
 	skt_cliente.conectar(hostname, puerto);
 	recibidor = new Recibidor(skt_cliente, *this);
-
 }
 
 ComunicadorServer::~ComunicadorServer() {
 	skt_cliente.shutdown();
-	recibidor->join();
+	if (recibidor->is_active())
+		recibidor->join();
 	delete recibidor;
 }
 

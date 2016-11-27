@@ -3,8 +3,8 @@
 VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 	Gtk::Dialog(cobject){
 	builder->get_widget("opcLobbies", comboBox);
-	builder->get_widget("btnConfirmar", boton_confirmar);
-	builder->get_widget("btnSalir", boton_salir);
+	builder->get_widget("btnConfirmarLobby", boton_confirmar);
+	builder->get_widget("btnSalirLobby", boton_salir);
 	builder->get_widget("btnAgregarLobby", boton_agregar_lobby);
 	builder->get_widget("btnSeleccionarLobby", boton_seleccionar_lobby);
 	builder->get_widget("btnPrivado", boton_lobby_privado);
@@ -18,6 +18,7 @@ VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Bu
 	boton_confirmar->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_confirmar));
 	boton_seleccionar_lobby->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_select_lobby));
 	boton_agregar_lobby->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_add_lobby));
+	boton_salir->signal_clicked().connect(sigc::mem_fun(*this, &VentanaInicio::on_quit));
 	label_error->hide();
 }
 
@@ -88,6 +89,10 @@ bool VentanaInicio::do_mostrar_error(){
 
 void VentanaInicio::mostrar_error() {
 	Glib::signal_idle().connect(sigc::mem_fun(*this, &VentanaInicio::do_mostrar_error));
+}
+
+void VentanaInicio::on_quit() {
+	client_handler->quit();
 }
 
 

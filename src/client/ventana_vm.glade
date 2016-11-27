@@ -15,7 +15,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btnIngresar">
+              <object class="GtkButton" id="btnIngresarCliente">
                 <property name="label" translatable="yes">Enter</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -29,7 +29,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnSali">
+              <object class="GtkButton" id="btnSalirCliente">
                 <property name="label" translatable="yes">Quit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -117,7 +117,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btnConfirmar">
+              <object class="GtkButton" id="btnConfirmarLobby">
                 <property name="label" translatable="yes">Enter</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -130,7 +130,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btnSalir">
+              <object class="GtkButton" id="btnSalirLobby">
                 <property name="label" translatable="yes">Quit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

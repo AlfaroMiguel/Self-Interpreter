@@ -12,10 +12,11 @@ class Recibidor: public Thread{
   void run() {
 	  recibir();
   }
+  bool is_active();
  private:
   	Socket& skt;
   	ComunicadorServer& com_server;
-  	bool esta_recibiendo;
+  	bool active;
   	void recibir();
 };
 #endif

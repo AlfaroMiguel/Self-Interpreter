@@ -35,5 +35,6 @@ class VentanaInicio: public Gtk::Dialog{
   	bool do_mostrar_error();
   	void on_select_lobby();
   	void on_add_lobby();
+  	void on_quit();
 };
 #endif
