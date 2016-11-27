@@ -145,17 +145,23 @@ std::string Expression::getRepresentation() const {
     //std::cout << "objectName del receiver" << receiver->getName() << std::endl;
     return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
   }
-  std::string pepe = "";
-  return pepe;
+  return objectName;
 }
 
 /*Devuelve el NativeValue del result luego de evaluar la expression*/
 NativeValue Expression::getValue(){
-  return result->getValue();
+  if(result != nullptr){
+    return result->getValue();
+  }
+  NativeValue value;
+  return value;
 }
 
 Object* Expression::getResult(){
-  return result;
+  if(result != nullptr){
+    return result;
+  }
+  return this;
 }
 
 
@@ -220,10 +226,13 @@ void Expression::evaluate(){
       std::cout << "Resultado de la expression:" << result->getValue().getInt() << std::endl;
     }
     else{
-      Object* metodo = this->getSlotName(operation);
-      std::cout << "objectName del metodo:" <<metodo->getName()<< std::endl;
-      metodo->evaluate();
-      std::cout << "Resultado final:" <<metodo->getResult()->getValue().getInt()<< std::endl;
-      this->setResult(metodo->getResult());
+      if(!operation.compare("")){
+
+        Object* metodo = this->getSlotName(operation);
+        std::cout << "objectName del metodo:" <<metodo->getName()<< std::endl;
+        metodo->evaluate();
+        //std::cout << "Resultado final:" <<metodo->getResult()->getValue().getInt()<< std::endl;
+        this->setResult(metodo->getResult());
+      }
     }
 }

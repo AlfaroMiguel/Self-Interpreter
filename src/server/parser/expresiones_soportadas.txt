@@ -36,3 +36,6 @@ punto _RemoveSlots:(| x.|).
 punto _RemoveSlots:(| y.|).
 // o se puede eliminar varios slots
 punto _RemoveSlots:(| x. y.|).
+lobby _AddSlots: (| punto = (| x = 5. |).  |).
+punto _AddSlots: (| punto2 = (| x = 5. |).  |).
+punto punto2.
