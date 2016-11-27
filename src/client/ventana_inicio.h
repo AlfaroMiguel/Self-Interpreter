@@ -20,7 +20,6 @@ class VentanaInicio: public Gtk::Dialog{
   	std::vector<Glib::ustring> lobbies;
   	ClientHandler* client_handler;
 
-
   	Gtk::ComboBoxText* comboBox;
 	Gtk::Button* boton_confirmar;
   	Gtk::Button* boton_salir;
@@ -34,5 +33,7 @@ class VentanaInicio: public Gtk::Dialog{
   	void on_confirmar();
   	bool do_inicializar();
   	bool do_mostrar_error();
+  	void on_select_lobby();
+  	void on_add_lobby();
 };
 #endif

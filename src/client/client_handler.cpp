@@ -50,7 +50,6 @@ void ClientHandler::create_morph(const std::string& name,
 }
 
 void ClientHandler::draw_morph(Glib::RefPtr<Morph> morph){
-	std::cout << "se dibuja el morph nuevo" << std::endl;
 	view_handler->draw_morph(morph);
 }
 
@@ -58,8 +57,11 @@ void ClientHandler::dismiss_morph() {
 	modelo->dismiss_morph();
 }
 
-void ClientHandler::dismiss_morph(Glib::RefPtr<Morph> morph) {
+void ClientHandler::hide_morph(Glib::RefPtr<Morph> morph){
 	view_handler->dismiss_morph(morph);
+}
+void ClientHandler::dismiss_morph(Glib::RefPtr<Morph> morph) {
+	hide_morph(morph);
 	com_server->dismiss_morph(morph->get_id());
 }
 
@@ -115,8 +117,4 @@ void ClientHandler::get_morph_from_slot(int morph_id,
 void ClientHandler::select_lobby(const std::string& lobby_name,
 								 const std::string& lobby_property){
 	com_server->send_selected_lobby(lobby_name, lobby_property);
-}
-
-void ClientHandler::finalizar_edicion() {
-	modelo->finalizar_edicion();
 }

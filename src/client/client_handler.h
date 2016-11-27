@@ -63,7 +63,7 @@ class ClientHandler{
   		void get_morph_from_slot(int morph_id, const std::string& slot_name);
   		/* Pide los datos del lobby seleccionado al servidor */
   		void select_lobby(const std::string& lobby_name, const std::string& lobby_property);
-  		void finalizar_edicion();//no necesito mas esta funcion pq no se habilita finalizar la edicion
+  		void hide_morph(Glib::RefPtr<Morph> morph);
  	private:
   		Modelo* modelo;
   		ComunicadorServer* com_server;
