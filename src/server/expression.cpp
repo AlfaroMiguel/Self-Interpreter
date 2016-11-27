@@ -145,7 +145,7 @@ std::string Expression::getRepresentation() const {
     //std::cout << "objectName del receiver" << receiver->getName() << std::endl;
     return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
   }
-  std::string pepe = "lala";
+  std::string pepe = "";
   return pepe;
 }
 
