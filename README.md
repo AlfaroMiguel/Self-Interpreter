@@ -44,21 +44,21 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Pasar por referencia (no por copia!) usar const cuando lo amerite (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
 - [x] Serializacion/Persistencia (TESTING) :microscope:
 - [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase) (EN PROCESO) :recycle:
-- [x] Mensajes con contexto en los objetos (TESTING) :microscope:
+- [x] Mensajes con contexto en los objetos
 - [x] Actualizacion de Slots (incluso cuando se hace DO)
 - [x] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado])
-- [ ] Cambiar de Lobby dentro de la app (EN PROCESO) :recycle:
+- [x] Cambiar de Lobby dentro de la app (TESTING) :microscope:
 - [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot. :no_entry_sign:
 - [x] Interfaz en un solo idioma (Ingles)
-- [ ] Seleccionar slot -> Cambia de color el borde
+- [ ] Seleccionar slot -> Cambia de color el borde :soon:
 - [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
 - [x] Borde del nombre del Morph mas grueso
 - [x] Borde de los slots mas fino
 - [ ] Nombre de Morph en negrita :no_entry_sign:
 - [ ] No repetir Morphs que ya estan visualizados 
 - [ ] Parser: resolver multiples parametros
-- [ ] Documentacion mas ordenada -> en los .h :soon:
+- [ ] Documentacion mas ordenada -> en los .h (EN PROCESO) :recycle:
 - [ ] Valgrind Servidor
-- [ ] Manejar excepciones correctamente
+- [ ] Manejar excepciones correctamente (EN PROCESO) :recycle:
 - [x] Verificar errores de sintaxis en el codigo Self
 - [ ] Codigo presentable (EN PROCESO) :recycle:
