@@ -2,9 +2,9 @@
 Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 
 ##Integrantes
-* [Alfaro Miguel](https://github.com/AlfaroMiguel)
-* [Gonzalez Cristian](https://github.com/Cristian3629)
-* [Mendez Agustina](https://github.com/abmendez)
+* [Alfaro Miguel](https://github.com/AlfaroMiguel) :boy:
+* [Gonzalez Cristian](https://github.com/Cristian3629) :boy:
+* [Mendez Agustina](https://github.com/abmendez) :girl:
 
 ##Pre-Build
 * Cmake >= 2.8.4
