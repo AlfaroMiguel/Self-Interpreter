@@ -39,7 +39,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 * Manual del usuario: https://www.overleaf.com/7090924zfjbtsqfghrk#/24374756/
 
 
-##TODO List (23/09) En orden de importancia
+##TODO List (23/11) :arrow_right: (29/11) En orden de importancia
 
 - [ ] Pasar por referencia (no por copia!) usar const cuando lo amerite (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
 - [x] Serializacion/Persistencia (TESTING) :microscope:
