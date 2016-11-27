@@ -3,6 +3,104 @@
 #include <iostream> //cout //stof
 #include "number.h"
 
+
+void Expression::serialize(json& jserialization){
+  std::cout << "Expression::serialize start:" << objectName << std::endl;
+  jserialization["objectName"] = objectName;
+  jserialization["representation"] = representation;
+
+  json jRegisterOfSlots;
+  slots.serialize(jRegisterOfSlots);
+  jserialization["slots"] = jRegisterOfSlots;
+
+  json jMorph;
+  myMorph.serialize(jMorph);
+  jserialization["myMorph"] = jMorph;
+
+  jserialization["type"] = "expression";
+
+  //Agrego lo de expression
+
+  if(receiver != nullptr) {
+    json jReceiver;
+    receiver->serialize(jReceiver);
+    jserialization["receiver"] = jReceiver;
+  } else
+    jserialization["receiver"] = nullptr;
+
+  jserialization["operation"] = operation;
+
+  if(argument != nullptr) {
+    json jArgument;
+    argument->serialize(jArgument);
+    jserialization["argument"] = jArgument;
+  } else
+    jserialization["argument"] = nullptr;
+
+  if(result != nullptr) {
+    json jResult;
+    result->serialize(jResult);
+    jserialization["result"] = jResult;
+  }else
+    jserialization["result"] = nullptr;
+}
+
+//Deserealizacion
+
+Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
+  std::cout << "Expression::deserialize start" << std::endl;
+  Expression* expression = new Expression();
+  expression->objectName = jdeserialization["objectName"];
+  expression->representation = jdeserialization["representation"];
+
+  json jRegisterOfSlots;
+  jRegisterOfSlots = jdeserialization["slots"];
+  expression->slots.deserialize(jRegisterOfSlots, expression, lobby);
+
+  json jMorph;
+  jMorph = jdeserialization["myMorph"];
+  expression->myMorph.deserialize(jMorph);
+
+  expression->myLobby = lobby;
+
+
+  //Empieza expression
+  json jReceiver = jdeserialization["receiver"];
+  if(jdeserialization["type"] == "number" && jReceiver != nullptr)
+    expression->receiver = Number::deserialize(jReceiver, lobby);
+  else if(jdeserialization["type"] == "searcherObject" && jReceiver != nullptr)
+    expression->receiver = SearcherObject::deserialize(jReceiver, lobby);
+  else
+    expression->receiver = nullptr;
+
+  expression->operation = jdeserialization["operation"];
+
+  json jArgument = jdeserialization["argument"];
+  if(jdeserialization["type"] == "number" && jArgument != nullptr)
+    expression->argument = Number::deserialize(jArgument, lobby);
+  else if(jdeserialization["type"] == "searcherObject" && jArgument != nullptr)
+    expression->argument = SearcherObject::deserialize(jArgument, lobby);
+  else
+    expression->argument = nullptr;
+
+  json jResult = jdeserialization["result"];
+  if(jdeserialization["type"] == "number" && jResult != nullptr)
+    expression->result = Number::deserialize(jResult, lobby);
+  else if(jdeserialization["type"] == "searcherObject" && jResult != nullptr)
+    expression->result = SearcherObject::deserialize(jResult, lobby);
+  else
+    expression->result = nullptr;
+
+  std::cout << "Expression::deserialize end" << std::endl;
+
+  return expression;
+}
+
+
+
+
+
+
 /*Esta clase modela un Composite*/
 Expression::Expression(){
   receiver = nullptr;

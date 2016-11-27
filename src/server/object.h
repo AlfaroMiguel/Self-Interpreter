@@ -44,8 +44,7 @@ public:
         myMorph.serialize(jMorph);
         jserialization["myMorph"] = jMorph;
 
-        jserialization["isNumber"] = false;
-
+        jserialization["type"] = "object";
     }
 
     //Deserealizacion
@@ -75,6 +74,7 @@ public:
 
     Object* searchForId(int objectId){
         std::cout << "Busco " << objectId << " en " << this->getName() << std::endl;
+        std::cout << "Busco " << objectId << " mi ID: " << this->getMorphId() << std::endl;
         if(this->getMorphId() == objectId)return this;
         std::vector<Object*> mySlotsObjects = this->slots.getObjectsWhitoutParents(); //Para que no haya ciclos de busqueda
         for(auto itObjectSlot = mySlotsObjects.begin(); itObjectSlot != mySlotsObjects.end(); itObjectSlot++){

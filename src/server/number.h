@@ -36,7 +36,7 @@ public:
         value.serialize(jNativeValue);
         jserialization["nativeValue"] = jNativeValue;
 
-        jserialization["isNumber"] = true;
+        jserialization["type"] = "number";
     }
 
     //Deserealizacion TEST

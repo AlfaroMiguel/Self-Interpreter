@@ -1,6 +1,7 @@
 #include "slot.h"
 #include "object.h"
 #include "number.h"
+#include "expression.h"
 
 Slot::Slot(){}
 
@@ -13,25 +14,20 @@ void Slot::serialize(json& jserialization){
     jserialization["isParent"] = isParent;
 }
 
-void Slot::serializeBase(json& jserialization){
-    jserialization["objectReferenceID"] = objectReference->getMorphId();
-    jserialization["isMutable"] = isMutable;
-    jserialization["isParent"] = isParent;
-}
-
 void Slot::deserialize(json& jdeserialization, Lobby* lobby){
     std::cout << "Slot::deserialize start" << std::endl << jdeserialization.dump(4) << std::endl; //TODO sacar
 
     json jObject = jdeserialization["objectReference"];
-    bool isSlotNumber = jObject["isNumber"];
-    std::cout << isSlotNumber << std::endl;
-    if(isSlotNumber) {
+    std::string typeString = jObject["type"];
+
+    std::cout << "Slot::deserialize: type: " << typeString << std::endl;
+    if(typeString == "number") {
         std::cout << "Slot::deserialize slot number" << std::endl;
         this->objectReference = Number::deserialize(jObject, lobby);
     }
-    else {
-        std::cout << "Slot::deserialize slot object" << std::endl;
-        this->objectReference = Object::deserialize(jObject, lobby);
+    else if (typeString == "expression"){
+        std::cout << "Slot::deserialize slot expression" << std::endl;
+        this->objectReference = Expression::deserialize(jObject, lobby);
     }
     this->isMutable = jdeserialization["isMutable"];
     this->isParent = jdeserialization["isParent"];
