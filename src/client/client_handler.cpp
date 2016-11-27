@@ -118,3 +118,7 @@ void ClientHandler::select_lobby(const std::string& lobby_name,
 								 const std::string& lobby_property){
 	com_server->send_selected_lobby(lobby_name, lobby_property);
 }
+
+void ClientHandler::quit(){
+	view_handler->quit();
+}

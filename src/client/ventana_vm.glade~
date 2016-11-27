@@ -16,7 +16,7 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btnIngresar">
-                <property name="label" translatable="yes">Ingresar</property>
+                <property name="label" translatable="yes">Enter</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -30,7 +30,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btnSali">
-                <property name="label" translatable="yes">Salir</property>
+                <property name="label" translatable="yes">Quit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -57,7 +57,7 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Ingrese su nombre: </property>
+                <property name="label" translatable="yes">Enter your name: </property>
                 <property name="xalign">0.019999999552965164</property>
               </object>
               <packing>
@@ -81,7 +81,7 @@
               <object class="GtkLabel" id="lblError">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Ya se encuentra conectado</property>
+                <property name="label" translatable="yes">You are already connected</property>
                 <property name="ellipsize">middle</property>
                 <attributes>
                   <attribute name="foreground" value="#cccc00000000"/>
@@ -118,7 +118,7 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btnConfirmar">
-                <property name="label" translatable="yes">Confirmar</property>
+                <property name="label" translatable="yes">Enter</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -131,7 +131,7 @@
             </child>
             <child>
               <object class="GtkButton" id="btnSalir">
-                <property name="label" translatable="yes">Salir</property>
+                <property name="label" translatable="yes">Quit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -160,7 +160,7 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkRadioButton" id="btnSeleccionarLobby">
-                    <property name="label" translatable="yes">Seleccionar Lobby: </property>
+                    <property name="label" translatable="yes">Select Lobby: </property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -198,7 +198,7 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkRadioButton" id="btnAgregarLobby">
-                    <property name="label" translatable="yes">Agregar Lobby:</property>
+                    <property name="label" translatable="yes">Add Lobby:</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -230,7 +230,7 @@
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkRadioButton" id="btnPrivado">
-                        <property name="label" translatable="yes">privado</property>
+                        <property name="label" translatable="yes">private</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -246,7 +246,7 @@
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="btnCompartido">
-                        <property name="label" translatable="yes">compartido</property>
+                        <property name="label" translatable="yes">shared</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>

@@ -44,3 +44,12 @@ void MainView::set_control(ClientHandler* client_handler){
 	view_handler = new ViewHandler(ventana_inicio, ventana_edicion, ventana_objetos, this, ventana_cliente);
 	view_handler->set_control(client_handler);
 }
+
+bool MainView::do_quit(){
+	hide();
+	return false;
+}
+
+void MainView::quit() {
+	Glib::signal_idle().connect(sigc::mem_fun(*this, &MainView::do_quit));
+}

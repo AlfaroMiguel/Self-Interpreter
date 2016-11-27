@@ -31,6 +31,6 @@ int main (int argc, char **argv) {
 	app->run(*main_view);
 
 	delete main_view;
-
+	std::cout << "sale de la app" << std::endl;
 	return 0;
 }

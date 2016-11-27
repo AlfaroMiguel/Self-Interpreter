@@ -21,5 +21,6 @@ class VentanaCliente: public Gtk::Dialog{
   void on_ingresar();
   bool on_ocultar();
   bool on_key_release_event(GdkEventKey* eventKey);
+  void on_quit();
 };
 #endif
