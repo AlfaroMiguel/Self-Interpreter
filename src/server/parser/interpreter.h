@@ -31,6 +31,7 @@ private:
   void setRepresentation(const  std::string value);
   void cloneObject(const std::string id);
   void removeSlot(const std::string name);
+  void emptyStack();
 
   GarbageCollector garbage;
   Object* lobbyObject;
