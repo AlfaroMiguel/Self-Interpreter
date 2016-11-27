@@ -63,7 +63,7 @@
 
 void yyerror (Interpreter* interpreter,const char * str)
 {
-	printf("Parse Error:-%s-\n", str );
+	//printf("Parse Error:-%s-\n", str );
 }
 
 int yywrap ( void ) { }

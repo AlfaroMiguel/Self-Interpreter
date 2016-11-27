@@ -20,6 +20,7 @@ void ProxyClient::attend(){
     Receiver receiver(socketAccepted, *this);
     receiver.run();
     std::cout << "Termino de atender" << std::endl;
+    if(!validClient)return;
     vm.disconnectClient(clientName);
     std::cout << "Desconecto client: " << clientName << std::endl;
 }

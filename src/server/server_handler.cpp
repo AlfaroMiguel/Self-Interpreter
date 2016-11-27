@@ -16,6 +16,7 @@ void ServerHandler::connect(const std::string& clientName){
     if(clientIsConnected){
         jResponse["evento"] = "cliente conectado";
         client.clientName = clientName;
+        client.validClient = true;
     }
     else
         jResponse["evento"] = "error";

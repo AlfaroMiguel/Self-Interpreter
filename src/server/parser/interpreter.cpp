@@ -39,6 +39,7 @@ Interpreter::Interpreter(Object *lobbyObjectPtr, Lobby *lobby) : lobbyObject(lob
     mapMessages.insert(std::pair<string, int>("create_variable", 14));
     mapMessages.insert(std::pair<string, int>("representation", 15));
     mapMessages.insert(std::pair<string, int>("clone", 16));
+    mapMessages.insert(std::pair<string, int>("error", 17));
     isClone = false;
     parentClone = nullptr;
 }
@@ -93,6 +94,9 @@ void Interpreter::pushToken(const string id, const string message, const string 
         case 16:
               cloneObject(id);
               break;
+        case 17:
+              emptyStack();
+              break;
         default:
             reportFile << "Message not found: " + message + "\n";
             sendMessage(message);
@@ -100,6 +104,19 @@ void Interpreter::pushToken(const string id, const string message, const string 
 }
 
 
+/*Este objeto saca todo lo que hay en el stack, esto se hace en caso de que haya
+un error de sintaxis, entonces el estado del stack es invalida porque hay objetos
+creados parcialmente*/
+void Interpreter::emptyStack(){
+  std::cout << "Error de sintaxis" << std::endl;
+  while(!stack.empty()){
+    stack.pop();
+  }
+}
+
+/*Este método busca el objeto al cual se tiene que remover el slot, lo
+añade como un objeto que fue modificado, luego saca los slots del stack y va
+eliminando uno a uno los slots del objeto encontrado.*/
 void Interpreter::removeSlot(const std::string name){
   reportFile << "Message not found: " + name + "\n";
   Object* objectToDeleteSlots = findExpression(name);
@@ -116,7 +133,6 @@ void Interpreter::removeSlot(const std::string name){
     reportFile << "name of slot to delete:"+nameSlot+ "\n";
     objectToDeleteSlots->RemoveSlots(nameSlot);
   }
-  //createdObjects.push_back(objectToDeleteSlots);
 }
 
 /*Dado que se quiere clonar un objeto se lo busca en el lobby y se clona todos
@@ -314,7 +330,8 @@ void Interpreter::interpretChar(const char *buffer,Object* entorno_ptr) {
     std::string bufferToInterpreter(buffer);
     reportFile << "Empieza a interpretar:" +bufferToInterpreter+"\n";
     yy_scan_string(buffer);
-    yyparse(this);
+    int resultado = yyparse(this);
+    std::cout << "El resultado del parser es:" <<resultado<< std::endl;
     reportFile << "Termine de interpretar\n";
     reportFile << "Se llama al recolector de basura\n";
     garbage.collect();

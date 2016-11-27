@@ -1,14 +1,14 @@
-Terminals unused in grammar
+Terminales no usados en la gramática
 
    WORD
    COMMENT
    SELF
 
 
-State 5 conflicts: 3 shift/reduce
+Estado 6 conflictos: 3 desplazamiento/reducción
 
 
-Grammar
+Gramática
 
     0 $accept: parse $end
 
@@ -27,709 +27,726 @@ Grammar
    11     | atom_expression
    12     | VARIABLE VARIABLE SEMICOLON
    13     | expression
+   14     | error
 
-   14 argument: %empty
-   15         | ARGS
+   15 argument: %empty
+   16         | ARGS
 
-   16 atom_expression: VARIABLE SEMICOLON
-   17                | VARIABLE EQUALSMUTAL expression SEMICOLON
-   18                | VARIABLE SET expression SEMICOLON
-   19                | VARIABLE ASTERISK EQUALS VARIABLE SEMICOLON
-   20                | ARGS
+   17 atom_expression: VARIABLE SEMICOLON
+   18                | VARIABLE EQUALSMUTAL expression SEMICOLON
+   19                | VARIABLE SET expression SEMICOLON
+   20                | VARIABLE ASTERISK EQUALS VARIABLE SEMICOLON
+   21                | ARGS
 
-   21 expression: expression PLUS inner1
-   22           | expression MINUS inner1
-   23           | inner1
+   22 expression: expression PLUS inner1
+   23           | expression MINUS inner1
+   24           | inner1
 
-   24 inner1: inner1 ASTERISK inner2
-   25       | inner1 FSLASH inner2
-   26       | inner2
+   25 inner1: inner1 ASTERISK inner2
+   26       | inner1 FSLASH inner2
+   27       | inner2
 
-   27 inner2: VARIABLE
-   28       | NUMBER
-   29       | LPAREN expression RPAREN
+   28 inner2: VARIABLE
+   29       | NUMBER
+   30       | LPAREN expression RPAREN
 
 
-Terminals, with rules where they appear
+Terminales con las reglas donde aparecen
 
 $end (0) 0
-error (256)
-PLUS (258) 21
-MINUS (259) 22
-ASTERISK (260) 19 24
-FSLASH (261) 25
-EQUALS (262) 9 19
+error (256) 14
+PLUS (258) 22
+MINUS (259) 23
+ASTERISK (260) 20 25
+FSLASH (261) 26
+EQUALS (262) 9 20
 PRINT (263) 4
-LPAREN (264) 29
-RPAREN (265) 10 29
-SEMICOLON (266) 4 7 8 9 10 12 16 17 18 19
-EQUALSMUTAL (267) 17
-SET (268) 18
+LPAREN (264) 30
+RPAREN (265) 10 30
+SEMICOLON (266) 4 7 8 9 10 12 17 18 19 20
+EQUALSMUTAL (267) 18
+SET (268) 19
 BAR (269) 10
 ADD (270) 7
 RM (271) 8
 CREATEOBJECTINIT (272) 5 6 10
 CREATEOBJECTEND (273) 5 6
-ARGS (274) 15 20
+ARGS (274) 16 21
 WORD (275)
 COMMENT (276)
-VARIABLE (277) 7 8 9 12 16 17 18 19 27
+VARIABLE (277) 7 8 9 12 17 18 19 20 28
 SELF (278)
-NUMBER (279) 28
+NUMBER (279) 29
 
 
-Nonterminals, with rules where they appear
+No terminales con las reglas donde aparecen
 
 $accept (25)
-    on left: 0
+    en la izquierda: 0
 parse (26)
-    on left: 1, on right: 0
+    en la izquierda: 1, en la derecha: 0
 lines (27)
-    on left: 2 3, on right: 1 2 5 9
+    en la izquierda: 2 3, en la derecha: 1 2 5 9
 line (28)
-    on left: 4 5 6 7 8 9 10 11 12 13, on right: 2 3 7 8
+    en la izquierda: 4 5 6 7 8 9 10 11 12 13 14, en la derecha: 2 3
+    7 8
 argument (29)
-    on left: 14 15, on right: 10
+    en la izquierda: 15 16, en la derecha: 10
 atom_expression (30)
-    on left: 16 17 18 19 20, on right: 11
+    en la izquierda: 17 18 19 20 21, en la derecha: 11
 expression (31)
-    on left: 21 22 23, on right: 4 10 13 17 18 21 22 29
+    en la izquierda: 22 23 24, en la derecha: 4 10 13 18 19 22 23 30
 inner1 (32)
-    on left: 24 25 26, on right: 21 22 23 24 25
+    en la izquierda: 25 26 27, en la derecha: 22 23 24 25 26
 inner2 (33)
-    on left: 27 28 29, on right: 24 25 26
+    en la izquierda: 28 29 30, en la derecha: 25 26 27
 
 
-State 0
+Estado 0
 
     0 $accept: . parse $end
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    CREATEOBJECTINIT  shift, and go to state 3
-    ARGS              shift, and go to state 4
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    ARGS              desplazar e ir al estado 5
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    parse            go to state 7
-    lines            go to state 8
-    line             go to state 9
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
+    parse            ir al estado 8
+    lines            ir al estado 9
+    line             ir al estado 10
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 1
+Estado 1
+
+   14 line: error .
+
+    $default  reduce usando la regla 14 (line)
+
+
+Estado 2
 
     4 line: PRINT . expression SEMICOLON
 
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
 
-    expression  go to state 15
-    inner1      go to state 12
-    inner2      go to state 13
-
-
-State 2
-
-   29 inner2: LPAREN . expression RPAREN
-
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
-
-    expression  go to state 16
-    inner1      go to state 12
-    inner2      go to state 13
+    expression  ir al estado 16
+    inner1      ir al estado 13
+    inner2      ir al estado 14
 
 
-State 3
+Estado 3
+
+   30 inner2: LPAREN . expression RPAREN
+
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
+
+    expression  ir al estado 17
+    inner1      ir al estado 13
+    inner2      ir al estado 14
+
+
+Estado 4
 
     5 line: CREATEOBJECTINIT . lines CREATEOBJECTEND
     6     | CREATEOBJECTINIT . CREATEOBJECTEND
    10     | CREATEOBJECTINIT . argument BAR expression SEMICOLON RPAREN
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    CREATEOBJECTINIT  shift, and go to state 3
-    CREATEOBJECTEND   shift, and go to state 17
-    ARGS              shift, and go to state 18
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    CREATEOBJECTEND   desplazar e ir al estado 18
+    ARGS              desplazar e ir al estado 19
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    $default  reduce using rule 14 (argument)
+    BAR  reduce usando la regla 15 (argument)
 
-    lines            go to state 19
-    line             go to state 9
-    argument         go to state 20
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
-
-
-State 4
-
-   20 atom_expression: ARGS .
-
-    $default  reduce using rule 20 (atom_expression)
+    lines            ir al estado 20
+    line             ir al estado 10
+    argument         ir al estado 21
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 5
+Estado 5
+
+   21 atom_expression: ARGS .
+
+    $default  reduce usando la regla 21 (atom_expression)
+
+
+Estado 6
 
     7 line: VARIABLE . ADD line SEMICOLON
     8     | VARIABLE . RM line SEMICOLON
     9     | VARIABLE . EQUALS lines SEMICOLON
    12     | VARIABLE . VARIABLE SEMICOLON
-   16 atom_expression: VARIABLE . SEMICOLON
-   17                | VARIABLE . EQUALSMUTAL expression SEMICOLON
-   18                | VARIABLE . SET expression SEMICOLON
-   19                | VARIABLE . ASTERISK EQUALS VARIABLE SEMICOLON
-   27 inner2: VARIABLE .
+   17 atom_expression: VARIABLE . SEMICOLON
+   18                | VARIABLE . EQUALSMUTAL expression SEMICOLON
+   19                | VARIABLE . SET expression SEMICOLON
+   20                | VARIABLE . ASTERISK EQUALS VARIABLE SEMICOLON
+   28 inner2: VARIABLE .
 
-    ASTERISK     shift, and go to state 21
-    EQUALS       shift, and go to state 22
-    SEMICOLON    shift, and go to state 23
-    EQUALSMUTAL  shift, and go to state 24
-    SET          shift, and go to state 25
-    ADD          shift, and go to state 26
-    RM           shift, and go to state 27
-    VARIABLE     shift, and go to state 28
+    ASTERISK     desplazar e ir al estado 22
+    EQUALS       desplazar e ir al estado 23
+    SEMICOLON    desplazar e ir al estado 24
+    EQUALSMUTAL  desplazar e ir al estado 25
+    SET          desplazar e ir al estado 26
+    ADD          desplazar e ir al estado 27
+    RM           desplazar e ir al estado 28
+    VARIABLE     desplazar e ir al estado 29
 
-    ASTERISK   [reduce using rule 27 (inner2)]
-    SEMICOLON  [reduce using rule 27 (inner2)]
-    VARIABLE   [reduce using rule 27 (inner2)]
-    $default   reduce using rule 27 (inner2)
-
-
-State 6
-
-   28 inner2: NUMBER .
-
-    $default  reduce using rule 28 (inner2)
+    ASTERISK   [reduce usando la regla 28 (inner2)]
+    SEMICOLON  [reduce usando la regla 28 (inner2)]
+    VARIABLE   [reduce usando la regla 28 (inner2)]
+    $default   reduce usando la regla 28 (inner2)
 
 
-State 7
+Estado 7
+
+   29 inner2: NUMBER .
+
+    $default  reduce usando la regla 29 (inner2)
+
+
+Estado 8
 
     0 $accept: parse . $end
 
-    $end  shift, and go to state 29
+    $end  desplazar e ir al estado 30
 
 
-State 8
+Estado 9
 
     1 parse: lines .
     2 lines: lines . line
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    CREATEOBJECTINIT  shift, and go to state 3
-    ARGS              shift, and go to state 4
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    ARGS              desplazar e ir al estado 5
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    $default  reduce using rule 1 (parse)
+    $end  reduce usando la regla 1 (parse)
 
-    line             go to state 30
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
+    line             ir al estado 31
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 9
+Estado 10
 
     3 lines: line .
 
-    $default  reduce using rule 3 (lines)
+    $default  reduce usando la regla 3 (lines)
 
 
-State 10
+Estado 11
 
    11 line: atom_expression .
 
-    $default  reduce using rule 11 (line)
+    $default  reduce usando la regla 11 (line)
 
 
-State 11
+Estado 12
 
    13 line: expression .
-   21 expression: expression . PLUS inner1
-   22           | expression . MINUS inner1
+   22 expression: expression . PLUS inner1
+   23           | expression . MINUS inner1
 
-    PLUS   shift, and go to state 31
-    MINUS  shift, and go to state 32
+    PLUS   desplazar e ir al estado 32
+    MINUS  desplazar e ir al estado 33
 
-    $default  reduce using rule 13 (line)
-
-
-State 12
-
-   23 expression: inner1 .
-   24 inner1: inner1 . ASTERISK inner2
-   25       | inner1 . FSLASH inner2
-
-    ASTERISK  shift, and go to state 33
-    FSLASH    shift, and go to state 34
-
-    $default  reduce using rule 23 (expression)
+    $default  reduce usando la regla 13 (line)
 
 
-State 13
+Estado 13
 
-   26 inner1: inner2 .
+   24 expression: inner1 .
+   25 inner1: inner1 . ASTERISK inner2
+   26       | inner1 . FSLASH inner2
 
-    $default  reduce using rule 26 (inner1)
+    ASTERISK  desplazar e ir al estado 34
+    FSLASH    desplazar e ir al estado 35
 
-
-State 14
-
-   27 inner2: VARIABLE .
-
-    $default  reduce using rule 27 (inner2)
+    $default  reduce usando la regla 24 (expression)
 
 
-State 15
+Estado 14
+
+   27 inner1: inner2 .
+
+    $default  reduce usando la regla 27 (inner1)
+
+
+Estado 15
+
+   28 inner2: VARIABLE .
+
+    $default  reduce usando la regla 28 (inner2)
+
+
+Estado 16
 
     4 line: PRINT expression . SEMICOLON
-   21 expression: expression . PLUS inner1
-   22           | expression . MINUS inner1
+   22 expression: expression . PLUS inner1
+   23           | expression . MINUS inner1
 
-    PLUS       shift, and go to state 31
-    MINUS      shift, and go to state 32
-    SEMICOLON  shift, and go to state 35
-
-
-State 16
-
-   21 expression: expression . PLUS inner1
-   22           | expression . MINUS inner1
-   29 inner2: LPAREN expression . RPAREN
-
-    PLUS    shift, and go to state 31
-    MINUS   shift, and go to state 32
-    RPAREN  shift, and go to state 36
+    PLUS       desplazar e ir al estado 32
+    MINUS      desplazar e ir al estado 33
+    SEMICOLON  desplazar e ir al estado 36
 
 
-State 17
+Estado 17
+
+   22 expression: expression . PLUS inner1
+   23           | expression . MINUS inner1
+   30 inner2: LPAREN expression . RPAREN
+
+    PLUS    desplazar e ir al estado 32
+    MINUS   desplazar e ir al estado 33
+    RPAREN  desplazar e ir al estado 37
+
+
+Estado 18
 
     6 line: CREATEOBJECTINIT CREATEOBJECTEND .
 
-    $default  reduce using rule 6 (line)
+    $default  reduce usando la regla 6 (line)
 
 
-State 18
+Estado 19
 
-   15 argument: ARGS .
-   20 atom_expression: ARGS .
+   16 argument: ARGS .
+   21 atom_expression: ARGS .
 
-    BAR       reduce using rule 15 (argument)
-    $default  reduce using rule 20 (atom_expression)
+    BAR       reduce usando la regla 16 (argument)
+    $default  reduce usando la regla 21 (atom_expression)
 
 
-State 19
+Estado 20
 
     2 lines: lines . line
     5 line: CREATEOBJECTINIT lines . CREATEOBJECTEND
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    CREATEOBJECTINIT  shift, and go to state 3
-    CREATEOBJECTEND   shift, and go to state 37
-    ARGS              shift, and go to state 4
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    CREATEOBJECTEND   desplazar e ir al estado 38
+    ARGS              desplazar e ir al estado 5
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    line             go to state 30
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
+    line             ir al estado 31
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 20
+Estado 21
 
    10 line: CREATEOBJECTINIT argument . BAR expression SEMICOLON RPAREN
 
-    BAR  shift, and go to state 38
+    BAR  desplazar e ir al estado 39
 
 
-State 21
+Estado 22
 
-   19 atom_expression: VARIABLE ASTERISK . EQUALS VARIABLE SEMICOLON
+   20 atom_expression: VARIABLE ASTERISK . EQUALS VARIABLE SEMICOLON
 
-    EQUALS  shift, and go to state 39
+    EQUALS  desplazar e ir al estado 40
 
 
-State 22
+Estado 23
 
     9 line: VARIABLE EQUALS . lines SEMICOLON
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    CREATEOBJECTINIT  shift, and go to state 3
-    ARGS              shift, and go to state 4
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    ARGS              desplazar e ir al estado 5
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    lines            go to state 40
-    line             go to state 9
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
-
-
-State 23
-
-   16 atom_expression: VARIABLE SEMICOLON .
-
-    $default  reduce using rule 16 (atom_expression)
+    lines            ir al estado 41
+    line             ir al estado 10
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 24
+Estado 24
 
-   17 atom_expression: VARIABLE EQUALSMUTAL . expression SEMICOLON
+   17 atom_expression: VARIABLE SEMICOLON .
 
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
-
-    expression  go to state 41
-    inner1      go to state 12
-    inner2      go to state 13
+    $default  reduce usando la regla 17 (atom_expression)
 
 
-State 25
+Estado 25
 
-   18 atom_expression: VARIABLE SET . expression SEMICOLON
+   18 atom_expression: VARIABLE EQUALSMUTAL . expression SEMICOLON
 
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
 
-    expression  go to state 42
-    inner1      go to state 12
-    inner2      go to state 13
+    expression  ir al estado 42
+    inner1      ir al estado 13
+    inner2      ir al estado 14
 
 
-State 26
+Estado 26
+
+   19 atom_expression: VARIABLE SET . expression SEMICOLON
+
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
+
+    expression  ir al estado 43
+    inner1      ir al estado 13
+    inner2      ir al estado 14
+
+
+Estado 27
 
     7 line: VARIABLE ADD . line SEMICOLON
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    CREATEOBJECTINIT  shift, and go to state 3
-    ARGS              shift, and go to state 4
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    ARGS              desplazar e ir al estado 5
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    line             go to state 43
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
+    line             ir al estado 44
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 27
+Estado 28
 
     8 line: VARIABLE RM . line SEMICOLON
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    CREATEOBJECTINIT  shift, and go to state 3
-    ARGS              shift, and go to state 4
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    ARGS              desplazar e ir al estado 5
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    line             go to state 44
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
+    line             ir al estado 45
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 28
+Estado 29
 
    12 line: VARIABLE VARIABLE . SEMICOLON
 
-    SEMICOLON  shift, and go to state 45
+    SEMICOLON  desplazar e ir al estado 46
 
 
-State 29
+Estado 30
 
     0 $accept: parse $end .
 
-    $default  accept
+    $default  aceptar
 
 
-State 30
+Estado 31
 
     2 lines: lines line .
 
-    $default  reduce using rule 2 (lines)
+    $default  reduce usando la regla 2 (lines)
 
 
-State 31
+Estado 32
 
-   21 expression: expression PLUS . inner1
+   22 expression: expression PLUS . inner1
 
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
 
-    inner1  go to state 46
-    inner2  go to state 13
-
-
-State 32
-
-   22 expression: expression MINUS . inner1
-
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
-
-    inner1  go to state 47
-    inner2  go to state 13
+    inner1  ir al estado 47
+    inner2  ir al estado 14
 
 
-State 33
+Estado 33
 
-   24 inner1: inner1 ASTERISK . inner2
+   23 expression: expression MINUS . inner1
 
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
 
-    inner2  go to state 48
-
-
-State 34
-
-   25 inner1: inner1 FSLASH . inner2
-
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
-
-    inner2  go to state 49
+    inner1  ir al estado 48
+    inner2  ir al estado 14
 
 
-State 35
+Estado 34
+
+   25 inner1: inner1 ASTERISK . inner2
+
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
+
+    inner2  ir al estado 49
+
+
+Estado 35
+
+   26 inner1: inner1 FSLASH . inner2
+
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
+
+    inner2  ir al estado 50
+
+
+Estado 36
 
     4 line: PRINT expression SEMICOLON .
 
-    $default  reduce using rule 4 (line)
+    $default  reduce usando la regla 4 (line)
 
 
-State 36
+Estado 37
 
-   29 inner2: LPAREN expression RPAREN .
+   30 inner2: LPAREN expression RPAREN .
 
-    $default  reduce using rule 29 (inner2)
+    $default  reduce usando la regla 30 (inner2)
 
 
-State 37
+Estado 38
 
     5 line: CREATEOBJECTINIT lines CREATEOBJECTEND .
 
-    $default  reduce using rule 5 (line)
+    $default  reduce usando la regla 5 (line)
 
 
-State 38
+Estado 39
 
    10 line: CREATEOBJECTINIT argument BAR . expression SEMICOLON RPAREN
 
-    LPAREN    shift, and go to state 2
-    VARIABLE  shift, and go to state 14
-    NUMBER    shift, and go to state 6
+    LPAREN    desplazar e ir al estado 3
+    VARIABLE  desplazar e ir al estado 15
+    NUMBER    desplazar e ir al estado 7
 
-    expression  go to state 50
-    inner1      go to state 12
-    inner2      go to state 13
-
-
-State 39
-
-   19 atom_expression: VARIABLE ASTERISK EQUALS . VARIABLE SEMICOLON
-
-    VARIABLE  shift, and go to state 51
+    expression  ir al estado 51
+    inner1      ir al estado 13
+    inner2      ir al estado 14
 
 
-State 40
+Estado 40
+
+   20 atom_expression: VARIABLE ASTERISK EQUALS . VARIABLE SEMICOLON
+
+    VARIABLE  desplazar e ir al estado 52
+
+
+Estado 41
 
     2 lines: lines . line
     9 line: VARIABLE EQUALS lines . SEMICOLON
 
-    PRINT             shift, and go to state 1
-    LPAREN            shift, and go to state 2
-    SEMICOLON         shift, and go to state 52
-    CREATEOBJECTINIT  shift, and go to state 3
-    ARGS              shift, and go to state 4
-    VARIABLE          shift, and go to state 5
-    NUMBER            shift, and go to state 6
+    error             desplazar e ir al estado 1
+    PRINT             desplazar e ir al estado 2
+    LPAREN            desplazar e ir al estado 3
+    SEMICOLON         desplazar e ir al estado 53
+    CREATEOBJECTINIT  desplazar e ir al estado 4
+    ARGS              desplazar e ir al estado 5
+    VARIABLE          desplazar e ir al estado 6
+    NUMBER            desplazar e ir al estado 7
 
-    line             go to state 30
-    atom_expression  go to state 10
-    expression       go to state 11
-    inner1           go to state 12
-    inner2           go to state 13
-
-
-State 41
-
-   17 atom_expression: VARIABLE EQUALSMUTAL expression . SEMICOLON
-   21 expression: expression . PLUS inner1
-   22           | expression . MINUS inner1
-
-    PLUS       shift, and go to state 31
-    MINUS      shift, and go to state 32
-    SEMICOLON  shift, and go to state 53
+    line             ir al estado 31
+    atom_expression  ir al estado 11
+    expression       ir al estado 12
+    inner1           ir al estado 13
+    inner2           ir al estado 14
 
 
-State 42
+Estado 42
 
-   18 atom_expression: VARIABLE SET expression . SEMICOLON
-   21 expression: expression . PLUS inner1
-   22           | expression . MINUS inner1
+   18 atom_expression: VARIABLE EQUALSMUTAL expression . SEMICOLON
+   22 expression: expression . PLUS inner1
+   23           | expression . MINUS inner1
 
-    PLUS       shift, and go to state 31
-    MINUS      shift, and go to state 32
-    SEMICOLON  shift, and go to state 54
+    PLUS       desplazar e ir al estado 32
+    MINUS      desplazar e ir al estado 33
+    SEMICOLON  desplazar e ir al estado 54
 
 
-State 43
+Estado 43
+
+   19 atom_expression: VARIABLE SET expression . SEMICOLON
+   22 expression: expression . PLUS inner1
+   23           | expression . MINUS inner1
+
+    PLUS       desplazar e ir al estado 32
+    MINUS      desplazar e ir al estado 33
+    SEMICOLON  desplazar e ir al estado 55
+
+
+Estado 44
 
     7 line: VARIABLE ADD line . SEMICOLON
 
-    SEMICOLON  shift, and go to state 55
+    SEMICOLON  desplazar e ir al estado 56
 
 
-State 44
+Estado 45
 
     8 line: VARIABLE RM line . SEMICOLON
 
-    SEMICOLON  shift, and go to state 56
+    SEMICOLON  desplazar e ir al estado 57
 
 
-State 45
+Estado 46
 
    12 line: VARIABLE VARIABLE SEMICOLON .
 
-    $default  reduce using rule 12 (line)
+    $default  reduce usando la regla 12 (line)
 
 
-State 46
+Estado 47
 
-   21 expression: expression PLUS inner1 .
-   24 inner1: inner1 . ASTERISK inner2
-   25       | inner1 . FSLASH inner2
+   22 expression: expression PLUS inner1 .
+   25 inner1: inner1 . ASTERISK inner2
+   26       | inner1 . FSLASH inner2
 
-    ASTERISK  shift, and go to state 33
-    FSLASH    shift, and go to state 34
+    ASTERISK  desplazar e ir al estado 34
+    FSLASH    desplazar e ir al estado 35
 
-    $default  reduce using rule 21 (expression)
-
-
-State 47
-
-   22 expression: expression MINUS inner1 .
-   24 inner1: inner1 . ASTERISK inner2
-   25       | inner1 . FSLASH inner2
-
-    ASTERISK  shift, and go to state 33
-    FSLASH    shift, and go to state 34
-
-    $default  reduce using rule 22 (expression)
+    $default  reduce usando la regla 22 (expression)
 
 
-State 48
+Estado 48
 
-   24 inner1: inner1 ASTERISK inner2 .
+   23 expression: expression MINUS inner1 .
+   25 inner1: inner1 . ASTERISK inner2
+   26       | inner1 . FSLASH inner2
 
-    $default  reduce using rule 24 (inner1)
+    ASTERISK  desplazar e ir al estado 34
+    FSLASH    desplazar e ir al estado 35
 
-
-State 49
-
-   25 inner1: inner1 FSLASH inner2 .
-
-    $default  reduce using rule 25 (inner1)
+    $default  reduce usando la regla 23 (expression)
 
 
-State 50
+Estado 49
+
+   25 inner1: inner1 ASTERISK inner2 .
+
+    $default  reduce usando la regla 25 (inner1)
+
+
+Estado 50
+
+   26 inner1: inner1 FSLASH inner2 .
+
+    $default  reduce usando la regla 26 (inner1)
+
+
+Estado 51
 
    10 line: CREATEOBJECTINIT argument BAR expression . SEMICOLON RPAREN
-   21 expression: expression . PLUS inner1
-   22           | expression . MINUS inner1
+   22 expression: expression . PLUS inner1
+   23           | expression . MINUS inner1
 
-    PLUS       shift, and go to state 31
-    MINUS      shift, and go to state 32
-    SEMICOLON  shift, and go to state 57
-
-
-State 51
-
-   19 atom_expression: VARIABLE ASTERISK EQUALS VARIABLE . SEMICOLON
-
-    SEMICOLON  shift, and go to state 58
+    PLUS       desplazar e ir al estado 32
+    MINUS      desplazar e ir al estado 33
+    SEMICOLON  desplazar e ir al estado 58
 
 
-State 52
+Estado 52
+
+   20 atom_expression: VARIABLE ASTERISK EQUALS VARIABLE . SEMICOLON
+
+    SEMICOLON  desplazar e ir al estado 59
+
+
+Estado 53
 
     9 line: VARIABLE EQUALS lines SEMICOLON .
 
-    $default  reduce using rule 9 (line)
+    $default  reduce usando la regla 9 (line)
 
 
-State 53
+Estado 54
 
-   17 atom_expression: VARIABLE EQUALSMUTAL expression SEMICOLON .
+   18 atom_expression: VARIABLE EQUALSMUTAL expression SEMICOLON .
 
-    $default  reduce using rule 17 (atom_expression)
-
-
-State 54
-
-   18 atom_expression: VARIABLE SET expression SEMICOLON .
-
-    $default  reduce using rule 18 (atom_expression)
+    $default  reduce usando la regla 18 (atom_expression)
 
 
-State 55
+Estado 55
+
+   19 atom_expression: VARIABLE SET expression SEMICOLON .
+
+    $default  reduce usando la regla 19 (atom_expression)
+
+
+Estado 56
 
     7 line: VARIABLE ADD line SEMICOLON .
 
-    $default  reduce using rule 7 (line)
+    $default  reduce usando la regla 7 (line)
 
 
-State 56
+Estado 57
 
     8 line: VARIABLE RM line SEMICOLON .
 
-    $default  reduce using rule 8 (line)
+    $default  reduce usando la regla 8 (line)
 
 
-State 57
+Estado 58
 
    10 line: CREATEOBJECTINIT argument BAR expression SEMICOLON . RPAREN
 
-    RPAREN  shift, and go to state 59
+    RPAREN  desplazar e ir al estado 60
 
 
-State 58
+Estado 59
 
-   19 atom_expression: VARIABLE ASTERISK EQUALS VARIABLE SEMICOLON .
+   20 atom_expression: VARIABLE ASTERISK EQUALS VARIABLE SEMICOLON .
 
-    $default  reduce using rule 19 (atom_expression)
+    $default  reduce usando la regla 20 (atom_expression)
 
 
-State 59
+Estado 60
 
    10 line: CREATEOBJECTINIT argument BAR expression SEMICOLON RPAREN .
 
-    $default  reduce using rule 10 (line)
+    $default  reduce usando la regla 10 (line)

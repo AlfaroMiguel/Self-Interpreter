@@ -89,6 +89,9 @@ line :
 		|expression{
 		std::cout << "Parser::expression" <<std::endl;
 		}
+		|error{
+		interpreter->pushToken("","error","");
+		}
 		;
 
 
@@ -163,8 +166,10 @@ inner2:
 		}
 		|LPAREN expression RPAREN {
 		//$$ = $2 ;
-		}
-		;
+		};
+
+
+
 %%
-void Div0Error ( void ) { printf (" Error : division by zero \n"); exit (0);}
+void Div0Error ( void ) { printf ("Error : division by zero \n"); exit (0);}
 void UnknownVarError ( string s ) { printf (" Error : -%s- does not exist !\n", s . c_str ()); exit (0);}
