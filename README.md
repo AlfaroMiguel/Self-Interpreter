@@ -54,8 +54,8 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
 - [x] Borde del nombre del Morph mas grueso
 - [x] Borde de los slots mas fino
-- [ ] Nombre de Morph en negrita
-- [ ] No repetir Morphs que ya estan visualizados
+- [ ] Nombre de Morph en negrita (PROBLEMA CON IMPLEMENTACION) :no_entry_sign:
+- [ ] No repetir Morphs que ya estan visualizados 
 - [ ] Parser: resolver multiples parametros
 - [ ] Documentacion mas ordenada -> en los .h
 - [ ] Valgrind Servidor
