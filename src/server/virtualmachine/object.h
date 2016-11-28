@@ -26,6 +26,7 @@ protected:
     Morph myMorph;
     Lobby* myLobby;
     friend class Interpreter;
+    friend class RegisterOfSlots;
 public:
 
     /*Objeto generico de Self*/

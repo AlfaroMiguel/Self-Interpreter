@@ -22,39 +22,7 @@ class RegisterOfSlots{
 public:
     //TEST SERIALIZATION
 
-    void serialize(json& jserialization){
-        for(auto itSlot = slotMap.begin(); itSlot != slotMap.end(); itSlot++) {
-            json jSlot;
-            if (itSlot->first != "self") {
-                std::cout << "Serializo (REC) el slot: " << itSlot->first << std::endl;
-                itSlot->second.serialize(jSlot);
-                jserialization.push_back(std::make_pair(itSlot->first, jSlot));
-            }
-        }
-    }
 
-    void serializeBase(json& jserialization){
-        for(auto itSlot = slotMap.begin(); itSlot != slotMap.end(); itSlot++) {
-                json jSlot;
-                std::cout << "Serializo (BASE) el slot: " << itSlot->first << std::endl;
-                itSlot->second.serializeBase(jSlot);
-                jserialization.push_back(std::make_pair(itSlot->first, jSlot));
-        }
-    }
-
-    void deserialize(json& jdeserialization, Object* selfObject, Lobby* lobby){
-        std::cout << "Empieza a deserealizar registro de slots" << std::endl;
-        this->addSlot("self", selfObject, false, true);
-        for(auto itSlot = jdeserialization.begin(); itSlot != jdeserialization.end(); itSlot++){
-            std::cout << "RegisterOfSlots::deserialize: "<< itSlot.key() << std::endl;
-            std::string slotName = itSlot.key();
-            Slot slot;
-            slot.deserialize(itSlot.value(), lobby);
-            this->slotMap.insert(std::make_pair(slotName, slot));
-        }
-        std::cout << "Termina de deserealizar registro de slots" << std::endl;
-
-    }
     std::vector<Object*> getObjectsWhitoutParents();
 
     /*Constructor, inicialmente el slotMap esta vacio*/
@@ -79,6 +47,9 @@ public:
     std::vector<Object*> getObjects();
     /*Obtiene los objetos que no son parents slots del registro de slots*/
     std::vector<Object*> getObjectsNotParent();
+
+    void serialize(json& jserialization);
+    void deserialize(json& jdeserialization, Object* selfObject, Lobby* lobby);
 };
 
 #endif
