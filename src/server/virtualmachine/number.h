@@ -7,22 +7,24 @@
 #include <map>
 
 
-class Number : public Object{
+class Number : public Object {
 private:
-  std::string operation;
-  NativeValue value;
+    std::string operation;
+    NativeValue value;
 public:
 
     //Metodo para serializar el objeto number
-    void serialize(json& jserialization);
+    void serialize(json &jserialization);
 
     //Metodo estatico para deserializar el objeto Number
-    static Number* deserialize(json& jdeserialization, Lobby* lobby);
+    static Number *deserialize(json &jdeserialization, Lobby *lobby);
+
     Number();
 
 
     /*Esto modela un numero entero dentro de los objetos de self*/
     Number(int valueAux);
+
     ~Number();
 
     /*Devuelve el NativeValue que contiene como atributo*/
@@ -33,16 +35,18 @@ public:
 
     /*Devuelve al igual que el convertToNativeValue() el NativeValue*/
     NativeValue getValue();
+
     /*Se setea el mensaje que desea realizar al numero */
     void setOperator(std::string operatorString);
 
     /*Se ejecuta la operation con los argumento que se pasan en expression*/
-    NativeValue ejecute(std::string operation, Object* expression);
+    NativeValue ejecute(std::string operation, Object *expression);
 
     /*Devuelve una copia de si mismo*/
-    Object* clone();
+    Object *clone();
+
     /*Devuelve el resulta de la operacion de que se realizo en ejecute()*/
-    Object* getResult();
+    Object *getResult();
 };
 
 #endif

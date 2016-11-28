@@ -98,12 +98,22 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
         }
         (*itObject)->notifyClients("crear");
     }
+
+    std::vector<Object*> objectsModified  = interpreter->getModifiedObjets();
+    for(auto itObject = objectsModified.begin(); itObject != objectsModified.end(); itObject++){
+        auto itMorph = visibleObjects.find((*itObject)->getMorphId());
+        if(itMorph == visibleObjects.end()) {
+            visibleObjects.insert((*itObject)->getMorphId());
+        }
+        (*itObject)->notifyClients("crear");
+    }
+
     interpreter->clearVectors();
 
-    for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
+    /*for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
         Object* visibleObject = lobbyReference->searchForId(*itVisibleObject);
         visibleObject->notifyClients("crear"); //TODO cambiar nombre de evento
-    }
+    }*/
 }
 
 void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
