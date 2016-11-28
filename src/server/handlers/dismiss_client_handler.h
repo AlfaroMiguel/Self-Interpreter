@@ -1,0 +1,8 @@
+//
+// Created by mikealpha on 27/11/16.
+//
+
+#ifndef SELFTP_DISMISS_CLIENT_HANDLER_H
+#define SELFTP_DISMISS_CLIENT_HANDLER_H
+
+#endif //SELFTP_DISMISS_CLIENT_HANDLER_H
