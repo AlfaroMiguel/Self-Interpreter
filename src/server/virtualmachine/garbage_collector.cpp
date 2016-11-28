@@ -15,6 +15,7 @@ GarbageCollector::GarbageCollector(Object* lobbyPtr):objectLobby(lobbyPtr),repor
 
 
 GarbageCollector::~GarbageCollector(){
+  freeResources();
   reportFile.close();
 }
 
@@ -98,6 +99,7 @@ void GarbageCollector::collect(){
   reportFile.close();
   visit(objectLobby);
   freeResources();
+  map.clear();
 }
 
 void GarbageCollector::setObjectLobby(Object* object){
