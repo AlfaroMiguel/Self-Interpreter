@@ -107,12 +107,8 @@ void Interpreter::registerObject(Object* object){
   garbage.registerObject(object);
   std::vector<Object*> slots = object->getReferences();
   for (size_t i = 0; i < slots.size(); i++) {
+    std::cout << "slot de nombre:" <<slots[i]->getName()<<"de:"<<object->getName()<< std::endl;
     registerObject(slots[i]);
-  }
-
-  std::vector<Object*> atributs = object->getAtributs();
-  for (size_t i = 0; i < atributs.size(); i++) {
-    registerObject(atributs[i]);
   }
 }
 
