@@ -48,7 +48,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [x] Actualizacion de Slots (incluso cuando se hace DO)
 - [x] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado])
 - [x] Cambiar de Lobby dentro de la app (TESTING) :microscope:
-- [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot. (EN PROCESO) :recycle:
+- [x] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot. (TESTING) :microscope: :relieved::relieved::relieved:
 - [x] Interfaz en un solo idioma (Ingles)
 - [ ] Seleccionar slot -> Cambia de color el borde :soon:
 - [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
