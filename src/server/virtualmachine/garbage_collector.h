@@ -14,6 +14,7 @@ private:
   void freeResources();
   bool isMarked(Object* object);
   void visit(Object* object);
+  void removeDuplicates();
   std::ofstream reportFile;
 public:
   GarbageCollector(Object* lobbyPtr);
