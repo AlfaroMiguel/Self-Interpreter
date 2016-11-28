@@ -1518,11 +1518,11 @@ yyreduce:
   case 29:
 #line 162 "parser.y" /* yacc.c:1646  */
     {
-		std::cout << "VARIABLE" <<std::endl;
+		//std::cout << "VARIABLE" <<std::endl;
 		//interpreter->pushToken(*$1,"find","");
 		interpreter->pushToken(*(yyvsp[0].str_val),"create_variable","");
 		std::cout << "VARIABLE" <<std::endl;
-		//delete(str_val);
+		delete((yyvsp[0].str_val));
 		}
 #line 1528 "parser.cpp" /* yacc.c:1646  */
     break;

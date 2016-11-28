@@ -33,18 +33,19 @@ bool Lobby::isLobbyShared(){
 }
 
 void Lobby::connectClient(Client* client){
-    std::cout << "El cliente: " << client->getClientName() << " se conecto al lobby: " << this->lobbyName << std::endl;
     auto itClient = clientsConnected.find((client->getClientName()));
-    if(itClient == clientsConnected.end())
+    if(itClient == clientsConnected.end()) {
         clientsConnected.insert(std::make_pair(client->getClientName(), client));
+        std::cout << "NEW CLIENT " << client->getClientName() << " CONNECTED TO LOBBY: " << this->lobbyName << std::endl;
+    }
     else {
-        std::cout << "Lobby::connectClient : no encontre el cliente" << std::endl;
         itClient->second = client;
+        std::cout << "CLIENT " << client->getClientName() << " CONNECTED TO LOBBY: " << this->lobbyName << std::endl;
     }
 }
 
 void Lobby::disconnectClient(Client* client){
-    std::cout << "Se desconecto del lobby a " << client->getClientName() << std::endl;
+    std::cout << client->getClientName() << " DISCONNECTED FROM LOBBY: " << this->lobbyName << std::endl;
     auto itClient = clientsConnected.find(client->getClientName());
     if(itClient != clientsConnected.end())
         itClient->second = nullptr;
@@ -68,14 +69,14 @@ void Lobby::notifyClients(const std::string& eventName, Morph& morph, const std:
 }
 
 void Lobby::initializeClient(const std::string& clientName) {
-    std::cout << "Lobby::initializeClient start" << std::endl;
+    std::cout << "START - INITILIZE CLIENT: " << clientName << std::endl;
     auto itClient = clientsConnected.find(clientName);
     if(itClient != clientsConnected.end()) {
         if (itClient->second != nullptr) {
             this->initializeMorphs();
         }
     }
-    std::cout << "Lobby::initializeClient end" << std::endl;
+    std::cout << "END - INITILIZE CLIENT: " << clientName << std::endl;
 }
 
 void Lobby::moveMorph(const std::string& clientName, int morphId, double newX, double newY){
@@ -88,7 +89,7 @@ void Lobby::moveMorph(const std::string& clientName, int morphId, double newX, d
 void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
-    std::cout << "Lobby::interpretCodeGet: interpreta: " << code << " y el Objecto contexto es " << objectContext->getName() << std::endl;
+    std::cout << "GET: " << code << " CONTEXT: " << objectContext->getName() << std::endl;
     interpreter->interpretChar(code.c_str(), objectContext);
     std::vector<Object*> objectsCreated  = interpreter->getCreatedObjets();
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
@@ -112,37 +113,43 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
 
     /*for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
         Object* visibleObject = lobbyReference->searchForId(*itVisibleObject);
-        visibleObject->notifyClients("crear"); //TODO cambiar nombre de evento
-    }*/
+        visibleObject->notifyClients("crear");
+    }*/ //OLD VERSION
 }
 
 void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
-    std::cout << "Lobby::interpretCodeDo: interpreta: " << code << " y el Objecto contexto es " << objectContext->getName() << std::endl;
-    interpreter->interpretChar(code.c_str(), objectContext); //TODO notificar solo modificados
-    for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
-        Object* visibleObject = lobbyReference->searchForId(*itVisibleObject);
-        visibleObject->notifyClients("crear"); //TODO cambiar nombre de evento
+    std::cout << "DO: " << code << " CONTEXT: " << objectContext->getName() << std::endl;
+    interpreter->interpretChar(code.c_str(), objectContext);
+    std::vector<Object*> objectsModified  = interpreter->getModifiedObjets();
+    for(auto itObject = objectsModified.begin(); itObject != objectsModified.end(); itObject++){
+        (*itObject)->notifyClients("crear");
     }
+    interpreter->clearVectors();
+
+
+    /*for(auto itVisibleObject = visibleObjects.begin(); itVisibleObject != visibleObjects.end(); itVisibleObject++){
+        Object* visibleObject = lobbyReference->searchForId(*itVisibleObject);
+        visibleObject->notifyClients("crear");
+    }*/ //OLD VERSION
 }
 
 
 void Lobby::initializeMorphs() {
-    std::cout << "Lobby::initializeMorphs: start" << std::endl;
+
     for (auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++) {
-        std::cout << "Lobby::initializeMorphs Busco object" << *itObject << std::endl;
-        std::cout << "Encuentro: " << lobbyReference->searchForId(*itObject)->getName() << std::endl;
-        lobbyReference->searchForId(*itObject)->notifyClients("crear"); //TODO cambiar nombre de evento
+        std::cout << "Lobby::initializeMorphs SEARCH OBJECTID" << *itObject << std::endl;
+        std::cout << "Lobby::initializeMorphs OBJECT FOUND: " << lobbyReference->searchForId(*itObject)->getName() << std::endl;
+        lobbyReference->searchForId(*itObject)->notifyClients("crear");
     }
-    std::cout << "Lobby::initializeMorphs: end" << std::endl;
 }
 
 void Lobby::changeObjectName(int objectID, const std::string& newName){
     Object* object = lobbyReference->searchForId(objectID);
     if(object != nullptr){
         object->changeObjectName(newName);
-        object->notifyClients("crear"); //TODO CAMBIAR NOMBRE DE EVENTO
+        object->notifyClients("crear");
     }
 }
 
@@ -162,7 +169,6 @@ void Lobby::serialize(json& jserialization){
     jserialization["lobbyName"] = lobbyName;
     jserialization["isShared"] = isShared;
 
-    //Esta es la serializacion recursiva
     json jLobby;
     lobbyReference->serialize(jLobby);
     jserialization["lobbyReference"] = jLobby;

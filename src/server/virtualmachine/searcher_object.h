@@ -15,7 +15,7 @@ public:
     NativeValue ejecute(std::string operation, Object* expression);
     void evaluate();
     Object* clone();
-    virtual void SearcherObject::serialize(json& jserialization);
+    virtual void serialize(json& jserialization);
     static Object* deserialize(json& jdeserialization, Lobby* lobby);
 };
 

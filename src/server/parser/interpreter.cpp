@@ -209,6 +209,8 @@ void Interpreter::sendMessage(const string message){
     garbage.registerObject(result);
     reportFile << "Interpreter::name" <<result->getName()<< "\n";
     std::string resultSTR = result->getRepresentation();
+    std::string name = message; //TESTLINEA
+    result->myMorph.setUnionName(name); //TESTLINEA
     result->changeMorphName(resultSTR); //TEST
     result->myMorph.setUnionId(expression->getMorphId()); //TEST LINEA
     createdObjects.push_back(result);
