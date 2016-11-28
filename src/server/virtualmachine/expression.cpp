@@ -51,7 +51,6 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
   std::cout << "Expression::deserialize start" << std::endl;
   Expression* expression = new Expression();
   expression->objectName = jdeserialization["objectName"];
-  std::cout << "My nameeeee:" <<expression->objectName<< std::endl;
   expression->representation = jdeserialization["representation"];
 
   json jRegisterOfSlots;
@@ -65,9 +64,7 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
   expression->myLobby = lobby;
 
 
-  //Empieza expression
-  json jReceiver = jdeserialization["receiver"];
-  std::cout << "el json receiver" <<jReceiver<< std::endl;
+    json jReceiver = jdeserialization["receiver"];
   if (jReceiver != "nullptr"){
     if (jReceiver["type"] == "number"){
       Object* object = Number::deserialize(jReceiver, lobby);
@@ -84,7 +81,6 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
 
   expression->operation = jdeserialization["operation"];
   json jArgument = jdeserialization["argument"];
-  std::cout << "el json receiver" <<jArgument<< std::endl;
   if (jArgument != "nullptr"){
     if (jArgument["type"] == "number"){
       Object* object = Number::deserialize(jArgument, lobby);
