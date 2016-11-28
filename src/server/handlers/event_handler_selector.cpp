@@ -42,18 +42,16 @@ EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) : serv
 
 EventHandlerSelector::~EventHandlerSelector() {
     delete server_handler;
-    for(auto itEventHanler = event_handlers.begin(); itEventHanler != event_handlers.end(); itEventHanler++){
+    for (auto itEventHanler = event_handlers.begin(); itEventHanler != event_handlers.end(); itEventHanler++) {
         delete itEventHanler->second;
     }
 }
 
-EventHandler* EventHandlerSelector::get_event_handler(const std::string &event) {
+EventHandler *EventHandlerSelector::get_event_handler(const std::string &event) {
     auto itEvent = event_handlers.find(event);
-    if(itEvent != event_handlers.end()){
+    if (itEvent != event_handlers.end()) {
         return event_handlers.at(event);
-    }
-    else{
+    } else {
         return nullptr;
     }
-
 }

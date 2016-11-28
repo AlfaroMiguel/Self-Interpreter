@@ -3,12 +3,12 @@
 #define OBJECTID "id"
 #define NEWNAME "new name"
 
-ChangeNameClientHandler::ChangeNameClientHandler(ServerHandler* server_handler) :
-        EventHandler(server_handler){
+ChangeNameClientHandler::ChangeNameClientHandler(ServerHandler *server_handler) :
+        EventHandler(server_handler) {
 }
 
-ChangeNameClientHandler::~ChangeNameClientHandler(){}
+ChangeNameClientHandler::~ChangeNameClientHandler() {}
 
-void ChangeNameClientHandler::handle(json j){
+void ChangeNameClientHandler::handle(json j) {
     server_handler->changeObjectName(j[OBJECTID], j[NEWNAME]);
 }

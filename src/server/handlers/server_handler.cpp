@@ -5,29 +5,28 @@
 
 using json = nlohmann::json;
 
-ServerHandler::ServerHandler(ProxyClient& client) : client(client){}
+ServerHandler::ServerHandler(ProxyClient &client) : client(client) {}
 
-ServerHandler::~ServerHandler(){}
+ServerHandler::~ServerHandler() {}
 
-void ServerHandler::connect(const std::string& clientName){
+void ServerHandler::connect(const std::string &clientName) {
     std::cout << " Se conecta cliente " << clientName << std::endl; //TODO sacar debug
     bool clientIsConnected = client.vm.connectClient(clientName, &client);
     json jResponse;
-    if(clientIsConnected){
+    if (clientIsConnected) {
         jResponse["evento"] = "cliente conectado";
         client.clientName = clientName;
         client.validClient = true;
-    }
-    else
+    } else
         jResponse["evento"] = "error";
 
     client.sendEvent(jResponse.dump());
 }
 
-void ServerHandler::initialize(){
+void ServerHandler::initialize() {
     std::vector<std::string> lobbies = client.vm.getAvailablesLobbies(client.clientName);
     json jlobbies;
-    for(int i = 0; i < lobbies.size(); i++){
+    for (int i = 0; i < lobbies.size(); i++) {
         jlobbies[std::to_string(i)] = lobbies[i];
     }
     json jInitialize;
@@ -36,9 +35,9 @@ void ServerHandler::initialize(){
     client.sendEvent(jInitialize.dump());
 }
 
-void ServerHandler::chooseLobby(const std::string& lobbyName, const std::string& lobbyState){
+void ServerHandler::chooseLobby(const std::string &lobbyName, const std::string &lobbyState) {
     //Conecto al client al lobby
-    if(lobbyState == "compartido")
+    if (lobbyState == "compartido")
         client.vm.connectClientToLobby(client.clientName, lobbyName, true);
     else
         client.vm.connectClientToLobby(client.clientName, lobbyName, false);
@@ -52,15 +51,15 @@ void ServerHandler::moveMorph(int idMorph, double newX, double newY) {
     client.vm.clientMovedMorph(client.clientName, idMorph, newX, newY);
 }
 
-void ServerHandler::interpretSelfGet(const std::string& code, int morphID){
+void ServerHandler::interpretSelfGet(const std::string &code, int morphID) {
     client.vm.interpretCodeGet(client.clientName, code, morphID);
 }
 
-void ServerHandler::interpretSelfDo(const std::string& code, int morphID){
+void ServerHandler::interpretSelfDo(const std::string &code, int morphID) {
     client.vm.interpretCodeDo(client.clientName, code, morphID);
 }
 
-void ServerHandler::changeObjectName(int objectID, const std::string& newName){
+void ServerHandler::changeObjectName(int objectID, const std::string &newName) {
     client.vm.changeObjectName(client.clientName, objectID, newName);
 }
 
