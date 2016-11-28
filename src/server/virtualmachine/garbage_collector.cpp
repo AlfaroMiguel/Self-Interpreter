@@ -73,7 +73,6 @@ void GarbageCollector::visit(Object* object){
     report = "cantidad de slots a visitar:" +std::to_string(pointers.size())+"\n";
     reportFile << report;
     for (size_t i = 0; i < pointers.size(); i++){
-      std::cout << "nombre del slot:" <<pointers[i]->getName()<< std::endl;
       visit(pointers[i]);
     }
   }
@@ -99,7 +98,6 @@ void GarbageCollector::freeResources(){
         }
     }
     for (size_t i = 0; i < vectorTem.size(); i++) {
-        std::cout << "Se eliminó el object con puntero:" << vectorTem[i]  << std::endl;
         createdObjects.remove(vectorTem[i]);
         delete(vectorTem[i]);
     }

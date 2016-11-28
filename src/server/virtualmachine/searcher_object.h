@@ -6,57 +6,35 @@
 class SearcherObject:public Object{
   Object* expressionSearched;
 public:
+    //Metodo para serializar un SearcherObject
+    void serialize(json& jserialization);
 
-    virtual void serialize(json& jserialization){
-        std::cout << "SearcherObject::serialize start: " << objectName << std::endl;
-        jserialization["objectName"] = objectName;
-        jserialization["representation"] = representation;
 
-        json jRegisterOfSlots;
-        slots.serialize(jRegisterOfSlots);
-        jserialization["slots"] = jRegisterOfSlots;
+    //Metodo estatico para la deserealizacion de un SearcherObject
+    static Object* deserialize(json& jdeserialization, Lobby* lobby);
 
-        json jMorph;
-        myMorph.serialize(jMorph);
-        jserialization["myMorph"] = jMorph;
 
-        jserialization["type"] = "searcherObject";
-
-        std::cout << "SearcherObject::serialize end " << objectName << std::endl;
-
-    }
-
-    //Deserealizacion
-
-    static Object* deserialize(json& jdeserialization, Lobby* lobby){
-        std::cout << "SearcherObject::deserialize start" << std::endl;
-        std::string name = jdeserialization["objectName"];
-        SearcherObject* searcherobj = new SearcherObject(name);
-        searcherobj->objectName = jdeserialization["objectName"];
-        searcherobj->representation = jdeserialization["representation"];
-
-        json jRegisterOfSlots;
-        jRegisterOfSlots = jdeserialization["slots"];
-        searcherobj->slots.deserialize(jRegisterOfSlots, searcherobj, lobby);
-
-        json jMorph;
-        jMorph = jdeserialization["myMorph"];
-        searcherobj->myMorph.deserialize(jMorph);
-
-        searcherobj->myLobby = lobby;
-
-        std::cout << "SearcherObject::deserialize end" << std::endl;
-
-        return searcherobj;
-    }
-
+    /*Este objeto tiene la responsabilidad de buscar el objeto con el nombre
+    seteado dado el contexto en el que se encuentra*/
     SearcherObject(std::string nameString);
     ~SearcherObject();
-    void setValue(int valueAux);
+
+    /*Si encontro el objeto se agrega el slot a ese, caso contrario se lo agrega a si mismo*/
     void addSlots(std::string slotName,Object* slot, bool isMutable, bool isParentSlot);
+
+    /*Devuelve un NativeValue del objeto del entorno correspondiente, se supone que
+    ya lo encontro, en caso contrario devuevlve un error*/
     NativeValue getValue();
+
+    /*Una vez que encontro el objeto se puede enviar un mensaje al objeto que
+    encontró*/
     NativeValue ejecute(std::string operation, Object* expression);
+
+    /*Aca obtiene su slot self que sería su entorno y buscar al objeto con el Nombre
+    objectName*/
     void evaluate();
+
+    /*Devuelve una copia de si mismo*/
     Object* clone();
 };
 
