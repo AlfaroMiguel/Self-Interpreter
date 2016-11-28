@@ -3,7 +3,6 @@
 #include "event_handler.h"
 #include "server_handler.h"
 
-
 #include "connect_client_handler.h"
 #include "initialize_client_handler.h"
 #include "choose_lobby_client_handler.h"
@@ -11,6 +10,7 @@
 #include "get_client_handler.h"
 #include "do_client_handler.h"
 #include "change_name_client_handler.h"
+#include "dismiss_client_handler.h"
 
 #define CONNNECT_EVENT "conectar cliente"
 #define INITIALIZE_EVENT "inicializar"
@@ -19,6 +19,7 @@
 #define GET_EVENT "get"
 #define DO_EVENT "do"
 #define CHANGE_NAME_EVENT "change name"
+#define DISMISS_EVENT "dismiss"
 
 EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) {
     event_handlers.insert(std::pair<std::string, EventHandler *>
@@ -35,6 +36,8 @@ EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) {
                                   (DO_EVENT, new DoClientHandler(server_handler)));
     event_handlers.insert(std::pair<std::string, EventHandler *>
                                   (CHANGE_NAME_EVENT, new ChangeNameClientHandler(server_handler)));
+    event_handlers.insert(std::pair<std::string, EventHandler *>
+                                  (DISMISS_EVENT, new DismissClientHandler(server_handler)));
 }
 
 EventHandlerSelector::~EventHandlerSelector() {}

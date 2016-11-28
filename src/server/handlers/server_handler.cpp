@@ -63,3 +63,7 @@ void ServerHandler::interpretSelfDo(const std::string& code, int morphID){
 void ServerHandler::changeObjectName(int objectID, const std::string& newName){
     client.vm.changeObjectName(client.clientName, objectID, newName);
 }
+
+void ServerHandler::dismissMorph(int objectID) {
+    client.vm.dismissObject(client.clientName, objectID);
+}

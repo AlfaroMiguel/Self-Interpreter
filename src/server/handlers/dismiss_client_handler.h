@@ -1,8 +1,15 @@
-//
-// Created by mikealpha on 27/11/16.
-//
+#ifndef DISMISS_CLIENT_HANDLER_H
+#define DISMISS_CLIENT_HANDLER_H
 
-#ifndef SELFTP_DISMISS_CLIENT_HANDLER_H
-#define SELFTP_DISMISS_CLIENT_HANDLER_H
+#include "event_handler.h"
+#include "server_handler.h"
 
-#endif //SELFTP_DISMISS_CLIENT_HANDLER_H
+class DismissClientHandler : public EventHandler{
+private:
+    void handle(json j);
+public:
+    DismissClientHandler(ServerHandler* server_handler);
+    ~DismissClientHandler();
+};
+
+#endif

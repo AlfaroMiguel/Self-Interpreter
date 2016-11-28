@@ -124,6 +124,14 @@ void VirtualMachine::changeObjectName(const std::string& clientName, int objectI
 }
 
 
+void VirtualMachine::dismissObject(const std::string& clientName , int objectID){
+    Client* client = searchClient(clientName);
+    if(client != nullptr){
+        Lobby* lobby = client->getActualLobby();
+        lobby->dismissObject(objectID);
+    }
+}
+
 /*Serializacion*/
 
 void VirtualMachine::serialize(json& jserialization){

@@ -64,6 +64,7 @@ public:
     //TODO DOCUMENTAR
 
     void changeObjectName(const std::string& clientName, int ObjectId, const std::string& newName);
+    void dismissObject(const std::string& clientName , int objectID);
 
     /*Serializacion*/
     void serialize(json& jserialization);

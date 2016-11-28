@@ -74,6 +74,7 @@ public:
     //TODO DOCUMENTAR
 
     void changeObjectName(int objectID, const std::string& newName);
+    void dismissObject(int objectID);
 
     /*Serializacion*/
 

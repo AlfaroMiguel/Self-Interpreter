@@ -32,6 +32,7 @@ public:
 
     //TODO DOCUMENTAR
     void changeObjectName(int objectID, const std::string& newName);
+    void dismissMorph(int moprhID);
 };
 
 #endif
