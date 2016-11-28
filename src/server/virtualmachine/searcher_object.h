@@ -6,11 +6,6 @@
 class SearcherObject:public Object{
   Object* expressionSearched;
 public:
-    //Metodo para serializar un SearcherObject
-    void serialize(json& jserialization);
-
-    //Metodo estatico para la deserealizacion de un SearcherObject
-    static Object* deserialize(json& jdeserialization, Lobby* lobby);
 
 
     /*Este objeto tiene la responsabilidad de buscar el objeto con el nombre
@@ -36,7 +31,11 @@ public:
 
     /*Devuelve una copia de si mismo*/
     Object* clone();
-    virtual void serialize(json& jserialization);
+
+    //Metodo para serializar un SearcherObject
+    void serialize(json& jserialization);
+
+    //Metodo estatico para la deserealizacion de un SearcherObject
     static Object* deserialize(json& jdeserialization, Lobby* lobby);
 };
 

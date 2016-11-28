@@ -11,43 +11,6 @@ SearcherObject::SearcherObject(std::string nameString):Object(){
 SearcherObject::~SearcherObject(){
 }
 
-
-Object* SearcherObject::deserialize(json& jdeserialization, Lobby* lobby){
-    std::string name = jdeserialization["objectName"];
-    SearcherObject* searcherobj = new SearcherObject(name);
-    searcherobj->objectName = jdeserialization["objectName"];
-    searcherobj->representation = jdeserialization["representation"];
-
-    json jRegisterOfSlots;
-    jRegisterOfSlots = jdeserialization["slots"];
-    searcherobj->slots.deserialize(jRegisterOfSlots, searcherobj, lobby);
-
-    json jMorph;
-    jMorph = jdeserialization["myMorph"];
-    searcherobj->myMorph.deserialize(jMorph);
-
-    searcherobj->myLobby = lobby;
-    return searcherobj;
-}
-
-
-void SearcherObject::serialize(json& jserialization){
-    jserialization["objectName"] = objectName;
-    jserialization["representation"] = representation;
-
-    json jRegisterOfSlots;
-    slots.serialize(jRegisterOfSlots);
-    jserialization["slots"] = jRegisterOfSlots;
-
-    json jMorph;
-    myMorph.serialize(jMorph);
-    jserialization["myMorph"] = jMorph;
-
-    jserialization["type"] = "searcherObject";
-}
-
-
-
 NativeValue SearcherObject::getValue(){
   if (expressionSearched != nullptr){
     return expressionSearched->getValue();
@@ -94,43 +57,36 @@ Object* SearcherObject::clone(){
   return newSearcheObject;
 }
 
+
 void SearcherObject::serialize(json& jserialization){
-  jserialization["objectName"] = objectName;
-  jserialization["representation"] = representation;
+    jserialization["objectName"] = objectName;
+    jserialization["representation"] = representation;
 
-  json jRegisterOfSlots;
-  slots.serialize(jRegisterOfSlots);
-  jserialization["slots"] = jRegisterOfSlots;
+    json jRegisterOfSlots;
+    slots.serialize(jRegisterOfSlots);
+    jserialization["slots"] = jRegisterOfSlots;
 
-  json jMorph;
-  myMorph.serialize(jMorph);
-  jserialization["myMorph"] = jMorph;
+    json jMorph;
+    myMorph.serialize(jMorph);
+    jserialization["myMorph"] = jMorph;
 
-  jserialization["type"] = "searcherObject";
-
-  std::cout << "SearcherObject::serialize end " << objectName << std::endl;
-
+    jserialization["type"] = "searcherObject";
 }
 
-//Deserealizacion
-
 Object* SearcherObject::deserialize(json& jdeserialization, Lobby* lobby){
-  std::string name = jdeserialization["objectName"];
-  SearcherObject* searcherobj = new SearcherObject(name);
-  searcherobj->objectName = jdeserialization["objectName"];
-  searcherobj->representation = jdeserialization["representation"];
+    std::string name = jdeserialization["objectName"];
+    SearcherObject* searcherobj = new SearcherObject(name);
+    searcherobj->objectName = jdeserialization["objectName"];
+    searcherobj->representation = jdeserialization["representation"];
 
-  json jRegisterOfSlots;
-  jRegisterOfSlots = jdeserialization["slots"];
-  searcherobj->slots.deserialize(jRegisterOfSlots, searcherobj, lobby);
+    json jRegisterOfSlots;
+    jRegisterOfSlots = jdeserialization["slots"];
+    searcherobj->slots.deserialize(jRegisterOfSlots, searcherobj, lobby);
 
-  json jMorph;
-  jMorph = jdeserialization["myMorph"];
-  searcherobj->myMorph.deserialize(jMorph);
+    json jMorph;
+    jMorph = jdeserialization["myMorph"];
+    searcherobj->myMorph.deserialize(jMorph);
 
-  searcherobj->myLobby = lobby;
-
-  std::cout << "SearcherObject::deserialize end" << std::endl;
-
-  return searcherobj;
+    searcherobj->myLobby = lobby;
+    return searcherobj;
 }
