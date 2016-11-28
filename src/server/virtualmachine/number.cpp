@@ -7,7 +7,6 @@
 Number::Number():Object(){}
 
 Number::Number(int valueAux):Object(){
-  std::cout << "Create Number" << std::endl;
   setName(std::to_string(valueAux));
   setRepresentation(std::to_string(valueAux));
   value.setValue(valueAux);
@@ -75,7 +74,6 @@ void Number::serialize(json& jserialization){
 
   //Agrego lo de number
 
-  std::cout << "Number::serialize" << std::endl;
   jserialization["operation"] = operation;
   json jNativeValue;
   value.serialize(jNativeValue);
