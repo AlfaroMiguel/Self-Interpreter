@@ -69,16 +69,17 @@ void Modelo::create_morph(const std::string& name, const Posicion& pos,
 	if (id_padre != 0) {
 		for (unsigned int i = 0; i < morphs.size(); i++)
 			if (morphs[i]->has_id(id_padre)) {
-				morph_union->add_path(morphs[i]->get_posicion_slot(slot_name), pos);
-				morphs[i]->add_path_to_slot(slot_name, id);
 				for (unsigned int i = 0; i < unions.size(); ++i){
 					if (*(unions[i]) == *(morph_union)){
 						existe = true;
 						break;
 					}
 				}
-				if (! existe)
+				if (! existe) {
+					morph_union->add_path(morphs[i]->get_posicion_slot(slot_name), pos);
+					morphs[i]->add_path_to_slot(slot_name, id);
 					unions.push_back(morph_union);
+				}
 			}
 	}
 }
