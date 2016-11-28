@@ -68,36 +68,36 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
   //Empieza expression
   json jReceiver = jdeserialization["receiver"];
   std::cout << "el json receiver" <<jReceiver<< std::endl;
-  if(jReceiver["type"] == "number" && jReceiver != "nullptr"){
-    std::cout << "es del tipo number sasasasaasasasa" << std::endl;
-    expression->receiver = Number::deserialize(jReceiver, lobby);
+  if (jReceiver != "nullptr"){
+    if (jReceiver["type"] == "number"){
+      Object* object = Number::deserialize(jReceiver, lobby);
+      expression->setReceiver(object);
+    }
+    else if (jReceiver["type"] == "searcherObject"){
+      Object* object = SearcherObject::deserialize(jReceiver, lobby);
+      expression->setReceiver(object);
+    }
   }
-  else if(jReceiver["type"] == "searcherObject" && jReceiver != "nullptr"){
-    expression->receiver = SearcherObject::deserialize(jReceiver, lobby);
-    std::cout << "es del tipo SearcherObject sasasasaasasasa" << std::endl;
-  }
-  else
+  else{
     expression->receiver = nullptr;
+  }
 
   expression->operation = jdeserialization["operation"];
-
   json jArgument = jdeserialization["argument"];
-  std::cout << "el json argument" <<jArgument<< std::endl;
-  if(jArgument["type"] == "number" && jArgument != "nullptr")
-    expression->argument = Number::deserialize(jArgument, lobby);
-  else if(jArgument["type"] == "searcherObject" && jArgument != "nullptr")
-    expression->argument = SearcherObject::deserialize(jArgument, lobby);
-  else
+  std::cout << "el json receiver" <<jArgument<< std::endl;
+  if (jArgument != "nullptr"){
+    if (jArgument["type"] == "number"){
+      Object* object = Number::deserialize(jArgument, lobby);
+      expression->setArgument(object);
+    }
+    else if (jArgument["type"] == "searcherObject"){
+      Object* object = SearcherObject::deserialize(jArgument, lobby);
+      expression->setArgument(object);
+    }
+  }
+  else{
     expression->argument = nullptr;
-
-  json jResult = jdeserialization["result"];
-  if(jdeserialization["type"] == "number" && jResult != nullptr)
-    expression->result = Number::deserialize(jResult, lobby);
-  else if(jdeserialization["type"] == "searcherObject" && jResult != nullptr)
-    expression->result = SearcherObject::deserialize(jResult, lobby);
-  else
-    expression->result = nullptr;
-
+  }
   std::cout << "Expression::deserialize end" << std::endl;
 
   return expression;
