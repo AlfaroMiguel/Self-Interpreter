@@ -105,11 +105,11 @@ void Interpreter::pushToken(const string id, const string message, const string 
 
 
 void Interpreter::registerObject(Object* object){
-  garbage.registerObject(object);
-  std::vector<Object*> slots = object->getReferences();
-  for (size_t i = 0; i < slots.size(); i++) {
-    std::cout << "slot de nombre:" <<slots[i]->getName()<<"de:"<<object->getName()<< std::endl;
-    registerObject(slots[i]);
+    garbage.registerObject(object);
+    std::vector<Object*> slots = object->getReferences();
+    for (size_t i = 0; i < slots.size(); i++) {
+        std::cout << "slot de nombre:" <<slots[i]->getName()<<"de:"<<object->getName()<< std::endl;
+        registerObject(slots[i]);
   }
 }
 
@@ -331,25 +331,22 @@ void Interpreter::interpretChar(const char *buffer,Object* entorno_ptr) {
 std::vector<Object*> Interpreter::getCreatedObjets(){
   reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
   reportFile  << "Objetos creados\n";
-  std::cout  << "Objetos creados\n";
   for (size_t i = 0; i < createdObjects.size(); i++) {
     reportFile << "      *Nombre:"+ createdObjects[i]->getName()+"\n";
-    std::cout << "       *Nombre:"+ createdObjects[i]->getName()+"\n";
   }
   reportFile.close();
   return createdObjects;
 }
 
 std::vector<Object*> Interpreter::getModifiedObjets(){
-  reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
-  reportFile  << "Objetos modificados\n";
-  std::cout  << "Objetos modificados\n";
-  for (size_t i = 0; i < modifiedObjects.size(); i++) {
-    reportFile << "      *Nombre:"+ modifiedObjects[i]->getName()+"\n";
-    std::cout << "      *Nombre:"+ modifiedObjects[i]->getName()+"\n";
+    reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
+    reportFile  << "Objetos modificados\n";
+    std::cout  << "Objetos modificados\n";
+    for (size_t i = 0; i < modifiedObjects.size(); i++) {
+        reportFile << "      *Nombre:"+ modifiedObjects[i]->getName()+"\n";
   }
-  reportFile.close();
-  return modifiedObjects;
+    reportFile.close();
+    return modifiedObjects;
 }
 
 void Interpreter::interpretFile(const char *nameFile) {

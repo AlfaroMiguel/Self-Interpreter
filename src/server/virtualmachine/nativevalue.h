@@ -16,53 +16,33 @@ private:
     float floatValue;
     bool boolValue;
     std::string stringValue;
+    /*Flags para identificar el tipo*/
     bool isIntBool, isFloatBool, isBoolBool, isStringBool;
     bool valueSetted();
 
 public:
-
-    void serialize(json& jserialization){
-        std::cout << "NativeValue::serialize" << std::endl;
-
-        jserialization["isIntBool"] = isIntBool;
-        jserialization["isFloatBool"] = isFloatBool;
-        jserialization["isBoolBool"] = isBoolBool;
-        jserialization["isStringBool"] = isStringBool;
-
-        if(isIntBool)jserialization["value"] = intValue;
-        if(isFloatBool)jserialization["value"] = floatValue;
-        if(isBoolBool)jserialization["value"] = boolValue;
-        if(isStringBool)jserialization["value"] = stringValue;
-    }
-
-    void deserialize(json& jdeserialization){
-        std::cout << "NativeValue::deserialize start" << std::endl;
-        std::cout << jdeserialization.dump(4) << std::endl;
-
-        this->isIntBool = jdeserialization["isIntBool"];
-        this->isFloatBool = jdeserialization["isFloatBool"];
-        this->isBoolBool = jdeserialization["isBoolBool"];
-        this->isStringBool = jdeserialization["isStringBool"];
-
-        if(isIntBool)this->intValue = jdeserialization["value"];
-        if(isFloatBool)this->floatValue = jdeserialization["value"];
-        if(isBoolBool)this->boolValue = jdeserialization["value"];
-        if(isStringBool)this->stringValue = jdeserialization["value"];
-
-        std::cout << "NativeValue::deserialize end" << std::endl;
-    }
-
+    //Metodo para serializar un NativeValue
+    void serialize(json& jserialization);
+    //Metodo para deserializar un NativeValue
+    void deserialize(json& jdeserialization);
+    //Constructor del NativeValue, internamente puede ser un string, un bool,
+    //float o un int
     NativeValue();
     ~NativeValue();
+    /*Se setea el valor del NativeValue,en caso de que ya haya sido seteado
+    anteriormente, se lanza un error, no se puede setear con 2 tipos distintos*/
     void setValue(int newValue);
     void setValue(float newValue);
     void setValue(bool newValue);
     void setValue(std::string newValue);
+    /*Metodos para indicar a qué tipo corresponde internamente*/
     bool isInt();
     bool isFloat();
     bool isBool();
     bool isString();
 
+    /*Metodos para obtener el dato interno, en caso de NativeValue no corresponda
+    con el tipo que se está pidiendo, se lanza un erro*/
     int getInt();
     float getFloat();
     bool getBool();

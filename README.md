@@ -56,7 +56,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [x] Borde de los slots mas fino
 - [ ] Nombre de Morph en negrita :no_entry_sign:
 - [x] No repetir Morphs que ya estan visualizados (TESTING) :microscope:
-- [ ] Parser: resolver multiples parametros
+- [ ] Parser: resolver multiples parametros :no_entry_sign:
 - [x] Documentacion mas ordenada -> en los .h (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
 - [x] Valgrind Servidor (TESTING) :microscope:
 - [ ] Manejar excepciones correctamente (EN PROCESO) :recycle:

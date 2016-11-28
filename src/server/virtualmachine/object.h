@@ -46,21 +46,24 @@ public:
     /*Buscar el objeto de nombre name en el objeto object*/
     Object* searchObject(const std::string& name, Object *object);
 
-    virtual void setReceiver(Object* receiverPtr){
-      std::cout << "Object::setReceiver:" << std::endl;
-    }
-    virtual void setOperator(std::string operatorString){
-      std::cout << "Object::setOperator:" << std::endl;
-    }
-    virtual void setArgument(Object* argumentPtr){
-      std::cout << "Object::setArgument:" << std::endl;
-    }
+    /*Se setea quien recibe el mensaje, normalmente es this*/
+    virtual void setReceiver(Object* receiverPtr){}
+
+    /*Se setea el mensaje a ejecuta*/
+    virtual void setOperator(std::string operatorString){}
+
+    /*Se setea el argumento del mensaje*/
+    virtual void setArgument(Object* argumentPtr){}
 
     /*Devuelve el resultado luego de haber ejecutado alguna operacion
     sobre el objeto*/
     virtual void setResult(Object* resultPtr){}
+    /*Devuelve el NativeValue asociado a el mismo o a la ejecucion de en mensaje*/
     virtual NativeValue getValue();
+
+    /*Devuelve el resultdo de la experssion*/
     virtual Object* getResult();
+    /*Se envia un mensaje al objeto con los respectivos argumentos*/
     virtual NativeValue ejecute(std::string operationStr, Object* argumentPtr);
 
     /*Dado se le envio un mensaje con un operation y los argumentos correspondiente
@@ -97,7 +100,6 @@ public:
 
     /*Setea su representacion*/
     virtual void setRepresentation(const std::string representationString);
-    virtual Object* print(const std::vector<Object*>& argumnets);
 
 
 

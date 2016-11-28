@@ -7,7 +7,6 @@
 Number::Number():Object(){}
 
 Number::Number(int valueAux):Object(){
-  std::cout << "Create Number" << std::endl;
   setName(std::to_string(valueAux));
   setRepresentation(std::to_string(valueAux));
   value.setValue(valueAux);
@@ -17,18 +16,13 @@ Number::~Number(){}
 
 
 Object* Number::clone(){
-  std::cout << "Namber::clone()" << std::endl;
   int valueInt = value.getInt();
   Number* newNumber = new Number(valueInt);
   setName(this->getName());
   return newNumber;
 }
 
-//TODO limpiar esto
-void Number::setValue(int valueAux){
-  /*Un nativeValue no es modificable*/
-  //value = valueAux;
-}
+void Number::setValue(int valueAux){}
 
 Object* Number::getResult(){
   return this;
@@ -39,7 +33,6 @@ NativeValue Number::getValue(){
 }
 
 void Number::setOperator(std::string operatorString){
-  std::cout << "Number::setOperator" << std::endl;
   this->operation = operatorString;
 }
 
@@ -50,10 +43,8 @@ NativeValue Number::convertToNativeValue(){
 
 NativeValue Number::ejecute(std::string operation, Object* expression){
   /*Aca permito cosas del tipo 3 + 4.0*/
-  std::cout << "Number::ejecute" << std::endl;
   int resultado = 0;
   if (expression->getValue().isInt() || expression->getValue().isFloat()){
-    std::cout << "Soy expression Number "<< value.getInt() <<" y voy a ejecutar la operation:" <<operation<< std::endl;
     if (operation.compare("*")==0){
       resultado = value.getInt()*expression->getValue().getInt();
     }else{
@@ -70,7 +61,6 @@ NativeValue Number::ejecute(std::string operation, Object* expression){
 
 
 void Number::serialize(json& jserialization){
-  std::cout << "Object::serialize adentro de Number: " << objectName << std::endl;
   jserialization["objectName"] = objectName;
   jserialization["representation"] = representation;
 
@@ -84,7 +74,6 @@ void Number::serialize(json& jserialization){
 
   //Agrego lo de number
 
-  std::cout << "Number::serialize" << std::endl;
   jserialization["operation"] = operation;
   json jNativeValue;
   value.serialize(jNativeValue);
@@ -95,7 +84,6 @@ void Number::serialize(json& jserialization){
 }
 
 Number* Number::deserialize(json& jdeserialization, Lobby* lobby){
-  std::cout << "Number::deserialize" << std::endl;
   Number* number = new Number();
 
   number->objectName = jdeserialization["objectName"];
