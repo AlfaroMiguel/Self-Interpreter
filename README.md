@@ -57,7 +57,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Nombre de Morph en negrita :no_entry_sign:
 - [x] No repetir Morphs que ya estan visualizados (TESTING) :microscope:
 - [ ] Parser: resolver multiples parametros
-- [ ] Documentacion mas ordenada -> en los .h (EN PROCESO) :recycle:
+- [x] Documentacion mas ordenada -> en los .h (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
 - [ ] Valgrind Servidor (EN PROCESO) :recycle:
 - [ ] Manejar excepciones correctamente (EN PROCESO) :recycle:
 - [x] Verificar errores de sintaxis en el codigo Self
