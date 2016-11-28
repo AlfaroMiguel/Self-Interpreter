@@ -88,6 +88,7 @@ int main(int argc, const char *argv[]) try{
             std::cout << DEL_MSG << std::endl;
         }
     }
+    delete vm;
     return RET_EXIT;
 }
 catch(...){

@@ -15,7 +15,15 @@ Client* VirtualMachine::searchClient(const std::string& clientName){
     return itClient->second;
 }
 
-VirtualMachine::VirtualMachine() {}
+VirtualMachine::VirtualMachine() {
+    for(auto itLobby = existingLobbies.begin(); itLobby != existingLobbies.end(); itLobby++){
+        delete itLobby->second;
+    }
+
+    for(auto itClient = existingClients.begin(); itClient != existingClients.end(); itClient++){
+        delete itClient->second;
+    }
+}
 
 void VirtualMachine::initialize(){
     //Tengo que tener un lobby principal, por ahora lo hago compartido entre todos los clientes

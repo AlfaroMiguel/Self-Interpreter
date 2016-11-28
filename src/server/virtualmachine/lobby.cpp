@@ -11,7 +11,9 @@ lobbyName(lobbyName), isShared(isShared), lobbyReference(lobbyReference){
     this->interpretCodeGet(shellCode, lobbyReference->getMorphId());
 }
 
-Lobby::~Lobby() {}
+Lobby::~Lobby() {
+    delete interpreter;
+}
 
 std::string Lobby::getLobbyName(){
     return lobbyName;
@@ -187,7 +189,6 @@ Lobby* Lobby::deserialize(json& jdeserialize){
     }
 
     lobby->interpreter = new Interpreter(lobby->lobbyReference, lobby);
-    lobby->interpreter->registerObjects();
     (lobby->interpreter)->registerObjects();
     json jVisibleObjects = jdeserialize["visibleObjects"];
     for(auto it = jVisibleObjects.begin(); it != jVisibleObjects.end(); it++){
