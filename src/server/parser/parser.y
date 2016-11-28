@@ -62,6 +62,9 @@ line :
 		|VARIABLE ADD line SEMICOLON
 		{
 		interpreter->pushToken(*$1,"add","");
+		std::cout << "Liberando:" <<$1<<std::endl;
+		std::cout << "Tiene:" <<*$1<<std::endl;
+		delete $1;
 		}
 		|VARIABLE RM line SEMICOLON
 		{
@@ -70,7 +73,10 @@ line :
 		|VARIABLE EQUALS lines SEMICOLON
 		{
 		interpreter->pushToken((*$1),"assignation","");
-		//vars[*$1] = $3;delete $1;
+		//vars[*$1] = $3;
+		std::cout << "Liberando:" <<$1<<std::endl;
+		std::cout << "Tiene:" <<*$1<<std::endl;
+		delete $1;
 		}
 		|CREATEOBJECTINIT argument BAR expression SEMICOLON RPAREN
 		{
@@ -158,6 +164,7 @@ inner2:
 		//interpreter->pushToken(*$1,"find","");
 		interpreter->pushToken(*$1,"create_variable","");
 		std::cout << "VARIABLE" <<std::endl;
+		//delete(str_val);
 		}
 		|NUMBER
 		{

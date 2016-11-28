@@ -15,12 +15,15 @@
 "print" 									{return PRINT;}
 [a-zA-Z][a-zA-Z0-9]* 			{
 													//std::cout<<"VARIABLE PAARA";
+													//yylval.str_val = std::to_string(yytext);
 													yylval.str_val = new string (yytext);
+													std::cout << "Creando:" <<yylval.str_val<<std::endl;
+													std::cout << "tiene:" <<*yylval.str_val<<std::endl;
 													return VARIABLE;
 													}
 ":"+[a-zA-Z]*+"." 				{
 													//std::cerr<<"encontré un argumento";
-													//yylval.str_val = new string (yytext);
+													yylval.str_val = new string (yytext);
 													return ARGS;
 													}
 [0-9][0-9]*(.[0-9]+)? 		{

@@ -16,6 +16,7 @@ extern FILE *yyin;
 extern void reset_lexer(void);
 
 extern void reset_parser(void);
+extern int yylex_destroy(void);
 
 using std::string;
 
@@ -324,6 +325,7 @@ void Interpreter::interpretChar(const char *buffer,Object* entorno_ptr) {
     std::cout << "El resultado del parser es:" <<resultado<< std::endl;
     reportFile << "Termine de interpretar\n";
     reportFile << "Se llama al recolector de basura\n";
+    yylex_destroy();
     garbage.collect();
     reportFile.close();
 }
