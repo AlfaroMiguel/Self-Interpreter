@@ -8,7 +8,7 @@
 
 struct is_near {
   bool operator() (Object* first, Object* second)
-  {   std::cout << "first:" <<first<<" second:"<<second<< std::endl;
+  { 
       return (first == second);
   }
 };
