@@ -11,8 +11,6 @@ ProxyClient::ProxyClient(Socket skt_aceptar, VirtualMachine& vm): //ademas recib
 }
 
 ProxyClient::~ProxyClient(){
-	//delete &socketAccepted; Ahora es RAII
-
 }
 
 void ProxyClient::attend(){
