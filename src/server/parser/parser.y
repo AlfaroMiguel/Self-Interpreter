@@ -160,11 +160,11 @@ inner1: 	inner1 ASTERISK inner2 {
 
 inner2:
 		VARIABLE {
-		std::cout << "VARIABLE" <<std::endl;
+		//std::cout << "VARIABLE" <<std::endl;
 		//interpreter->pushToken(*$1,"find","");
 		interpreter->pushToken(*$1,"create_variable","");
 		std::cout << "VARIABLE" <<std::endl;
-		//delete(str_val);
+		delete($1);
 		}
 		|NUMBER
 		{
