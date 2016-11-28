@@ -52,6 +52,11 @@ std::string Morph::getEvent(const std::string& eventName){
         slotsj[itSlot->first] = itSlot->second;
     }
     eventj["slots"] = slotsj.dump();
+
+    //TEST LINEA
+    eventj["unionName"] = unionName;
+    eventj["unionID"] = unionID;
+
     return eventj.dump();
 }
 

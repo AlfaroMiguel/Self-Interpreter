@@ -22,9 +22,6 @@ Object::Object(const Object &otherObject) {
     this->myMorph = otherObject.myMorph;
 }
 
-
-
-
 //TODO
 NativeValue Object::getValue(){
   NativeValue value;
@@ -64,6 +61,7 @@ void Object::addSlots(std::string slotName,
                       bool isParentSlot){
     std::cout << "Agrego slot: " << slotName <<" de nombre:"<<object->getName()<< " a " << this->getName() << std::endl; //TODO sacar debug
 
+    object->myMorph.setUnionName(slotName); //TEST LINEA
 
     slots.addSlot(slotName, object, isMutable, isParentSlot);
     if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference

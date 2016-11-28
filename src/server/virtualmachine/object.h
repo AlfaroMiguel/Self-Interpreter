@@ -25,7 +25,7 @@ protected:
     std::string representation;
     Morph myMorph;
     Lobby* myLobby;
-
+    friend class Interpreter;
 public:
 
     /*Objeto generico de Self*/
