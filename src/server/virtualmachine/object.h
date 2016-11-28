@@ -107,6 +107,7 @@ public:
     int getMorphId();
     void changeMorphName(std::string& newName);
     Object* searchForId(int objectId);
+    void changeObjectName(const std::string& newName);
 
     /*Serializacion*/
     virtual void serialize(json& jserialization);

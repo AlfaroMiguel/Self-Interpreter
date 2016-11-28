@@ -61,6 +61,10 @@ public:
      * Interpreta el codigo self*/
     void interpretCodeDo(const std::string& clientName, const std::string& code, int morphID);
 
+    //TODO DOCUMENTAR
+
+    void changeObjectName(const std::string& clientName, int ObjectId, const std::string& newName);
+
     /*Serializacion*/
     void serialize(json& jserialization);
     static VirtualMachine* deserialize(json& jdeserialization);

@@ -38,29 +38,28 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 * Documentacion tecnica: https://www.overleaf.com/7097755ztvkcsjjjxgv
 * Manual del usuario: https://www.overleaf.com/7090924zfjbtsqfghrk#/24374756/
 
-![29/11/16](http://media.riffsy.com/images/980d7dc84eca23451960212b25f7fba4/tenor.gif)
 
-
-##TODO List (23/09) En orden de importancia
+##TODO List (23/11) :arrow_right: (29/11) En orden de importancia
 
 - [ ] Pasar por referencia (no por copia!) usar const cuando lo amerite (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
 - [x] Serializacion/Persistencia (TESTING) :microscope:
-- [ ] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase) (EN PROCESO) :recycle:
-- [x] Mensajes con contexto en los objetos (TESTING) :microscope:
+- [x] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
+- [x] Mensajes con contexto en los objetos
 - [x] Actualizacion de Slots (incluso cuando se hace DO)
 - [x] Notificar morphs (_AddSlot + Get =  mostrar valor de slot) (_AddSlot + Do = Actualiza el morph [si se encuentra visualizado])
-- [ ] Cambiar de Lobby dentro de la app (EN PROCESO) :recycle:
+- [x] Cambiar de Lobby dentro de la app (TESTING) :microscope:
 - [ ] Agregar linea en la interfaz uniendo Morph con el Morph de su Slot. :no_entry_sign:
 - [x] Interfaz en un solo idioma (Ingles)
-- [ ] Seleccionar slot -> Cambia de color el borde
+- [ ] Seleccionar slot -> Cambia de color el borde :soon:
 - [x] Fixear los anchos de los slots al ancho del Morph que lo contiene
 - [x] Borde del nombre del Morph mas grueso
 - [x] Borde de los slots mas fino
 - [ ] Nombre de Morph en negrita :no_entry_sign:
-- [ ] No repetir Morphs que ya estan visualizados 
+- [x] No repetir Morphs que ya estan visualizados (TESTING) :microscope:
 - [ ] Parser: resolver multiples parametros
-- [ ] Documentacion mas ordenada -> en los .h :soon:
+- [ ] Documentacion mas ordenada -> en los .h (EN PROCESO) :recycle:
 - [ ] Valgrind Servidor
-- [ ] Manejar excepciones correctamente
+- [ ] Manejar excepciones correctamente (EN PROCESO) :recycle:
 - [x] Verificar errores de sintaxis en el codigo Self
 - [ ] Codigo presentable (EN PROCESO) :recycle:
+- [x] Garbage collector con Serializacion
