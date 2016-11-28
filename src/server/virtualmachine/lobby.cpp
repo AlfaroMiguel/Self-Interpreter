@@ -187,6 +187,7 @@ Lobby* Lobby::deserialize(json& jdeserialize){
     }
 
     lobby->interpreter = new Interpreter(lobby->lobbyReference, lobby);
+    lobby->interpreter->registerObjects();
     (lobby->interpreter)->registerObjects();
     json jVisibleObjects = jdeserialize["visibleObjects"];
     for(auto it = jVisibleObjects.begin(); it != jVisibleObjects.end(); it++){
