@@ -30,16 +30,26 @@ class Objeto: public Representacion{
   	void cambiar_posicion(const Posicion& pos);
   	const Posicion& get_posicion() const;
   	void resize_all(double new_size);
+  	void add_path(int id_padre, const std::string& slot_name);
+  	void add_path_to_slot(const std::string& slot_name, int id_padre);
+  	const Posicion& get_posicion_slot(const std::string& slot_name);
+  	void move_path();
+
  private:
   	std::mutex mutex;
   	std::vector<Glib::RefPtr<Slot>> slots;
-
+	//std::vector<Glib::RefPtr<Goocanvas::Path>> paths;
+	int cant_paths = 0;
   	Objeto(const Objeto& otra) = delete;
   	Objeto& operator=(const Objeto& otra) = delete;
+
+  	std::string name_slot;
+  	int id_padre;
 
   	bool on_cambiar_posicion(const Posicion* pos);
   	bool on_mover(const Posicion* pos);
   	bool on_agregar_slot(Glib::RefPtr<Slot> slot);
   	void set_line_width();
+  	bool on_add_path(Glib::RefPtr<Goocanvas::Path> path);
 };
 #endif

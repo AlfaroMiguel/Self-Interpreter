@@ -2,9 +2,9 @@
 #define CLIENT_HANDLER_H
 
 #include "morph.h"
-#include "comunicador_server.h"
+#include "server_proxy.h"
 #include "posicion.h"
-
+#include "union.h"
 #include <string>
 #include <map>
 #include <gtkmm.h>
@@ -16,7 +16,7 @@ class Modelo;
  * y las distintas clases del cliente */
 class ClientHandler{
  	public:
-  		ClientHandler(Modelo* modelo, ComunicadorServer* com_server);
+  		ClientHandler(Modelo* modelo, ServerProxy* server_proxy);
   		~ClientHandler();
 
   		/* Establece el controlador de vistas */
@@ -37,7 +37,8 @@ class ClientHandler{
   		void enable_editing(Glib::RefPtr<Morph> morph);
   		/* Crea un morph nuevo */
   		void create_morph(const std::string& name, const Posicion& pos,
-						 std::map<std::string, std::string> slots, int id);
+						 std::map<std::string, std::string> slots, int id,
+						  int id_padre, const std::string& slot_name);
   		/* Dibuja el morph en la interfaz */
   		void draw_morph(Glib::RefPtr<Morph> morph);
   		/* Elimina el morph seleccionado de la interfaz */
@@ -63,13 +64,22 @@ class ClientHandler{
   		void get_morph_from_slot(int morph_id, const std::string& slot_name);
   		/* Pide los datos del lobby seleccionado al servidor */
   		void select_lobby(const std::string& lobby_name, const std::string& lobby_property);
+  		/* Elimina el morph de la vista */
   		void hide_morph(Glib::RefPtr<Morph> morph);
+  		/* Cierra la aplicacion */
   		void quit();
-  		void change_lobby();
+  		/* Muestra al usuario las opciones para elegir un nuevo lobby */
+  		void show_lobby_options();
+  		/* */
   		void reset_lobby();
+  		void join_morphs(const Posicion& pos_begin, const Posicion& pos_end);
+  		void add_union(Union* morph_union);
+  		void dismiss_morph(int id);
+  		void add_union(int id_obj, int id_padre, const std::string& slot_name);
+  		void delete_union(Union* morph_union);
  	private:
   		Modelo* modelo;
-  		ComunicadorServer* com_server;
+  		ServerProxy* server_proxy;
   		ViewHandler* view_handler;
 };
 #endif

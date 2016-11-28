@@ -1,5 +1,5 @@
-#ifndef COMUNICADOR_SERVER_H
-#define COMUNICADOR_SERVER_H
+#ifndef SERVER_PROXY_H
+#define SERVER_PROXY_H
 
 #include "../common/socket.h"
 #include "../common/json.hpp"
@@ -13,23 +13,23 @@ class ClientHandler;
 
 /* Clase que encapsula el manejo del envío y recepción de datos
  * respetando el protocolo correspondiente por parte del servidor. */
-class ComunicadorServer {
+class ServerProxy {
  	private:
   		Socket skt_cliente;
   		ClientHandler* client_handler;
 		Recibidor* recibidor;
 
-  		ComunicadorServer(const ComunicadorServer& otra) = delete;
-  		ComunicadorServer& operator=(const ComunicadorServer& otra) = delete;
+  		ServerProxy(const ServerProxy& otra) = delete;
+  		ServerProxy& operator=(const ServerProxy& otra) = delete;
 
   		void send_json(const json& j);
  	public:
-  		ComunicadorServer(const std::string& hostname, const std::string& puerto);
-  		ComunicadorServer();
-  		~ComunicadorServer();
+  		ServerProxy(const std::string& hostname, const std::string& puerto);
+  		ServerProxy();
+  		~ServerProxy();
 
-  		ComunicadorServer(ComunicadorServer&& otra);
-  		ComunicadorServer& operator=(ComunicadorServer&& otra);
+  		ServerProxy(ServerProxy&& otra);
+  		ServerProxy& operator=(ServerProxy&& otra);
 
   		void inicializar();
   		void set_control(ClientHandler* client_handler);

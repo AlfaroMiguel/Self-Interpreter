@@ -2,7 +2,7 @@
 #define VIEW_HANDLER_H
 
 #include "client_handler.h"
-
+#include "union.h"
 class MainView;
 class VentanaObjetos;
 class VentanaInicio;
@@ -39,6 +39,10 @@ class ViewHandler{
   		void quit();
   		void show_lobby_options();
   		void reset_lobby();
+  		void join_morphs(const Posicion& pos_begin, const Posicion& pos_end);
+  		void add_union(Union* morph_union);
+  		void add_union(int id_obj, int id_padre, const std::string& slot_name);
+  		void delete_union(Union* morph_union);
  	private:
   		MainView* main_view;
   		VentanaInicio* ventana_inicio;

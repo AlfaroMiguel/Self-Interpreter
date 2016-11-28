@@ -11,6 +11,8 @@ void NewMorphHandler::handle(const json& j) const{
 	int id = j["id"];
 	double x = j["posicion"]["x"];
 	double y = j["posicion"]["y"];
+	int id_padre = j["unionID"];
+	std::string slot_name = j["unionName"];
 	std::string slots_str = j["slots"];
 	json slots = json::parse((char*)slots_str.c_str());
 	for (json::iterator it = slots.begin(); it != slots.end(); ++it) {
@@ -19,5 +21,5 @@ void NewMorphHandler::handle(const json& j) const{
 		dic_slots.insert(std::make_pair(nombre, valor));
 	}
 	Posicion pos_morph(x, y);
-	client_handler->create_morph(nombre, pos_morph, dic_slots, id);
+	client_handler->create_morph(nombre, pos_morph, dic_slots, id, id_padre, slot_name);
 }

@@ -48,7 +48,7 @@ VentanaEdicion::VentanaEdicion(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 VentanaEdicion::~VentanaEdicion(){}
 
 void VentanaEdicion::on_change_lobby_event(){
-	client_handler->change_lobby();
+	client_handler->show_lobby_options();
 }
 
 void VentanaEdicion::add_to_code_entry(const Glib::ustring& code){

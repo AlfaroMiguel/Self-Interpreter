@@ -64,6 +64,7 @@ void Objeto::cambiar_posicion(const Posicion& new_pos){
 	double offset_y = y - posicion.get_y();
 	posicion.set_x(x);
 	posicion.set_y(y);
+	move_path();
 	translate(offset_x, offset_y);
 	Posicion pos_slot(offset_x, offset_y);
 	for (unsigned int i = 0; i < slots.size(); i++)
@@ -74,11 +75,17 @@ bool Objeto::on_mover(const Posicion* new_pos){
 	double new_x = new_pos->get_x();
 	double new_y = new_pos->get_y();
 	translate(new_x, new_y);
+	move_path();
 	actualizar_posicion(*new_pos);
 	for (unsigned int i = 0; i < slots.size(); i++)
 		slots[i]->mover(*new_pos);
 	return false;
 }
+
+void Objeto::move_path(){
+	parent_morph.add_union(parent_morph.get_id(), id_padre, name_slot);
+}
+
 void Objeto::mover(const Posicion& new_pos){
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Objeto::on_mover), &new_pos));
 }
@@ -136,4 +143,23 @@ void Objeto::resize_all(double new_size){
 
 void Objeto::set_line_width() {
 	base->property_line_width() = 4;
+}
+
+void Objeto::add_path(int id_padre, const std::string& name_slot) {
+	this->id_padre = id_padre;
+	std::string name(name_slot.c_str());
+	this->name_slot = name;
+}
+
+void Objeto::add_path_to_slot(const std::string& slot_name, int id_padre) {
+	for (unsigned int i = 0; i < slots.size(); i++)
+		if (slots[i]->get_nombre().raw() == slot_name) {
+			slots[i]->add_path(id_padre);
+		}
+}
+
+const Posicion& Objeto::get_posicion_slot(const std::string &slot_name) {
+	for (unsigned int i = 0; i < slots.size(); i++)
+		if (slots[i]->get_nombre().raw() == slot_name)
+			return slots[i]->get_posicion();
 }

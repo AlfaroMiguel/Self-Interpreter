@@ -46,12 +46,17 @@ class Morph: public Goocanvas::Group {
   	const Posicion& get_posicion() const;
   	bool has_id(int id);
   	void resize(double new_size);
+  	void add_path_to_object(int id_padre, const std::string& slot_name);
+  	void add_path_to_slot(const std::string& slot_name, int id_padre);
+  	const Posicion& get_posicion_slot(const std::string& slot_name);
+  	void move_path(const Posicion& pos_slot, int id_padre);
+  	void add_union(int id, int id_padre, const std::string& slot_name);
  private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;
   	bool siendo_editado = false;
   	Glib::RefPtr<Objeto> objeto;
-  	Glib::RefPtr<Goocanvas::Polyline> linea;
+  	//Glib::RefPtr<Goocanvas::Polyline> linea;
 	int id;
   	ClientHandler* client_handler;
 

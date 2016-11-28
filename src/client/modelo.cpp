@@ -48,32 +48,39 @@ void Modelo::dismiss_morph(){
 	}
 }
 
-Glib::RefPtr<Morph> Modelo::create_morph(const std::string& name,
-										const Posicion& pos,
-										std::map<std::string,
-												 std::string> slots,
-										int id) {
-	for(unsigned int i = 0; i < morphs.size(); i++)
+void Modelo::create_morph(const std::string& name, const Posicion& pos,
+						  std::map<std::string, std::string> slots, int id,
+						  int id_padre, const std::string& slot_name) {
+	for (unsigned int i = 0; i < morphs.size(); i++)
 		if (morphs[i]->has_id(id)) {
 			client_handler->hide_morph(morphs[i]);
-			morphs.erase(morphs.begin()+i);
+			morphs.erase(morphs.begin() + i);
 		}
 	const Glib::ustring morph_name(name);
-	Glib::RefPtr<Morph> morph = Morph::create(pos, morph_name, id);
+	Glib::RefPtr <Morph> morph = Morph::create(pos, morph_name, id);
 	morphs.push_back(morph);
 	morph->conectar_seniales();
 	morph->agregar_slots(slots);
 	morph->set_control(client_handler);
+	morph->add_path_to_object(id_padre, slot_name);
 	client_handler->draw_morph(morph);
-	return morph;
-}
-
-void Modelo::unir_morphs(Glib::RefPtr<Morph> morph1, Glib::RefPtr<Morph> morph2, double x_inicio, double y_inicio) {
-	double x_fin = morph2->get_x();
-	double y_fin = morph2->get_y();
-	Glib::RefPtr <Goocanvas::Polyline> linea = Goocanvas::Polyline::create(x_inicio, y_inicio, x_fin, y_fin);
-	morph1->agregar_union(linea);
-	morph2->agregar_union(linea);
+	Union* morph_union = new Union(id, id_padre, slot_name, client_handler);
+	bool existe = false;
+	if (id_padre != 0) {
+		for (unsigned int i = 0; i < morphs.size(); i++)
+			if (morphs[i]->has_id(id_padre)) {
+				morph_union->add_path(morphs[i]->get_posicion_slot(slot_name), pos);
+				morphs[i]->add_path_to_slot(slot_name, id);
+				for (unsigned int i = 0; i < unions.size(); ++i){
+					if (*(unions[i]) == *(morph_union)){
+						existe = true;
+						break;
+					}
+				}
+				if (! existe)
+					unions.push_back(morph_union);
+			}
+	}
 }
 
 void Modelo::get_morph_from_slot(Posicion& pos){
@@ -93,7 +100,7 @@ void Modelo::change_morph_position(int morph_id, const Posicion& new_pos){
 
 void Modelo::move_morph(int morph_id, const Posicion& new_pos){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
-		if (morphs[i]->get_id() == morph_id){
+		if (morphs[i]->has_id(morph_id)){
 			morphs[i]->mover(new_pos);
 		}
 	}
@@ -101,7 +108,7 @@ void Modelo::move_morph(int morph_id, const Posicion& new_pos){
 
 bool Modelo::existe_morph(int morph_id){
 	for (unsigned int i = 0; i < morphs.size(); ++i) {
-		if (morphs[i]->get_id() == morph_id){
+		if (morphs[i]->has_id(morph_id)){
 			return true;
 		}
 	}
@@ -129,4 +136,33 @@ void Modelo::reset_lobby() {
 	for(unsigned int i = 0; i < morphs.size(); i++)
 		client_handler->dismiss_morph(morphs[i]);
 	morphs.clear();
+}
+
+void Modelo::dismiss_morph(int id) {
+	for (unsigned int i = 0; i < morphs.size(); ++i) {
+		if (morphs[i]->has_id(id)){
+			client_handler->dismiss_morph(morphs[i]);
+		}
+	}
+}
+
+void Modelo::add_union(int id_obj, int id_padre, const std::string& slot_name){
+	Posicion pos_begin(0,0);
+	Posicion pos_end(0,0);
+	for (unsigned int i = 0; i < morphs.size(); ++i) {
+		if (morphs[i]->has_id(id_obj)){
+			pos_begin.set_x(morphs[i]->get_posicion().get_x());
+			pos_begin.set_y(morphs[i]->get_posicion().get_y());
+		}
+		if (morphs[i]->has_id(id_padre)){
+			pos_end.set_x(morphs[i]->get_posicion_slot(slot_name).get_x());
+			pos_end.set_y(morphs[i]->get_posicion_slot(slot_name).get_y());
+		}
+	}
+	Union morph_union(id_obj, id_padre, slot_name, client_handler);
+	for (unsigned int i = 0; i < unions.size(); ++i){
+		if (*(unions[i]) == morph_union){
+			unions[i]->update_path(pos_begin, pos_end);
+		}
+	}
 }

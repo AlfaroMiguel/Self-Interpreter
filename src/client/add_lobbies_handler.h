@@ -5,11 +5,11 @@
 
 /* Clase functor que se encarga de manejar el evento
  * de agregar lobbies */
-class AddLobbiesHandler: public EventHandler{
- private:
-  void handle(const json& j) const;
+class AddLobbiesHandler : public EventHandler {
  public:
-  AddLobbiesHandler(ClientHandler* client_handler);
+  AddLobbiesHandler(ClientHandler *client_handler);
   ~AddLobbiesHandler();
+ private:
+  void handle(const json &j) const;
 };
 #endif

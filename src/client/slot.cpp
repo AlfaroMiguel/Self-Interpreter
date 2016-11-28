@@ -4,6 +4,7 @@
 #define ALTO 23
 #define ANCHO 200
 #define WIDTH_PER_CHARACTER 10
+
 Glib::RefPtr<Slot> Slot::create(const Posicion& pos,
 								const Glib::ustring& nombre,
 								const Glib::ustring& valor,
@@ -42,6 +43,7 @@ bool Slot::esta_en_posicion(const Posicion& pos_comparar) const{
 
 void Slot::mover(const Posicion& new_pos){
 	actualizar_posicion(new_pos);
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Slot::move_path), &new_pos));
 }
 
 void Slot::editar_nombre(const Glib::ustring& nombre_nuevo){
@@ -60,4 +62,13 @@ Glib::ustring& Slot::obtener_nombre(){
 
 void Slot::set_line_width() {
 	base->property_line_width() = 0.5;
+}
+
+void Slot::add_path(int id_padre) {
+	this->id_padre = id_padre;
+}
+
+bool Slot::move_path(const Posicion* new_pos) {
+	parent_morph.add_union(id_padre, parent_morph.get_id(), nombre);
+	return false;
 }

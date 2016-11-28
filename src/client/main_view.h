@@ -7,7 +7,6 @@
 #include <vector>
 #include <map>
 #include "morph.h"
-#include "comunicador_server.h"
 #include "view_handler.h"
 #include "client_handler.h"
 #include "ventana_cliente.h"

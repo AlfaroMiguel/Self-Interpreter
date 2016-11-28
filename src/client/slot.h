@@ -21,9 +21,12 @@ class Slot: public Representacion{
   	void editar_nombre(const Glib::ustring& nombre_nuevo);
 	Glib::ustring& obtener_valor();
   	Glib::ustring& obtener_nombre();
+  	void add_path(int id_padre);
+  	bool move_path(const Posicion* pos);
  private:
   	Glib::ustring valor;
-
+  	Glib::RefPtr<Goocanvas::Path> path;
+  	int id_padre;
   	Slot(const Slot& otra) = delete;
   	Slot& operator=(const Slot& otra) = delete;
 

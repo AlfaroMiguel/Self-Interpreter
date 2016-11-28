@@ -1,6 +1,6 @@
 #include "recibidor.h"
 
-Recibidor::Recibidor(Socket& skt, ComunicadorServer& com_server): skt(skt), com_server(com_server){
+Recibidor::Recibidor(Socket& skt, ServerProxy& server_proxy): skt(skt), server_proxy(server_proxy){
 	active = false;
 }
 
@@ -17,7 +17,7 @@ void Recibidor::recibir(){
 			skt.recibir(msj_buffer, tam);
 			std::string msj(msj_buffer);
 			std::cout << "Mensaje recibido: " << msj << std::endl;
-			com_server.recibir_mensaje(msj);
+			server_proxy.recibir_mensaje(msj);
 			free(msj_buffer);
 		}
 		free(tam_buffer);

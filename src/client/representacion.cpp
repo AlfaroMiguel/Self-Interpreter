@@ -53,6 +53,10 @@ double Representacion::get_y() const{
 	return posicion.get_y();
 }
 
+const Posicion& Representacion::get_posicion() const{
+	return posicion;
+}
+
 bool Representacion::needs_resize(double max_width) {
 	return base->property_width() < max_width;
 }
@@ -64,4 +68,8 @@ bool Representacion::do_resize(double new_size){
 
 void Representacion::resize(double new_size) {
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Representacion::do_resize), new_size));
+}
+
+const Glib::ustring& Representacion::get_nombre() const{
+	return nombre;
 }

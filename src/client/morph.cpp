@@ -137,7 +137,6 @@ const std::string Morph::get_nombre() const{
 void Morph::mover(const Posicion& new_pos){
 	objeto->mover(new_pos);
 	client_handler->update_morph_position(get_id(), get_posicion());
-	//if (linea) linea->translate(x, y);
 }
 
 const Posicion& Morph::get_posicion() const{
@@ -158,4 +157,20 @@ bool Morph::es_slot(const Posicion& pos) const{
 
 void Morph::cambiar_posicion(const Posicion& new_pos){
 	objeto->cambiar_posicion(new_pos);
+}
+
+void Morph::add_path_to_object(int id_padre, const std::string& slot_name){
+	objeto->add_path(id_padre, slot_name);
+}
+
+void Morph::add_path_to_slot(const std::string& slot_name, int id_padre){
+	objeto->add_path_to_slot(slot_name, id_padre);
+}
+
+const Posicion& Morph::get_posicion_slot(const std::string &slot_name) {
+	return objeto->get_posicion_slot(slot_name);
+}
+
+void Morph::add_union(int id, int id_padre, const std::string& slot_name){
+	client_handler->add_union(id, id_padre, slot_name);
 }

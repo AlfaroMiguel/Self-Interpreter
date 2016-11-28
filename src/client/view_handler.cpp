@@ -68,6 +68,14 @@ void ViewHandler::show_lobby_options() {
 	Glib::signal_idle().connect(sigc::mem_fun(*this, &ViewHandler::do_show_lobby_options));
 }
 
-void ViewHandler::reset_lobby() {
-	//ventana_objetos->clear();
+void join_morphs(const Posicion& pos_begin, const Posicion& pos_end){
+	//ventana_objetos->join_morphs(pos_begin, pos_end);
+}
+
+void ViewHandler::add_union(Union* morph_union) {
+	ventana_objetos->add_path(morph_union->get_path());
+}
+
+void ViewHandler::delete_union(Union *morph_union) {
+	ventana_objetos->delete_path(morph_union->get_path());
 }

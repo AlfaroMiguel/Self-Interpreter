@@ -1,7 +1,7 @@
 #include <gtkmm.h>
 #include <iostream>
 #include "main_view.h"
-#include "comunicador_server.h"
+#include "server_proxy.h"
 #include "modelo.h"
 #include "ventana_edicion.h"
 #include "ventana_inicio.h"
@@ -16,11 +16,11 @@ int main (int argc, char **argv) {
 	const std::string hostname(argv[1]);
 	const std::string puerto(argv[2]);
 
-	ComunicadorServer com_server(hostname, puerto);
+	ServerProxy server_proxy(hostname, puerto);
 	Modelo modelo;
-	ClientHandler client_handler(&modelo, &com_server);
+	ClientHandler client_handler(&modelo, &server_proxy);
 
-	com_server.set_control(&client_handler);
+	server_proxy.set_control(&client_handler);
 	modelo.set_control(&client_handler);
 
 	MainView* main_view = nullptr;

@@ -24,6 +24,8 @@ class Representacion: public Goocanvas::Group {
   	double get_x() const ;
   	double get_y() const ;
   	bool needs_resize(double max_width);
+  	const Glib::ustring& get_nombre() const;
+  	const Posicion& get_posicion() const;
 
  protected:
   	Posicion posicion;
@@ -38,7 +40,5 @@ class Representacion: public Goocanvas::Group {
  private:
   	Representacion(const Representacion& otra) = delete;
   	Representacion& operator=(const Representacion& otra) = delete;
-
-
 };
 #endif

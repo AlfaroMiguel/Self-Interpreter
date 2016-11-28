@@ -3,11 +3,11 @@
 
 #include "../common/thread.h"
 #include "../common/socket.h"
-#include "comunicador_server.h"
+#include "server_proxy.h"
 
 class Recibidor: public Thread{
  public:
-  Recibidor(Socket& skt, ComunicadorServer& com_server);
+  Recibidor(Socket& skt, ServerProxy& server_proxy);
   ~Recibidor();
   void run() {
 	  recibir();
@@ -15,7 +15,7 @@ class Recibidor: public Thread{
   bool is_active();
  private:
   	Socket& skt;
-  	ComunicadorServer& com_server;
+  	ServerProxy& server_proxy;
   	bool active;
   	void recibir();
 };
