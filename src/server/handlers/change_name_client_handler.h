@@ -4,11 +4,18 @@
 #include "event_handler.h"
 #include "server_handler.h"
 
-class ChangeNameClientHandler : public EventHandler{
+/*EventHandler que representa el handler del evento que se recibe cuando un cliente
+ * quiere cambiar de nombre a un Morph*/
+class ChangeNameClientHandler : public EventHandler {
 private:
+    /*Recibe el json representando el evento y lo resuelve*/
     void handle(json j);
+
 public:
-    ChangeNameClientHandler(ServerHandler* server_handler);
+    /*Creador del handler recibe un puntero al Server Handler*/
+    ChangeNameClientHandler(ServerHandler *server_handler);
+
+    /*Destructor no libera ningun recuso al no adquirir ninguno en el constructor*/
     ~ChangeNameClientHandler();
 };
 

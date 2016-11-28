@@ -4,7 +4,8 @@
 #include "lobby.h"
 #include "../proxy_client.h"
 
-Client::Client(std::string clientName, ProxyClient* clientReference) : clientName(clientName), clientReference(clientReference) {
+Client::Client(std::string clientName, ProxyClient *clientReference) : clientName(clientName),
+                                                                       clientReference(clientReference) {
     actualLobby = nullptr;
 }
 
@@ -16,15 +17,15 @@ void Client::setActualLobby(Lobby *newActualLobby) {
     actualLobby->initializeClient(clientName);
 }
 
-Lobby* Client::getActualLobby(){
+Lobby *Client::getActualLobby() {
     return actualLobby;
 }
 
-std::string Client::getClientName(){
+std::string Client::getClientName() {
     return clientName;
 }
 
-void Client::notify(std::string eventName, Morph& morph){
+void Client::notify(std::string eventName, Morph &morph) {
     std::string event = morph.getEvent(eventName); //Hardcodeo por ahora
     clientReference->sendEvent(event);
 }

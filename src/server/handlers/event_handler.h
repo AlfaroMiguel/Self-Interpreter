@@ -3,17 +3,28 @@
 
 #include "server_handler.h"
 
-class EventHandler{
- protected:
-  EventHandler(const EventHandler& otra) = delete;
-  EventHandler& operator=(const EventHandler& otra) = delete;
+/*Clase padre representa a un EventHandler generico
+ * Contiene una referencias al ServerHandler*/
+class EventHandler {
+protected:
+    EventHandler(const EventHandler &otra) = delete;
+    EventHandler &operator=(const EventHandler &otra) = delete;
+    ServerHandler *server_handler;
+public:
+    /*Constructor, recibe un puntero al ServerHandler asociado*/
+    EventHandler(ServerHandler *server_handler);
 
-  ServerHandler* server_handler;
- public:
-  EventHandler(ServerHandler* server_handler);
-  virtual ~EventHandler();
-  EventHandler(EventHandler&& otra);
-  EventHandler& operator=(EventHandler&& otra);
-  virtual void handle(json j) = 0;
+    /*Destructor virtual*/
+    virtual ~EventHandler();
+
+    /*Constructor por movimiento*/
+    EventHandler(EventHandler &&otra);
+
+    /*Operador asignacion por moviemiento*/
+    EventHandler &operator=(EventHandler &&otra);
+
+    /*Metodo abstracto puro*/
+    virtual void handle(json j) = 0;
 };
+
 #endif
