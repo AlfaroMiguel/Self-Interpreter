@@ -5,6 +5,14 @@
 #include "expression.h"
 #include <iostream> //cout //stof
 
+
+struct is_near {
+  bool operator() (Object* first, Object* second)
+  {   std::cout << "first:" <<first<<" second:"<<second<< std::endl;
+      return (first == second);
+  }
+};
+
 GarbageCollector::GarbageCollector(Object* lobbyPtr):objectLobby(lobbyPtr),reportFile("Garbage_Collector_LOG.txt"){
   reportFile << "==LOG==\n";
   reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
@@ -12,11 +20,14 @@ GarbageCollector::GarbageCollector(Object* lobbyPtr):objectLobby(lobbyPtr),repor
   reportFile.close();
 }
 
-
+void GarbageCollector::removeDuplicates(){
+    createdObjects.sort();
+    createdObjects.unique(is_near());
+}
 
 GarbageCollector::~GarbageCollector(){
-  freeResources();
-  reportFile.close();
+    freeResources();
+    reportFile.close();
 }
 
 
@@ -74,23 +85,25 @@ bool GarbageCollector::isMarked(Object* object){
   return map.count(object) == 1;
 }
 void GarbageCollector::freeResources(){
-  reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
-  reportFile << "free resources\n";
-  std::list<Object*>::iterator it;
-  std::vector<Object*> vectorTem;
-  for (it=createdObjects.begin(); it != createdObjects.end(); ++it){
-    Object* object = *it;
-    if(!isMarked(object)){
-      std::string input = "Se eliminó el object:" + object->getName() + " .\n";
-      reportFile << input;
-      vectorTem.push_back(object);
+    removeDuplicates();
+    reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
+    reportFile << "free resources\n";
+    std::list<Object*>::iterator it;
+    std::vector<Object*> vectorTem;
+    for (it=createdObjects.begin(); it != createdObjects.end(); ++it){
+        Object* object = *it;
+        if(!isMarked(object)){
+            std::string input = "Se eliminó el object:" + object->getName() + " .\n";
+            reportFile << input;
+            vectorTem.push_back(object);
+        }
     }
-  }
-  for (size_t i = 0; i < vectorTem.size(); i++) {
-    createdObjects.remove(vectorTem[i]);
-    delete(vectorTem[i]);
-  }
-  reportFile.close();
+    for (size_t i = 0; i < vectorTem.size(); i++) {
+        std::cout << "Se eliminó el object con puntero:" << vectorTem[i]  << std::endl;
+        createdObjects.remove(vectorTem[i]);
+        delete(vectorTem[i]);
+    }
+    reportFile.close();
 }
 
 void GarbageCollector::collect(){
