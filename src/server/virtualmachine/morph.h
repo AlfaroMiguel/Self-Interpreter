@@ -31,6 +31,7 @@ private:
 
 public:
     static int idNumber;
+    static void decreaseID();
     /*Crea un morph, se le setea un unico id*/
     Morph();
     /*Destructor del morph*/

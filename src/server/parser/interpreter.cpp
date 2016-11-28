@@ -7,6 +7,7 @@
 #include "scanner.h"
 #include <vector>
 #include <stdexcept>
+#include "../virtualmachine/morph.h"
 #include "../virtualmachine/lobby.h"
 
 extern int yyparse(Interpreter *interpreter);
@@ -303,6 +304,7 @@ void Interpreter::addSlot(const string name) {
         reportFile << "Lo guarde en el lobby\n";
         map.insert(std::pair<string, Object *>(slot->getName(), slot));
     }
+    Morph::idNumber--;
 }
 
 void Interpreter::clearVectors(){
