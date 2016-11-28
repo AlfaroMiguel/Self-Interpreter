@@ -95,7 +95,6 @@ Object* SearcherObject::clone(){
 }
 
 void SearcherObject::serialize(json& jserialization){
-  std::cout << "SearcherObject::serialize start: " << objectName << std::endl;
   jserialization["objectName"] = objectName;
   jserialization["representation"] = representation;
 
@@ -116,7 +115,6 @@ void SearcherObject::serialize(json& jserialization){
 //Deserealizacion
 
 Object* SearcherObject::deserialize(json& jdeserialization, Lobby* lobby){
-  std::cout << "SearcherObject::deserialize start" << std::endl;
   std::string name = jdeserialization["objectName"];
   SearcherObject* searcherobj = new SearcherObject(name);
   searcherobj->objectName = jdeserialization["objectName"];

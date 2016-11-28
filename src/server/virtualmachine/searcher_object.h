@@ -9,7 +9,6 @@ public:
     //Metodo para serializar un SearcherObject
     void serialize(json& jserialization);
 
-
     //Metodo estatico para la deserealizacion de un SearcherObject
     static Object* deserialize(json& jdeserialization, Lobby* lobby);
 
