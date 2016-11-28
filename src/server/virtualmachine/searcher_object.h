@@ -17,6 +17,7 @@ public:
     /*Este objeto tiene la responsabilidad de buscar el objeto con el nombre
     seteado dado el contexto en el que se encuentra*/
     SearcherObject(std::string nameString);
+
     ~SearcherObject();
 
     /*Si encontro el objeto se agrega el slot a ese, caso contrario se lo agrega a si mismo*/
@@ -36,6 +37,8 @@ public:
 
     /*Devuelve una copia de si mismo*/
     Object* clone();
+    virtual void SearcherObject::serialize(json& jserialization);
+    static Object* deserialize(json& jdeserialization, Lobby* lobby);
 };
 
 #endif
