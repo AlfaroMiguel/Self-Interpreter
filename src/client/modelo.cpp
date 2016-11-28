@@ -58,6 +58,11 @@ void Modelo::create_morph(const std::string& name, const Posicion& pos,
 		}
 	const Glib::ustring morph_name(name);
 	Glib::RefPtr <Morph> morph = Morph::create(pos, morph_name, id);
+	for (unsigned int i = 0; i < morphs.size(); i++){
+		if (morphs[i]->shares_parent(id_padre, slot_name)){
+			client_handler->dismiss_morph(morphs[i]);
+		}
+	}
 	morphs.push_back(morph);
 	morph->conectar_seniales();
 	morph->agregar_slots(slots);

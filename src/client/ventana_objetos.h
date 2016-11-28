@@ -36,5 +36,6 @@ class VentanaObjetos: public Gtk::Box{
   		bool do_start();
   		bool do_draw_morph(Glib::RefPtr<Morph> morph);
   		bool do_add_path(Glib::RefPtr<Goocanvas::Path> path);
+  		bool do_delete_path(Glib::RefPtr <Goocanvas::Path> path);
 };
 #endif

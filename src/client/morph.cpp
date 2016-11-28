@@ -174,3 +174,7 @@ const Posicion& Morph::get_posicion_slot(const std::string &slot_name) {
 void Morph::add_union(int id, int id_padre, const std::string& slot_name){
 	client_handler->add_union(id, id_padre, slot_name);
 }
+
+bool Morph::shares_parent(int parent_id, const std::string& slot_name){
+	return objeto->shares_parent(parent_id, slot_name);
+}

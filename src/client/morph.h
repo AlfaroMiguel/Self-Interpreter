@@ -51,6 +51,7 @@ class Morph: public Goocanvas::Group {
   	const Posicion& get_posicion_slot(const std::string& slot_name);
   	void move_path(const Posicion& pos_slot, int id_padre);
   	void add_union(int id, int id_padre, const std::string& slot_name);
+  	bool shares_parent(int parent_id, const std::string& slot_name);
  private:
   	Glib::RefPtr<Goocanvas::Item> dragging;
   	int drag_x, drag_y;

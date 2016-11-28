@@ -66,10 +66,15 @@ bool VentanaObjetos::do_add_path(Glib::RefPtr <Goocanvas::Path> path) {
 }
 
 void VentanaObjetos::add_path(Glib::RefPtr <Goocanvas::Path> path) {
-	std::cout << "AGREGA PATH" << std::endl;
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_add_path), path));
+}
+
+bool VentanaObjetos::do_delete_path(Glib::RefPtr <Goocanvas::Path> path){
+	path->remove();
+	return false;
 }
 
 void VentanaObjetos::delete_path(Glib::RefPtr <Goocanvas::Path> path) {
 	path->remove();
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_delete_path), path));
 }

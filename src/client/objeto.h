@@ -34,6 +34,7 @@ class Objeto: public Representacion{
   	void add_path_to_slot(const std::string& slot_name, int id_padre);
   	const Posicion& get_posicion_slot(const std::string& slot_name);
   	void move_path();
+  	bool shares_parent(int parent_id, const std::string& slot_name);
 
  private:
   	std::mutex mutex;

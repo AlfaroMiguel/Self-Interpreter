@@ -163,3 +163,7 @@ const Posicion& Objeto::get_posicion_slot(const std::string &slot_name) {
 		if (slots[i]->get_nombre().raw() == slot_name)
 			return slots[i]->get_posicion();
 }
+
+bool Objeto::shares_parent(int parent_id, const std::string& slot_name){
+	return this->id_padre == parent_id && this->name_slot == slot_name;
+}
