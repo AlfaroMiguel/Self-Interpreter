@@ -24,6 +24,11 @@ private:
     double y;
     std::map<std::string, std::string> slots;
     int id;
+
+    //TEST LINEA
+    std::string unionName;
+    int unionID;
+
 public:
     static int idNumber;
     /*Crea un morph, se le setea un unico id*/
@@ -44,6 +49,14 @@ public:
     std::string getEvent(const std::string &eventName);
     /*Devuelve el id del morph*/
     int getId();
+
+    /*TEST LINEA*/
+    void setUnionId(int id){
+        unionID = id;
+    }
+    void setUnionName(std::string& name){
+        unionName = name;
+    }
 
     /*Serializacion*/
     void serialize(json& jserialization);

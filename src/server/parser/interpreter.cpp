@@ -212,6 +212,7 @@ void Interpreter::sendMessage(const string message){
     reportFile << "Interpreter::name" <<result->getName()<< "\n";
     std::string resultSTR = result->getRepresentation();
     result->changeMorphName(resultSTR); //TEST
+    result->myMorph.setUnionId(expression->getMorphId()); //TEST LINEA
     createdObjects.push_back(result);
     result->setLobby(lobby);
 }
