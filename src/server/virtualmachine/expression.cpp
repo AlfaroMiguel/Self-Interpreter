@@ -98,9 +98,6 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
 
 
 
-
-
-
 /*Esta clase modela un Composite*/
 Expression::Expression(){
   receiver = nullptr;
@@ -116,39 +113,43 @@ Expression::Expression(){
 
 Expression::~Expression(){}
 
-/*Se setea el receiver y se le agrega el slot self*/
+
+std::vector<Object*> Expression::getAtributs(){
+  std::vector<Object*> v;
+  if (receiver != nullptr){
+    v.push_back(receiver);
+    v.push_back(argument);
+  }
+  return v;
+}
+
+
 void Expression::setReceiver(Object* receiverPtr){
   std::cout << "Expression::setReceiver" << std::endl;
   receiver = receiverPtr;
   receiver->addSlots("self",this,false,true);
 }
 
-/*Se setea el argument y se le agrega el slot self*/
 void Expression::setArgument(Object* argumentPtr){
   std::cout << "Expression::setArgument" << std::endl;
   argument = argumentPtr;
   argument->addSlots("self",this,false,true);
 }
 
-/*Se setea la operation que se va a ejecutar*/
 void Expression::setOperator(std::string operatorString){
   std::cout << "Expression::setOperator" << std::endl;
   this->operation = operatorString;
 }
 
-/*De forma recursiva va pidiendo la representacion de sus componentes para
-devolver su representacion*/
+
 std::string Expression::getRepresentation() const {
   std::cout << "Expression::getRepresentation a: "<< objectName << std::endl;
-  //Hay que arreglar esto sino no anda
   if ( receiver != nullptr){
-    //std::cout << "objectName del receiver" << receiver->getName() << std::endl;
     return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
   }
   return objectName;
 }
 
-/*Devuelve el NativeValue del result luego de evaluar la expression*/
 NativeValue Expression::getValue(){
   if(result != nullptr){
     return result->getValue();
@@ -167,7 +168,6 @@ Object* Expression::getResult(){
 
 
 
-/*Esto permite que se pueda acoplar mas mensaje a una expression que ya fue evaluada*/
 NativeValue Expression::ejecute(std::string operationStr, Object* argumentPtr){
   std::cout << "Error, cannot ejecute() in Expression class" << std::endl;
   /*A la expression ya se le mando el mensaje evaluate, ahora pide ejecutar*/
@@ -197,7 +197,6 @@ std::vector<Object*> Expression::getReferences(){
 }
 
 
-/*Devuelve una copia de si mismo*/
 Object* Expression::clone(){
   std::cout << "Expression::clone" << std::endl;
   Expression* newExpression = new Expression;
@@ -215,7 +214,6 @@ Object* Expression::clone(){
   return newExpression;
 }
 
-/*Envia el mensaje a receiver con el argument seteado*/
 void Expression::evaluate(){
     std::cout << "Expression::evaluate" << std::endl;
     if (receiver != nullptr){
@@ -231,7 +229,6 @@ void Expression::evaluate(){
         Object* metodo = this->getSlotName(operation);
         std::cout << "objectName del metodo:" <<metodo->getName()<< std::endl;
         metodo->evaluate();
-        //std::cout << "Resultado final:" <<metodo->getResult()->getValue().getInt()<< std::endl;
         this->setResult(metodo->getResult());
       }
     }

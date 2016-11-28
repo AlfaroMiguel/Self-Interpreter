@@ -23,7 +23,6 @@ void GarbageCollector::registerObject(Object* object){
   reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
   std::string report = "Se registró:" + object->getName() + "\n";
   reportFile << report;
-  //std::cout << "Se registro:" <<object->getName()<<"pointer"<<object<< std::endl;
   reportFile.close();
   createdObjects.push_back(object);
 }
@@ -74,7 +73,6 @@ bool GarbageCollector::isMarked(Object* object){
   return map.count(object) == 1;
 }
 void GarbageCollector::freeResources(){
-  //std::cout << "free resources-elementos registrados:" <<createdObjects.size()<< std::endl;
   reportFile.open("Garbage_Collector_LOG.txt",std::ofstream::app);
   reportFile << "free resources\n";
   std::list<Object*>::iterator it;

@@ -6,7 +6,6 @@ typedef std::tuple<Object*, bool, bool> slot_t;
 typedef std::map<std::string, slot_t> slot_map;
 
 
-/*Objeto generico de Self*/
 Object::Object(){
     representation = "";
     myLobby = nullptr;
@@ -39,7 +38,6 @@ NativeValue Object::ejecute(std::string operationStr, Object* argumentPtr){
   return value;
 }
 
-/*Obtiene el objet de un slot*/
 Object* Object::getSlotName(const std::string& name) const{
   Slot slot = slots.getSlot(name);
   return slot.getReference();
@@ -70,7 +68,6 @@ void Object::addSlots(std::string slotName,
 
     slots.addSlot(slotName, object, isMutable, isParentSlot);
     if(slotName != "self"){ //No me interesa tener el slot implicito self en el morph del objectReference
-        //std::cout << "Agrega el slot " << slotName << " al morph" << std::endl;
         myMorph.addSlot(slotName, object->getRepresentation());
     }
 }
@@ -83,40 +80,33 @@ void Object::RemoveSlots(std::string slotName) {
     }
 }
 
-/*Devuelve un copia de si mismo*/
 Object* Object::clone() const{
   std::cout << "Object::clone" << std::endl;
   return new Object(*this);
 }
 
-/*Devuelve su RegisterOfSlots*/
 RegisterOfSlots Object::getSlots(){
     return slots;
 }
 
-/*Devuelve un RegisterOfSlots solo con parentsSlots*/
 RegisterOfSlots Object::getParentsSlots() const{
     return slots.getParentsSlots();
 }
 
-/*Buscar el objeto de nombre name en el objeto object*/
 Object* Object::searchObject(const std::string& name, Object *object) {
     std::cout << "Busco: " << name <<  " en " << object->getName() << std::endl;
     return slots.searchSlot(name, object);
 }
 
-/*Devuelve el resultado*/
 Object* Object::getResult(){
   return this;
 }
 
 void Object::evaluate(){}
 
-/*Setea su representacion*/
 void Object::setRepresentation(const std::string representationString){
   representation = representationString;
 }
-/*Devuelve su representation*/
 std::string Object::getRepresentation() const {
   return representation;
 }
@@ -147,10 +137,13 @@ void Object::moveMorph(const std::string clientName, double newX, double newY){
     notifyClients("mover morph", clientName);
 }
 
-//Por defecto devuelve los slots
 std::vector<Object*> Object::getReferences(){
   RegisterOfSlots slots = this->getSlots();
   return slots.getObjectsNotParent();
+}
+std::vector<Object*> Object::getAtributs(){
+  std::vector<Object*> v;
+  return v;
 }
 
 
