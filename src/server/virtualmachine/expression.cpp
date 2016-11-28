@@ -26,7 +26,7 @@ void Expression::serialize(json& jserialization){
     receiver->serialize(jReceiver);
     jserialization["receiver"] = jReceiver;
   } else
-    jserialization["receiver"] = nullptr;
+    jserialization["receiver"] = "nullptr";
 
   jserialization["operation"] = operation;
 
@@ -35,14 +35,14 @@ void Expression::serialize(json& jserialization){
     argument->serialize(jArgument);
     jserialization["argument"] = jArgument;
   } else
-    jserialization["argument"] = nullptr;
+    jserialization["argument"] = "nullptr";
 
   if(result != nullptr) {
     json jResult;
     result->serialize(jResult);
     jserialization["result"] = jResult;
   }else
-    jserialization["result"] = nullptr;
+    jserialization["result"] = "nullptr";
 }
 
 //Deserealizacion
@@ -51,6 +51,7 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
   std::cout << "Expression::deserialize start" << std::endl;
   Expression* expression = new Expression();
   expression->objectName = jdeserialization["objectName"];
+  std::cout << "My nameeeee:" <<expression->objectName<< std::endl;
   expression->representation = jdeserialization["representation"];
 
   json jRegisterOfSlots;
@@ -66,19 +67,25 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
 
   //Empieza expression
   json jReceiver = jdeserialization["receiver"];
-  if(jdeserialization["type"] == "number" && jReceiver != nullptr)
+  std::cout << "el json receiver" <<jReceiver<< std::endl;
+  if(jReceiver["type"] == "number" && jReceiver != "nullptr"){
+    std::cout << "es del tipo number sasasasaasasasa" << std::endl;
     expression->receiver = Number::deserialize(jReceiver, lobby);
-  else if(jdeserialization["type"] == "searcherObject" && jReceiver != nullptr)
+  }
+  else if(jReceiver["type"] == "searcherObject" && jReceiver != "nullptr"){
     expression->receiver = SearcherObject::deserialize(jReceiver, lobby);
+    std::cout << "es del tipo SearcherObject sasasasaasasasa" << std::endl;
+  }
   else
     expression->receiver = nullptr;
 
   expression->operation = jdeserialization["operation"];
 
   json jArgument = jdeserialization["argument"];
-  if(jdeserialization["type"] == "number" && jArgument != nullptr)
+  std::cout << "el json argument" <<jArgument<< std::endl;
+  if(jArgument["type"] == "number" && jArgument != "nullptr")
     expression->argument = Number::deserialize(jArgument, lobby);
-  else if(jdeserialization["type"] == "searcherObject" && jArgument != nullptr)
+  else if(jArgument["type"] == "searcherObject" && jArgument != "nullptr")
     expression->argument = SearcherObject::deserialize(jArgument, lobby);
   else
     expression->argument = nullptr;
@@ -115,8 +122,10 @@ Expression::~Expression(){}
 
 
 std::vector<Object*> Expression::getAtributs(){
+  std::cout << "/* Expression::getAtributs*/" << std::endl;
   std::vector<Object*> v;
   if (receiver != nullptr){
+    std::cout << "dentro de if" << std::endl;
     v.push_back(receiver);
     v.push_back(argument);
   }
