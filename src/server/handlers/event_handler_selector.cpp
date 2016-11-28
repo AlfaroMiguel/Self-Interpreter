@@ -21,7 +21,7 @@
 #define CHANGE_NAME_EVENT "change name"
 #define DISMISS_EVENT "dismiss"
 
-EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) {
+EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) : server_handler(server_handler) {
     event_handlers.insert(std::pair<std::string, EventHandler *>
                                   (CONNNECT_EVENT, new ConnectClientHandler(server_handler)));
     event_handlers.insert(std::pair<std::string, EventHandler *>
@@ -40,7 +40,12 @@ EventHandlerSelector::EventHandlerSelector(ServerHandler *server_handler) {
                                   (DISMISS_EVENT, new DismissClientHandler(server_handler)));
 }
 
-EventHandlerSelector::~EventHandlerSelector() {}
+EventHandlerSelector::~EventHandlerSelector() {
+    delete server_handler;
+    for(auto itEventHanler = event_handlers.begin(); itEventHanler != event_handlers.end(); itEventHanler++){
+        delete itEventHanler->second;
+    }
+}
 
 EventHandler* EventHandlerSelector::get_event_handler(const std::string &event) {
     auto itEvent = event_handlers.find(event);

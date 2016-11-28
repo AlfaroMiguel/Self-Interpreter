@@ -5,13 +5,20 @@
 #include <string>
 
 class ServerHandler;
+
 class EventHandler;
-class EventHandlerSelector{
- public:
-  EventHandlerSelector(ServerHandler* client_handler);
-  ~EventHandlerSelector();
-  EventHandler* get_event_handler(const std::string& event);
- private:
-  std::map<std::string, EventHandler*> event_handlers;
+
+class EventHandlerSelector {
+public:
+    EventHandlerSelector(ServerHandler *client_handler);
+
+    ~EventHandlerSelector();
+
+    EventHandler *get_event_handler(const std::string &event);
+
+private:
+    ServerHandler* server_handler;
+    std::map<std::string, EventHandler *> event_handlers;
 };
+
 #endif

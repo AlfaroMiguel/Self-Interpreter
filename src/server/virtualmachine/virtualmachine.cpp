@@ -62,8 +62,10 @@ void VirtualMachine::disconnectClient(const std::string& clientName){
     std::cout << "Voy a desconectar a un cliente" << std::endl;
     std::cout << clientName << std::endl;
     auto itClient = existingClients.find(clientName);
-    if(itClient != existingClients.end())
+    if(itClient != existingClients.end()) {
+        delete itClient->second;
         existingClients.erase(clientName);
+    }
     for(auto itLobbies = existingLobbies.begin(); itLobbies != existingLobbies.end(); itLobbies++){
         itLobbies->second->disconnectClient(itClient->second);
     }
