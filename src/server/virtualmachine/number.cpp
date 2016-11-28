@@ -66,3 +66,54 @@ NativeValue Number::ejecute(std::string operation, Object* expression){
   value.setValue(resultado);
   return value;
 }
+
+
+
+void Number::serialize(json& jserialization){
+  std::cout << "Object::serialize adentro de Number: " << objectName << std::endl;
+  jserialization["objectName"] = objectName;
+  jserialization["representation"] = representation;
+
+  json jRegisterOfSlots;
+  slots.serialize(jRegisterOfSlots);
+  jserialization["slots"] = jRegisterOfSlots;
+
+  json jMorph;
+  myMorph.serialize(jMorph);
+  jserialization["myMorph"] = jMorph;
+
+  //Agrego lo de number
+
+  std::cout << "Number::serialize" << std::endl;
+  jserialization["operation"] = operation;
+  json jNativeValue;
+  value.serialize(jNativeValue);
+  jserialization["nativeValue"] = jNativeValue;
+
+  jserialization["type"] = "number";
+
+}
+
+Number* Number::deserialize(json& jdeserialization, Lobby* lobby){
+  std::cout << "Number::deserialize" << std::endl;
+  Number* number = new Number();
+
+  number->objectName = jdeserialization["objectName"];
+  number->representation = jdeserialization["representation"];
+
+  json jRegisterOfSlots;
+  jRegisterOfSlots = jdeserialization["slots"];
+  number->slots.deserialize(jRegisterOfSlots, number, lobby);
+
+  json jMorph;
+  jMorph = jdeserialization["myMorph"];
+  number->myMorph.deserialize(jMorph);
+
+  number->myLobby = lobby;
+
+  //Agrego lo de number
+
+  number->operation = jdeserialization["operation"];
+  number->value.deserialize(jdeserialization["nativeValue"]);
+  return number;
+}

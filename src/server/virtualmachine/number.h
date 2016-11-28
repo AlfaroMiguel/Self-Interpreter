@@ -13,68 +13,35 @@ private:
   NativeValue value;
 public:
 
-    //Serializacion TEST
-    void serialize(json& jserialization){
+    //Metodo para serializar el objeto number
+    void serialize(json& jserialization);
 
-        std::cout << "Object::serialize adentro de Number: " << objectName << std::endl;
-        jserialization["objectName"] = objectName;
-        jserialization["representation"] = representation;
-
-        json jRegisterOfSlots;
-        slots.serialize(jRegisterOfSlots);
-        jserialization["slots"] = jRegisterOfSlots;
-
-        json jMorph;
-        myMorph.serialize(jMorph);
-        jserialization["myMorph"] = jMorph;
-
-        //Agrego lo de number
-
-        std::cout << "Number::serialize" << std::endl;
-        jserialization["operation"] = operation;
-        json jNativeValue;
-        value.serialize(jNativeValue);
-        jserialization["nativeValue"] = jNativeValue;
-
-        jserialization["type"] = "number";
-    }
-
-    //Deserealizacion TEST
-
-    static Number* deserialize(json& jdeserialization, Lobby* lobby){
-        std::cout << "Number::deserialize" << std::endl;
-        Number* number = new Number();
-
-        number->objectName = jdeserialization["objectName"];
-        number->representation = jdeserialization["representation"];
-
-        json jRegisterOfSlots;
-        jRegisterOfSlots = jdeserialization["slots"];
-        number->slots.deserialize(jRegisterOfSlots, number, lobby);
-
-        json jMorph;
-        jMorph = jdeserialization["myMorph"];
-        number->myMorph.deserialize(jMorph);
-
-        number->myLobby = lobby;
-
-        //Agrego lo de number
-
-        number->operation = jdeserialization["operation"];
-        number->value.deserialize(jdeserialization["nativeValue"]);
-        return number;
-    }
-
+    //Metodo estatico para deserializar el objeto Number
+    static Number* deserialize(json& jdeserialization, Lobby* lobby);
     Number();
+
+
+    /*Esto modela un numero entero dentro de los objetos de self*/
     Number(int valueAux);
     ~Number();
+
+    /*Devuelve el NativeValue que contiene como atributo*/
     NativeValue convertToNativeValue();
+
+    /*Se setea el valor que contiene*/
     void setValue(int valueAux);
+
+    /*Devuelve al igual que el convertToNativeValue() el NativeValue*/
     NativeValue getValue();
+    /*Se setea el mensaje que desea realizar al numero */
     void setOperator(std::string operatorString);
-    //void setReceiver(Object* receiverPtr);
+
+    /*Se ejecuta la operation con los argumento que se pasan en expression*/
     NativeValue ejecute(std::string operation, Object* expression);
+
+    /*Devuelve una copia de si mismo*/
     Object* clone();
+    /*Devuelve el resulta de la operacion de que se realizo en ejecute()*/
     Object* getResult();
 };
 
