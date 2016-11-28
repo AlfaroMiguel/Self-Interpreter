@@ -36,8 +36,7 @@ public:
 
     /*Devuelve una copia de si mismo*/
     Object* clone();
-    virtual void serialize(json& jserialization);
-    static Object* deserialize(json& jdeserialization, Lobby* lobby);
+
 };
 
 #endif
