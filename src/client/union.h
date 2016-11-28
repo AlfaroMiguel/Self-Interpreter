@@ -25,5 +25,7 @@ class Union{
   const std::string slot_name;
   ClientHandler* client_handler;
   Glib::RefPtr<Goocanvas::Path> path;
+
+  bool on_add_path(const std::string& path_data);
 };
 #endif

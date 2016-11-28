@@ -150,6 +150,5 @@ void ClientHandler::add_union(int id_obj, int id_padre, const std::string& slot_
 }
 
 void ClientHandler::delete_union(Union* morph_union){
-	//modelo->delete_union(morph_union);
 	view_handler->delete_union(morph_union);
 }

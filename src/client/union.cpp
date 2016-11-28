@@ -9,20 +9,22 @@ Union::~Union(){}
 //	return Glib::RefPtr<Union>(new Union(id_padre, slot_name));
 //}
 
+bool Union::on_add_path(const std::string& path_data){
+	path = Goocanvas::Path::create(path_data);
+	client_handler->add_union(this);
+	return false;
+}
 void Union::add_path(const Posicion& pos_begin, const Posicion& pos_end){
 	std::string x_begin = std::to_string((int)pos_begin.get_x());
 	std::string y_begin = std::to_string((int)pos_begin.get_y());
 	std::string x_end = std::to_string((int)pos_end.get_x());
 	std::string y_end = std::to_string((int)pos_end.get_y());
 	std::string path_data("M "+x_begin+" "+y_begin+" L "+x_end+" "+y_end);
-	std::cout << path_data << std::endl;
-	path = Goocanvas::Path::create(path_data);
-	client_handler->add_union(this);
+	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Union::on_add_path), path_data));
 }
 
 void Union::update_path(const Posicion& pos_begin, const Posicion& pos_end){
 	client_handler->delete_union(this);
-	std::cout << "updates path" << std::endl;
 	add_path(pos_begin, pos_end);
 }
 
@@ -31,10 +33,6 @@ bool Union::operator==(const Union& other) const{
 }
 
 bool Union::is_equal(const Union &other) {
-	std::cout << "compara unions: " << std::endl;
-	std::cout << "id_padre 1: " << id_padre << "id_padre 2: " << other.id_padre << std::endl;
-	std::cout << "id 1: " << id << "id 2: " << other.id << std::endl;
-	std::cout << "slot name 1: " << slot_name << "slot name 2: " << other.slot_name << std::endl;
 	return id_padre == other.id_padre && slot_name == other.slot_name && id == other.id;
 }
 

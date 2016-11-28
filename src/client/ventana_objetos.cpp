@@ -66,7 +66,8 @@ bool VentanaObjetos::do_add_path(Glib::RefPtr <Goocanvas::Path> path) {
 }
 
 void VentanaObjetos::add_path(Glib::RefPtr <Goocanvas::Path> path) {
-	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_add_path), path));
+	root->add_child(path);
+	//Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_add_path), path));
 }
 
 bool VentanaObjetos::do_delete_path(Glib::RefPtr <Goocanvas::Path> path){
