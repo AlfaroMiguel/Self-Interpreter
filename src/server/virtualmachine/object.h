@@ -106,7 +106,7 @@ public:
     void moveMorph(const std::string clientName, double newX, double newY);
     int getMorphId();
     void changeMorphName(std::string& newName);
-    Object* searchForId(int objectId);
+    virtual Object* searchForId(int objectId);
     void changeObjectName(const std::string& newName);
 
     /*Serializacion*/

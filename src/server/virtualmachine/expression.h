@@ -46,6 +46,8 @@ public:
     /*Devuelve una copia de si mismo*/
     Object* clone();
     std::vector<Object*> getAtributs();
+
+    virtual Object* searchForId(int objectId);
   };
 
 #endif

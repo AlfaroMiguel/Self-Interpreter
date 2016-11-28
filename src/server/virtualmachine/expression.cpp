@@ -242,3 +242,23 @@ void Expression::evaluate(){
       }
     }
 }
+
+Object* Expression::searchForId(int objectId){
+  std::cout << "Busco " << objectId << " en " << this->getName() << std::endl;
+  std::cout << "Busco " << objectId << " mi ID: " << this->getMorphId() << std::endl;
+
+    if(result != nullptr)
+        if(objectId == result->getMorphId())
+            return result;
+
+  if(this->getMorphId() == objectId)return this;
+  std::vector<Object*> mySlotsObjects = this->slots.getObjectsWhitoutParents(); //Para que no haya ciclos de busqueda
+  for(auto itObjectSlot = mySlotsObjects.begin(); itObjectSlot != mySlotsObjects.end(); itObjectSlot++){
+    if((*itObjectSlot)->getName() != "self") {
+      Object *objectFound = (*itObjectSlot)->searchForId(objectId);
+      if (objectFound != nullptr) return objectFound;
+    }
+  }
+  return nullptr;
+}
+
