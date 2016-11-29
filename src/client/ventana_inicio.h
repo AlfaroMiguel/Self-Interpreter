@@ -27,6 +27,7 @@ class VentanaInicio: public Gtk::Dialog{
   	Gtk::RadioButton* boton_lobby_privado;
   	Gtk::RadioButton* boton_lobby_compartido;
   	Gtk::Entry* entrada_texto;
+  	Gtk::Label* label_lobby;
 
   	bool reseted;
 
