@@ -23,6 +23,7 @@ class VentanaEdicion: public Gtk::Box{
   		Gtk::Button* remove_slot_hint;
 		Gtk::Button* close_editing_btn;
   		Gtk::Button* change_lobby_btn;
+		Gtk::Label* label_lobby;
 
   		double x_editando, y_editando;
   		ClientHandler* client_handler;

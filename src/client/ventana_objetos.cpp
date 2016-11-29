@@ -24,7 +24,7 @@ bool VentanaObjetos::do_draw_morph(Glib::RefPtr<Morph> morph) {
 }
 
 void VentanaObjetos::draw_morph(Glib::RefPtr <Morph> morph) {
-	std::cout << "AGREGO MORPH" << std::endl;
+	std::cout << "AGREGO MORPH: "<< morph->get_id() << std::endl;
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_draw_morph), morph));
 }
 

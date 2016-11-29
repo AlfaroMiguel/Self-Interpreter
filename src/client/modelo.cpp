@@ -94,7 +94,6 @@ void Modelo::create_morph(const std::string& name, const Posicion& pos,
 void Modelo::get_morph_from_slot(Posicion& pos){
 	for(unsigned int i = 0; i < morphs.size(); i++) {
 		if (morphs[i]->esta_en_posicion(pos)) {
-			std::cout << "get morph from slot" << std::endl;
 			const std::string slot_name(morphs[i]->obtener_nombre_slot(pos));
 			client_handler->get_morph_from_slot(morphs[i]->get_id(), slot_name);
 		}

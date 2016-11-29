@@ -1,5 +1,7 @@
 #include "ventana_inicio.h"
 
+#define GLD_LABEL_LOBBY "labelLobby"
+
 VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
 	Gtk::Dialog(cobject){
 	reseted = false;
@@ -11,6 +13,7 @@ VentanaInicio::VentanaInicio(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Bu
 	builder->get_widget("btnPrivado", boton_lobby_privado);
 	builder->get_widget("btnCompartido", boton_lobby_compartido);
 	builder->get_widget("entradaTexto", entrada_texto);
+	builder->get_widget(GLD_LABEL_LOBBY, label_lobby);
 	boton_agregar_lobby->join_group(*boton_seleccionar_lobby);
 	boton_lobby_compartido->join_group(*boton_lobby_privado);
 	boton_seleccionar_lobby->set_active();
@@ -90,6 +93,7 @@ void VentanaInicio::on_confirmar(){
 	}
 	hide();
 	reset();
+	label_lobby->set_text(lobby);
 	client_handler->select_lobby(lobby.raw(), estado.raw());
 }
 
