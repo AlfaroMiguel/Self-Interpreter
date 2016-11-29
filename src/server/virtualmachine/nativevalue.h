@@ -47,17 +47,17 @@ public:
     void setValue(std::string newValue);
 
     /*Metodos para indicar a qué tipo corresponde internamente*/
-    bool isInt();
+    bool isInt() const ;
 
-    bool isFloat();
+    bool isFloat() const;
 
-    bool isBool();
+    bool isBool() const ;
 
-    bool isString();
+    bool isString() const;
 
     /*Metodos para obtener el dato interno, en caso de NativeValue no corresponda
     con el tipo que se está pidiendo, se lanza un erro*/
-    int getInt();
+    int getInt() const;
 
     float getFloat();
 

@@ -137,7 +137,6 @@ void Interpreter::removeSlot(const std::string name){
   stack.pop();
   RegisterOfSlots slots = objectEncapsulate->getSlots();
   std::vector<Object*> slotsVector = slots.getObjects();
-  //se puede eliminar varios slots
   for (size_t i = 0; i < slotsVector.size(); i++) {
     Object* slot = slotsVector[i];
     std::string nameSlot = slot->getName();
@@ -322,7 +321,6 @@ void Interpreter::interpretChar(const char *buffer,Object* entorno_ptr) {
     reportFile << "Empieza a interpretar:" +bufferToInterpreter+"\n";
     yy_scan_string(buffer);
     int resultado = yyparse(this);
-    std::cout << "El resultado del parser es:" <<resultado<< std::endl;
     reportFile << "Termine de interpretar\n";
     reportFile << "Se llama al recolector de basura\n";
     yylex_destroy();
@@ -343,7 +341,6 @@ std::vector<Object*> Interpreter::getCreatedObjets(){
 std::vector<Object*> Interpreter::getModifiedObjets(){
     reportFile.open("Interpreter_LOG.txt",std::ofstream::app);
     reportFile  << "Objetos modificados\n";
-    std::cout  << "Objetos modificados\n";
     for (size_t i = 0; i < modifiedObjects.size(); i++) {
         reportFile << "      *Nombre:"+ modifiedObjects[i]->getName()+"\n";
   }

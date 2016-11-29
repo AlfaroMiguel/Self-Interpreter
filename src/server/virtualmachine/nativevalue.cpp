@@ -50,20 +50,20 @@ void NativeValue::deserialize(json& jdeserialization){
     //std::cout << "NativeValue::deserialize end" << std::endl;
 }
 
-bool NativeValue::isInt(){
+bool NativeValue::isInt() const{
   return isIntBool;
 }
 
-bool NativeValue::isString(){
+bool NativeValue::isString() const{
   return isStringBool;
 }
 
 
-bool NativeValue::isFloat(){
+bool NativeValue::isFloat()const {
   return isFloatBool;
 }
 
-bool NativeValue::isBool(){
+bool NativeValue::isBool()const {
   return isBoolBool;
 }
 
@@ -96,7 +96,7 @@ void NativeValue::setValue(std::string newValue){
     isStringBool = true;
 }
 
-int NativeValue::getInt(){
+int NativeValue::getInt() const{
     if(!isInt())
         throw std::runtime_error("El valor nativo no corresponde al tipo 'int'");
     return intValue;
