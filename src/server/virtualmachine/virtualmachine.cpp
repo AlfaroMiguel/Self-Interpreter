@@ -21,8 +21,8 @@ void VirtualMachine::initialize() {
     //Tengo que tener un lobby principal, por ahora lo hago compartido entre todos los clientes
     std::cout << "STARTING VIRTUAL MACHINE" << std::endl;
     Object *lobbyObject = new Object();
-    lobbyObject->setName("Lobby Principal");
-    Lobby *lobby = new Lobby("Lobby Principal", true, lobbyObject);
+    lobbyObject->setName("Main Lobby");
+    Lobby *lobby = new Lobby("Main Lobby", true, lobbyObject);
     existingLobbies.insert(std::make_pair(lobby->getLobbyName(), lobby));
     std::cout << "VIRTUAL MACHINE UP AND RUNNING" << std::endl;
 }
