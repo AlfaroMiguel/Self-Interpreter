@@ -176,6 +176,7 @@ void Interpreter::cloneObject(const std::string id){
       if(!isFound){
         reportFile << "Slot not found" <<slotNative->getName()<< "\n";
         Object* newSlot = garbage.cloneObject(slotNative);
+        registerObject(newSlot);
         stack.push(newSlot);
     }
   }
@@ -214,6 +215,7 @@ void Interpreter::sendMessage(const string message){
     result->myMorph.setUnionId(expression->getMorphId()); //TEST LINEA
     createdObjects.push_back(result);
     result->setLobby(lobby);
+    registerObject(expression);
 }
 
 void Interpreter::createNumber(const string value) {

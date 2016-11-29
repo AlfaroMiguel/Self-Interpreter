@@ -76,10 +76,8 @@ line :
 		}
 		|CREATEOBJECTINIT argument BAR expression SEMICOLON RPAREN
 		{
-		std::cout << "(| :args | procedimiento)" <<std::endl;
 		}
 		|atom_expression{
-		std::cout << "atom:_expression)" <<std::endl;
 		}
 		|VARIABLE VARIABLE SEMICOLON{
 		std::cout << "objectReference metodo." <<std::endl;
@@ -87,9 +85,10 @@ line :
 		interpreter->pushToken(*$1,"find","");
 		/*Le mando el mensaje siguiente*/
 		interpreter->pushToken("",*$2,"");
+		delete($1);
+		delete($2);
 		}
 		|expression{
-		std::cout << "Parser::expression" <<std::endl;
 		}
 		|error{
 		interpreter->pushToken("","error","");
@@ -99,11 +98,9 @@ line :
 
 argument:/*nada*/
 				{
-				std::cout << "Un argumento vacio" <<std::endl;
 				}
 				|ARGS
 				{
-				std::cout << "Un argumento no vacio" <<std::endl;
 				}
 				;
 
@@ -122,6 +119,8 @@ atom_expression:
 							}
 							|VARIABLE ASTERISK EQUALS VARIABLE SEMICOLON{
 							interpreter->pushToken(*$4,"clone","");
+							delete($1);
+							delete($4);
 							}
 							|ARGS
 							{
