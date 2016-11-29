@@ -59,7 +59,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Parser: resolver multiples parametros :no_entry_sign:
 - [x] Documentacion mas ordenada -> en los .h (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
 - [x] Valgrind Servidor (TESTING) :microscope:
-- [ ] Manejar excepciones correctamente (EN PROCESO) :recycle:
+- [x] Manejar excepciones correctamente (TESTING) :microscope:
 - [x] Verificar errores de sintaxis en el codigo Self
 - [ ] Codigo presentable SERVER: :white_check_mark: CLIENT: (EN PROCESO) :recycle:
 - [x] Garbage collector con Serializacion
