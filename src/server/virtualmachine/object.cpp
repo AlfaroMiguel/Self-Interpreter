@@ -27,6 +27,13 @@ NativeValue Object::getValue() {
     return value;
 }
 
+bool Object::createANewObject(){
+    return false;
+}
+
+void Object::deleteGarbage(){}
+
+
 NativeValue Object::ejecute(std::string operationStr, Object *argumentPtr) {
     NativeValue value;
     return value;

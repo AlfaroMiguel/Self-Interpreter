@@ -129,6 +129,11 @@ Expression::Expression(){
     receiver = nullptr;
     argument = nullptr;
     result = nullptr;
+    create = false;
+}
+
+bool Expression::createANewObject(){
+    return create;
 }
 
 Expression::~Expression(){}
@@ -223,12 +228,21 @@ Object* Expression::clone() const {
     return newExpression;
 }
 
+
+
 void Expression::evaluate(){
     if (receiver != nullptr){
         receiver->evaluate();
         argument->evaluate();
         NativeValue valor = receiver->ejecute(operation,argument->getResult());
+        if (receiver->createANewObject()){
+            Morph::decreaseID();
+        }
+        if(argument->createANewObject()){
+            Morph::decreaseID();
+        }
         this->result = new Number(valor.getInt());
+        create = true;
     }
     else{
         if(operation.compare("") != 0){
@@ -238,6 +252,14 @@ void Expression::evaluate(){
         }
     }
 }
+
+void Expression::deleteGarbage(){
+    if(argument != nullptr){
+        argument->setResult(nullptr);
+        receiver->setResult(nullptr);
+    }
+}
+
 
 Object* Expression::searchForId(int objectId){
     if(result != nullptr)

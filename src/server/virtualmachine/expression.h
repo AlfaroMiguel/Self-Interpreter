@@ -11,6 +11,7 @@ class Expression:public Object{
     std::string operation;
     Object* argument;
     Object* result;
+    bool create;
 public:
     virtual void serialize(json& jserialization);
     static Expression* deserialize(json& jdeserialization, Lobby* lobby);
@@ -28,6 +29,14 @@ public:
     void setArgument(Object* argumentPtr);
     void setResult(Object* resultPtr);
     std::vector<Object*> getReferences();
+
+    bool createANewObject();
+
+    /*Cuando se evalua expression, cada subexpression genera resultados
+    parciales, para esto luego de evaluar, se lo setea a nullptr estos resultados
+    de tal manera que recolector de basura lo recoga*/
+    void deleteGarbage();
+
 
     /*De forma recursiva va pidiendo la representacion de sus componentes para
     devolver su representacion*/

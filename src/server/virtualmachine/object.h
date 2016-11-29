@@ -90,6 +90,9 @@ public:
     virtual std::vector<Object *> getReferences();
 
 
+    //Define si el evaluarse una expression creo un nuevo objeto
+    virtual bool createANewObject();
+
     /*Devuelve en un vector todos los atributos a los cuales contiene, sí y solo
     sí solo viven en él.*/
     virtual std::vector<Object *> getAtributs();
@@ -124,6 +127,8 @@ public:
     int getMorphId();
 
     void changeMorphName(std::string &newName);
+
+    virtual void deleteGarbage();
 
     virtual Object *searchForId(int objectId);
 

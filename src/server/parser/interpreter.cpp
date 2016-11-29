@@ -108,7 +108,6 @@ void Interpreter::registerObject(Object* object){
     garbage.registerObject(object);
     std::vector<Object*> slots = object->getReferences();
     for (size_t i = 0; i < slots.size(); i++) {
-        std::cout << "slot de nombre:" <<slots[i]->getName()<<"de:"<<object->getName()<< std::endl;
         registerObject(slots[i]);
   }
 }
@@ -216,6 +215,8 @@ void Interpreter::sendMessage(const string message){
     createdObjects.push_back(result);
     result->setLobby(lobby);
     registerObject(expression);
+    Object* slot = expression->getSlotName(message);
+    slot->deleteGarbage();
 }
 
 void Interpreter::createNumber(const string value) {
