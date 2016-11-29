@@ -40,9 +40,7 @@ void ServerHandler::chooseLobby(const std::string &lobbyName, const std::string 
     else
         client.vm.connectClientToLobby(client.clientName, lobbyName, false);
 
-    json jDatosLobby;
-    jDatosLobby["evento"] = "datos lobby";
-    client.sendEvent(jDatosLobby.dump());
+    this->initialize();
 }
 
 void ServerHandler::moveMorph(int idMorph, double newX, double newY) {
