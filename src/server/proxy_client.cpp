@@ -22,7 +22,7 @@ void ProxyClient::attend(){
 }
 
 void ProxyClient::recieveEvent(std::string event){
-    //std::cout << "RECEIVED FROM: " << clientName << " EVENT: " << event << std::endl;
+    std::cout << "RECEIVED FROM: " << clientName << " EVENT: " << event << std::endl;
     json eventJ = json::parse(event);
     EventHandler* eventHandler = eventHandlerSelector.get_event_handler(eventJ["evento"]);
     if(eventHandler != nullptr)
@@ -34,7 +34,7 @@ bool ProxyClient::isExecuting(){
 }
 
 void ProxyClient::sendEvent(std::string event){
-    //std::cout << "SENDING TO: " << clientName << " EVENT: " << event << std::endl;
+    std::cout << "SENDING TO: " << clientName << " EVENT: " << event << std::endl;
     char* eventToSend = (char*)event.c_str();
     uint32_t tamanio_32 = (uint32_t)htonl(strlen(eventToSend) + 1);
     socketAccepted.enviar((char*)(&tamanio_32), sizeof(tamanio_32));

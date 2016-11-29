@@ -24,7 +24,7 @@ void VirtualMachine::initialize() {
     lobbyObject->setName("Lobby Principal");
     Lobby *lobby = new Lobby("Lobby Principal", true, lobbyObject);
     existingLobbies.insert(std::make_pair(lobby->getLobbyName(), lobby));
-    std::cout << "VIRTUAL MACHINE RUNNING" << std::endl;
+    std::cout << "VIRTUAL MACHINE UP AND RUNNING" << std::endl;
 }
 
 VirtualMachine::~VirtualMachine() {
@@ -90,9 +90,7 @@ bool VirtualMachine::connectClientToLobby(const std::string &clientName, const s
 
 void VirtualMachine::clientMovedMorph(const std::string &clientName, int morphId, double newX, double newY) {
     auto itClient = existingClients.find(clientName);
-    if (itClient == existingClients.end())
-        return;
-
+    if (itClient == existingClients.end())return;
     Client *client = itClient->second;
     Lobby *lobby = client->getActualLobby();
     lobby->moveMorph(clientName, morphId, newX, newY);
@@ -130,7 +128,8 @@ void VirtualMachine::dismissObject(const std::string &clientName, int objectID) 
     Client *client = searchClient(clientName);
     if (client != nullptr) {
         Lobby *lobby = client->getActualLobby();
-        lobby->dismissObject(objectID);
+        if(lobby != nullptr)
+            lobby->dismissObject(objectID);
     }
 }
 

@@ -10,7 +10,6 @@ ServerHandler::ServerHandler(ProxyClient &client) : client(client) {}
 ServerHandler::~ServerHandler() {}
 
 void ServerHandler::connect(const std::string &clientName) {
-    std::cout << " Se conecta cliente " << clientName << std::endl; //TODO sacar debug
     bool clientIsConnected = client.vm.connectClient(clientName, &client);
     json jResponse;
     if (clientIsConnected) {
@@ -19,7 +18,6 @@ void ServerHandler::connect(const std::string &clientName) {
         client.validClient = true;
     } else
         jResponse["evento"] = "error";
-
     client.sendEvent(jResponse.dump());
 }
 

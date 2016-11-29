@@ -110,7 +110,6 @@ void Object::setLobby(Lobby *lobby) {
 void Object::notifyClients(std::string eventName, std::string clientName) {
     if (myLobby != nullptr) {
         myLobby->notifyClients(eventName, myMorph, clientName);
-
     }
 }
 

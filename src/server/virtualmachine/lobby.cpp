@@ -60,7 +60,6 @@ void Lobby::notifyClient(const std::string& eventName, const std::string& client
 
 void Lobby::notifyClients(const std::string& eventName, Morph& morph, const std::string& clientNameUnnotified = ""){
     for(auto itClient = clientsConnected.begin(); itClient != clientsConnected.end(); itClient++){
-        std::cout << clientsConnected.size() << std::endl;
         if(itClient->second != nullptr){
             if(itClient->second->getClientName() != clientNameUnnotified)
                 itClient->second->notify(eventName, morph);
@@ -90,7 +89,8 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
     std::cout << "GET: " << code << " CONTEXT: " << objectContext->getName() << std::endl;
-    interpreter->interpretChar(code.c_str(), objectContext);
+    try{interpreter->interpretChar(code.c_str(), objectContext);}
+    catch(...){std::cerr << "ERROR" << std::endl;}
     std::vector<Object*> objectsCreated  = interpreter->getCreatedObjets();
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
         auto itMorph = visibleObjects.find((*itObject)->getMorphId());
@@ -121,7 +121,8 @@ void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
     std::cout << "DO: " << code << " CONTEXT: " << objectContext->getName() << std::endl;
-    interpreter->interpretChar(code.c_str(), objectContext);
+    try{interpreter->interpretChar(code.c_str(), objectContext);}
+    catch(...){std::cerr << "ERROR" << std::endl;}
     std::vector<Object*> objectsModified  = interpreter->getModifiedObjets();
     for(auto itObject = objectsModified.begin(); itObject != objectsModified.end(); itObject++){
         (*itObject)->notifyClients("crear");
