@@ -61,5 +61,5 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [x] Valgrind Servidor (TESTING) :microscope:
 - [ ] Manejar excepciones correctamente (EN PROCESO) :recycle:
 - [x] Verificar errores de sintaxis en el codigo Self
-- [ ] Codigo presentable (EN PROCESO) :recycle:
+- [ ] Codigo presentable SERVER: :white_check_mark: CLIENT: (EN PROCESO) :recycle:
 - [x] Garbage collector con Serializacion
