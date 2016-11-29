@@ -41,7 +41,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 
 ##TODO List (23/11) :arrow_right: (29/11) En orden de importancia
 
-- [x] Pasar por referencia (no por copia!) usar const cuando lo amerite (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
+- [x] Pasar por referencia (no por copia!)
 - [x] Serializacion/Persistencia
 - [x] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
 - [x] Mensajes con contexto en los objetos
