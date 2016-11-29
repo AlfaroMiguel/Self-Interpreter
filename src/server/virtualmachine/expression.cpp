@@ -47,6 +47,7 @@ void Expression::serialize(json& jserialization){
 /*Deserializacion*/
 
 Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
+    std::cout << "expresion inicia desearelia" << std::endl;
     Expression* expression = new Expression();
     expression->objectName = jdeserialization["objectName"];
     expression->representation = jdeserialization["representation"];
@@ -63,13 +64,20 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
 
 
     json jReceiver = jdeserialization["receiver"];
+    std::cout << "jReceiver" <<jReceiver<< std::endl;
     if (jReceiver != "nullptr"){
         if (jReceiver["type"] == "number"){
+            std::cout << "es un numero" << std::endl;
             Object* object = Number::deserialize(jReceiver, lobby);
             expression->setReceiver(object);
         }
         else if (jReceiver["type"] == "searcherObject"){
+            std::cout << "es un searcher object" << std::endl;
             Object* object = SearcherObject::deserialize(jReceiver, lobby);
+            expression->setReceiver(object);
+        }
+        else if(jReceiver["type"] == "expression"){
+            Object* object = Expression::deserialize(jReceiver, lobby);
             expression->setReceiver(object);
         }
     }
@@ -79,13 +87,20 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
 
     expression->operation = jdeserialization["operation"];
     json jArgument = jdeserialization["argument"];
+    std::cout << "jArgument" <<jArgument<< std::endl;
     if (jArgument != "nullptr"){
         if (jArgument["type"] == "number"){
+            std::cout << "es un numero" << std::endl;
             Object* object = Number::deserialize(jArgument, lobby);
             expression->setArgument(object);
         }
         else if (jArgument["type"] == "searcherObject"){
+            std::cout << "es un searcher object" << std::endl;
             Object* object = SearcherObject::deserialize(jArgument, lobby);
+            expression->setArgument(object);
+        }
+        else if(jArgument["type"] == "expression"){
+            Object* object = Expression::deserialize(jArgument, lobby);
             expression->setArgument(object);
         }
     }
