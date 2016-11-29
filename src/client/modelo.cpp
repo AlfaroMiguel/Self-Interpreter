@@ -58,6 +58,7 @@ void Modelo::create_morph(const std::string& name, const Posicion& pos,
 		}
 	const Glib::ustring morph_name(name);
 	Glib::RefPtr <Morph> morph = Morph::create(pos, morph_name, id);
+	std::cout << "CREO MORPH: " << morph_name << std::endl;
 	for (unsigned int i = 0; i < morphs.size(); i++){
 		if (morphs[i]->shares_parent(id_padre, slot_name)){
 			client_handler->hide_morph(morphs[i]);

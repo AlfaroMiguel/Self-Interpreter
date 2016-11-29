@@ -37,6 +37,10 @@ void ViewHandler::add_lobby(const std::string& lobby_id){
 
 void ViewHandler::set_lobbies() {
 	ventana_inicio->inicializar();
+	if (first_connection){
+		Glib::signal_idle().connect(sigc::mem_fun(*this, &ViewHandler::do_show_lobby_options));
+		first_connection = false;
+	}
 }
 
 void ViewHandler::open_lobby() {

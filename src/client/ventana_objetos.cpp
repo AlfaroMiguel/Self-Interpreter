@@ -10,21 +10,9 @@ VentanaObjetos::VentanaObjetos(BaseObjectType* cobject, const Glib::RefPtr<Gtk::
 	canvas->set_hexpand(true);
 	canvas->set_size_request(800,800);
 	canvas->property_background_color_rgb() = 0xE0E0E0;
-	pack_start(*canvas);
-	reorder_child(*canvas, 0);
+	add(*canvas);
 	root = Goocanvas::Group::create();
 	canvas->set_root_item(root);
-//	LineDrawingArea myArea(canvas);
-//	pack_start(myArea);
-//	reorder_child(myArea, 0);
-//	Glib::RefPtr<Goocanvas::Path> path = Goocanvas::Path::create("M 256.0 275.0 L 326.0 135.0");
-//	root->add_child(path);
-//	cr = canvas->create_cairo_context();
-//	canvas->render(cr);
-//	cr->set_source_rgb(0.8, 0.0, 0.0);
-//	cr->move_to(0, 0);
-//	cr->line_to(10, 10);
-//	cr->stroke();
 }
 
 VentanaObjetos::~VentanaObjetos() {}
@@ -36,6 +24,7 @@ bool VentanaObjetos::do_draw_morph(Glib::RefPtr<Morph> morph) {
 }
 
 void VentanaObjetos::draw_morph(Glib::RefPtr <Morph> morph) {
+	std::cout << "AGREGO MORPH" << std::endl;
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_draw_morph), morph));
 }
 
@@ -66,7 +55,6 @@ bool VentanaObjetos::do_add_path(Glib::RefPtr <Goocanvas::Path> path) {
 }
 
 void VentanaObjetos::add_path(Glib::RefPtr <Goocanvas::Path> path) {
-	//root->add_child(path);
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_add_path), path));
 }
 
@@ -76,6 +64,5 @@ bool VentanaObjetos::do_delete_path(Glib::RefPtr <Goocanvas::Path> path){
 }
 
 void VentanaObjetos::delete_path(Glib::RefPtr <Goocanvas::Path> path) {
-	//path->remove();
 	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &VentanaObjetos::do_delete_path), path));
 }

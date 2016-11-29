@@ -50,7 +50,9 @@ class ViewHandler{
   		VentanaObjetos* ventana_objetos;
   		VentanaCliente* ventana_cliente;
 
+  		bool first_connection = true;
   		bool do_show_lobby_options();
+
 };
 
 #endif

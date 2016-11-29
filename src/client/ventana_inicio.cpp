@@ -38,13 +38,25 @@ void VentanaInicio::on_add_lobby(){
 }
 void VentanaInicio::add_lobby(const std::string& lobby_id){
 	Glib::ustring lobby(lobby_id);
-	lobbies.push_back(lobby);
+	std::cout << "lobby recibido: " << lobby_id<< std::endl;
+	std::cout << "size: " << lobbies.size()<< std::endl;
+	bool is_existing_lobby = false;
+	for(unsigned  int i = 0; i < lobbies.size(); i++) {
+		if (lobbies[i] == lobby) {
+			std::cout << "Lobbies: " << lobbies[i] << ", " << lobby.raw() << std::endl;
+			is_existing_lobby = true;
+		}
+	}
+	if (!is_existing_lobby) {
+		std::cout << "Lobby agregado a lista: " << lobby_id << std::endl;
+		lobbies.push_back(lobby);
+	}
 }
 
 bool VentanaInicio::do_inicializar(){
-	std::cout << lobbies.size() << std::endl;
+	comboBox->remove_all();
 	for(unsigned  int i = 0; i < lobbies.size(); i++) {
-		std::cout << lobbies[i] << std::endl;
+		std::cout << "Lobby agregado: " << lobbies[i] << std::endl;
 		comboBox->append(lobbies[i]);
 	}
 	if (lobbies.size() > 0)
@@ -52,7 +64,6 @@ bool VentanaInicio::do_inicializar(){
 	entrada_texto->set_sensitive(false);
 	boton_lobby_compartido->set_sensitive(false);
 	boton_lobby_privado->set_sensitive(false);
-	show();
 	return false;
 }
 
