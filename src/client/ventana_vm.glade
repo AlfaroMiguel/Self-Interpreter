@@ -57,7 +57,7 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Enter your name: </property>
+                <property name="label" translatable="yes">Enter user name: </property>
                 <property name="xalign">0.019999999552965164</property>
               </object>
               <packing>
@@ -81,7 +81,7 @@
               <object class="GtkLabel" id="lblError">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">You are already connected</property>
+                <property name="label" translatable="yes">user already connected</property>
                 <property name="ellipsize">middle</property>
                 <attributes>
                   <attribute name="foreground" value="#cccc00000000"/>

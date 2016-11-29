@@ -36,7 +36,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 ##Documentacion adicional
 * Manual de proyecto: https://www.overleaf.com/7097737cbmvrznwvpqb
 * Documentacion tecnica: https://www.overleaf.com/7097755ztvkcsjjjxgv
-* Manual del usuario: https://www.overleaf.com/7090924zfjbtsqfghrk#/24374756/
+* Manual del usuario: https://www.overleaf.com/7090924zfjbtsqfghrk#/24374756/ <-- REVISAR, creo que ya esta terminado.
 
 
 ##TODO List (23/11) :arrow_right: (29/11) En orden de importancia
