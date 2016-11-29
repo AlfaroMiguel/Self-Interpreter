@@ -5,7 +5,6 @@
 
 
 void Expression::serialize(json& jserialization){
-  std::cout << "Expression::serialize start:" << objectName << std::endl;
   jserialization["objectName"] = objectName;
   jserialization["representation"] = representation;
 
@@ -48,7 +47,6 @@ void Expression::serialize(json& jserialization){
 //Deserealizacion
 
 Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
-  std::cout << "Expression::deserialize start" << std::endl;
   Expression* expression = new Expression();
   expression->objectName = jdeserialization["objectName"];
   expression->representation = jdeserialization["representation"];
@@ -94,7 +92,6 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
   else{
     expression->argument = nullptr;
   }
-  std::cout << "Expression::deserialize end" << std::endl;
 
   return expression;
 }
@@ -106,22 +103,14 @@ Expression::Expression(){
   receiver = nullptr;
   argument = nullptr;
   result = nullptr;
-  if (receiver != nullptr){
-    std::cout << "receive not null" << std::endl;
-  }
-  if (argument != nullptr){
-    std::cout << "argument not null" << std::endl;
-  }
 }
 
 Expression::~Expression(){}
 
 
 std::vector<Object*> Expression::getAtributs(){
-  std::cout << "/* Expression::getAtributs*/" << std::endl;
   std::vector<Object*> v;
   if (receiver != nullptr){
-    std::cout << "dentro de if" << std::endl;
     v.push_back(receiver);
     v.push_back(argument);
   }
@@ -130,25 +119,21 @@ std::vector<Object*> Expression::getAtributs(){
 
 
 void Expression::setReceiver(Object* receiverPtr){
-  std::cout << "Expression::setReceiver" << std::endl;
   receiver = receiverPtr;
   receiver->addSlots("self",this,false,true);
 }
 
 void Expression::setArgument(Object* argumentPtr){
-  std::cout << "Expression::setArgument" << std::endl;
   argument = argumentPtr;
   argument->addSlots("self",this,false,true);
 }
 
 void Expression::setOperator(std::string operatorString){
-  std::cout << "Expression::setOperator" << std::endl;
   this->operation = operatorString;
 }
 
 
 std::string Expression::getRepresentation() const {
-  std::cout << "Expression::getRepresentation a: "<< objectName << std::endl;
   if ( receiver != nullptr){
     return "(" + receiver->getRepresentation() + operation + argument->getRepresentation() + ")";
   }
@@ -165,7 +150,6 @@ NativeValue Expression::getValue(){
 
 Object* Expression::getResult(){
   if(result != nullptr){
-    std::cout << "/* result es distinto de nulltpr */" << std::endl;
     return result;
   }
   return this;
@@ -174,7 +158,6 @@ Object* Expression::getResult(){
 
 
 NativeValue Expression::ejecute(std::string operationStr, Object* argumentPtr){
-  std::cout << "Error, cannot ejecute() in Expression class" << std::endl;
   /*A la expression ya se le mando el mensaje evaluate, ahora pide ejecutar*/
   if(result!=nullptr){
     return result->ejecute(operationStr,argumentPtr);
@@ -202,8 +185,7 @@ std::vector<Object*> Expression::getReferences(){
 }
 
 
-Object* Expression::clone(){
-  std::cout << "Expression::clone" << std::endl;
+Object* Expression::clone() const {
   Expression* newExpression = new Expression;
   if (receiver != nullptr){
     newExpression->setReceiver(receiver->clone());
@@ -220,14 +202,11 @@ Object* Expression::clone(){
 }
 
 void Expression::evaluate(){
-    std::cout << "Expression::evaluate" << std::endl;
     if (receiver != nullptr){
-      std::cout << "dentro del if" << std::endl;
       receiver->evaluate();
       argument->evaluate();
       NativeValue valor = receiver->ejecute(operation,argument->getResult());
       this->result = new Number(valor.getInt());
-      std::cout << "Resultado de la expression:" << result->getValue().getInt() << std::endl;
     }
     else{
       if(operation.compare("") != 0){
@@ -257,4 +236,3 @@ Object* Expression::searchForId(int objectId){
   }
   return nullptr;
 }
-

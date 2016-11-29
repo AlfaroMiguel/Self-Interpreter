@@ -44,7 +44,7 @@ public:
     virtual void evaluate();
 
     /*Devuelve una copia de si mismo*/
-    Object* clone();
+    Object* clone() const;
     std::vector<Object*> getAtributs();
 
     virtual Object* searchForId(int objectId);
