@@ -15,7 +15,7 @@ Lobby::~Lobby() {
     delete interpreter;
 }
 
-std::string Lobby::getLobbyName() const{
+std::string Lobby::getLobbyName() {
     return lobbyName;
 }
 
