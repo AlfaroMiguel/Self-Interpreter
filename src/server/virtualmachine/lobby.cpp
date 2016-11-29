@@ -152,12 +152,13 @@ void Lobby::changeObjectName(int objectID, const std::string& newName){
 }
 
 void Lobby::dismissObject(int objectID) {
-    Object* object = lobbyReference->searchForId(objectID);
+    //TODO ARREGLAR BUG AGUS
+    /*Object* object = lobbyReference->searchForId(objectID);
     auto itObjectID = visibleObjects.find(objectID);
     if(itObjectID != visibleObjects.end())visibleObjects.erase(itObjectID);
     if(object != nullptr){
         object->notifyClients("dismiss");
-    }
+    }*/
 }
 
 

@@ -71,9 +71,9 @@ int main(int argc, const char *argv[]) try{
             break;
         }else if(entrada == DEL_SERIALIZATION_FILE){
             if(remove(SERIALIZATION_FILE) != 0 )
-                std::cerr << "Error eliminando el archivo de persistencia" << std::endl;
+                std::cerr << "ERROR DELETING SERIALIZATION FILE" << std::endl;
             else
-                std::cerr << "Archivo de persistencia eliminado exitosamente" << std::endl;
+                std::cerr << "SERIALIZATION FILE DELETED" << std::endl;
             aceptador.stop();
             aceptador.join();
             break;
