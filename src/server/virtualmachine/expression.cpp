@@ -100,7 +100,6 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
     else{
         expression->argument = nullptr;
     }
-
     return expression;
 }
 

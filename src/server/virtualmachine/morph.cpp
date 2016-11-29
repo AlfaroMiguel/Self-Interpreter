@@ -5,6 +5,7 @@ using json = nlohmann::json;
 int Morph::idNumber = 0;
 
 Morph::Morph() {
+    id = idNumber++;
     x = 0.0;
     y = 0.0;
 }
@@ -13,7 +14,6 @@ Morph::~Morph() {}
 
 void Morph::setName(const std::string &newName) {
     name = newName;
-    id = idNumber++;
 }
 
 void Morph::changeName(const std::string &newName){
