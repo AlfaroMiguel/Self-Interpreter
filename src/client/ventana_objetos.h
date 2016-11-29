@@ -2,7 +2,7 @@
 #define VENTANA_OBJETOS_H
 
 
-#include "modelo.h"
+#include "model.h"
 #include <gtkmm.h>
 #include <goocanvasmm.h>
 

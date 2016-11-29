@@ -2,12 +2,13 @@
 #define LOBBY_DATA_HANDLER_H
 
 #include "event_handler.h"
-class LobbyDataHandler: public EventHandler{
+
+class LobbyDataHandler : public EventHandler {
  public:
-  LobbyDataHandler(ClientHandler* client_handler);
+  LobbyDataHandler(ClientHandler *client_handler);
   ~LobbyDataHandler();
   void operator()();
  private:
-  void handle(const json& j) const;
+  void handle(const json &j) const;
 };
 #endif

@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <iostream>
 
-#include "modelo.h"
+#include "model.h"
 #include "recibidor.h"
 #include "ventana_inicio.h"
 #include "client_handler.h"

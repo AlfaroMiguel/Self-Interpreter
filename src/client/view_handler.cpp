@@ -24,7 +24,7 @@ void ViewHandler::dismiss_morph(Glib::RefPtr<Morph> morph){
 }
 
 void ViewHandler::enable_editing(Glib::RefPtr<Morph> morph) {
-	ventana_edicion->start(morph->get_nombre());
+	ventana_edicion->start(morph->get_name());
 }
 
 void ViewHandler::ocultar_vista_cliente() {

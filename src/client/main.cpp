@@ -2,12 +2,13 @@
 #include <iostream>
 #include "main_view.h"
 #include "server_proxy.h"
-#include "modelo.h"
+#include "model.h"
 #include "ventana_edicion.h"
 #include "ventana_inicio.h"
 #include "ventana_objetos.h"
 #include "client_handler.h"
 
+#define GLD_MAIN_VIEW "ventanaPpal"
 int main (int argc, char **argv) {
 
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create();
@@ -17,20 +18,20 @@ int main (int argc, char **argv) {
 	const std::string puerto(argv[2]);
 
 	ServerProxy server_proxy(hostname, puerto);
-	Modelo modelo;
-	ClientHandler client_handler(&modelo, &server_proxy);
+	Model model;
+	ClientHandler client_handler(&model, &server_proxy);
 
 	server_proxy.set_control(&client_handler);
-	modelo.set_control(&client_handler);
+	model.set_handler(&client_handler);
 
 	MainView* main_view = nullptr;
-	builder->get_widget_derived("ventanaPpal", main_view);
+	builder->get_widget_derived(GLD_MAIN_VIEW, main_view);
 
-	main_view->set_control(&client_handler);
+	main_view->set_handler(&client_handler);
 
 	app->run(*main_view);
 
 	delete main_view;
-	std::cout << "sale de la app" << std::endl;
+
 	return 0;
 }

@@ -8,7 +8,7 @@
 
 using json = nlohmann::json;
 class Recibidor;
-class Modelo;
+class Model;
 class ClientHandler;
 
 /* Clase que encapsula el manejo del envío y recepción de datos

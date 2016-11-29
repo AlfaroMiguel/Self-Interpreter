@@ -42,6 +42,7 @@ EventHandlerSelector::EventHandlerSelector(ClientHandler *client_handler) {
 
 EventHandlerSelector::~EventHandlerSelector() {}
 
-EventHandler* EventHandlerSelector::get_event_handler(const std::string &event) {
+EventHandler *EventHandlerSelector::get_event_handler
+	(const std::string &event) {
 	return event_handlers.at(event);
 }

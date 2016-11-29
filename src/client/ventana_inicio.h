@@ -1,7 +1,7 @@
 #ifndef VENTANA_INICIO_H
 #define VENTANA_INICIO_H
 
-#include "modelo.h"
+#include "model.h"
 #include "client_handler.h"
 #include <gtkmm.h>
 

@@ -12,40 +12,44 @@
 #include "ventana_cliente.h"
 #include "morph.h"
 
-#define GLD_CAJA_EDITAR "cajaEditar"
-#define GLD_CAJA_OBJETOS "cajaObjetos"
+#define GLD_EDIT_VIEW "cajaEditar"
+#define GLD_OBJECT_VIEW "cajaObjetos"
+#define GLD_LOBBY_WDW "dialogInicio"
+#define GLD_CLIENT_WDW "dialogCliente"
 
-MainView::MainView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder):
-							Gtk::Window(cobject), builder(builder){
+MainView::MainView(BaseObjectType *cobject,
+				   const Glib::RefPtr <Gtk::Builder> &builder) :
+	Gtk::Window(cobject), builder(builder) {
 	maximize();
-	builder->get_widget_derived(GLD_CAJA_EDITAR, ventana_edicion);
-	builder->get_widget_derived(GLD_CAJA_OBJETOS, ventana_objetos);
-	builder->get_widget_derived("dialogInicio", ventana_inicio);
-	builder->get_widget_derived("dialogCliente", ventana_cliente);
+	builder->get_widget_derived(GLD_EDIT_VIEW, editing_view);
+	builder->get_widget_derived(GLD_OBJECT_VIEW, objects_view);
+	builder->get_widget_derived(GLD_LOBBY_WDW, lobbies_view);
+	builder->get_widget_derived(GLD_CLIENT_WDW, client_view);
 	show_all_children();
 	Gdk::RGBA rgba;
 	rgba.set_rgba(0.8784, 0.8784, 0.8784);
 	override_background_color(rgba);
-	ventana_edicion->hide();
-	ventana_objetos->hide();
-	ventana_inicio->hide();
-	ventana_cliente->present();
+	editing_view->hide();
+	objects_view->hide();
+	lobbies_view->hide();
+	client_view->present();
 }
 
 MainView::~MainView() {
-	delete ventana_edicion;
-	delete ventana_inicio;
-	delete ventana_objetos;
-	delete ventana_cliente;
+	delete editing_view;
+	delete lobbies_view;
+	delete objects_view;
+	delete client_view;
 	delete view_handler;
 }
 
-void MainView::set_control(ClientHandler* client_handler){
-	view_handler = new ViewHandler(ventana_inicio, ventana_edicion, ventana_objetos, this, ventana_cliente);
+void MainView::set_handler(ClientHandler *client_handler) {
+	view_handler = new ViewHandler(lobbies_view, editing_view,
+								   objects_view, this, client_view);
 	view_handler->set_control(client_handler);
 }
 
-bool MainView::do_quit(){
+bool MainView::do_quit() {
 	hide();
 	return false;
 }

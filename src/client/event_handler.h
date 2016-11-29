@@ -3,17 +3,14 @@
 
 #include "client_handler.h"
 
-class EventHandler{
+/* Clase functor que se ocupa de manejar eventos */
+class EventHandler {
  protected:
-  EventHandler(const EventHandler& otra) = delete;
-  EventHandler& operator=(const EventHandler& otra) = delete;
-
-  ClientHandler* client_handler;
+  ClientHandler *client_handler;
  public:
-  EventHandler(ClientHandler* client_handler);
+  EventHandler(ClientHandler *client_handler);
   virtual ~EventHandler();
-  EventHandler(EventHandler&& otra);
-  EventHandler& operator=(EventHandler&& otra);
-  virtual void handle(const json& j) const = 0;
+  /* Maneja un evento utilizando los datos del objeto json recibido */
+  virtual void handle(const json &j) const = 0;
 };
 #endif

@@ -17,8 +17,8 @@ class Representacion: public Goocanvas::Group {
   	Representacion(const Representacion&& otra);
   	Representacion& operator=(const Representacion&& otra);
 
-  	virtual bool esta_en_posicion(const Posicion& pos_comparar) const = 0;
-  	virtual void editar_nombre(const Glib::ustring& nombre_nuevo) = 0;
+  	//virtual bool esta_en_posicion(const Posicion& pos_comparar) const = 0;
+  	//virtual void editar_nombre(const Glib::ustring& nombre_nuevo) = 0;
   	void actualizar_posicion(const Posicion& new_pos);
 	void resize(double new_size);
   	double get_x() const ;

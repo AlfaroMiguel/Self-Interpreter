@@ -15,29 +15,30 @@ class VentanaEdicion;
 class VentanaObjetos;
 class VentanaInicio;
 
-class MainView: public Gtk::Window{
- private:
-  VentanaEdicion* ventana_edicion;
-  VentanaObjetos* ventana_objetos;
-  VentanaInicio* ventana_inicio;
-  VentanaCliente* ventana_cliente;
-  ViewHandler* view_handler;
-
-  Glib::RefPtr<Gtk::Builder> builder;
-
-  bool do_iniciar();
-  bool do_editar();
-  bool do_quit();
+/* Clase que representa a la ventana principal de programa. */
+class MainView : public Gtk::Window {
  public:
-  MainView(BaseObjectType* cobject, const Glib::RefPtr<Gtk::Builder>& builder);
+  MainView(BaseObjectType *cobject,
+           const Glib::RefPtr <Gtk::Builder> &builder);
   virtual ~MainView();
 
-  MainView(MainView&& otra);
-  MainView& operator=(MainView&& otra);
+  MainView(MainView &&otra);
+  MainView &operator=(MainView &&otra);
 
+  /* Cierra la ventana */
   void quit();
-  void set_control(ClientHandler* client_handler);
-  void editar();
-  void mostrar_lobbies();
+  /* Establece el manejador del cliente en el controlador de la vista*/
+  void set_handler(ClientHandler *client_handler);
+ private:
+  VentanaEdicion *editing_view;
+  VentanaObjetos *objects_view;
+  VentanaInicio *lobbies_view;
+  VentanaCliente *client_view;
+  ViewHandler *view_handler;
+
+  Glib::RefPtr <Gtk::Builder> builder;
+
+  /* Realiza la funcion quit() en el hilo principal */
+  bool do_quit();
 };
 #endif

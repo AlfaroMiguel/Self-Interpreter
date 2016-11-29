@@ -6,12 +6,16 @@
 #include <map>
 #include <string>
 
-class EventHandlerSelector{
+/* Clase que se ocupa de seleccionar un manejador de eventos
+ * segun el evento */
+class EventHandlerSelector {
  public:
-  EventHandlerSelector(ClientHandler* client_handler);
+  EventHandlerSelector(ClientHandler *client_handler);
   ~EventHandlerSelector();
-  EventHandler* get_event_handler(const std::string& event);
+
+  /* Devuelve un manejador de eventos correspondiente al evento recibido */
+  EventHandler *get_event_handler(const std::string &event);
  private:
-  std::map<std::string, EventHandler*> event_handlers;
+  std::map<std::string, EventHandler *> event_handlers;
 };
 #endif

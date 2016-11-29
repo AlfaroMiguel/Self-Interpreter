@@ -7,71 +7,100 @@
 #include <vector>
 #include <map>
 
-#include "objeto.h"
+#include "morph_object.h"
 #include "slot.h"
 
-class Modelo;
+class Model;
 class ClientHandler;
 
-class Morph: public Goocanvas::Group {
+/* Clase que representa a la representacion de los MorphObjects y sus slots */
+class Morph : public Goocanvas::Group {
  public:
-  	static Glib::RefPtr<Morph> create(const Posicion& pos,
-									  const Glib::ustring& nombre, int id);
-  	Morph(const Posicion& pos, const Glib::ustring& nombre, int id);
-  	~Morph();
+  static Glib::RefPtr <Morph> create(const Posicion &pos,
+									 const Glib::ustring &nombre, int id);
+  Morph(const Posicion &pos, const Glib::ustring &nombre, int id);
+  ~Morph();
 
-  	Morph(Morph&& otra);
-  	Morph& operator=(Morph&& otra);
+  Morph(Morph &&otra);
+  Morph &operator=(Morph &&otra);
 
-  	void conectar_seniales();
-  	/* Elimina al morph de la interfaz */
-  	void dismiss();
-  	bool esta_en_posicion(const Posicion& pos) const;
-  	void editar_nombre(const std::string& nombre_nuevo);
-  	void editando(bool valor);
-  	bool editando();
-  	void agregar_slots(std::map<std::string, std::string> slots_a_agregar);
-  	double get_x() const;
-  	double get_y() const;
-  	int get_id() const;
-  	const std::string get_nombre() const;
-  	void agregar_union(Glib::RefPtr<Goocanvas::Polyline> linea);
-	const std::string obtener_valor_slot(const Posicion& pos) const;
-  	const std::string obtener_nombre_slot(const Posicion& pos) const;
-  	void mover(const Posicion& new_pos);
-  	void set_control(ClientHandler* client_handler);
-  	bool es_objeto(const Posicion& pos) const;
-  	bool es_slot(const Posicion& pos) const;
-  	void cambiar_posicion(const Posicion& pos);
-  	const Posicion& get_posicion() const;
-  	bool has_id(int id);
-  	void resize(double new_size);
-  	void add_path_to_object(int id_padre, const std::string& slot_name);
-  	void add_path_to_slot(const std::string& slot_name, int id_padre);
-  	const Posicion& get_posicion_slot(const std::string& slot_name);
-  	void move_path(const Posicion& pos_slot, int id_padre);
-  	void add_union(int id, int id_padre, const std::string& slot_name);
-  	bool shares_parent(int parent_id, const std::string& slot_name);
+  /* Establece el controlador con el que se va a comunicar la clase */
+  void set_handler(ClientHandler *client_handler);
+  /* Conecta en el morph las señales necesarias para manejar las
+   * acciones sobre la interfaz */
+  void connect_signals();
+  /* Elimina al morph de la interfaz */
+  void dismiss();
+  /* Devuelve true si el morph se encuentra en la posicion dada */
+  bool is_in_position(const Posicion &pos) const;
+  /* Cambia el nombre del morph por el recibido */
+  void edit_name(const std::string &new_name);
+  /* Agrega los slots recibidos */
+  void add_slots(std::map <std::string, std::string> added_slots);
+  /* Devuelve la posicion x del morph*/
+  double get_x() const;
+  /* Devuelve la posicion y del morph*/
+  double get_y() const;
+  /* Devuelve el id del morph */
+  int get_id() const;
+  /* Devuelve el nombre del morph */
+  const std::string get_name() const;
+  /* Devuelve el valor del slot que se encuentra en la posicion dada */
+  const std::string get_slot_value(const Posicion &slot_pos) const;
+  /* Devuelve el nombre del slot que se encuentra en la posicion dada */
+  const std::string get_slot_name(const Posicion &slot_pos) const;
+  /* Mueve el morph a la posicion dada */
+  void move(const Posicion &new_pos);
+  /* Devuelve true si en la posicion dada se encuentra el MorphObject del morph */
+  bool is_object(const Posicion &pos) const;
+  /* Devuelve true si en la posicion dada se encuentra algun slot del morph*/
+  bool is_slot(const Posicion &pos) const;
+  /* Cambia la posicion del morph por la posicion recibida */
+  void change_position(const Posicion &new_pos);
+  /* Devuelve la posicion del morph*/
+  const Posicion &get_position() const;
+  /* Devuelve true si el id del morph coincide con el id recibido */
+  bool has_id(int id);
+  /* Redimensiona el morph al tamanio nuevo*/
+  void resize(double new_size);
+  /* Agrega un camino del MorphObject al slot identificado con slot_name del morph
+   * identificado con parent_id */
+  void add_path_to_object(int parent_id, const std::string &slot_name);
+  /* Agrega un camino desde el slot identificado con slot_name al MorphObject del
+   * morph identificado por parent_id */
+  void add_path_to_slot(const std::string &slot_name, int parent_id);
+  /* Devuelve la posicion en la que se encuentra el slot identificado por
+   * el nombre dado */
+  const Posicion &get_slot_position(const std::string &slot_name) const;
+  /* Agrega una union desde el morph identificado con id_obj al slot
+   * identificado con slot_name del morph identificado con parent_id*/
+  void add_union(int id_obj, int parent_id, const std::string &slot_name);
+  /* Devuelve true si esta unido al slot identificado por slot_name
+   * del morph representado por parent_id */
+  bool shares_parent(int parent_id, const std::string &slot_name);
  private:
-  	Glib::RefPtr<Goocanvas::Item> dragging;
-  	int drag_x, drag_y;
-  	bool siendo_editado = false;
-  	Glib::RefPtr<Objeto> objeto;
-  	//Glib::RefPtr<Goocanvas::Polyline> linea;
-	int id;
-  	ClientHandler* client_handler;
+  Glib::RefPtr <Goocanvas::Item> dragging;
+  int drag_x, drag_y;
+  Glib::RefPtr <MorphObject> object;
+  int id;
+  ClientHandler *client_handler;
 
-  	bool on_item_button_press_event(const Glib::RefPtr<Goocanvas::Item>& item,
-									GdkEventButton* event);
-  	bool on_item_button_release_event(const Glib::RefPtr<Goocanvas::Item>& item,
-									  GdkEventButton* event);
-  	bool on_item_motion_notify_event(const Glib::RefPtr<Goocanvas::Item>& item,
-									 GdkEventMotion* event);
+  /* Maneja el evento en el que se presiona sobre el morph */
+  bool on_item_button_press_event(const Glib::RefPtr <Goocanvas::Item> &item,
+								  GdkEventButton *event);
+  /* Maneja el evento en el que se deja de presionar sobre el morph */
+  bool on_item_button_release_event(const Glib::RefPtr <Goocanvas::Item> &item,
+									GdkEventButton *event);
+  /* Maneja el evento en el que se mueve el morph */
+  bool on_item_motion_notify_event(const Glib::RefPtr <Goocanvas::Item> &item,
+								   GdkEventMotion *event);
 
-  	Morph(const Morph& otra) = delete;
-  	Morph& operator=(const Morph& otra) = delete;
+  Morph(const Morph &otra) = delete;
+  Morph &operator=(const Morph &otra) = delete;
 
-  	bool on_create(Glib::RefPtr<Objeto>);
-  	bool do_dismiss();
+  /* Realiza el metodo create() en el hilo principal */
+  bool do_create(Glib::RefPtr <MorphObject>);
+  /* Realiza el metodo dismiss() en el hilo principal */
+  bool do_dismiss();
 };
 #endif
