@@ -100,6 +100,28 @@ Expression* Expression::deserialize(json& jdeserialization, Lobby* lobby){
     else{
         expression->argument = nullptr;
     }
+
+
+    json jResult = jdeserialization["result"];
+    if (jResult != "nullptr"){
+        if (jResult["type"] == "number"){
+            Object* object = Number::deserialize(jResult, lobby);
+            expression->setResult(object);
+        }
+        else if (jResult["type"] == "searcherObject"){
+            Object* object = SearcherObject::deserialize(jResult, lobby);
+            expression->setResult(object);
+        }
+        else if(jResult["type"] == "expression"){
+            Object* object = Expression::deserialize(jResult, lobby);
+            expression->setResult(object);
+        }
+    }
+    else{
+        expression->result = nullptr;
+    }
+
+
     return expression;
 }
 
