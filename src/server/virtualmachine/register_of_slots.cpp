@@ -10,6 +10,8 @@ RegisterOfSlots::~RegisterOfSlots() {
 void RegisterOfSlots::addSlot(const std::string &slotName, Object *object, bool isMutable, bool isParent) {
     Slot newSlot(object, isMutable, isParent);
     if (slotMap.count(slotName) == 1) {
+        auto itSlot = slotMap.find(slotName);
+        itSlot->second.getReference()->notifyClients("dismiss");
         removeSlot(slotName);
     }
     slotMap.insert(make_pair(slotName, newSlot));

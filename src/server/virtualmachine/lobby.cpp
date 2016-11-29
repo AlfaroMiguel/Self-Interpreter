@@ -93,6 +93,7 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
     catch(...){std::cerr << "ERROR" << std::endl;}
     std::vector<Object*> objectsCreated  = interpreter->getCreatedObjets();
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
+        //if(((*itObject)->getMorphId()) == lobbyReference->getMorphId())continue;
         auto itMorph = visibleObjects.find((*itObject)->getMorphId());
         if(itMorph == visibleObjects.end()) {
             visibleObjects.insert((*itObject)->getMorphId());
@@ -102,6 +103,7 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
 
     std::vector<Object*> objectsModified  = interpreter->getModifiedObjets();
     for(auto itObject = objectsModified.begin(); itObject != objectsModified.end(); itObject++){
+        if(((*itObject)->getMorphId()) == lobbyReference->getMorphId())continue;
         auto itMorph = visibleObjects.find((*itObject)->getMorphId());
         if(itMorph == visibleObjects.end()) {
             visibleObjects.insert((*itObject)->getMorphId());
@@ -152,13 +154,12 @@ void Lobby::changeObjectName(int objectID, const std::string& newName){
 }
 
 void Lobby::dismissObject(int objectID) {
-    //TODO ARREGLAR BUG AGUS
-    /*Object* object = lobbyReference->searchForId(objectID);
+    Object* object = lobbyReference->searchForId(objectID);
     auto itObjectID = visibleObjects.find(objectID);
     if(itObjectID != visibleObjects.end())visibleObjects.erase(itObjectID);
     if(object != nullptr){
         object->notifyClients("dismiss");
-    }*/
+    }
 }
 
 
