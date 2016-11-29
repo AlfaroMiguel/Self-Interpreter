@@ -28,7 +28,7 @@ Object *Number::getResult() {
     return this;
 }
 
-NativeValue Number::getValue() {
+NativeValue Number::getValue(){
     return value;
 }
 

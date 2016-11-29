@@ -32,12 +32,12 @@ objectReference(object), isMutable(isMutable), isParent(esParent){}
 
 Slot::~Slot(){}
 
-Object* Slot::getReference(){
+Object* Slot::getReference() const{
     return objectReference;
 }
-bool Slot::isMutableSlot(){
+bool Slot::isMutableSlot() const{
     return this->isMutable;
 }
-bool Slot::isParentSlot(){
+bool Slot::isParentSlot() const{
     return this->isParent;
 }

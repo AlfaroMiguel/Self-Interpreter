@@ -26,13 +26,13 @@ public:
     ~Client();
 
     /*Devuelve el nombre del cliente*/
-    std::string getClientName();
+    std::string getClientName() ;
 
     /*Recibe un puntero a un lobby y setea el lobby actual del cliente a ese lobby*/
     void setActualLobby(Lobby *newActualLobby);
 
     /*Devuelve el lobby actual del cliente*/
-    Lobby *getActualLobby();
+    Lobby *getActualLobby() ;
 
     /*Recibe el nombre del evento a notificar y una referencia a un morph y lo notifica*/
     void notify(std::string eventName, Morph &morph);

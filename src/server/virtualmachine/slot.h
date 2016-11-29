@@ -41,13 +41,13 @@ public:
     ~Slot();
 
     /*Devuelve la referencia al objeto que contiene*/
-    Object *getReference();
+    Object *getReference() const;
 
     /*Devuelve si es mutable*/
-    bool isMutableSlot();
+    bool isMutableSlot() const;
 
     /*Devuelve si es parent slot*/
-    bool isParentSlot();
+    bool isParentSlot() const;
 };
 
 #endif
