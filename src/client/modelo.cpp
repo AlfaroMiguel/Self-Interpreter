@@ -60,7 +60,8 @@ void Modelo::create_morph(const std::string& name, const Posicion& pos,
 	Glib::RefPtr <Morph> morph = Morph::create(pos, morph_name, id);
 	for (unsigned int i = 0; i < morphs.size(); i++){
 		if (morphs[i]->shares_parent(id_padre, slot_name)){
-			client_handler->dismiss_morph(morphs[i]);
+			client_handler->hide_morph(morphs[i]);
+			morphs.erase(morphs.begin() + i);
 		}
 	}
 	morphs.push_back(morph);

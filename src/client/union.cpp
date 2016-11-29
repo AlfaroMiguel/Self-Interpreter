@@ -5,22 +5,21 @@ Union::Union(int id, int id_padre, const std::string& slot_name, ClientHandler* 
 														  slot_name(slot_name), client_handler(client_handler){}
 Union::~Union(){}
 
-//static Glib::RefPtr<Union> Union::create(int id_padre, const std::string& slot_name){
-//	return Glib::RefPtr<Union>(new Union(id_padre, slot_name));
-//}
-
 bool Union::on_add_path(const std::string& path_data){
 	path = Goocanvas::Path::create(path_data);
 	client_handler->add_union(this);
 	return false;
 }
+
 void Union::add_path(const Posicion& pos_begin, const Posicion& pos_end){
 	std::string x_begin = std::to_string((int)pos_begin.get_x());
 	std::string y_begin = std::to_string((int)pos_begin.get_y());
 	std::string x_end = std::to_string((int)pos_end.get_x());
 	std::string y_end = std::to_string((int)pos_end.get_y());
 	std::string path_data("M "+x_begin+" "+y_begin+" L "+x_end+" "+y_end);
-	Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Union::on_add_path), path_data));
+	path = Goocanvas::Path::create(path_data);
+	client_handler->add_union(this);
+	//Glib::signal_idle().connect(sigc::bind(sigc::mem_fun(*this, &Union::on_add_path), path_data));
 }
 
 void Union::update_path(const Posicion& pos_begin, const Posicion& pos_end){
