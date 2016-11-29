@@ -62,11 +62,9 @@ void ServerProxy::enviar_datos_morph(const std::string &nombre, const Posicion &
 }
 
 void ServerProxy::get_morph_from_slot(int morph_id, const std::string &slot_name) {
-	json j;
-	j[JSON_ID_EVENT] = "get morph";
-	j["morph id"] = morph_id;
-	j["slot name"] = slot_name;
-	send_json(j);
+	std::cout << "Pido morph: " << morph_id << ", " << slot_name << std::endl;
+	std::string cadena("self " + slot_name + ".");
+	send_code(cadena, "get", morph_id);
 }
 
 void ServerProxy::send_json(const json &j) {

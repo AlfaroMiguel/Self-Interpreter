@@ -61,12 +61,12 @@ void VentanaEdicion::on_code_hint_event() {
 }
 
 void VentanaEdicion::on_add_slot_hint_event() {
-	add_to_code_entry("self _AddSlot: (||).");
+	add_to_code_entry("self _AddSlots: (||).");
 	code_entry->grab_focus();
 }
 
 void VentanaEdicion::on_remove_slot_hint_event() {
-	add_to_code_entry("self _RemoveSlot: (||).");
+	add_to_code_entry("self _RemoveSlots: (||).");
 	code_entry->grab_focus();
 }
 

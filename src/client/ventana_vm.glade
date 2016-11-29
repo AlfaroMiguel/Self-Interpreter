@@ -316,6 +316,9 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
+                  <placeholder/>
+                </child>
+                <child>
                   <object class="GtkButton" id="btnChangeLobby">
                     <property name="label" translatable="yes">Change Lobby</property>
                     <property name="visible">True</property>
@@ -328,11 +331,8 @@
                     <property name="expand">False</property>
                     <property name="fill">False</property>
                     <property name="pack_type">end</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -495,7 +495,7 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="btnCode">
-                    <property name="label" translatable="yes">(||.).</property>
+                    <property name="label" translatable="yes">(||).</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -508,7 +508,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="btnAddSlot">
-                    <property name="label" translatable="yes">AddSlot:</property>
+                    <property name="label" translatable="yes">_AddSlots:</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -521,7 +521,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="btnRemoveSlot">
-                    <property name="label" translatable="yes">RemoveSlot:</property>
+                    <property name="label" translatable="yes">_RemoveSlots:</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>

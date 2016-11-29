@@ -92,10 +92,14 @@ void Modelo::create_morph(const std::string& name, const Posicion& pos,
 }
 
 void Modelo::get_morph_from_slot(Posicion& pos){
-	if (selected_morph){
-		const std::string slot_name(selected_morph->obtener_nombre_slot(pos));
-		client_handler->get_morph_from_slot(selected_morph->get_id(), slot_name);
+	for(unsigned int i = 0; i < morphs.size(); i++) {
+		if (morphs[i]->esta_en_posicion(pos)) {
+			std::cout << "get morph from slot" << std::endl;
+			const std::string slot_name(morphs[i]->obtener_nombre_slot(pos));
+			client_handler->get_morph_from_slot(morphs[i]->get_id(), slot_name);
+		}
 	}
+
 }
 
 void Modelo::change_morph_position(int morph_id, const Posicion& new_pos){
