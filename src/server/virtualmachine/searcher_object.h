@@ -30,7 +30,7 @@ public:
     void evaluate();
 
     /*Devuelve una copia de si mismo*/
-    Object* clone();
+    Object* clone() const;
 
     //Metodo para serializar un SearcherObject
     void serialize(json& jserialization);

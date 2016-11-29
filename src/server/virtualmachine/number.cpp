@@ -15,10 +15,10 @@ Number::Number(int valueAux) : Object() {
 Number::~Number() {}
 
 
-Object *Number::clone() {
+Object *Number::clone() const {
     int valueInt = value.getInt();
     Number *newNumber = new Number(valueInt);
-    setName(this->getName());
+    newNumber->setName(this->getName());
     return newNumber;
 }
 

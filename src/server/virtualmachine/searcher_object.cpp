@@ -48,7 +48,7 @@ NativeValue SearcherObject::ejecute(std::string operation, Object* argument){
   }
 }
 
-Object* SearcherObject::clone(){
+Object* SearcherObject::clone() const{
   SearcherObject* newSearcheObject = new SearcherObject(objectName);
   newSearcheObject->setRepresentation(objectName);
   std::string selfStr = "self";

@@ -70,7 +70,7 @@ RegisterOfSlots RegisterOfSlots::getParentsSlots() const {
 }
 
 Object *RegisterOfSlots::searchSlot(const std::string &slotName, Object *object) {
-    if (slotName == object->getName()) { //Si es el object lo devuelvo
+    if (slotName == object->getName()) {
         return object;
     }
     RegisterOfSlots slotsDeObject = object->getSlots();
@@ -80,7 +80,6 @@ Object *RegisterOfSlots::searchSlot(const std::string &slotName, Object *object)
         std::vector<Object *> parentsSlotsFounded;
         for (auto iter = parentsSlots.slotMap.begin(); iter != parentsSlots.slotMap.end(); ++iter) {
             Object *temporalObject = (iter->second).getReference();
-            std::cout << "temporalObject name:" << temporalObject->getName() << std::endl;
             Object *parent = searchSlot(slotName, temporalObject);
             parentsSlotsFounded.push_back(parent);
         }
@@ -102,7 +101,6 @@ void RegisterOfSlots::serialize(json &jserialization) {
     for (auto itSlot = slotMap.begin(); itSlot != slotMap.end(); itSlot++) {
         json jSlot;
         if (itSlot->first != "self") {
-            std::cout << "Serializo (REC) el slot: " << itSlot->first << std::endl;
             itSlot->second.serialize(jSlot);
             jserialization.push_back(std::make_pair(itSlot->first, jSlot));
         }
@@ -110,16 +108,11 @@ void RegisterOfSlots::serialize(json &jserialization) {
 }
 
 void RegisterOfSlots::deserialize(json &jdeserialization, Object *selfObject, Lobby *lobby) {
-    std::cout << "Empieza a deserealizar registro de slots" << std::endl;
-    //this->addSlot("self", selfObject, false, true);
     for (auto itSlot = jdeserialization.begin(); itSlot != jdeserialization.end(); itSlot++) {
-        std::cout << "RegisterOfSlots::deserialize: " << itSlot.key() << std::endl;
         std::string slotName = itSlot.key();
         Slot slot;
         slot.deserialize(itSlot.value(), lobby);
         slot.getReference()->slots.addSlot("self", selfObject, false, true);
         this->slotMap.insert(std::make_pair(slotName, slot));
     }
-    std::cout << "Termina de deserealizar registro de slots" << std::endl;
-
 }

@@ -34,6 +34,7 @@ private:
     std::string clientName;
     VirtualMachine &vm;
     friend class ServerHandler;
+    friend class Receiver;
 public:
     /*Constructor del proxy cliente recibe un socket y una referencia a la VirtualMachine*/
     ProxyClient(Socket socketAccepted, VirtualMachine &vm);

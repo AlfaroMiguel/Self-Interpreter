@@ -62,8 +62,6 @@ line :
 		|VARIABLE ADD line SEMICOLON
 		{
 		interpreter->pushToken(*$1,"add","");
-		std::cout << "Liberando:" <<$1<<std::endl;
-		std::cout << "Tiene:" <<*$1<<std::endl;
 		delete $1;
 		}
 		|VARIABLE RM line SEMICOLON
@@ -74,16 +72,12 @@ line :
 		{
 		interpreter->pushToken((*$1),"assignation","");
 		//vars[*$1] = $3;
-		std::cout << "Liberando:" <<$1<<std::endl;
-		std::cout << "Tiene:" <<*$1<<std::endl;
 		delete $1;
 		}
 		|CREATEOBJECTINIT argument BAR expression SEMICOLON RPAREN
 		{
-		std::cout << "(| :args | procedimiento)" <<std::endl;
 		}
 		|atom_expression{
-		std::cout << "atom:_expression)" <<std::endl;
 		}
 		|VARIABLE VARIABLE SEMICOLON{
 		std::cout << "objectReference metodo." <<std::endl;
@@ -91,9 +85,10 @@ line :
 		interpreter->pushToken(*$1,"find","");
 		/*Le mando el mensaje siguiente*/
 		interpreter->pushToken("",*$2,"");
+		delete($1);
+		delete($2);
 		}
 		|expression{
-		std::cout << "Parser::expression" <<std::endl;
 		}
 		|error{
 		interpreter->pushToken("","error","");
@@ -103,18 +98,15 @@ line :
 
 argument:/*nada*/
 				{
-				std::cout << "un argumento vacio" <<std::endl;
 				}
 				|ARGS
 				{
-				std::cout << "un argumento no vacio" <<std::endl;
 				}
 				;
 
 atom_expression:
 							VARIABLE SEMICOLON
 							{
-							std::cout << "uh entró" <<std::endl;
 							interpreter->pushToken(*$1,"create_variable","");
 							}
 							|VARIABLE EQUALSMUTAL expression SEMICOLON {
@@ -126,8 +118,9 @@ atom_expression:
 							interpreter->pushToken("","set","");
 							}
 							|VARIABLE ASTERISK EQUALS VARIABLE SEMICOLON{
-							std::cout << "clonacion objeto" <<std::endl;
 							interpreter->pushToken(*$4,"clone","");
+							delete($1);
+							delete($4);
 							}
 							|ARGS
 							{
@@ -148,12 +141,10 @@ expression: 	expression PLUS inner1
 						| inner1 { $$ = $1 ;};
 
 inner1: 	inner1 ASTERISK inner2 {
-		//std::cout << "$$ = $1 * $3" <<std::endl;
 		interpreter->pushToken("","*","");
  		//$$ = $1 * $3 ;
 		}
 		|inner1 FSLASH inner2{
-		//std::cout << "$$ = $1 / $3" <<std::endl;
 		interpreter->pushToken("","/","");
 		if( $3 == 0) Div0Error (); else $$ = $1 / $3 ;}
 		|inner2 { $$ = $1 ;};
@@ -163,7 +154,6 @@ inner2:
 		//std::cout << "VARIABLE" <<std::endl;
 		//interpreter->pushToken(*$1,"find","");
 		interpreter->pushToken(*$1,"create_variable","");
-		std::cout << "VARIABLE" <<std::endl;
 		delete($1);
 		}
 		|NUMBER

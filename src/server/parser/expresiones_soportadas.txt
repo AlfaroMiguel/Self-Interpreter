@@ -28,7 +28,8 @@ lobby _AddSlots: (| punto1 = (| x <- 20. y <- 1. proto* = punto. |). |).
 
 //Ejemplo punto del enunciado
 lobby _AddSlots: (| punto = (| x = 5. y = 3. squareNorm = (|  | x * x + y * y. ). |).  |).
-punto squareNorm.
+lobby _AddSlots: (| punto1 = (| x = 20. y = 1. proto* = punto. |). |).
+punto1 squareNorm.
 
 //Se elimina un slot
 lobby _AddSlots: (| punto = (| x = 5. y = 3. squareNorm = (|  | x * x + y * y. ). |).  |).

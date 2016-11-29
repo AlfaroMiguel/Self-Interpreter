@@ -822,11 +822,11 @@ case 4:
 YY_RULE_SETUP
 #line 16 "scanner.l"
 {
-													//std::cout<<"VARIABLE PAARA";
-													//yylval.str_val = std::to_string(yytext);
+
+
 													yylval.str_val = new string (yytext);
-													std::cout << "Creando:" <<yylval.str_val<<std::endl;
-													std::cout << "tiene:" <<*yylval.str_val<<std::endl;
+
+
 													return VARIABLE;
 													}
 	YY_BREAK
@@ -834,7 +834,7 @@ case 5:
 YY_RULE_SETUP
 #line 24 "scanner.l"
 {
-													//std::cerr<<"encontré un argumento";
+
 													yylval.str_val = new string (yytext);
 													return ARGS;
 													}
@@ -843,7 +843,7 @@ case 6:
 YY_RULE_SETUP
 #line 29 "scanner.l"
 {
-													//std::cerr<<"[Number] ";
+
 													yylval.double_val = atof(yytext);
 													return NUMBER;
 													}
@@ -852,7 +852,7 @@ case 7:
 YY_RULE_SETUP
 #line 34 "scanner.l"
 {
-													//std::cerr<<"=";
+
 													return EQUALS;
 													}
 	YY_BREAK
@@ -860,7 +860,7 @@ case 8:
 YY_RULE_SETUP
 #line 38 "scanner.l"
 {
-													std::cerr<<"barra barra";
+
 													return COMMENT;
 													}
 	YY_BREAK

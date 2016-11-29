@@ -26,7 +26,6 @@ int main(int argc, const char *argv[]) try{
     if(argc != MIN_PARAM){
         return RET_EXIT;
     }
-
     std::ifstream jsonFile (SERIALIZATION_FILE);
     std::string linea;
     std::string jsonString;
@@ -34,21 +33,18 @@ int main(int argc, const char *argv[]) try{
         while ( getline (jsonFile,linea))jsonString.append(linea);
         jsonFile.close();
     }
-
     VirtualMachine* vm;
-
     if(jsonString != ""){
-        std::cout << "Voy a serializar" << std::endl;
+        std::cout << "START - DESERIALIZING VIRTUAL MACHINE" << std::endl;
         json jSerialization = json::parse(jsonString);
         vm = VirtualMachine::deserialize(jSerialization);
-
+        std::cout << "END - DESERIALIZING VIRTUAL MACHINE" << std::endl;
+        std::cout << "VIRTUAL MACHINE RUNNING" << std::endl;
     }
     else{
         vm = new VirtualMachine();
         vm->initialize();
     }
-
-    std::cout << "Termino de crearse la VirtualMachine" << std::endl; //TODO debug
 
     std::string puerto = argv[POS_PORT];
     Accepter aceptador(puerto, *vm);
@@ -61,23 +57,23 @@ int main(int argc, const char *argv[]) try{
             break;
         }
         else if(entrada == SERIALIZATION){
-            std::cerr << "Serializando Virtual Machine" << std::endl;
+            std::cout << "START - SERIALIZING VIRTUAL MACHINE" << std::endl;
             aceptador.stop();
             aceptador.join();
             json jserialize;
             (*vm).serialize(jserialize);
-
+            std::cout << "JSON FILE GENERATED:" << std::endl;
             std::cout << jserialize.dump(4) << std::endl;
-
             std::ofstream out(SERIALIZATION_FILE);
             out << jserialize.dump();
             out.close();
+            std::cout << "END - SERIALIZING VIRTUAL MACHINE" << std::endl;
             break;
         }else if(entrada == DEL_SERIALIZATION_FILE){
             if(remove(SERIALIZATION_FILE) != 0 )
-                std::cerr << "Error eliminando el archivo de persistencia" << std::endl;
+                std::cerr << "ERROR DELETING SERIALIZATION FILE" << std::endl;
             else
-                std::cerr << "Archivo de persistencia eliminado exitosamente" << std::endl;
+                std::cerr << "SERIALIZATION FILE DELETED" << std::endl;
             aceptador.stop();
             aceptador.join();
             break;
@@ -88,7 +84,9 @@ int main(int argc, const char *argv[]) try{
             std::cout << DEL_MSG << std::endl;
         }
     }
+    std::cout << "DELETING VIRTUAL MACHINE" << std::endl;
     delete vm;
+    std::cout << "VIRTUAL MACHINE DELETED" << std::endl;
     return RET_EXIT;
 }
 catch(...){

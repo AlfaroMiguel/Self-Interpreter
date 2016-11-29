@@ -13,7 +13,6 @@ Client::~Client() {}
 
 void Client::setActualLobby(Lobby *newActualLobby) {
     actualLobby = newActualLobby;
-    std::cout << "Client::SetActualLobby" << std::endl;
     actualLobby->initializeClient(clientName);
 }
 
@@ -26,6 +25,6 @@ std::string Client::getClientName() {
 }
 
 void Client::notify(std::string eventName, Morph &morph) {
-    std::string event = morph.getEvent(eventName); //Hardcodeo por ahora
+    std::string event = morph.getEvent(eventName);
     clientReference->sendEvent(event);
 }

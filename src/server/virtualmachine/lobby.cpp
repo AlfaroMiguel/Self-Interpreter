@@ -60,7 +60,6 @@ void Lobby::notifyClient(const std::string& eventName, const std::string& client
 
 void Lobby::notifyClients(const std::string& eventName, Morph& morph, const std::string& clientNameUnnotified = ""){
     for(auto itClient = clientsConnected.begin(); itClient != clientsConnected.end(); itClient++){
-        std::cout << clientsConnected.size() << std::endl;
         if(itClient->second != nullptr){
             if(itClient->second->getClientName() != clientNameUnnotified)
                 itClient->second->notify(eventName, morph);
@@ -90,7 +89,8 @@ void Lobby::interpretCodeGet(const std::string& code, int objectContextID){
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
     std::cout << "GET: " << code << " CONTEXT: " << objectContext->getName() << std::endl;
-    interpreter->interpretChar(code.c_str(), objectContext);
+    try{interpreter->interpretChar(code.c_str(), objectContext);}
+    catch(...){std::cerr << "ERROR" << std::endl;}
     std::vector<Object*> objectsCreated  = interpreter->getCreatedObjets();
     for(auto itObject = objectsCreated.begin(); itObject != objectsCreated.end(); itObject++){
         auto itMorph = visibleObjects.find((*itObject)->getMorphId());
@@ -121,7 +121,8 @@ void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
     Object* objectContext = lobbyReference->searchForId(objectContextID);
     if(objectContext->getName() == "shell")objectContext = lobbyReference;
     std::cout << "DO: " << code << " CONTEXT: " << objectContext->getName() << std::endl;
-    interpreter->interpretChar(code.c_str(), objectContext);
+    try{interpreter->interpretChar(code.c_str(), objectContext);}
+    catch(...){std::cerr << "ERROR" << std::endl;}
     std::vector<Object*> objectsModified  = interpreter->getModifiedObjets();
     for(auto itObject = objectsModified.begin(); itObject != objectsModified.end(); itObject++){
         (*itObject)->notifyClients("crear");
@@ -137,10 +138,7 @@ void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
 
 
 void Lobby::initializeMorphs() {
-
     for (auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++) {
-        std::cout << "Lobby::initializeMorphs SEARCH OBJECTID" << *itObject << std::endl;
-        std::cout << "Lobby::initializeMorphs OBJECT FOUND: " << lobbyReference->searchForId(*itObject)->getName() << std::endl;
         lobbyReference->searchForId(*itObject)->notifyClients("crear");
     }
 }
@@ -154,12 +152,13 @@ void Lobby::changeObjectName(int objectID, const std::string& newName){
 }
 
 void Lobby::dismissObject(int objectID) {
-    Object* object = lobbyReference->searchForId(objectID);
+    //TODO ARREGLAR BUG AGUS
+    /*Object* object = lobbyReference->searchForId(objectID);
     auto itObjectID = visibleObjects.find(objectID);
     if(itObjectID != visibleObjects.end())visibleObjects.erase(itObjectID);
     if(object != nullptr){
         object->notifyClients("dismiss");
-    }
+    }*/
 }
 
 
@@ -188,22 +187,17 @@ void Lobby::serialize(json& jserialization){
 
 Lobby* Lobby::deserialize(json& jdeserialize){
     Lobby* lobby = new Lobby();
-
     lobby->lobbyName = jdeserialize["lobbyName"];
     lobby->isShared = jdeserialize["isShared"];
-
     json jLobby;
     jLobby = jdeserialize["lobbyReference"];
-
     lobby->lobbyReference = Object::deserialize(jLobby, lobby);
-
     json jClientsConnected = jdeserialize["clientsConnected"];
     for(auto it = jClientsConnected.begin(); it != jClientsConnected.end(); it++){
         std::string clientName = *it;
         Client* client = nullptr;
         lobby->clientsConnected.insert(std::make_pair(clientName, client));
     }
-
     lobby->interpreter = new Interpreter(lobby->lobbyReference, lobby);
     (lobby->interpreter)->registerObjects();
     json jVisibleObjects = jdeserialize["visibleObjects"];

@@ -43,7 +43,7 @@ public:
     NativeValue ejecute(std::string operation, Object *expression);
 
     /*Devuelve una copia de si mismo*/
-    Object *clone();
+    Object* clone() const;
 
     /*Devuelve el resulta de la operacion de que se realizo en ejecute()*/
     Object *getResult();

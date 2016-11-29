@@ -41,8 +41,8 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 
 ##TODO List (23/11) :arrow_right: (29/11) En orden de importancia
 
-- [x] Pasar por referencia (no por copia!) usar const cuando lo amerite (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
-- [x] Serializacion/Persistencia (TESTING) :microscope:
+- [x] Pasar por referencia (no por copia!)
+- [x] Serializacion/Persistencia
 - [x] Cambios en la interfaz de Glade (Agregar cosas que se charlaron en clase)
 - [x] Mensajes con contexto en los objetos
 - [x] Actualizacion de Slots (incluso cuando se hace DO)
@@ -59,7 +59,7 @@ Trabajo practico final de la materia Taller de Programacion - 75.42 - FIUBA
 - [ ] Parser: resolver multiples parametros :no_entry_sign:
 - [x] Documentacion mas ordenada -> en los .h (REALIZADO EN ALGUNAS CLASES) :heavy_exclamation_mark:
 - [x] Valgrind Servidor (TESTING) :microscope:
-- [ ] Manejar excepciones correctamente (EN PROCESO) :recycle:
+- [x] Manejar excepciones correctamente (TESTING) :microscope:
 - [x] Verificar errores de sintaxis en el codigo Self
-- [ ] Codigo presentable (EN PROCESO) :recycle:
+- [ ] Codigo presentable SERVER: :white_check_mark: CLIENT: (EN PROCESO) :recycle:
 - [x] Garbage collector con Serializacion

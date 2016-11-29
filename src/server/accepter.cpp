@@ -55,7 +55,7 @@ void Accepter::accept() {
             keepAcceptingClients = false;
             continue;
         }
-        std::cerr << "Cliente conectado." << std::endl;
+        std::cerr << "NEW CLIENT" << std::endl;
         ProxyClient *newClient = new ProxyClient(std::move(socket_acpt), vm);
         newClient->start();
         deleteClients();

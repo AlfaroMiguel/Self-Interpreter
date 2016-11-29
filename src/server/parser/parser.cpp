@@ -470,10 +470,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    38,    38,    40,    44,    51,    54,    58,    62,    69,
-      73,    81,    85,    88,    95,    98,   105,   108,   115,   120,
-     124,   128,   132,   138,   143,   148,   150,   155,   159,   162,
-     169,   174
+       0,    38,    38,    40,    44,    51,    54,    58,    62,    67,
+      71,    77,    80,    82,    91,    93,   100,   102,   108,   112,
+     116,   120,   125,   131,   136,   141,   143,   147,   150,   153,
+     159,   164
 };
 #endif
 
@@ -1334,218 +1334,208 @@ yyreduce:
 #line 63 "parser.y" /* yacc.c:1646  */
     {
 		interpreter->pushToken(*(yyvsp[-3].str_val),"add","");
-		std::cout << "Liberando:" <<(yyvsp[-3].str_val)<<std::endl;
-		std::cout << "Tiene:" <<*(yyvsp[-3].str_val)<<std::endl;
 		delete (yyvsp[-3].str_val);
 		}
-#line 1342 "parser.cpp" /* yacc.c:1646  */
+#line 1340 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 70 "parser.y" /* yacc.c:1646  */
+#line 68 "parser.y" /* yacc.c:1646  */
     {
 		interpreter->pushToken(*(yyvsp[-3].str_val),"remove","");
 		}
-#line 1350 "parser.cpp" /* yacc.c:1646  */
+#line 1348 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 74 "parser.y" /* yacc.c:1646  */
+#line 72 "parser.y" /* yacc.c:1646  */
     {
 		interpreter->pushToken((*(yyvsp[-3].str_val)),"assignation","");
 		//vars[*$1] = $3;
-		std::cout << "Liberando:" <<(yyvsp[-3].str_val)<<std::endl;
-		std::cout << "Tiene:" <<*(yyvsp[-3].str_val)<<std::endl;
 		delete (yyvsp[-3].str_val);
 		}
-#line 1362 "parser.cpp" /* yacc.c:1646  */
+#line 1358 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 82 "parser.y" /* yacc.c:1646  */
+#line 78 "parser.y" /* yacc.c:1646  */
     {
-		std::cout << "(| :args | procedimiento)" <<std::endl;
 		}
-#line 1370 "parser.cpp" /* yacc.c:1646  */
+#line 1365 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 85 "parser.y" /* yacc.c:1646  */
+#line 80 "parser.y" /* yacc.c:1646  */
     {
-		std::cout << "atom:_expression)" <<std::endl;
 		}
-#line 1378 "parser.cpp" /* yacc.c:1646  */
+#line 1372 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 88 "parser.y" /* yacc.c:1646  */
+#line 82 "parser.y" /* yacc.c:1646  */
     {
 		std::cout << "objectReference metodo." <<std::endl;
 		/*Lo busco y lo guardo en el stack*/
 		interpreter->pushToken(*(yyvsp[-2].str_val),"find","");
 		/*Le mando el mensaje siguiente*/
 		interpreter->pushToken("",*(yyvsp[-1].str_val),"");
+		delete((yyvsp[-2].str_val));
+		delete((yyvsp[-1].str_val));
 		}
-#line 1390 "parser.cpp" /* yacc.c:1646  */
+#line 1386 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 95 "parser.y" /* yacc.c:1646  */
+#line 91 "parser.y" /* yacc.c:1646  */
     {
-		std::cout << "Parser::expression" <<std::endl;
 		}
-#line 1398 "parser.cpp" /* yacc.c:1646  */
+#line 1393 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 98 "parser.y" /* yacc.c:1646  */
+#line 93 "parser.y" /* yacc.c:1646  */
     {
 		interpreter->pushToken("","error","");
 		}
-#line 1406 "parser.cpp" /* yacc.c:1646  */
+#line 1401 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 105 "parser.y" /* yacc.c:1646  */
+#line 100 "parser.y" /* yacc.c:1646  */
     {
-				std::cout << "un argumento vacio" <<std::endl;
 				}
-#line 1414 "parser.cpp" /* yacc.c:1646  */
+#line 1408 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 109 "parser.y" /* yacc.c:1646  */
+#line 103 "parser.y" /* yacc.c:1646  */
     {
-				std::cout << "un argumento no vacio" <<std::endl;
 				}
-#line 1422 "parser.cpp" /* yacc.c:1646  */
+#line 1415 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 116 "parser.y" /* yacc.c:1646  */
+#line 109 "parser.y" /* yacc.c:1646  */
     {
-							std::cout << "uh entró" <<std::endl;
 							interpreter->pushToken(*(yyvsp[-1].str_val),"create_variable","");
 							}
-#line 1431 "parser.cpp" /* yacc.c:1646  */
+#line 1423 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 120 "parser.y" /* yacc.c:1646  */
+#line 112 "parser.y" /* yacc.c:1646  */
     {
 							interpreter->pushToken(*(yyvsp[-3].str_val),"assignation_mutable","");
 							interpreter->pushToken(*(yyvsp[-3].str_val),"assignation","");
 							}
-#line 1440 "parser.cpp" /* yacc.c:1646  */
+#line 1432 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 124 "parser.y" /* yacc.c:1646  */
+#line 116 "parser.y" /* yacc.c:1646  */
     {
 							interpreter->pushToken(*(yyvsp[-3].str_val),"find","");
 							interpreter->pushToken("","set","");
 							}
-#line 1449 "parser.cpp" /* yacc.c:1646  */
+#line 1441 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 128 "parser.y" /* yacc.c:1646  */
+#line 120 "parser.y" /* yacc.c:1646  */
     {
-							std::cout << "clonacion objeto" <<std::endl;
 							interpreter->pushToken(*(yyvsp[-1].str_val),"clone","");
+							delete((yyvsp[-4].str_val));
+							delete((yyvsp[-1].str_val));
 							}
-#line 1458 "parser.cpp" /* yacc.c:1646  */
+#line 1451 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 133 "parser.y" /* yacc.c:1646  */
+#line 126 "parser.y" /* yacc.c:1646  */
     {
 							std::cout << "ARGS"<<std::endl;
 							}
-#line 1466 "parser.cpp" /* yacc.c:1646  */
+#line 1459 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 139 "parser.y" /* yacc.c:1646  */
+#line 132 "parser.y" /* yacc.c:1646  */
     {
 							//$$ = $1 + $3 ;
 							interpreter->pushToken("","+","");
 								}
-#line 1475 "parser.cpp" /* yacc.c:1646  */
+#line 1468 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 143 "parser.y" /* yacc.c:1646  */
+#line 136 "parser.y" /* yacc.c:1646  */
     {
 						//std::cout << "$$ = $1 - $3" <<std::endl;
 						interpreter->pushToken("","-","");
 						 //$$ = $1 - $3 ;
 						 }
-#line 1485 "parser.cpp" /* yacc.c:1646  */
+#line 1478 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 148 "parser.y" /* yacc.c:1646  */
+#line 141 "parser.y" /* yacc.c:1646  */
     { (yyval.double_val) = (yyvsp[0].double_val) ;}
-#line 1491 "parser.cpp" /* yacc.c:1646  */
+#line 1484 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 150 "parser.y" /* yacc.c:1646  */
+#line 143 "parser.y" /* yacc.c:1646  */
     {
-		//std::cout << "$$ = $1 * $3" <<std::endl;
 		interpreter->pushToken("","*","");
  		//$$ = $1 * $3 ;
 		}
-#line 1501 "parser.cpp" /* yacc.c:1646  */
+#line 1493 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 155 "parser.y" /* yacc.c:1646  */
+#line 147 "parser.y" /* yacc.c:1646  */
     {
-		//std::cout << "$$ = $1 / $3" <<std::endl;
 		interpreter->pushToken("","/","");
 		if( (yyvsp[0].double_val) == 0) Div0Error (); else (yyval.double_val) = (yyvsp[-2].double_val) / (yyvsp[0].double_val) ;}
-#line 1510 "parser.cpp" /* yacc.c:1646  */
+#line 1501 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 159 "parser.y" /* yacc.c:1646  */
+#line 150 "parser.y" /* yacc.c:1646  */
     { (yyval.double_val) = (yyvsp[0].double_val) ;}
-#line 1516 "parser.cpp" /* yacc.c:1646  */
+#line 1507 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 162 "parser.y" /* yacc.c:1646  */
+#line 153 "parser.y" /* yacc.c:1646  */
     {
 		//std::cout << "VARIABLE" <<std::endl;
 		//interpreter->pushToken(*$1,"find","");
 		interpreter->pushToken(*(yyvsp[0].str_val),"create_variable","");
-		std::cout << "VARIABLE" <<std::endl;
 		delete((yyvsp[0].str_val));
 		}
-#line 1528 "parser.cpp" /* yacc.c:1646  */
+#line 1518 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 170 "parser.y" /* yacc.c:1646  */
+#line 160 "parser.y" /* yacc.c:1646  */
     {
 		interpreter->pushToken("","create_number",to_string((yyvsp[0].double_val)));
 		//$$ = $1 ;
 		}
-#line 1537 "parser.cpp" /* yacc.c:1646  */
+#line 1527 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 174 "parser.y" /* yacc.c:1646  */
+#line 164 "parser.y" /* yacc.c:1646  */
     {
 		//$$ = $2 ;
 		}
-#line 1545 "parser.cpp" /* yacc.c:1646  */
+#line 1535 "parser.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1549 "parser.cpp" /* yacc.c:1646  */
+#line 1539 "parser.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1773,7 +1763,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 180 "parser.y" /* yacc.c:1906  */
+#line 170 "parser.y" /* yacc.c:1906  */
 
 void Div0Error ( void ) { printf ("Error : division by zero \n"); exit (0);}
 void UnknownVarError ( string s ) { printf (" Error : -%s- does not exist !\n", s . c_str ()); exit (0);}
