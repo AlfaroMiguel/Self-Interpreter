@@ -34,7 +34,7 @@ public:
     std::string getRepresentation() const ;
 
     /*Devuelve el NativeValue del result luego de evaluar la expression*/
-    virtual NativeValue getValue();
+    virtual NativeValue getValue() const;
     Object* getResult();
 
     /*Esto permite que se pueda acoplar mas mensaje a una expression que ya fue evaluada*/

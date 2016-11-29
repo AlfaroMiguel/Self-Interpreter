@@ -46,7 +46,7 @@ public:
     ~Lobby();
 
     /*Devuelve el nombre del lobby*/
-    std::string getLobbyName();
+    std::string getLobbyName() const;
 
     /*Indica si un cliente esta conectado recibiendo el nombre del cliente*/
     bool clientConnected(const std::string &clientName);

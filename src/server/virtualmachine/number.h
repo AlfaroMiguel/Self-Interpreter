@@ -34,7 +34,7 @@ public:
     void setValue(int valueAux);
 
     /*Devuelve al igual que el convertToNativeValue() el NativeValue*/
-    NativeValue getValue();
+    NativeValue getValue() const;
 
     /*Se setea el mensaje que desea realizar al numero */
     void setOperator(std::string operatorString);

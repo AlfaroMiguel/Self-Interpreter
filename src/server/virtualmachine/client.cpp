@@ -16,11 +16,11 @@ void Client::setActualLobby(Lobby *newActualLobby) {
     actualLobby->initializeClient(clientName);
 }
 
-Lobby *Client::getActualLobby() {
+Lobby *Client::getActualLobby() const {
     return actualLobby;
 }
 
-std::string Client::getClientName() {
+std::string Client::getClientName() const {
     return clientName;
 }
 

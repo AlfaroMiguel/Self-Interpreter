@@ -142,7 +142,7 @@ std::string Expression::getRepresentation() const {
     return objectName;
 }
 
-NativeValue Expression::getValue(){
+NativeValue Expression::getValue() const{
     if(result != nullptr){
         return result->getValue();
     }
