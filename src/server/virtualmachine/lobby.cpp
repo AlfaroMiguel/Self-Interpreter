@@ -137,10 +137,7 @@ void Lobby::interpretCodeDo(const std::string& code, int objectContextID){
 
 
 void Lobby::initializeMorphs() {
-
     for (auto itObject = visibleObjects.begin(); itObject != visibleObjects.end(); itObject++) {
-        std::cout << "Lobby::initializeMorphs SEARCH OBJECTID" << *itObject << std::endl;
-        std::cout << "Lobby::initializeMorphs OBJECT FOUND: " << lobbyReference->searchForId(*itObject)->getName() << std::endl;
         lobbyReference->searchForId(*itObject)->notifyClients("crear");
     }
 }
@@ -188,22 +185,17 @@ void Lobby::serialize(json& jserialization){
 
 Lobby* Lobby::deserialize(json& jdeserialize){
     Lobby* lobby = new Lobby();
-
     lobby->lobbyName = jdeserialize["lobbyName"];
     lobby->isShared = jdeserialize["isShared"];
-
     json jLobby;
     jLobby = jdeserialize["lobbyReference"];
-
     lobby->lobbyReference = Object::deserialize(jLobby, lobby);
-
     json jClientsConnected = jdeserialize["clientsConnected"];
     for(auto it = jClientsConnected.begin(); it != jClientsConnected.end(); it++){
         std::string clientName = *it;
         Client* client = nullptr;
         lobby->clientsConnected.insert(std::make_pair(clientName, client));
     }
-
     lobby->interpreter = new Interpreter(lobby->lobbyReference, lobby);
     (lobby->interpreter)->registerObjects();
     json jVisibleObjects = jdeserialize["visibleObjects"];

@@ -14,16 +14,15 @@ ProxyClient::~ProxyClient(){
 }
 
 void ProxyClient::attend(){
-    std::cout << "Empiezo a atender" << std::endl;
     Receiver receiver(socketAccepted, *this);
     receiver.run();
-    std::cout << "Termino de atender" << std::endl;
     if(!validClient)return;
     vm.disconnectClient(clientName);
-    std::cout << "Desconecto client: " << clientName << std::endl;
+    std::cout << "CLIENT DISCONNECTED: " << clientName << std::endl;
 }
 
 void ProxyClient::recieveEvent(std::string event){
+    //std::cout << "RECEIVED FROM: " << clientName << " EVENT: " << event << std::endl;
     json eventJ = json::parse(event);
     EventHandler* eventHandler = eventHandlerSelector.get_event_handler(eventJ["evento"]);
     if(eventHandler != nullptr)
@@ -35,7 +34,7 @@ bool ProxyClient::isExecuting(){
 }
 
 void ProxyClient::sendEvent(std::string event){
-    std::cout << "Envio evento: " << event << std::endl;
+    //std::cout << "SENDING TO: " << clientName << " EVENT: " << event << std::endl;
     char* eventToSend = (char*)event.c_str();
     uint32_t tamanio_32 = (uint32_t)htonl(strlen(eventToSend) + 1);
     socketAccepted.enviar((char*)(&tamanio_32), sizeof(tamanio_32));

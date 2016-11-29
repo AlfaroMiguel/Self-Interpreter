@@ -41,7 +41,7 @@ std::vector<std::string> VirtualMachine::getAvailablesLobbies(const std::string 
     std::vector<std::string> availablesLobbies;
     for (auto it = existingLobbies.begin(); it != existingLobbies.end(); it++) {
         if (it->second->clientConnected(client) ||
-            it->second->isLobbyShared()) {//Agrego si se conecto se client o el lobby es compartido
+            it->second->isLobbyShared()) {
             availablesLobbies.push_back(it->second->getLobbyName());
         }
     }
@@ -102,7 +102,7 @@ void VirtualMachine::interpretCodeGet(const std::string &clientName, const std::
     Client *client = searchClient(clientName);
     if (client != nullptr) {
         Lobby *lobby = client->getActualLobby();
-        std::cout << "ACTUAL LOBBY " << clientName << " es " << lobby->getLobbyName() << std::endl;
+        std::cout << "ACTUAL LOBBY OF " << clientName << " IS " << lobby->getLobbyName() << std::endl;
         lobby->interpretCodeGet(code, morphID);
     }
 }
@@ -111,7 +111,7 @@ void VirtualMachine::interpretCodeDo(const std::string &clientName, const std::s
     Client *client = searchClient(clientName);
     if (client != nullptr) {
         Lobby *lobby = client->getActualLobby();
-        std::cout << "El lobby actual de: " << clientName << " es " << lobby->getLobbyName() << std::endl;
+        std::cout << "ACTUAL LOBBY OF " << clientName << " IS " << lobby->getLobbyName() << std::endl;
         lobby->interpretCodeDo(code, morphID);
     }
 }
@@ -149,8 +149,6 @@ void VirtualMachine::serialize(json &jserialization) {
 
 VirtualMachine *VirtualMachine::deserialize(json &jdeserialization) {
     VirtualMachine *vm = new VirtualMachine();
-    std::cout << "Deserealizando VirtualMachine" << std::endl;
-
     json jExistingLobbies = jdeserialization["existingLobbies"];
     for (auto it = jExistingLobbies.begin(); it != jExistingLobbies.end(); it++) {
         std::string lobbyName = it.key();

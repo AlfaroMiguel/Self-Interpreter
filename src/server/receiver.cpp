@@ -13,7 +13,6 @@ void Receiver::receive(){
 		char* msj_buffer = (char*) malloc(sizeof(char)*tam);
 		skt.recibir(msj_buffer, tam);
 		std::string evnt(msj_buffer);
-		std::cout << "Recibi: " << evnt << std::endl; //TODO sacar debug
         client.recieveEvent(evnt);
 		free(msj_buffer);
 	}

@@ -15,24 +15,16 @@ void Slot::serialize(json& jserialization){
 }
 
 void Slot::deserialize(json& jdeserialization, Lobby* lobby){
-    std::cout << "Slot::deserialize start" << std::endl << jdeserialization.dump(4) << std::endl; //TODO sacar
-
     json jObject = jdeserialization["objectReference"];
     std::string typeString = jObject["type"];
-
-    std::cout << "Slot::deserialize: type: " << typeString << std::endl;
     if(typeString == "number") {
-        std::cout << "Slot::deserialize slot number" << std::endl;
         this->objectReference = Number::deserialize(jObject, lobby);
     }
     else if (typeString == "expression"){
-        std::cout << "Slot::deserialize slot expression" << std::endl;
         this->objectReference = Expression::deserialize(jObject, lobby);
     }
     this->isMutable = jdeserialization["isMutable"];
     this->isParent = jdeserialization["isParent"];
-
-    std::cout << "Slot::deserialize end" << std::endl; //TODO sacar
 }
 
 Slot::Slot(Object* object, bool isMutable, bool esParent) :
